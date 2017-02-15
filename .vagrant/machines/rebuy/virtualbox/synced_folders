@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/rebuy":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/rebuy","hostpath":"D:/DexterFiles/laravel-projects/rebuy","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"D:/DexterFiles/laravel-projects/rebuy","disabled":false,"__vagrantfile":true}}}
