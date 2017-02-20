@@ -1,0 +1,5 @@
+.bg-clouds {
+	background: #5dbde9 url(/img/bg_top_front.gif) no-repeat center bottom -100px;
+    width: 100%;
+    position: relative;
+}
