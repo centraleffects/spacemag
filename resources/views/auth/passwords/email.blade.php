@@ -31,7 +31,7 @@
             </div>
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary pull-right">
                     Send Password Reset Link
                 </button>
             </div>

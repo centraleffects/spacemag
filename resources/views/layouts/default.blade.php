@@ -36,17 +36,15 @@
     </head>
     <body class="page-login theme-template-blue theme-light-green" init-ripples>
         <div class="center bg-clouds" id="app">
-            <div class="card bordered z-depth-2"  style="margin:0% auto; max-width:400px;">
-                <div class="card-header">
-                    <div class="brand-logo">
-                        <div id="logo"></div>
-                        
-                        <a href="/">
-                            <img class="img-responsive" src="/img/rebuy_logo.png">
-                        </a>
+            <div class="row">   
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="logo-holder">
+                        <img src="/img/rebuy_logo.png" class="img-responsive">
+                    </div>
+                    <div class="card bordered z-depth-2"  style="margin:0% auto;">
+                        @yield('content')
                     </div>
                 </div>
-                @yield('content')
             </div>
         </div>
 

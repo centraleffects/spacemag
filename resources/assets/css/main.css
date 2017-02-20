@@ -3,3 +3,12 @@
     width: 100%;
     position: relative;
 }
+
+.logo-holder {
+	margin-bottom: 14px;
+}
+
+.logo-holder img{
+	margin: auto;
+    max-height: 40px;
+}
