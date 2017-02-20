@@ -41,7 +41,7 @@
                     <div class="logo-holder">
                         <img src="/img/rebuy_logo.png" class="img-responsive">
                     </div>
-                    <div class="card bordered z-depth-2"  style="margin:0% auto;">
+                    <div class="card bordered z-depth-2"  style="margin:0% auto; max-width: 400px;">
                         @yield('content')
                     </div>
                 </div>
