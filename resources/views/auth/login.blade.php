@@ -33,12 +33,12 @@
             </div>
         </div>
         
-    </div>
-    <div class="card-action clearfix">
-        <div class="pull-right">
-            <a href="{{ route('password.request') }}" class="btn">Forgot password</a>
-            <button type="submit" class="btn btn-primary">Login</button>
+        <div class="card-action clearfix">
+            <div class="pull-right">
+                <a href="{{ route('password.request') }}" class="btn">Forgot password</a>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
         </div>
-    </div>
-</form>
-@stop
+    </form>
+</div>
+@endsection

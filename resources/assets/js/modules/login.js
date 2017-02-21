@@ -1,4 +1,4 @@
-/* Copyright 2014+, Federico Zivolo, LICENSE at https://github.com/FezVrasta/bootstrap-material-design/blob/master/LICENSE.md */
+/* Copyright 2014+, Federico Zivolo, LICENSE at https://github.com/FezVrasta/bootstrap-material-admindesign/blob/master/LICENSE.md */
 /* globals jQuery, navigator */
 
 (function($, window, document, undefined) {

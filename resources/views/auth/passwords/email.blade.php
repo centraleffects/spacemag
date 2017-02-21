@@ -4,7 +4,7 @@
 <div class="card-content">
     <div class="m-b-30">
         <div class="card-title strong">
-            <h2 class="green-text"><i class="md md-email"></i> Reset Password</h2>
+            <h2 class="green-text"><i class="md md-email"></i> Reset password</h2>
         </div>
         <p class="card-title-desc">
             Welcome to Rebuy.se! The admin template for material design lovers.
