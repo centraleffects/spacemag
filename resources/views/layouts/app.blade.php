@@ -11,8 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ mix('/css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
@@ -21,7 +21,7 @@
     </script>
 </head>
 <body>
-    <div id="app">
+    <div id="app" init-ripples>
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -82,6 +82,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <script src="{{ mix('/js/login.js') }}"></script>
+    <script src="{{ mix('/js/app.js') }}"></script>
 </body>
 </html>
