@@ -23,6 +23,10 @@ Route::get('/home', 'HomeController@index');
 Route::name('dashboard')
 	->middleware('auth')
 	->get('/dashboard', 'AdminController@index');
-	// ->get('/another-url', 'AnotherController@something')
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('users', 'AdminController@index'); // Matches The "/admin/users" URL
+});
 
 
