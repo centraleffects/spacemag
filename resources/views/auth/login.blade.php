@@ -5,7 +5,7 @@
     <form class="form-floating" role="form" method="POST" action="{{ route('login') }}">
         <div class="m-b-30">
             <div class="card-title strong">
-                <h2 class="green-text"><i class="md md-lock-open"></i> Login</h2>
+                <h2 class="green-text"><i class="glyphicon glyphicon-lock"></i> Login</h2>
             </div>
             <p class="card-title-desc">
                 Welcome to Rebuy.se! The admin template for material design lovers.

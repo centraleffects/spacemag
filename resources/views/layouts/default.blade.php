@@ -25,8 +25,8 @@
         <![endif]-->
 
         <!-- Styles -->
-        <link href="/css/app.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="{{ mix('/css/vendor.css') }}">
+        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
         <!-- Scripts -->
         <script>
             window.Laravel = {!! json_encode([
@@ -35,11 +35,11 @@
         </script>
     </head>
     <body class="page-login theme-template-blue theme-light-green" init-ripples>
-        <div class="center bg-clouds" id="app">
+        <div class="center bg-clouds">
             <div class="row">   
                 <div class="col-md-6 col-md-offset-3">
                     <div class="logo-holder">
-                        <img src="/img/rebuy_logo.png" class="img-responsive">
+                        <a href="/"><img src="/img/rebuy_logo.png" class="img-responsive"></a>
                     </div>
                     <div class="card bordered z-depth-2"  style="margin:0% auto; max-width: 400px;">
                         @yield('content')
@@ -48,9 +48,9 @@
             </div>
         </div>
 
-        <script charset="utf-8" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script charset="utf-8" src="/js/app.js"></script>
-        <script src="/js/login.js"></script>
+        <script src="{{ mix('/js/login.js') }}"></script>
+        <script src="{{ mix('/js/app.js') }}"></script>
+        
         @yield('scripts')
     </body>
 </html>

@@ -17,7 +17,7 @@ require('bootstrap-sass');
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -44,3 +44,5 @@ window.axios.defaults.headers.common = {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+window.angular = require('angular');
