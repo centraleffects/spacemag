@@ -19,14 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
+
 Route::name('dashboard')
 	->middleware('auth')
-	->get('/dashboard', function (){
-		// write your dashboard routes here
-	});
+	->get('/dashboard', 'AdminController@index');
+	// ->get('/another-url', 'AnotherController@something')
 
-Route::name('shop')
-	->middleware('auth')
-	->get('/shop', function (){
-		// write routes for shop here
-	});
+
