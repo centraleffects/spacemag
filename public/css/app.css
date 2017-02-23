@@ -6,9 +6,39 @@
 
 .logo-holder {
 	margin-bottom: 14px;
+    margin-top: 14px;
 }
 
 .logo-holder img{
 	margin: auto;
     max-height: 40px;
+}
+
+.centered {
+	text-align: center;
+}
+
+.div-seperator {
+    color: #B9BCC0;
+    font-size: 24px;
+    display: flex;
+	flex-basis: 100%;
+	align-items: center;
+	width: 70%;
+    margin: auto;
+}
+
+.div-seperator::before,
+.div-seperator::after {
+	content: "";
+	flex-grow: 1;
+	background: #E1E2E4;
+	height: 1px;
+	font-size: 0px;
+	line-height: 0px;
+	margin: 0px 8px;
+}
+
+.page-login .card {
+	max-width: 450px;
 }
