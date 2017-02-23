@@ -1,88 +1,56 @@
 <!DOCTYPE html>
-<html lang="{{ config('app.locale') }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="{{ config('app.locale') }}" ng-app="materialism">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ config('app.name', 'Rebuy') }}</title>
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/favicon-32.png">
+        <link rel="icon" sizes="32x32" href="/img/favicon/favicon-32.png" type="image/png">
+        <link rel="icon" sizes="64x64" href="/img/favicon/favicon-64.png" type="image/png">
+        <link rel="icon" sizes="96x96" href="/img/favicon/favicon-96.png" type="image/png">
+        <link rel="icon" href="/img/favicon/favicon.png" type="image/png">
+        <link rel="shortcut icon" href="/img/favicon/favicon.ico" type="image/x-icon">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
 
-    <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-
-    <!-- Scripts -->
-    <script>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-        ]) !!};
-    </script>
-</head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->first_name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ mix('/css/vendor.css') }}">
+        <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
+        <!-- Scripts -->
+        <script>
+            window.Laravel = {!! json_encode([
+                'csrfToken' => csrf_token(),
+            ]) !!};
+        </script>
+    </head>
+    <body class="page-login theme-template-blue theme-light-green" init-ripples>
+        <div class="center bg-clouds">
+            <div class="row">   
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="logo-holder">
+                        <a href="/"><img src="/img/rebuy_logo.png" class="img-responsive"></a>
+                    </div>
+                    <div class="card bordered z-depth-2"  style="margin:0% auto; max-width: 400px;">
+                        @yield('content')
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
 
-        @yield('content')
+        <script src="{{ mix('/js/login.js') }}"></script>
+        <script src="{{ mix('/js/app.js') }}"></script>
         
-    </div>
-
-    <!-- Scripts -->
-    <script src="/js/admin/app.js"></script>
-</body>
+        @yield('scripts')
+    </body>
 </html>

@@ -9,7 +9,7 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ ($title ?? 'Home').' - '.config('app.name', 'Rebuy') }}</title>
+        <title>{{ ($title || 'Home').' - '.config('app.name', 'Rebuy') }}</title>
         
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/favicon-32.png">
         <link rel="icon" sizes="32x32" href="/img/favicon/favicon-32.png" type="image/png">
@@ -36,7 +36,7 @@
     <body class="page-login theme-template-blue theme-light-green" init-ripples>
         <div class="center bg-clouds">
             <div class="row">   
-                <div class="{{ $width ?? 'col-md-6 col-md-offset-3' }}">
+                <div class="{{ !empty($width) ? $width : 'col-md-6 col-md-offset-3' }}">
                     @include('layouts._partials.logo')
                     {{ $slot }}
                 </div>
