@@ -19,7 +19,7 @@
                     </div>
                 @endif
 
-                <button class="btn btn-info btn-flat">
+                <button class="btn btn-info">
             		Sign Up with Facebook
             	</button>
 
@@ -84,7 +84,7 @@
 		                    </div>
 
 		                    <div class="form-group">
-		                        <button type="submit" class="btn btn-primary btn-flat pull-right">
+		                        <button type="submit" class="btn btn-primary pull-right">
 		                            Register
 		                        </button>
 		                    </div>

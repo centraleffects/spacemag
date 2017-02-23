@@ -7,4 +7,4 @@
 
 require('./bootstrap');
 
-angular.module('rebuyApp', []);
+angular.module('rebuy', []);
