@@ -9,7 +9,8 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ ($title || 'Home').' - '.config('app.name', 'Rebuy') }}</title>
+
+        <title>{{ !empty($title) ? $title : 'Home'.' - '.config('app.name', 'Rebuy') }}</title>
         
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/favicon-32.png">
         <link rel="icon" sizes="32x32" href="/img/favicon/favicon-32.png" type="image/png">
@@ -45,6 +46,6 @@
 
         @include('layouts._partials._scripts')
         
-        {{ $scripts ?? '' }}
+        {{ !empty($scripts) ? $scripts : '' }}
     </body>
 </html>
