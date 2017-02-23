@@ -16,6 +16,7 @@ class CreateSalespotsTable extends Migration
          Schema::create('salespots', function (Blueprint $table) {
             
             $table->increments('id')->unique();
+            $table->integer('shop_id')->unsigned()->index();
             $table->foreign('shop_id')->references('id')->on('shops');
 
             $table->string('spot_code')->nullable();

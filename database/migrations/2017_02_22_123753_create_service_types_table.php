@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServiceTypeTable extends Migration
+class CreateServiceTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,9 +19,9 @@ class CreateServiceTypeTable extends Migration
 
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->smallinteger('price_per_day', 5, 2)->nullable();
+            $table->decimal('price_per_day', 5, 2)->nullable();
             $table->decimal('price_per_week', 5, 2)->nullable();
-            $table->smallinteger('is_active', 1)->default(0);
+            $table->smallInteger('is_active')->default(0);
 
             $table->timestamps();
         });

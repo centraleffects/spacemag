@@ -16,12 +16,14 @@ class CreateSalespotPricesTable extends Migration
          Schema::create('salespot_prices', function (Blueprint $table) {
             
             $table->increments('id')->unique();
+
+            $table->integer('salespot_id')->unsigned()->index();
             $table->foreign('salespot_id')->references('id')->on('salespots');
 
             $table->decimal('price_per_day', 5, 2)->nullable();
             $table->decimal('price_per_3d', 5, 2)->nullable();
             $table->decimal('price_per_week', 5, 2)->nullable();
-            $table->smallInteger('is_active', 1)->default(0);
+            $table->smallInteger('is_active')->default(0);
 
             $table->timestamps();
         });

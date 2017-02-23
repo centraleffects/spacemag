@@ -15,10 +15,12 @@ class CreateShopNewsletterSubscriptionTable extends Migration
     {
         Schema::create('shop_newsletter_subscription', function (Blueprint $table) {
             $table->increments('id')->unique();
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('shop_id')->unsigned()->index();
             $table->foreign('shop_id')->references('id')->on('shops');
 
-            $table->smallInteger('is_active',1)->default(1)
+            $table->smallInteger('is_active')->default(1);
 
             $table->timestamps();
         });

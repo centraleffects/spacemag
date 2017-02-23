@@ -35,10 +35,8 @@ class CreateUsersTable extends Migration
             $table->string('city')->nullable();
             $table->string('zip_code')->nullable();
 
-            $table->string('address_1')->nullable();
-            $table->string('address_2')->nullable();
-            $table->smallInteger('signed_agreement',1)->default(0);
-            $table->smallInteger('is_email_confirmed',1)->default(0);
+            $table->smallInteger('signed_agreement')->default(0);
+            $table->smallInteger('is_email_confirmed')->default(0);
 
             $table->string('lang')->default('se'); // defaults to Swedish
 

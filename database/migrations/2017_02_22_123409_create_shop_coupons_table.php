@@ -15,13 +15,14 @@ class CreateShopCouponsTable extends Migration
     {
          Schema::create('shop_coupons', function (Blueprint $table) {
             $table->increments('id')->unique();
+            $table->integer('shop_id')->unsigned()->index();
             $table->foreign('shop_id')->references('id')->on('shops');
            
             $table->enum('type', ['amount', 'percent'])->default('amount');
             $table->decimal('value', 5, 2)->nullable();
             $table->string('date_start')->nullable();
             $table->string('date_end')->nullable();
-            $table->smallInteger('is_active',1)->default(0);
+            $table->smallInteger('is_active')->default(0);
 
             $table->timestamps();
         });

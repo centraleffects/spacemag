@@ -16,6 +16,7 @@ class CreateUserBillingDetailsTable extends Migration
          Schema::create('user_billing_details', function (Blueprint $table) {
             
             $table->increments('id')->unique();
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->string('address_1')->nullable();

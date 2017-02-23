@@ -15,13 +15,14 @@ class CreateArticlePricesTable extends Migration
     {
         Schema::create('article_prices', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('article_id')->unsigned()->index();
             $table->foreign('article_id')->references('id')->on('articles');
             
             $table->decimal('price', 5,2)->nullable();
             $table->decimal('original_price', 5,2)->nullable();
             $table->decimal('quantity', 5,2)->nullable();
             
-            $table->smallInteger('sold_in_pieces', 1)->default(0);
+            $table->smallInteger('sold_in_pieces')->default(0);
 
             $table->enum('status', ['draft', 'printed', 'sold', 'deleted'])->default('draft');
 

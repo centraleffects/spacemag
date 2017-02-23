@@ -16,6 +16,8 @@ class CreateUserNotesTable extends Migration
          Schema::create('user_notes', function (Blueprint $table) {
             
             $table->increments('id')->unique();
+
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->longText('notes')->nullable();

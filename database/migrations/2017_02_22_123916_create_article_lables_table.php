@@ -16,9 +16,17 @@ class CreateArticleLablesTable extends Migration
          Schema::create('article_labels', function (Blueprint $table) {
             
             $table->increments('id')->unique();
+
+            $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->integer('article_id')->unsigned()->index();
             $table->foreign('article_id')->references('id')->on('articles');
-            $table->foreign('salespot_id')>references('id')->on('salespots');
+
+            $table->integer('salespot_id')->unsigned()->index();
+            $table->foreign('salespot_id')->references('id')->on('salespots');
+
+            $table->integer('media_type_id')->unsigned()->index();
             $table->foreign('media_type_id')->references('id')->on('label_media_type');        
 
             $table->string('filename');
