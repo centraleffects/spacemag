@@ -11164,7 +11164,7 @@ process.umask = function() { return 0; };
 
 __webpack_require__(31);
 
-angular.module('rebuy', []);
+window.app = angular.module('rebuy', []);
 
 /***/ }),
 /* 10 */,

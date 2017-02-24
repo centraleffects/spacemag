@@ -7,4 +7,5 @@
 
 require('./bootstrap');
 
-angular.module('rebuy', []);
+
+window.app = angular.module('rebuy', []);
