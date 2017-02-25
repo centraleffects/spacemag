@@ -11,10 +11,6 @@ const { mix } = require('laravel-mix');
  |
  */
 
-// mix.js('resources/assets/js/app.js', 'public/js')
-//    .sass('resources/assets/sass/app.scss', 'public/css');
-// mix.sass(angularPath+'css/sass/')
-
 mix.combine([
 	  'resources/assets/css/materialism.css',
 	  'resources/assets/css/angular-ui-select.css',
@@ -23,7 +19,8 @@ mix.combine([
    ], 'public/css/vendor.css')
    .combine([
 	  'resources/assets/css/main.css'
-   ], 'public/css/app.css')
-   .js('resources/assets/js/app.js', 'public/js')
-   .js('resources/assets/js/modules/login.js', 'public/js');
+   ], 'public/css/app.css');
+
+mix.js('resources/assets/js/app.js', 'public/js/')
+	.js('resources/assets/js/modules/login.js', 'public/js/');
    

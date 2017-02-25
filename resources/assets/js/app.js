@@ -1,6 +1,9 @@
-/*jslint strict: true */
 
-var app = angular.module('materialism', [
+
+require('./bootstrap');
+
+window.app = angular.module('rebuy', [
+
   'app.constants',
 
   'ngRoute',
@@ -27,4 +30,5 @@ var app = angular.module('materialism', [
   'fsm',                    // sticky header
   'smoothScroll',
   'LocalStorageModule'
+  
 ]);
