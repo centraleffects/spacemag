@@ -10,9 +10,15 @@ class Shop extends Model
     protected $table = "shops";
 
     // returns the Owner of this Shop
-    public function user(){
+    public function owner(){
     	return $this->belongsTo('App\User');
     }  
+
+    public function users(){
+    	return $this->hasMany('App\User')
+    				->withPivot('user_id', 'shop_id')
+    				->withTimestamps();
+    }
 
     public function coupons(){
     	return $this->hasMany('App\ShopCoupon');

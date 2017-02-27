@@ -92,28 +92,10 @@ class UserController extends Controller
 
     public function test(){
         $user = User::find(1);
-        $shop = new Shop([
-            'id' => 2,
-            'user_id' => $user->id,
-            'name' => 'PureFoods Hotdog2',
-            'description' => 'Something that describes this shop',
-            'url' => null,
-            'currency' => 'USD'
-        ]);
-        $user->shops()->save($shop);
 
-        $shop = new Shop([
-            'id' => 2,
-            'user_id' => $user->id,
-            'name' => 'PureFoods Hotdog',
-            'description' => 'Something that describes this shop',
-            'url' => null,
-            'currency' => 'USD'
-        ]);
-        $user->shops()->save($shop);
+        $shops = $user->shops()->first();
 
-
-        return $user->shops()->get();
+        dd($shops);
     }
     
 
