@@ -19,5 +19,9 @@ use Illuminate\Http\Request;
 // });
 
 
-Route::get('/users', 'UserController@all');
-Route::get('/users/{user}', 'UserController@show');
+Route::get('users', 'UserController@index');
+Route::get('users/{user}', 'UserController@show');
+
+Route::group(['prefix' => 'test'], function(){
+	Route::get('users', 'UserController@test');
+});

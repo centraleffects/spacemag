@@ -1,12 +1,12 @@
 @component('layouts.default')
     @slot('title')
-        Sign Up
+        Register
     @endslot
     <div class="card bordered z-depth-2"  style="margin:0% auto;">
         <div class="card-content centered">
             <div class="m-b-30">
                 <div class="card-title strong">
-                    <h2 class="green-text"><i class="glyphicon glyphicon-email"></i> Sign Up</h2>
+                    <h2 class="green-text"><i class="glyphicon glyphicon-email"></i> Register</h2>
                 </div>
                 <p class="card-title-desc">
                     Welcome to Rebuy.se! The admin template for material design lovers.

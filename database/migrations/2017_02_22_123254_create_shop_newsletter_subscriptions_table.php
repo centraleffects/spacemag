@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticleTagsTable extends Migration
+class CreateShopNewsletterSubscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateArticleTagsTable extends Migration
      */
     public function up()
     {
-         Schema::create('article_tags', function (Blueprint $table) {
+        Schema::create('shop_newsletter_subscriptions', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->integer('article_id')->unsigned()->index();
-            $table->foreign('article_id')->references('id')->on('articles');
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('shop_id')->unsigned()->index();
             $table->foreign('shop_id')->references('id')->on('shops');
 
-            $table->string('name');
-            $table->longText('description')->nullable();
+            $table->smallInteger('is_active')->default(1);
 
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ class CreateArticleTagsTable extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('article_tags');
+        Schema::dropIfExists('shop_newsletter_subscriptions');
     }
 }
