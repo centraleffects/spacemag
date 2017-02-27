@@ -21,4 +21,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function shops(){
+        return $this->hasMany('App\Shop');
+    }
+
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
+
 }
