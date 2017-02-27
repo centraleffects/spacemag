@@ -1,11 +1,34 @@
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 
 require('./bootstrap');
 
+window.app = angular.module('rebuy', [
 
-window.app = angular.module('rebuy', []);
+  'app.constants',
+
+  'ngRoute',
+  'ngAnimate',
+  'ngSanitize',
+  'ngPlaceholders',
+  'ngTable',
+
+  'angular-loading-bar',
+
+  'angulartics',
+  'angulartics.google.analytics',
+
+  'nemLogging',
+  'uiGmapgoogle-maps',
+  'ui.select',
+
+  'gridshore.c3js.chart',
+  'monospaced.elastic',     // resizable textarea
+  'mgcrea.ngStrap',
+  'jcs-autoValidate',
+  'ngFileUpload',
+  'textAngular',
+  'fsm',                    // sticky header
+  'smoothScroll',
+  'LocalStorageModule'
+  
+]);

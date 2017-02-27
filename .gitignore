@@ -10,3 +10,4 @@ Homestead.yaml
 /.vagrant
 /bower_components
 *.log
+npm-debug.log
