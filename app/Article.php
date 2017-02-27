@@ -14,10 +14,16 @@ class Article extends Model
     }
 
     public function tags(){
-    	return $this->belongsToMany('App\ArticleTag');
+    	return $this->hasMany('App\Tag');
     }
 
     public function prices(){
     	return $this->hasMany('App\Prices');
+    }
+
+    public function shops(){
+    	return $this->belongsToMany('App\Shop')
+    				->withPivot('article_id', 'shop_id')
+    				->withTimestamps();
     }
 }
