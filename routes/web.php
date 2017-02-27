@@ -20,9 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 
-Route::name('dashboard')
+Route::name('admin')
 	->middleware('auth')
-	->get('/dashboard', 'AdminController@index');
+	->get('/admin', 'AdminController@index');
 
 
 Route::group(['prefix' => 'admin'], function () {

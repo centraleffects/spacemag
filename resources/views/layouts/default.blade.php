@@ -1,7 +1,7 @@
 @include('layouts._partials.header')
     <div class="center bg-clouds">
         <div class="row">   
-            <div class="{{ $width ?? 'col-md-6 col-md-offset-3' }}">
+            <div class="{{ !empty($width) ? $width  : 'col-md-6 col-md-offset-3' }}">
                 @include('layouts._partials.logo')
                 {{ $slot }}
 

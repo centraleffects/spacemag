@@ -6,16 +6,16 @@ module.exports = function(grunt) {
 
   var options = {
     paths: {
-      app: 'app',
-      assets: 'app/assets',
-      dist: 'app/dist',
-      distAssets: 'app/dist/assets',
-      html: 'app/html',
+      app: 'public',
+      assets: 'public/assets',
+      dist: 'public/dist',
+      distAssets: 'public/dist/assets',
+   /*   html: 'public/html',
       htmlTmp: '.tmp/htmlsnapshot',
-      htmlAssets: 'app/html/assets',
-      index: 'app/dist/index.html',
-      indexDev: 'app/index.dev.html',
-      indexTmp: '.tmp/html/index.html'
+      htmlAssets: 'public/html/assets',
+      index: 'public/dist/index.html',
+      indexDev: 'public/index.dev.html',
+      indexTmp: '.tmp/html/index.html'*/
     },
     pkg: pkg
   };
@@ -49,12 +49,12 @@ module.exports = function(grunt) {
     'imagemin',
     'usebanner'
   ]);
-
+/*
   grunt.registerTask('demo', [
     'shared',
     'copy:postusemin',
     'grep:demo'
-  ]);
+  ]);*/
 
   grunt.registerTask('dist', [
     'shared',
@@ -67,11 +67,11 @@ module.exports = function(grunt) {
     'grep:demo',
   ]);
 
-  grunt.registerTask('html', [
+/*  grunt.registerTask('html', [
     'clean:html',
     'copy:html',
     'concat:html',
     'uglify:html',
     'cssmin:html',
-  ]);
+  ]);*/
 };
