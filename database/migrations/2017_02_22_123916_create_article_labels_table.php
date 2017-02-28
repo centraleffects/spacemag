@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticleTransactionsTable extends Migration
+class CreateArticleLabelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateArticleTransactionsTable extends Migration
      */
     public function up()
     {
-         Schema::create('article_transactions', function (Blueprint $table) {
-
+         Schema::create('article_labels', function (Blueprint $table) {
+            
             $table->increments('id')->unique();
+
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users');
 
             $table->integer('article_id')->unsigned()->index();
             $table->foreign('article_id')->references('id')->on('articles');
@@ -23,15 +26,11 @@ class CreateArticleTransactionsTable extends Migration
             $table->integer('salespot_id')->unsigned()->index();
             $table->foreign('salespot_id')->references('id')->on('salespots');
 
-            $table->integer('user_id')->unsigned()->index();
-            $table->foreign('user_id')->references('id')->on('users');        
-            
-            $table->string('user_id_cashier')->nullable();
+            $table->integer('media_type_id')->unsigned()->index();
+            $table->foreign('media_type_id')->references('id')->on('label_media_type');        
 
-            $table->decimal('quantity', 5,2)->nullable();
-            $table->decimal('amount', 5,2)->nullable();
-            $table->decimal('price', 5,2)->nullable();
-            $table->decimal('original_price', 5,2)->nullable();
+            $table->string('filename');
+            $table->enum('status', ["draft", "ready to print", "printed", "deleted"])->default("draft");
 
             $table->timestamps();
         });
@@ -44,6 +43,6 @@ class CreateArticleTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_transactions');
+         Schema::dropIfExists('article_labels');
     }
 }

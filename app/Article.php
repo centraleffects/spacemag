@@ -26,4 +26,14 @@ class Article extends Model
     				->withPivot('article_id', 'shop_id')
     				->withTimestamps();
     }
+
+    public function transactions(){
+        return $this->hasMany('App\ArticleTransaction');
+    }
+
+    public function labels(){
+        return $this->hasMany('App\ArticleLabel');
+    }
+
+    
 }

@@ -8,7 +8,9 @@ class ShopNewsletterSubscriptions extends Model
 {
     protected $guarded = [ "id" ];
 
-    // gets the list of subscribers for this newsletter
+    /**
+     * gets the list of subscribers for this newsletter
+     */
     public function users(){
     	return $this->hasMany('App\User');
     }

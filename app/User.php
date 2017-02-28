@@ -29,12 +29,61 @@ class User extends Authenticatable
         return $this->hasMany('App\Shop');
     }
 
+
     /**
      * returns the articles that this user has created.
      */
     public function articles(){
         return $this->hasMany('App\Article');
     }
+
+    /**
+     * Billing details of this user
+     */
+    public function billingDetails(){
+        return $this->hasMany('App\BillingDetail');
+    }
+
+    /**
+     * The Shop services bookings made by this user
+     */
+    public function shopServicesBookings(){
+        return $this->hasMany('App\ShopServicesBooking');
+    }
+
+    /**
+     * Returns the Salespot Categories that the user has authored
+     */
+    public function salespotCategories(){
+        return $this->hasMany('App\SalespotCategory');
+    }
+
+    /**
+     * The SaleSpots bookings made by this user
+     */
+    public function salespotBookings(){
+        return $this->hasMany('App\SalespotBooking');
+    }
+
+
+    /**
+     * The notes that this user has authored
+     */
+    public function notes(){
+        return $this->hasMany('App\Note');
+    }
+
+    /**
+     * the article labels that this user authored
+     */
+    public function articleLabels(){
+        return $this->hasMany('App\ArticleLabel');
+    }
+
+    public function todoTasks(){
+        return $this->hasMany('App\TodoTask', 'worker_user_id');
+    }
+
 
     /**
      * determines if a user is admin
