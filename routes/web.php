@@ -1,4 +1,5 @@
 <?php
+use App\Mail\Welcome;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,7 @@ Route::get('/test-event', function (){
 	event(new CustomerBecameAClient($user));
 });
 
+Route::get('/test-mail', function (){
+	$user = App\User::first();
+	Mail::to($user->email)->send(new Welcome);
+});

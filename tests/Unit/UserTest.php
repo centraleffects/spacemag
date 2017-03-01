@@ -8,11 +8,13 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 
 use App\User;
 use App\Shop;
 
 use App\Events\CustomerBecameAClient;
+use App\Mail\Welcome;
 
 class UserTest extends TestCase
 {
@@ -90,9 +92,11 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_own_multiple_shops(){
-    	$shops = User::find(1)->shops()->get();
-    	
-    	$this->assertCount(2, $shops);
+    public function it_fakes_mail(){
+        Mail::fake();
+        $user = User::first();
+        $this->visit('/test-mail');
+
+        Mail::assertSentTo($user->email, Welcome::class);
     }
 }
