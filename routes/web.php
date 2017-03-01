@@ -30,3 +30,9 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
+Route::get('/test-event', function (){
+	// $user = auth()->user();
+	$user = App\User::first();
+	event(new CustomerBecameAClient($user));
+});
+

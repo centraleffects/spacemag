@@ -3,29 +3,35 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithoutMiddleWare;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Illuminate\Support\Facades\Event;
+
 use App\User;
 use App\Shop;
+
+use App\Events\CustomerBecameAClient;
 
 class UserTest extends TestCase
 {
 
 	protected $user, $shop;
-
-    function __construct()
-    {
-        $this->setUp();
-    }
     
     function setUp()
     {
-        $user = new User([
+        parent::setUp();
+
+        // User::findOrFail(1)->delete();
+        // Shop::findOrFail(2)->delete();
+        // Shop::findOrFail(3)->delete();
+
+        /*User::create([
         	'id' => 1,
         	'first_name' => 'John',
 			'last_name' => 'Doe',
-			'email' => 'JohnDoe@example.com',
+			'email' => 'dexterb@asdsad.com',
 			'password' => 'secret',
 			'facebook_id' => null,
 			'type' => 'customer',
@@ -43,47 +49,50 @@ class UserTest extends TestCase
 			'is_email_confirmed' => 0
         ]);
 
+
+
         $user = User::find(1);
-        $shop = new Shop([
+
+
+        Shop::create([
             'id' => 2,
-            'user_id' => $user->id,
+            'user_id' => 1,
             'name' => 'PureFoods Hotdog2',
             'description' => 'Something that describes this shop',
             'url' => null,
             'currency' => 'USD'
         ]);
-        $user->shops()->save($shop);
 
-        $shop = new Shop([
-            'id' => 2,
-            'user_id' => $user->id,
+        Shop::create([
+            'id' => 3,
+            'user_id' => 1,
             'name' => 'PureFoods Hotdog',
             'description' => 'Something that describes this shop',
             'url' => null,
             'currency' => 'USD'
-        ]);
-
-        $user->shops()->save($shop);
-
-        $this->user = $user;
-
+        ]);*/
     }
 
     /** @test */
-    public function a_user_has_an_id(){
-    	$user =  User::find(1);
-    	$this->assertEquals(1, $user->id);
-    }
+    public function a_customer_has_become_a_client(){
+        // When a customer booked a salespot, he will be asked to accept the
+        // terms and agreements, and as well as his billing information
 
-    /** @test */
-    public function a_user_has_a_first_name(){
-    	$this->assertEquals("John", $this->user->first_name);
+        Event::fake();
+
+        $this->visit('/test-event');
+
+        $user = User::first();
+
+        Event::assertFired(CustomerBecameAClient::class, function ($e) use ($user){
+            return $e->user->id = $user->id;
+        });
     }
 
     /** @test */
     public function a_user_can_own_multiple_shops(){
     	$shops = User::find(1)->shops()->get();
-    	var_dump($this->shops);
+    	
     	$this->assertCount(2, $shops);
     }
 }
