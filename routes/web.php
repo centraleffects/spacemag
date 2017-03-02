@@ -26,8 +26,15 @@ Route::name('admin')
 	->get('/admin', 'AdminController@index');
 
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('users', 'AdminController@index'); // Matches The "/admin/users" URL
+});
+
+
+Route::group(['prefix' => 'shop', 'middleware' => ['owner', 'client']], function (){
+	Route::get('/', function (){
+		return "Hello world!";
+	});
 });
 
 

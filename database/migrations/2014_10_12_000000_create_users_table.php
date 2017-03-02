@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('facebook_id')->nullable();
-            $table->string('type')->default('customer');
+            $table->string('role')->default('customer');
             $table->string('confirmation_code')->nullable();
             $table->integer('newsletter_subscription')->default(0);
             $table->string('last_online')->nullable();

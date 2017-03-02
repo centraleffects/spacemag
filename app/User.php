@@ -90,21 +90,21 @@ class User extends Authenticatable
      * possible user types: admin, owner, worker, client, customer
      */
     public function isAdmin(){
-        return $this->type == 'admin' ? true : false;
+        return $this->role == 'admin' ? true : false;
     }
 
     /**
      * determines if user is a shop owner
      */
     public function isOwner(){
-        return $this->type == 'owner' ? true : false;
+        return $this->role == 'owner' ? true : false;
     }
 
     /**
      * determines if user is a shop worker
      */
     public function isWorker(){
-        return $this->type == 'worker' ? true : false;
+        return $this->role == 'worker' ? true : false;
     }
 
     /**
@@ -112,7 +112,7 @@ class User extends Authenticatable
      * upgraded to 'client'
      */
     public function isClient(){
-        return $this->type == 'client' ? true : false;
+        return $this->role == 'client' ? true : false;
     }
 
     /**
@@ -120,6 +120,6 @@ class User extends Authenticatable
      * then he's considered to be just a customer
      */
     public function isCustomer(){
-        return $this->type == 'customer' ? true : false;
+        return $this->role == 'customer' ? true : false;
     }
 }

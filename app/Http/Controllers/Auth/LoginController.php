@@ -39,11 +39,6 @@ class LoginController extends Controller
 
     protected function authenticated( $user)
     {
-
-        if($user->type == 'admin') {
-            return redirect('/admin');
-        }
-
-        return redirect('/shop');
+        //
     }
 }
