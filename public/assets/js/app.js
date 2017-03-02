@@ -1,5 +1,5 @@
 
-var app = angular.module('materialism', [
+var app = angular.module('rebuy', [
   'app.constants',
 
   'ngRoute',
@@ -14,7 +14,6 @@ var app = angular.module('materialism', [
   'angulartics.google.analytics',
 
   'nemLogging',
-  'uiGmapgoogle-maps',
   'ui.select',
 
   'gridshore.c3js.chart',

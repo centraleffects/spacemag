@@ -13,14 +13,6 @@ app.config(['$routeProvider', function($routeProvider) {
     }).otherwise({ redirectTo: '/' });
 }])
 
-// google maps
-.config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
-  uiGmapGoogleMapApiProvider.configure({
-    //    key: 'your api key',
-    v: '3.17',
-    libraries: 'weather,geometry,visualization'
-  });
-}])
 
 // loading bar settings
 .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
