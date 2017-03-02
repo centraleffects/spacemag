@@ -1,13 +1,7 @@
 <aside class="sidebar fixed">
-  <div class="brand-logo">
-    <div id="logo">
-      <div class="foot1"></div>
-      <div class="foot2"></div>
-      <div class="foot3"></div>
-      <div class="foot4"></div>
-    </div>
-    Materialism
-  </div>
+  
+  @include('layouts._partials.logo')
+  
   <div class="user-logged-in">
     <div class="content">
       <div class="user-name">Katsumoto <span class="text-muted f9">admin</span></div>

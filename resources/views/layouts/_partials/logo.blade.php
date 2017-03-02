@@ -1,3 +1,4 @@
-<div class="logo-holder">
-    <a href="/"><img src="/assets/img/rebuy_logo.png" class="img-responsive"></a>
+
+<div class="brand-logo">
+     <a href="/"><img src="/images/rebuy.jpg" class="img-responsive"></a>
 </div>
