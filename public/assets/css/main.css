@@ -42,3 +42,7 @@
 .page-login .card {
 	max-width: 450px;
 }
+
+a.btn {
+    color: white;
+}
