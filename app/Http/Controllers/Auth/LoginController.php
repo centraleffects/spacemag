@@ -62,7 +62,7 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $fb_user = Socialite::driver('facebook')->user();
-        
+            
         // dd($fb_user);
         $client = new \GuzzleHttp\Client();
 
@@ -87,6 +87,9 @@ class LoginController extends Controller
             $user->gender = $data->gender;
             $user->facebook_id = $fb_user->id;
             $user->password = bcrypt(str_random(10)); // use a random password
+
+            $user->avatar = $fb_user->avatar;
+            $user->avatar_original = $fb_user->avatar_original;
 
             if( $user->save() ){
                 \Auth::loginUsingId($user->id);

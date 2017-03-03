@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('facebook_id')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('avatar_original')->nullable();
             $table->string('gender')->nullable();
             $table->string('role')->default('customer');
 
