@@ -19,9 +19,9 @@
                     </div>
                 @endif
 
-                <button class="btn btn-info">
+                <a href="{{ url('login/fb') }}" class="btn btn-info">
             		Sign Up with Facebook
-            	</button>
+            	</a>
 
             	<div class="div-seperator">or</div>
             	<div class="row">

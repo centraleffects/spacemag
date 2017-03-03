@@ -18,12 +18,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('home', 'HomeController@index');
 
-
-Route::name('admin')
-	->middleware('auth')
-	->get('/admin', 'AdminController@index');
+// Routes for Facebook Auth
+Route::get('login/fb', 'Auth\LoginController@redirectToProvider');
+Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
@@ -38,13 +37,13 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner', 'client']], function
 });
 
 
-Route::get('/test-event', function (){
+Route::get('test-event', function (){
 	// $user = auth()->user();
 	$user = App\User::first();
 	event(new CustomerBecameAClient($user));
 });
 
-Route::get('/test-mail', function (){
+Route::get('test-mail', function (){
 	$user = App\User::first();
 	Mail::to($user->email)->send(new Welcome);
 });

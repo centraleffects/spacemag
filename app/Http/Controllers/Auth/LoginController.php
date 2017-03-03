@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -40,5 +42,61 @@ class LoginController extends Controller
     protected function authenticated( $user)
     {
         //
+    }
+
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $fb_user = Socialite::driver('facebook')->user();
+            
+        // dd($fb_user);
+        $client = new \GuzzleHttp\Client();
+
+        $fields = 'first_name,last_name,gender';
+        $url = "https://graph.facebook.com/v2.8/$fb_user->id?fields=$fields&oauth_token=$fb_user->token";
+        $res = $client->get($url);
+
+        $data = json_decode( $res->getBody()->getContents() );
+
+        // find the user with a facebok id
+        $user = User::where('facebook_id', '=', $fb_user->id)->first();
+
+        // login the user
+        if( $user ){
+            \Auth::loginUsingId($user->id);
+        }else{
+            // create the user 
+            $user = new User();
+            $user->first_name = $data->first_name;
+            $user->last_name = $data->last_name;
+            $user->email = $fb_user->email;
+            $user->gender = $data->gender;
+            $user->facebook_id = $fb_user->id;
+            $user->password = bcrypt(str_random(10)); // use a random password
+
+            $user->avatar = $fb_user->avatar;
+            $user->avatar_original = $fb_user->avatar_original;
+
+            if( $user->save() ){
+                \Auth::loginUsingId($user->id);
+            }
+        }
+
+        return \Redirect::to('home');
+        
     }
 }
