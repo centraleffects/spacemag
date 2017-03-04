@@ -14,7 +14,9 @@ class AdminController extends Controller
     public function index()
     {
        
-       return view('admin.dashboard');
+       $data['user'] = \Auth::user()['attributes'];
+
+       return view('admin.dashboard', $data);
     }
 
     /**

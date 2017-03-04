@@ -19,6 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
+Route::get('admin', 'AdminController@index');
 
 // Routes for Facebook Auth
 Route::get('login/fb', 'Auth\LoginController@redirectToProvider');

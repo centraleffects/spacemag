@@ -21,7 +21,7 @@ class CreateSalespotCategoriesTable extends Migration
             $table->foreign('salespot_id')->references('id')->on('salespots');
 
             $table->integer('category_type_id')->unsigned()->index();
-            $table->foreign('category_type_id')->references('id')->on('salespot_categories_type');
+            $table->foreign('category_type_id')->references('id')->on('salespot_category_types');
 
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');        

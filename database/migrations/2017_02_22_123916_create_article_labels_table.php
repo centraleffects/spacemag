@@ -27,7 +27,7 @@ class CreateArticleLabelsTable extends Migration
             $table->foreign('salespot_id')->references('id')->on('salespots');
 
             $table->integer('media_type_id')->unsigned()->index();
-            $table->foreign('media_type_id')->references('id')->on('label_media_type');        
+            $table->foreign('media_type_id')->references('id')->on('label_media_types');        
 
             $table->string('filename');
             $table->enum('status', ["draft", "ready to print", "printed", "deleted"])->default("draft");

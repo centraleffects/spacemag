@@ -27,7 +27,7 @@ class CreateTodoTasksTable extends Migration
             $table->foreign('worker_user_id')->references('id')->on('users');
 
             $table->integer('service_booking_id')->unsigned()->index();
-            $table->foreign('service_booking_id')->references('id')->on('shop_services_booking');  
+            $table->foreign('service_booking_id')->references('id')->on('shop_services_bookings');  
 
             $table->longText('description')->nullable();
             $table->smallInteger('status')->default(1);

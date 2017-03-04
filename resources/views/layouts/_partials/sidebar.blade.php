@@ -4,8 +4,8 @@
   
   <div class="user-logged-in">
     <div class="content">
-      <div class="user-name">Katsumoto <span class="text-muted f9">admin</span></div>
-      <div class="user-email">last@samurai.jp</div>
+      <div class="user-name"><?php echo $user['first_name']. ' '.$user['last_name'] ?> <span class="text-muted f9">admin</span></div>
+      <div class="user-email"><?php echo $user['email']; ?></div>
       <div class="user-actions">
         <a class="m-r-5" href="/">settings</a>
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -20,7 +20,7 @@
   </div>
   <ul class="menu-links" ng-cloak>
     <a menu-link href="#/dashboard" icon="md md-blur-on">Dashboard</a>
-    <li menu-toggle path="/apps" name="APPS" icon="md md-camera">
+<!--     <li menu-toggle path="/apps" name="APPS" icon="md md-camera">
       <a menu-link href="#/apps/todo" name="Todo">
         <span id="todosCount" class="pull-right badge z-depth-0" ng-bind="todosCount"></span>
         Todo
@@ -61,6 +61,6 @@
       <a target="_blank" href="pages/404.html">404</a>
       <a target="_blank" href="pages/500.html">500</a>
       <a target="_blank" href="pages/material-bird.html">Easter Egg</a>
-    </li>
+    </li> -->
   </ul>
 </aside>

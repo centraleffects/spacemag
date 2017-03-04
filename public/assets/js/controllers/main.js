@@ -68,7 +68,7 @@ app.controller('MainController',
     introductionAlert.show();
   };
 
-
+/*
   var refererNotThemeforest = $alert({
     title: 'Hi there!',
     content: 'You like what you see and interested in using our theme? You can find it at <a href="http://themeforest.net/item/materialism-angular-bootstrap-admin-template/11322821" target="_blank"><img style="height:20px;" src="assets/img/icons/themeforest-icon.png" /> Themeforest</a>.',
@@ -83,5 +83,5 @@ app.controller('MainController',
     $timeout(function(){
       refererNotThemeforest.show();
     }, 1750);
-  }
+  }*/
 }]);

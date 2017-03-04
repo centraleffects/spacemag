@@ -95,7 +95,7 @@ class LoginController extends Controller
                 \Auth::loginUsingId($user->id);
             }
         }
-
+        
         return \Redirect::to('home');
         
     }

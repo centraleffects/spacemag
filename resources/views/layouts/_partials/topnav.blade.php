@@ -8,12 +8,12 @@
         <span class="icon-bar"></span>
       </button>
       <ul class="breadcrumb">
-        <li><a href="#/">Materialism</a></li>
+        <li><a href="#/">Home</a></li>
         <li ng-bind="pageTitle" class="active">Loading..</li>
       </ul>
     </div>
 
-    <ul class="nav navbar-nav navbar-right navbar-right-no-collapse">
+    <!-- <ul class="nav navbar-nav navbar-right navbar-right-no-collapse">
       <li class="dropdown pull-right">
         <button class="dropdown-toggle pointer btn btn-round-sm btn-link withoutripple" bs-dropdown="dropdown"
                 data-template-url="assets/tpl/partials/dropdown-navbar.html" data-animation="mat-grow-top-right">
@@ -26,8 +26,8 @@
                 analytics-on="click" analytics-category="Themepicker" analytics-event="Open">
           <i class="md md-settings f20"></i>
         </button>
-      </li>
-
+      </li> -->
+      
       <li navbar-search class="pull-right"></li>
     </ul>
   </div>
