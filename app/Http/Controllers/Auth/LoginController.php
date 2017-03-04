@@ -78,6 +78,12 @@ class LoginController extends Controller
         // login the user
         if( $user ){
             \Auth::loginUsingId($user->id);
+
+            if( !auth()->user()->isAdmin() )
+                return \Redirect::to('shop');
+
+            return \Redirect::to('admin');
+            
         }else{
             // create the user 
             $user = new User();
