@@ -15,11 +15,11 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next)
     {   
-        if(auth()->check() && auth()->user()->isAdmin()) 
+        if(auth()->check() && !auth()->user()->isAdmin()) 
         {
-            return $next($request);
+            return redirect('home');
         }
 
-        return redirect('admin');
+        return $next($request);
     }
 }

@@ -15,12 +15,12 @@ class ShopOwnerAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if(auth()->check() && auth()->user()->isOwner() ) 
+        if(auth()->check() && !auth()->user()->isOwner() ) 
         {
-            return $next($request);
+            return redirect('home');   
         }
 
-        return redirect('home');
-
+       
+        return $next($request);
     }
 }
