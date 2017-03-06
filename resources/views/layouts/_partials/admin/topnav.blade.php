@@ -14,12 +14,12 @@
     </div>
 
     <ul class="nav navbar-nav navbar-right navbar-right-no-collapse">
-      <li class="dropdown pull-right">
+      <!-- <li class="dropdown pull-right">
         <button class="dropdown-toggle pointer btn btn-round-sm btn-link withoutripple" bs-dropdown="dropdown"
                 data-template-url="assets/tpl/partials/dropdown-navbar.html" data-animation="mat-grow-top-right">
           <i class="md md-more-vert f20"></i>
         </button>
-      </li>
+      </li> -->
       <li class="dropdown pull-right">
         <button class="dropdown-toggle pointer btn btn-round-sm btn-link withoutripple" bs-dropdown="dropdown"
                 data-template-url="assets/tpl/partials/theme-picker.html"

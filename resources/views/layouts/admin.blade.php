@@ -30,7 +30,7 @@
   <link rel="manifest" href="/assets/img/favicon/manifest.json">
   <link rel="shortcut icon" href="/assets/img/favicon/favicon.ico"> -->
 
-  <title ng-bind="pageTitle + ' - Materialism'">Loading... - Materialism</title>
+  <title ng-bind="pageTitle + ' - Rebuy'">Loading... - Rebuy</title>
 
 
   @include('layouts._partials.admin.styles')
