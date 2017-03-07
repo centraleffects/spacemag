@@ -16,11 +16,13 @@ class ClientAuthenticated
     public function handle($request, Closure $next)
     {   
         if(auth()->check() && 
-            ( auth()->user()->isClient() or auth()->user()->isCustomer() ) ) 
+            ( !auth()->user()->isClient() && !auth()->user()->isCustomer() ) 
+        ) 
         {
-            return $next($request);
+            return redirect('home');
         }
 
-        return redirect('home');
+       
+        return $next($request);
     }
 }

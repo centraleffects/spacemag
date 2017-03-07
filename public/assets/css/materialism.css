@@ -9073,7 +9073,8 @@ aside.sidebar {
       aside.sidebar .user-logged-in .content .user-email {
         font-size: 13px;
         color: #999;
-        line-height: 15px; }
+        line-height: 15px;
+        text-transform: lowercase; }
       aside.sidebar .user-logged-in .content .user-actions {
         margin-top: 7px;
         font-size: 10px; }

@@ -1,3 +1,5 @@
+window.angular = require('angular');
+
 
 var app = angular.module('rebuy', [
   'app.constants',

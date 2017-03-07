@@ -19,7 +19,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
-Route::get('admin', 'AdminController@index');
 
 // Routes for Facebook Auth
 Route::get('login/fb', 'Auth\LoginController@redirectToProvider');
@@ -27,7 +26,7 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('users', 'AdminController@index'); // Matches The "/admin/users" URL
+    Route::get('/', 'AdminController@index'); // Matches The "admin/" URL
 });
 
 
