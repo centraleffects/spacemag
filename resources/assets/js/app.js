@@ -16,5 +16,18 @@ require('./bootstrap');
 
 
 // init
-$('.button-collapse').sideNav();
-console.log('hello world!');
+(function (rebuy){
+	rebuy(window.jQuery, window, document);
+}(function rebuy($, window, document){
+	$(function (){
+		// dom is now ready!
+		console.log("hello world!");
+		// variable declaration goes here
+
+
+		// initialization goes here
+		$('.button-collapse').sideNav();
+	});
+
+	// The rest of the codes goes here
+}));
