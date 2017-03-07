@@ -14,6 +14,9 @@ const { mix } = require('laravel-mix');
 mix.combine([
 	  'resources/css/vendor/materialize.css',
    ], 'public/css/vendor.css')
+	.combine([
+	  'resources/css/vendor/theme.css',
+   ], 'public/css/theme.css')
    .combine([
 	  'resources/css/app.css'
    ], 'public/css/app.css');

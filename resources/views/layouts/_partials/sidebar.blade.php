@@ -2,7 +2,7 @@
   
   @include('layouts._partials.logo')
   
-<!--   <div class="user-logged-in">
+<!-- <div class="user-logged-in">
     <div class="content">
       <div class="user-name">{{ auth()->user()->first_name.' '.auth()->user()->last_name }}<span class="text-muted f9">admin</span></div>
       <div class="user-email">{{ auth()->user()->email }}</div>
@@ -35,7 +35,7 @@
     @endif
   </ul> -->
 
-  <ul id="slide-out" class="side-nav">
+<ul id="slide-out" class="side-nav">
     <li><div class="userView">
       <div class="background">
         <img src="images/office.jpg">
@@ -49,6 +49,5 @@
     <li><div class="divider"></div></li>
     <li><a class="subheader">Subheader</a></li>
     <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
-  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+  </ul> 
 </aside>

@@ -1,11 +1,12 @@
 require('angular');
-require('jquery');
+//require('jquery');
 
 window.app = angular.module('rebuy', []);
 
 (function($){
+  $(function(){
 
-	//$(".button-collapse").sideNav();
-	
+    $('.button-collapse').sidenav();
 
-})(jQuery);
+  }); // end of document ready
+})(jQuery); // end of jQuery name space
