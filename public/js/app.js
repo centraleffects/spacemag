@@ -10352,6 +10352,9 @@ __webpack_require__(3);
 
 		// initialization goes here
 		$('.button-collapse').sideNav();
+		$('.do-nav-slideout').click(function () {
+			$('.button-collapse').sideNav('show');
+		});
 	});
 
 	// The rest of the codes goes here
