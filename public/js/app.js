@@ -10297,9 +10297,18 @@ return jQuery;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(10);
+/* WEBPACK VAR INJECTION */(function(jQuery) {__webpack_require__(10);
+__webpack_require__(0);
 
 window.app = angular.module('rebuy', []);
+
+(function ($) {
+
+	//$(".button-collapse").sideNav();
+
+
+})(jQuery);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 2 */,
