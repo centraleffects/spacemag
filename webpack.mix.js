@@ -12,15 +12,12 @@ const { mix } = require('laravel-mix');
  */
 
 mix.combine([
-	  'public/assets/css/materialism.css',
-	  'public/assets/css/angular-ui-select.css',
-	  'public/assets/css/helpers.css',
-	  'public/assets/css/ripples.css',
+	  'resources/css/vendor/materialize.css',
    ], 'public/css/vendor.css')
    .combine([
-	  'public/assets/css/main.css'
+	  'resources/css/app.css'
    ], 'public/css/app.css');
 
-mix.js('public/assets/js/app.js', 'public/js/')
-	.js('public/assets/js/modules/login.js', 'public/js/');
+mix.js('resources/js/vendor/materialize.js', 'public/js/vendor.js')
+	.js('resources/js/app.js', 'public/js/app.js');
    
