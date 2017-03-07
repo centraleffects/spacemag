@@ -22,8 +22,8 @@
     <?php if($user['role']=="admin"): ?>
         <a menu-link href="#/dashboard" icon="md md-blur-on">Dashboard</a>
             <li menu-toggle path="/Categories" name="Categories" icon="fa fa-cubes">
-                <a menu-link href="#/Categories/All-Categories">All Categories</a>
-                <a menu-link href="#/Categories/New">New</a>
+                <a menu-link href="#/categories/all-categories">All Categories</a>
+                <a menu-link href="#/categories/New">New</a>
             </li>
         <a menu-link href="#/shop" icon="fa fa-building">Shop</a>
     <?php elseif($user['role']=="shop_owner"): ?>
