@@ -12,12 +12,11 @@ const { mix } = require('laravel-mix');
  */
 
 mix.combine([
-	  'resources/css/vendor/materialize.css',
+	  'resources/assets/materialize/css/materialize.css',
    ], 'public/css/vendor.css')
    .combine([
-	  'resources/css/app.css'
+	  'resources/assets/css/app.css'
    ], 'public/css/app.css');
 
-mix.js('resources/js/vendor/materialize.js', 'public/js/vendor.js')
-	.js('resources/js/app.js', 'public/js/app.js');
+mix.js('resources/assets/js/app.js', 'public/js/app.js');
    
