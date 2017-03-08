@@ -53,6 +53,28 @@ nav .brand-logo img{
     margin-top: 15px;
 }
 
+/* toolbar */
+.toolbar{
+	margin-bottom: 0;
+}
+.toolbar .col{
+	padding:0;
+}
+.toolbar nav{
+	box-shadow: none;
+    border-bottom: 1px solid #ccc;
+    background: transparent !important; 
+    padding-right: 45px;
+}
+.toolbar nav a{
+	color:#0089ec;
+}
+.toolbar nav a:hover{
+	color:#6fa6ce;
+}
+.toolbar nav ul a:hover {
+    background-color: transparent;
+}
 /* login page*/
 .page-login .brand-logo{
 	margin:20px; 
@@ -72,19 +94,19 @@ body{
 	margin: 0;
 }
 .page-footer{
-	position: fixed;
+	position: absolute;
     bottom: 0;
     width: 100%;
-    background: #5dbde9 !important;
+}
+.page-admin nav .container{ 
+	width: 100%;
 }
 .navbar {
     border: none;
     -webkit-box-shadow: 0 0 1px rgba(0,0,0,.3);
     box-shadow: 0 0 1px rgba(0,0,0,.3);
-    background: #5dbde9 !important;
 }
 .nav-sidebar{
-	background: #5dbde9 !important;
 	left: 0;
     width: 260px;
     margin: 0;
@@ -108,4 +130,56 @@ body{
 .nav-sidebar .background img {
     -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
     filter: grayscale(100%);
+     opacity: 0.7;
 }
+.content-wrap{
+	margin-bottom: 0;
+}
+
+/* dashboard left side bar*/
+#dashleft-sidebar{
+	min-height: 600px;
+}
+#dashleft-sidebar h5{
+	font-size: 20px;
+    color: #fff;
+    margin-top: 25px;
+}
+#dashleft-sidebar li svg{
+	width: 13px;
+    position: absolute;
+    margin-left: -19px;
+    margin-top: 15px;
+    fill: #0089ec;
+    cursor: pointer;
+}
+#dashleft-sidebar ul{
+	border: 0;
+	border-bottom: 1px solid #e0e0e0;
+}
+#dashleft-sidebar li{
+	padding-left: 20px;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    font-size: 14px;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+#dashleft-sidebar li input{
+	border: none;
+	padding: 0;
+	margin: 0;
+	width: 92%;
+}
+#dashleft-sidebar li input[type=text]:focus:not([readonly]){
+	box-shadow: none;
+}
+#dashleft-sidebar li .edit-icon, #dashleft-sidebar li .delete-icon{
+	position: absolute;
+    margin-top: 15px;
+    font-size: 17px;
+    cursor: pointer;
+}
+ #dashleft-sidebar li .delete-icon{
+ 	margin-left: 30px;
+ }

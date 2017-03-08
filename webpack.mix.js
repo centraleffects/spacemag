@@ -13,10 +13,8 @@ const { mix } = require('laravel-mix');
 
 mix.combine([
 	  'resources/assets/materialize/css/materialize.css',
+	  'resources/assets/css/font-awesome.css',
    ], 'public/css/vendor.css')
-	.combine([
-	  'resources/css/vendor/theme.css',
-   ], 'public/css/theme.css')
    .combine([
 	  'resources/assets/css/app.css'
    ], 'public/css/app.css');
