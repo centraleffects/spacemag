@@ -21,13 +21,17 @@ require('./bootstrap');
 }(function rebuy($, window, document){
 	$(function (){
 		// dom is now ready!
-		console.log("hello world!");
+		
 		// variable declaration goes here
 
 
 		// initialization goes here
 		$('.button-collapse').sideNav();
-		$('.do-nav-slideout').click(function(){ $('.button-collapse').sideNav('show'); });
+		$('.do-nav-slideout').click(function(){
+			$('.button-collapse').sideNav('show'); 
+		});
+
+	    $('.parallax').parallax();
 	});
 
 	// The rest of the codes goes here
