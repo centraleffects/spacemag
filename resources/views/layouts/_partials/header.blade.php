@@ -11,6 +11,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ !empty($title) ? $title : 'Home'}} {{' - '.config('app.name', 'Rebuy') }}</title>
         
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/favicon-32.png">
         <link rel="icon" sizes="32x32" href="/img/favicon/favicon-32.png" type="image/png">
         <link rel="icon" sizes="64x64" href="/img/favicon/favicon-64.png" type="image/png">
@@ -33,4 +34,4 @@
             ]) !!};
         </script>
     </head>
-    <body class="page-login theme-template-blue theme-light-green" init-ripples>
+    <body class="page-{{ collect(\Request::segments())->implode('-') }}" init-ripples>
