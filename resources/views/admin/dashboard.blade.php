@@ -1,7 +1,3 @@
-@extends('layouts.admin')
-
-@section('content')
-
-asdsadsad
-
-@endsection
+@component('admin.layouts.app')
+	
+@endcomponent

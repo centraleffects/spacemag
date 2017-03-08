@@ -39,9 +39,13 @@ class LoginController extends Controller
         $this->middleware('guest', ['except' => 'logout']);
     }
 
-    protected function authenticated( $user)
+    protected function authenticated($user)
     {
-        //
+
+        if( auth()->user()->isAdmin() )
+            return \Redirect::to('admin');
+
+        return \Redirect::to('shop');
     }
 
     /**

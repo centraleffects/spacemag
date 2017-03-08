@@ -11,12 +11,10 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-       
-       $data['user'] = \Auth::user()['attributes'];
 
-       return view('admin.dashboard', $data);
+       return view('admin.dashboard');
     }
 
     /**
