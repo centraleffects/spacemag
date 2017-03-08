@@ -1,29 +1,38 @@
 @include('layouts._partials.header')
 
-<div class="row">
+<div class="container">
 
     @includeWhen(auth()->check(), 'layouts._partials.sidebar')
 
     <section class="maincontent col s12">
 
-      @include('layouts._partials.topnav')
+        @includeWhen(auth()->check(), 'layouts._partials.topnav')
         
         <div class="inner-content">
             <div class="main-content">
-                @if(session()->has('alert'))
+                @if(session()->has('flash_message'))
                     @component('layouts._partials.alert')
                         @slot('alert_type') 
-                            alert-danger
+                            {{ session()->get('flash_message')['type'] }}
                         @endslot
-                        {{ session()->get('alert') }}
+                        {{ session()->get('flash_message')['msg'] }}
                     @endcomponent
                 @endif
+
                 {{ $slot }}
             </div>
         </div>
 
     </section>
 
+
+    @if(Session::has("flash_message"))
+        <script type="text/javascript">
+            $("div.alert").not(".alert-important").delay(5000).slideUp(function(){
+                $(this).remove();
+            });
+        </script>
+    @endif
 </div>
 
 @include('layouts._partials.footer')

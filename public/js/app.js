@@ -10346,7 +10346,7 @@ __webpack_require__(3);
 })(function rebuy($, window, document) {
 	$(function () {
 		// dom is now ready!
-		console.log("hello world!");
+
 		// variable declaration goes here
 
 
@@ -10355,6 +10355,8 @@ __webpack_require__(3);
 		$('.do-nav-slideout').click(function () {
 			$('.button-collapse').sideNav('show');
 		});
+
+		$('.parallax').parallax();
 	});
 
 	// The rest of the codes goes here

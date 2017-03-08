@@ -2,51 +2,51 @@
     @slot('title') 
         Login
     @endslot
-    <div class="card bordered z-depth-2"  style="margin:0% auto;">
-        <div class="card-content">
-
-            <form class="form-floating" role="form" method="POST" action="{{ route('login') }}">
-                <div class="m-b-30">
-                    <div class="card-title strong">
-                        <h2 class="green-text"><i class="glyphicon glyphicon-lock"></i> Login</h2>
-                    </div>
-                    <p class="card-title-desc">
-                        Welcome to Rebuy.se! The admin template for material design lovers.
-                    </p>
-                </div>
-                <div class="form-group centered">
-                    <a href="{{ url('login/fb') }}" class="btn btn-info">Login with Facebook</a>
-                </div>
-                <div class="div-seperator">or</div>
-                {{ csrf_field() }}
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label for="email" class="control-label">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
+    <div class="row">
+        <div class="col md-8 s12 l6 push-l3 pull-l3">
+            <form class="form" role="form" method="POST" action="{{ route('login') }}">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title green-text centered">
+                            <i class="material-icons">lock_outline</i>Login
                         </span>
-                    @endif
-                </div>
-                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                    <label for="inputPassword" class="control-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Remember me
-                        </label>
+                        
+                        <div class="container">
+                            <div class="input-field centered">
+                                <a href="{{ url('login/fb') }}" class="waves-effect waves-light btn blue lighten-2">Login with Facebook</a>
+                            </div>
+                            <div class="div-seperator">or</div>
+                            {{ csrf_field() }}
+                            <div class="input-field{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <input id="email" type="email" class="validate" name="email" value="{{ old('email') }}" required autofocus>
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="input-field{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <input type="password" id="password" name="password" required>
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="input-field">
+                                @if ($errors->has('email'))
+                                    <span class="help-block red-text lighten-1">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="input-field">
+                                <p>
+                                    <input type="checkbox" id="remember" name="remember" value="true" />
+                                    <label for="remember">Remember Me</label>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="card-action clearfix">
-                    <div class="pull-right">
-                        <a href="{{ route('password.request') }}" class="btn">Forgot password</a>
-                        <button type="submit" class="btn btn-primary">Login</button>
+                    <div class="card-action">
+                        <a href="{{ route('password.request') }}">Forgot password</a>
+                        <button type="submit" class="btn blue lighten-2 waves-effect waves-light">Login</button>
                     </div>
                 </div>
             </form>
-        </div>      
+        </div>
     </div>
+    
 @endcomponent

@@ -34,4 +34,4 @@
             ]) !!};
         </script>
     </head>
-    <body class="page-{{ collect(\Request::segments())->implode('-') }}" init-ripples>
+    <body class="page-{{ collect(\Request::segments())->implode('-') }}">
