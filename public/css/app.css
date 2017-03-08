@@ -169,7 +169,17 @@ body{
 	border: none;
 	padding: 0;
 	margin: 0;
+	width: 92%;
 }
 #dashleft-sidebar li input[type=text]:focus:not([readonly]){
 	box-shadow: none;
 }
+#dashleft-sidebar li .edit-icon, #dashleft-sidebar li .delete-icon{
+	position: absolute;
+    margin-top: 15px;
+    font-size: 17px;
+    cursor: pointer;
+}
+ #dashleft-sidebar li .delete-icon{
+ 	margin-left: 30px;
+ }
