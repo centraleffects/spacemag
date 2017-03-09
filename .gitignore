@@ -13,3 +13,5 @@ Homestead.yaml
 /public/bower_components/*
 npm-debug.log
 /bower_components.7z
+/public/js
+/public/css

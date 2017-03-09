@@ -26,12 +26,14 @@ require('./bootstrap');
 
 
 		// initialization goes here
+		Materialize.updateTextFields();
 		$('.button-collapse').sideNav();
 		$('.do-nav-slideout').click(function(){
 			$('.button-collapse').sideNav('show'); 
 		});
 
 	    $('.parallax').parallax();
+	    $('#password').strength_meter();
 	});
 
 	// The rest of the codes goes here

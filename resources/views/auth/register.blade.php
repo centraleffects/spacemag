@@ -55,7 +55,7 @@
                             <div class="input-field{{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label for="email">E-Mail Address</label>
 
-                                <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" name="email" value="{{ old('email') }}" required />
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -67,7 +67,7 @@
                             <div class="input-field{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password">Password</label>
 
-                                <input id="password" type="password" name="password" required>
+                                <input id="password" type="password" name="password" autocomplete="off" required />
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -78,11 +78,11 @@
 
                             <div class="input-field">
                                 <label for="password-confirm">Confirm Password</label>
-                                <input id="password-confirm" type="password" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" name="password_confirmation" autocomplete="off" required />
                             </div>
                         </div>
                     </div>
-                    <div class="card-action">
+                    <div class="card-action centered">
                         <button type="submit" class="btn blue lighten-2 waves-effect waves-light">
                             Register
                         </button>
