@@ -1,6 +1,6 @@
 @include('layouts._partials.header')
 
-<div class="container">
+<div class="row">
 
     @includeWhen(auth()->check(), 'layouts._partials.sidebar')
 

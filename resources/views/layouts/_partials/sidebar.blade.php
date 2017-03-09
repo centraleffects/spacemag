@@ -1,4 +1,4 @@
-<section class="nav-sidebar side-nav blue lighten-2" id="slide-out">
+<section class="nav-sidebar side-nav" id="slide-out">
   <div class="row brand blue lighten-2">
        <img src="/images/rebuy_logo.png" class="img-responsive logo">
   </div>
