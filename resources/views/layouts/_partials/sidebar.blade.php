@@ -8,7 +8,7 @@
           <div class="background">
             <img src="images/office.jpg">
           </div>
-          <a href="#!user"><img class="circle" src="/images/avatar/280.jpg"></a>
+          <a href="#!user"><img class="circle" src="{{ auth()->user()->avatar ? auth()->user()->avatar : '' }}"></a>
           <a href="#!name"><span class="white-text name">{{ auth()->user()->first_name.' '.auth()->user()->last_name }}</span></a>
           <a href="#!email"><span class="white-text email">{{ auth()->user()->email }}</span></a>
         </div></li>

@@ -25,7 +25,8 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/shop';
+
 
     /**
      * Create a new controller instance.
@@ -33,7 +34,11 @@ class ResetPasswordController extends Controller
      * @return void
      */
     public function __construct()
-    {
+    {   
         $this->middleware('guest');
+
+        if( auth()->check() &&  auth()->user()->isAdmin() ){
+            $redirectTo = '/admin';
+        }
     }
 }
