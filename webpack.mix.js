@@ -12,8 +12,9 @@ const { mix } = require('laravel-mix');
  */
 
 mix.combine([
+	  'resources/assets/password_strength/password_strength.css',
 	  'resources/assets/materialize/css/materialize.css',
-	  'resources/assets/css/font-awesome.css',
+	  'resources/assets/css/font-awesome.css'
    ], 'public/css/vendor.css')
    .combine([
 	  'resources/assets/css/app.css'

@@ -11,7 +11,7 @@
     </div>
     <div class="footer-copyright blue lighten-2">
       <div class="container">
-        &copy; 2017 Rebuy &trade;  
+        &copy; 2017 Rebuy &reg;  
       </div>
     </div>
   </footer>

@@ -25,3 +25,8 @@ Route::get('users/{user}', 'UserController@show');
 Route::group(['prefix' => 'test'], function(){
 	Route::get('users', 'UserController@test');
 });
+
+
+Route::group(['prefix' => 'shops'], function (){
+	Route::get('all', 'ShopController@index');
+});

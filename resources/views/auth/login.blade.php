@@ -40,7 +40,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-action">
+                    <div class="card-action centered">
                         <a href="{{ route('password.request') }}">Forgot password</a>
                         <button type="submit" class="btn blue lighten-2 waves-effect waves-light">Login</button>
                     </div>
