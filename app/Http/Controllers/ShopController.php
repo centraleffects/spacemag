@@ -14,7 +14,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        return view('shop_owner.dashboard');
     }
 
     /**
@@ -46,7 +46,7 @@ class ShopController extends Controller
      */
     public function show(Shop $shop)
     {
-        //
+        return $shop;
     }
 
     /**

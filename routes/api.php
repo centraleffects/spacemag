@@ -29,4 +29,5 @@ Route::group(['prefix' => 'test'], function(){
 
 Route::group(['prefix' => 'shops'], function (){
 	Route::get('all', 'ShopController@index');
+	Route::get('{$shop}', 'ShopController@show');
 });

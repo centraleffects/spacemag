@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AdminAuthenticated
+class ShopWorkerAuthenticated
 {
     /**
      * Handle an incoming request.
@@ -14,12 +14,11 @@ class AdminAuthenticated
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
-        if(! $request->user()->isAdmin() ) 
-        {
+    {
+        if(! $request->user()->isWorker() ){
             return redirect('home');
         }
-
+        
         return $next($request);
     }
 }

@@ -1,8 +1,53 @@
+
+/* clouds */
 .bg-clouds {
-	background: #5dbde9 url(/img/bg_top_front.gif) no-repeat center bottom -100px;
+	background: #5dbde9 url(/img/bg_top_front.gif) no-repeat center bottom -34px;
     width: 100%;
     position: relative;
 }
+
+.clouds {
+	position: absolute;
+	height: 448px;
+	left: 0;
+	width: 100%;
+	top: 27px;
+	z-index: -1;
+}
+
+.cloud {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-position: left center;
+    background-repeat: no-repeat;
+    animation: moveclouds 35s linear 0s infinite;
+    -webkit-animation: moveclouds 35s linear 0s infinite;
+}
+	.cloud.big {
+	    height: 96px;
+	    background-image: url(../img/cloud_big.png);
+	}
+
+	.cloud.mid {
+	    height: 54px;
+	    background-image: url(../img/cloud_midi.png);
+	}
+
+	.cloud.small {
+	    height: 34px;
+	    background-image: url(../img/cloud_small.png);
+	}
+
+	@-moz-keyframes moveclouds {
+		0%   { transform: translate3d(0,0,0); }
+		100% { transform: translate3d(-100%,0,0); }
+	}
+	@-webkit-keyframes moveclouds {
+		0%   { -webkit-transform: translate3d(0,0,0); }
+		100% { -webkit-transform: translate3d(-100%,0,0); }
+	}
 
 .logo-holder {
 	margin-bottom: 14px;
@@ -105,9 +150,6 @@ nav .brand-logo img{
 }
 
 /* login page*/
-.page-login .brand-logo{
-	margin:20px; 
-}
 .bg-clouds .brand-logo img{
     margin-top: 10px;
     max-width: 200px;
@@ -147,6 +189,10 @@ nav .brand-logo img{
 	    background-color: #f2dede;
 	    border-color: #ebccd1;
 	}
+
+/* colors */
+.green { background-color: #629d1c !important; }
+.green-text { color: #629d1c !important; }
 
 /* main content */
 body{
@@ -231,15 +277,10 @@ footer.page-footer {
     font-size: 17px;
     cursor: pointer;
 }
-<<<<<<< HEAD
- #dashleft-sidebar li .delete-icon{
- 	margin-left: 27px;
- }
-=======
+
 #dashleft-sidebar li .delete-icon{
 	margin-left: 30px;
 }
->>>>>>> a601ab30f9ac919d91f7d9362821cccd9c4e6d94
 
 /* list info - center content*/
 #list-info{
