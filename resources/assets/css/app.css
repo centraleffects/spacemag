@@ -231,15 +231,10 @@ footer.page-footer {
     font-size: 17px;
     cursor: pointer;
 }
-<<<<<<< HEAD
+
  #dashleft-sidebar li .delete-icon{
  	margin-left: 27px;
  }
-=======
-#dashleft-sidebar li .delete-icon{
-	margin-left: 30px;
-}
->>>>>>> a601ab30f9ac919d91f7d9362821cccd9c4e6d94
 
 /* list info - center content*/
 #list-info{
@@ -255,6 +250,63 @@ footer.page-footer {
 	margin-right: -7px;
 	padding: 15px;
 }
+
 #info-content{
 	padding:15px;
+}
+#info-content input[type=text]:focus:not([readonly]), #info-nav input[type=text]:focus:not([readonly]){
+	box-shadow: none;
+}
+ #info-nav input{
+ 	border: none;
+    padding: 0;
+    margin: 0;
+    width: 97%;
+    padding-left: 10px;
+ }
+#info-content input, #info-content textarea{
+	border: none;
+    margin: 0;
+    width: 97%;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+#info-nav #info-option{
+	font-size: 20px;
+    padding: 5px;
+    width: 21px;
+    text-align: center;
+    position: absolute;
+    margin-left: -10px;
+    padding-top: 10px;
+    cursor: pointer;
+}
+#info-nav #info-option:hover{
+	color:#0089ec !important;
+}
+#info-content input:hover, #info-content textarea:hover,  #info-nav input:hover{
+	border-bottom-color: #ccc;
+}
+#info-content textarea{
+	min-height: 100px;
+	padding-top: 10px;
+}
+#info-content textarea:focus{
+	border: none;
+}
+#info-content li small{
+	padding-left: 10px;
+}
+#info-content ul.collection, #info-content li.collection-item{
+	border: none;
+	padding:0;
+	margin:0;
+}
+#info-nav #lsinfo-option{
+	width: auto !important;
+}
+#info-nav #lsinfo-option li > a{
+	font-size: 12px;
 }
