@@ -40,6 +40,11 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        'shop_users' => [
+            \App\Http\Middleware\ClientAuthenticated::class,
+            \App\Http\Middleware\ShopOwnerAuthenticated::class,
+        ],
     ];
 
     /**
@@ -58,6 +63,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \App\Http\Middleware\AdminAuthenticated::class,
         'client' => \App\Http\Middleware\ClientAuthenticated::class,
-        'owner' => \App\Http\Middleware\ShopOwnerAuthenticated::class
+        'owner' => \App\Http\Middleware\ShopOwnerAuthenticated::class,
+        'worker' => \App\Http\Middleware\ShopWorkerAuthenticated::class,
     ];
 }

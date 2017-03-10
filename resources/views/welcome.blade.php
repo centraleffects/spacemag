@@ -13,18 +13,42 @@
                 <a id="logo-container" href="#" class="brand-logo">Logo</a>
                 <ul class="right hide-on-med-and-down">
                     @if (Auth::check())
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                        <li><a href="{{ url('/home') }}">Home</a></li>
+                        @if( Auth::user()->isAdmin() )
+                        <li>
+                            <a href="{{ url('/admin') }}">Dashboard</a>
+                        </li>
+                        @else
+                        <li>
+                            <a href="{{ url('/shop') }}">Shop</a>
+                        </li>
+                        @endif
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                        </li>
                     @else
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
                     @endif
                 </ul>
                 <ul id="nav-mobile" class="side-nav">
                     @if (Auth::check())
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                        <li>
+                            <a href="{{ url('/home') }}">Home</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Logout
+                            </a>
+                        </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
                     @else
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/register') }}">Register</a></li>
                     @endif
                 </ul>
                 <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

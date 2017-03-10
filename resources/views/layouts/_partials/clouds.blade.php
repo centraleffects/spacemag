@@ -1,0 +1,32 @@
+<div class="clouds">
+      <div class="cloud big" style="left: 20%; top: 0%; animation-duration: 13.2s; -webkit-animation-duration: 13.2s;"></div>
+    <div class="cloud big" style="left: 120%; top: 0%; animation-duration: 13.2s; -webkit-animation-duration: 13.2s;"></div>
+      <div class="cloud big" style="left: 65%; top: 4%; animation-duration: 13.65s; -webkit-animation-duration: 13.65s;"></div>
+    <div class="cloud big" style="left: 165%; top: 4%; animation-duration: 13.65s; -webkit-animation-duration: 13.65s;"></div>
+      <div class="cloud mid" style="left: 15%; top: 20%; animation-duration: 37.1s; -webkit-animation-duration: 37.1s;"></div>
+    <div class="cloud mid" style="left: 115%; top: 20%; animation-duration: 37.1s; -webkit-animation-duration: 37.1s;"></div>
+      <div class="cloud mid" style="left: 45%; top: 21%; animation-duration: 40.25s; -webkit-animation-duration: 40.25s;"></div>
+    <div class="cloud mid" style="left: 145%; top: 21%; animation-duration: 40.25s; -webkit-animation-duration: 40.25s;"></div>
+      <div class="cloud mid" style="left: 80%; top: 22%; animation-duration: 28.7s; -webkit-animation-duration: 28.7s;"></div>
+    <div class="cloud mid" style="left: 180%; top: 22%; animation-duration: 28.7s; -webkit-animation-duration: 28.7s;"></div>
+      <div class="cloud small" style="left: 17%; top: 35%; animation-duration: 46s; -webkit-animation-duration: 46s;"></div>
+    <div class="cloud small" style="left: 117%; top: 35%; animation-duration: 46s; -webkit-animation-duration: 46s;"></div>
+      <div class="cloud small" style="left: 37%; top: 33%; animation-duration: 48.5s; -webkit-animation-duration: 48.5s;"></div>
+    <div class="cloud small" style="left: 137%; top: 33%; animation-duration: 48.5s; -webkit-animation-duration: 48.5s;"></div>
+      <div class="cloud small" style="left: 76%; top: 38%; animation-duration: 43s; -webkit-animation-duration: 43s;"></div>
+    <div class="cloud small" style="left: 176%; top: 38%; animation-duration: 43s; -webkit-animation-duration: 43s;"></div>
+      <div class="cloud small" style="left: 90%; top: 36%; animation-duration: 41s; -webkit-animation-duration: 41s;"></div>
+    <div class="cloud small" style="left: 190%; top: 36%; animation-duration: 41s; -webkit-animation-duration: 41s;"></div>
+      <div class="cloud small" style="left: 19%; top: 55%; animation-duration: 53.5s; -webkit-animation-duration: 53.5s;"></div>
+    <div class="cloud small" style="left: 119%; top: 55%; animation-duration: 53.5s; -webkit-animation-duration: 53.5s;"></div>
+      <div class="cloud small" style="left: 39%; top: 53%; animation-duration: 48.5s; -webkit-animation-duration: 48.5s;"></div>
+    <div class="cloud small" style="left: 139%; top: 53%; animation-duration: 48.5s; -webkit-animation-duration: 48.5s;"></div>
+      <div class="cloud small" style="left: 74%; top: 58%; animation-duration: 40.5s; -webkit-animation-duration: 40.5s;"></div>
+    <div class="cloud small" style="left: 174%; top: 58%; animation-duration: 40.5s; -webkit-animation-duration: 40.5s;"></div>
+      <div class="cloud small" style="left: 93%; top: 56%; animation-duration: 45s; -webkit-animation-duration: 45s;"></div>
+    <div class="cloud small" style="left: 193%; top: 56%; animation-duration: 45s; -webkit-animation-duration: 45s;"></div>
+      <div class="cloud big" style="left: 24%; top: 70%; animation-duration: 13.2s; -webkit-animation-duration: 13.2s;"></div>
+    <div class="cloud big" style="left: 124%; top: 70%; animation-duration: 13.2s; -webkit-animation-duration: 13.2s;"></div>
+      <div class="cloud big" style="left: 69%; top: 74%; animation-duration: 14.55s; -webkit-animation-duration: 14.55s;"></div>
+    <div class="cloud big" style="left: 169%; top: 74%; animation-duration: 14.55s; -webkit-animation-duration: 14.55s;"></div>
+  	</div>

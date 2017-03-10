@@ -9,20 +9,25 @@
     </head>
     <body class="page-{{ collect(\Request::segments())->implode('-') }} bg-clouds">
     	<div class="container">
-    		<div class="centered">
-    			@include('layouts._partials.logo')
-    		</div>
+    		<div class="section">
+	    		<div class="centered">
+	    			@include('layouts._partials.logo')
+	    		</div>
+	    	</div>
+		    <div class="section">
+		    	{{ $slot }}
+		    </div>
     	</div>
-	    <div class="container">
-	    	{{ $slot }}
-	    </div>
+    	<div class="container">
+    		@include('layouts._partials.clouds')
+    	</div>
     	
 		<footer class="page-footer">
 			<div class="container">
 				<div class="row">
 					<div class="col l6 s12">
-						<h5 class="white-text">Nyheter</h5>
-							<p class="grey-text text-lighten-4">
+						<h5 class="grey-text">Nyheter</h5>
+							<p class="grey-text">
 							Rebuy är nu ett registrerat varumärke.
 						</p>
 					</div>

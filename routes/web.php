@@ -30,10 +30,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 
 
-Route::group(['prefix' => 'shop', 'middleware' => ['owner', 'client']], function (){
-	Route::get('/', function (){
-		return "Hello world!";
-	});
+Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
+	Route::get('/', 'ShopOwnerController@index');
 });
 
 

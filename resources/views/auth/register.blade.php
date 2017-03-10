@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="card-action centered">
-                        <button type="submit" class="btn blue lighten-2 waves-effect waves-light">
+                        <button type="submit" class="btn green waves-effect waves-light">
                             Register
                         </button>
                     </div>
