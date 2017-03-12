@@ -1,12 +1,12 @@
 @include('layouts._partials.header')
 
-<div class="row">
+<article class="row">
 
     @includeWhen(auth()->check(), 'layouts._partials.sidebar')
 
     <section class="maincontent col s12">
 
-        @includeWhen(auth()->check(), 'layouts._partials.topnav')
+        @includeWhen(auth()->check(), 'admin.partials._topnav')
         
         <div class="inner-content">
             <div class="main-content">
@@ -33,6 +33,6 @@
             });
         </script>
     @endif
-</div>
-
-@include('layouts._partials.footer')
+</article>
+<div class="clearfix"></div>
+@include('admin.partials._footer')

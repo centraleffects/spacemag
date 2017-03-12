@@ -1,9 +1,9 @@
 
 /* clouds */
-.bg-clouds {
+.bg-clouds{
 	background: #5dbde9 url(/img/bg_top_front.gif) no-repeat center bottom -34px;
     width: 100%;
-    position: relative;
+    position: initial;
 }
 
 .clouds {
@@ -130,6 +130,8 @@ nav .brand-logo img{
 }
 .content-wrap{
 	margin-bottom: 0;
+	padding-left: 45px;
+    padding-right: 45px;
 }
 
 
@@ -195,14 +197,15 @@ nav .brand-logo img{
 .green-text { color: #629d1c !important; }
 
 /* main content */
-body{
+body.page-admin, body.page-login{
 	padding-left: 0;
 	padding-right: 0;
+	margin: 0 0 180px;
 }
 .maincontent{
 	min-height: 500px;
 	padding:0 !important;
-	margin: 0;
+	margin: 0 45px 0 0;
 }
 .maincontent:before{
 	content: "";
@@ -224,11 +227,18 @@ body{
 	filter: blur(10px);
 }
 
-footer.page-footer {
-    padding-top: 20px;
-    background-color: transparent;
+.page-admin footer.page-footer, .page-login footer.page-footer {
+	clear: both;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 180px;
+    overflow: hidden;
 }
-
+.page-admin .navbar:first-child{
+	padding-left: 45px;
+    padding-right: 45px;
+}
 .page-admin nav .container{ 
 	width: 100%;
 }

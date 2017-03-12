@@ -67,7 +67,7 @@
 					</div>
 				</div>
 				<div class="card-action">
-					<button class="btn waves-effect waves-light btn waves-effect waves-light-small green"> Go to Articles</button>
+					<a href="#articles" class="btn waves-effect waves-light btn waves-effect waves-light-small green"> Go to Articles</a>
 				</div>
 			</div><!-- End Shop -->
 		</div>

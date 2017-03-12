@@ -9321,16 +9321,7 @@ __webpack_require__(3);
 
 
 		// initialization goes here
-		Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
-		$('.button-collapse').sideNav();
-		$('.do-nav-slideout').click(function () {
-			$('.button-collapse').sideNav('show');
-		});
-
-		$('.chips').material_chip();
-		$('select').material_select();
-		$('.parallax').parallax();
-		$('#password').strength_meter();
+		initMaterialize();
 
 		// instantiation goes here
 		$('.chips-salesspots').material_chip({
@@ -9354,9 +9345,61 @@ __webpack_require__(3);
 				'C4': null
 			}
 		});
+
+		//make the toolbar restful
+		$('.toolbar').on('click', 'li a', function () {
+			var page = $(this).attr('href').replace('#/', '/admin/');
+			loadsubpage(page);
+		});
+
+		//redirect hash to proper location
+		var hash = window.location.hash;
+		if ($('.page-admin').length > 0) {
+			if (hash.length < 3) {
+				return false;
+			}
+			var page = hash.replace('#/', '/admin/');
+			if (window.loadsubpage !== page) {
+				loadsubpage(page);
+				window.loadsubpage = page;
+			}
+		}
 	});
 
 	// The rest of the codes goes here
+	function loadsubpage(page) {
+		$.get(page, function (result) {
+			if (page === "/admin/dashboard") {
+				$('body').html(result);
+			} else {
+				$('.content-wrap').html(result);
+			}
+			initMaterialize();
+		});
+	}
+
+	function initMaterialize() {
+		Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
+
+		$('.dropdown-button').dropdown({ "hover": false });
+		$('ul.tabs').tabs();
+		$('.tab-demo').show().tabs();
+		$('.parallax').parallax();
+		$('.modal').modal();
+		$('.tooltipped').tooltip({ "delay": 45 });
+		$('.collapsible-accordion').collapsible();
+		$('.collapsible-expandable').collapsible({ "accordion": false });
+		$('.materialboxed').materialbox();
+		$('.scrollspy').scrollSpy();
+		$('.button-collapse').sideNav();
+		$('.datepicker').pickadate();
+		$('.do-nav-slideout').click(function () {
+			$('.button-collapse').sideNav('show');
+		});
+		$('.chips').material_chip();
+		$('select').material_select();
+		// $('#password').strength_meter();
+	}
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -9378,6 +9421,8 @@ window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(0);
 __webpack_require__(4);
 
 __webpack_require__(5);
+
+__webpack_require__(12);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -37949,6 +37994,78 @@ module.exports = g;
 
 module.exports = __webpack_require__(2);
 
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
+    $.ReBuy = {
+        alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
+            var btnYesLabel = btnYesLabel || 'OK',
+                modalWidth = modalWidth || '300',
+                callback = callback || 'function(){ return false; }',
+                modalId = 'alertDialog',
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                        <div class="modal-content">\
+                          <p>' + message + '</p>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
+                        </div>\
+                      </div>';
+
+            if ($('#' + modalId).length == 0) {
+                $('body').append(html);
+            } else {
+                $('#' + modalId).html(html);
+            }
+            $('.modal').modal();
+            $('#' + modalId).modal('open');
+            $('#' + modalId).find('.btn-yes-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+                callback();
+            });
+        },
+        confirmDialog: function confirmDialog(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
+            var btnYesLabel = btnYesLabel || 'OK',
+                btnNoLabel = btnNoLabel || 'Cancel',
+                modalWidth = modalWidth || '300',
+                doCallback = doCallback || 'function(){ return false; }',
+                modalId = 'confirmDialog',
+                alertDialogModal = $('#' + modalId),
+                $body = $('body'),
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                        <div class="modal-content">\
+                          <p>' + message + '</p>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#!" class=" modal-action btn-no-label waves-effect waves-green btn-flat">' + btnNoLabel + '</a>\
+                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
+                        </div>\
+                      </div>';
+
+            if ($('#' + modalId).length == 0) {
+                $('body').append(html);
+            } else {
+                $('#' + modalId).html(html);
+            }
+            $('.modal').modal();
+            $('#' + modalId).modal('open');
+            $('#' + modalId).find('.btn-yes-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+                doCallback();
+            });
+            $('#' + modalId).find('.btn-no-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+            });
+        }
+    };
+})(jQuery);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })
 /******/ ]);

@@ -27,7 +27,14 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'AdminController@index'); // Matches The "admin/" URL
+    Route::get('/dashboard', 'AdminController@index'); 
+    Route::get('/users', 'AdminController@users'); 
+    Route::get('/shops', 'AdminController@shops'); 
+    Route::get('/categories', 'AdminController@categories'); 
+    Route::get('/transactions', 'AdminController@transactions'); 
 });
+
+
 
 
 Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
