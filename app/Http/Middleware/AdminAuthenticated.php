@@ -15,7 +15,7 @@ class AdminAuthenticated
      */
     public function handle($request, Closure $next)
     {   
-        if(! $request->user()->isAdmin() ) 
+        if(!auth()->check() or !$request->user()->isAdmin() ) 
         {
             return redirect('home');
         }

@@ -34,6 +34,11 @@ require('./bootstrap');
 
 	    $('.parallax').parallax();
 	    $('#password').strength_meter();
+
+	    $('.toolbar').on('click', 'li a', function(){
+	    	console.log($(this).attr('href'));
+	    	//$.get('/admin/')
+	    });
 	});
 
 	// The rest of the codes goes here

@@ -1,6 +1,6 @@
 @include('layouts._partials.header')
 
-<div class="row">
+<article class="row">
 
     @includeWhen(auth()->check(), 'layouts._partials.sidebar')
 
@@ -33,6 +33,6 @@
             });
         </script>
     @endif
-</div>
-
+</article>
+<div class="clearfix"></div>
 @include('layouts._partials.footer')

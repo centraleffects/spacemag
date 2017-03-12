@@ -1,17 +1,7 @@
 @component('admin.layouts.app')
-<div class="toolbar row">
-	<div class="col s12">
-		<nav>
-		    <div class="nav-wrapper">
-		      <ul id="nav-mobile" class="right hide-on-med-and-down">
-		         <li><a href="#" class="btn btn-flat waves-effect  waves-light">Add Shop Owner</a></li>
-				 <li><a href="#" class="btn btn-flat waves-effect  waves-light">List Show Owners</a></li>
-				 <li><a href="#" class="btn btn-flat waves-effect  waves-light">List Shops</a></li>
-		      </ul>
-		    </div>
-		</nav>
-	</div>
-</div>
+
+@includeWhen(auth()->check(), 'admin.partials._toolbar')
+	
 <div class="row content-wrap">
 
 	<div class="col s3">
@@ -45,7 +35,8 @@
 				<input type="text" name="shop_name" placeholder="Shop name">
 				<i data-activates="lsinfo-option" class="fa fa-ellipsis-v grey-text lighten-2 dropdown-button" aria-hidden="true" id="info-option"></i>
 				<ul id="lsinfo-option" class="dropdown-content">
-				  <li><a href="#!"><i class="fa fa-times" aria-hidden="true"></i> REMOVE</a></li>
+				  <li><a href="#!"  onclick="$.ReBuy.alertDialog('test');"><i class="fa fa-times" aria-hidden="true"></i> REMOVE</a></li>
+				  <li><a href="#!"  onclick="$.ReBuy.confirmDialog('test', function(){ console.log('ok'); });"><i class="fa fa-times" aria-hidden="true"></i> REMOVE 2</a></li>
 				</ul>
 			</div>
 			<div class="row" id="info-content">
