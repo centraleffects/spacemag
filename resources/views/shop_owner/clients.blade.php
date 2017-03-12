@@ -3,17 +3,17 @@
 
 	<div class="col s3">
 		<div  class="white" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>
+			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Clients</h5>
 			<ul class="collection">
 				<li class="collection-item">
 					@include('layouts._partials.dragicon')
-					<input type="text" value="Rebuy store">
+					<input type="text" value="John Doe">
 					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 
 			    <li class="collection-item">
 					@include('layouts._partials.dragicon')
-					<input type="text" value="Nike">
+					<input type="text" value="Johny Doer">
 					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>

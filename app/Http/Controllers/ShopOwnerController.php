@@ -9,4 +9,8 @@ class ShopOwnerController extends Controller
     public function index(){
     	return view('shop_owner.dashboard');
     }
+
+    public function clients(){
+    	return view('shop_owner.clients');
+    }
 }
