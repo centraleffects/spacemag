@@ -6,7 +6,7 @@
 
     <section class="maincontent col s12">
 
-        @includeWhen(auth()->check(), 'layouts._partials.topnav')
+        @includeWhen(auth()->check(), 'admin.partials._topnav')
         
         <div class="inner-content">
             <div class="main-content">
@@ -35,4 +35,4 @@
     @endif
 </article>
 <div class="clearfix"></div>
-@include('layouts._partials.footer')
+@include('admin.partials._footer')

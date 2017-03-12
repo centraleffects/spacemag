@@ -17,6 +17,7 @@ class AdminController extends Controller
        return view('admin.dashboard');
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -82,4 +83,23 @@ class AdminController extends Controller
     {
         //
     }
+
+
+
+    public function users(Request $request){
+        return view('admin.users');
+    }
+
+    public function shops(Request $request){
+        return view('admin.shops');
+    }
+
+    public function categories(Request $request){
+        return view('admin.categories');
+    }
+
+    public function transactions(Request $request){
+        return view('admin.transactions');
+    }
+
 }

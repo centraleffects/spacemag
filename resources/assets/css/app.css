@@ -130,6 +130,8 @@ nav .brand-logo img{
 }
 .content-wrap{
 	margin-bottom: 0;
+	padding-left: 45px;
+    padding-right: 45px;
 }
 
 
@@ -203,7 +205,7 @@ body.page-admin, body.page-login{
 .maincontent{
 	min-height: 500px;
 	padding:0 !important;
-	margin: 0;
+	margin: 0 45px 0 0;
 }
 .maincontent:before{
 	content: "";
@@ -233,7 +235,10 @@ body.page-admin, body.page-login{
     height: 180px;
     overflow: hidden;
 }
-
+.page-admin .navbar:first-child{
+	padding-left: 45px;
+    padding-right: 45px;
+}
 .page-admin nav .container{ 
 	width: 100%;
 }
