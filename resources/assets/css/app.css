@@ -197,7 +197,7 @@ nav .brand-logo img{
 .green-text { color: #629d1c !important; }
 
 /* main content */
-body.page-admin, body.page-login{
+body{
 	padding-left: 0;
 	padding-right: 0;
 	margin: 0 0 180px;
@@ -227,7 +227,7 @@ body.page-admin, body.page-login{
 	filter: blur(10px);
 }
 
-.page-admin footer.page-footer, .page-login footer.page-footer {
+footer.page-footer, .page-login footer.page-footer {
 	clear: both;
     position: absolute;
     width: 100%;

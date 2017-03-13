@@ -22,12 +22,12 @@
     		@include('layouts._partials.clouds')
     	</div>
     	
-		<footer class="page-footer">
+		<footer class="page-footer  blue lighten-2">
 			<div class="container">
 				<div class="row">
 					<div class="col l6 s12">
-						<h5 class="grey-text">Nyheter</h5>
-							<p class="grey-text">
+						<h5 class="white-text">Nyheter</h5>
+							<p class="white-text">
 							Rebuy är nu ett registrerat varumärke.
 						</p>
 					</div>
