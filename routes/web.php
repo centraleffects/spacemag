@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
 Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
 	Route::get('/', 'ShopOwnerController@index');
+	Route::get('clients', 'ShopOwnerController@clients');
 });
 
 
@@ -51,4 +52,9 @@ Route::get('test-event', function (){
 Route::get('test-mail', function (){
 	$user = App\User::first();
 	Mail::to($user->email)->send(new Welcome);
+});
+
+Route::get('try', function (){
+	// Route for testing purposes
+	// do your quick algorithm test here
 });

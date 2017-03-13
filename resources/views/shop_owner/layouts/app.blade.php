@@ -2,11 +2,11 @@
 
 <div class="row">
 
-    @includeWhen(auth()->check(), 'layouts._partials.sidebar')
+    @include('layouts._partials.sidebar')
 
     <section class="maincontent col s12">
 
-        @includeWhen(auth()->check(), 'layouts._partials.topnav')
+        @include( 'layouts._partials.topnav')
         
         <div class="inner-content">
             <div class="main-content">
@@ -18,8 +18,49 @@
                         {{ session()->get('flash_message')['msg'] }}
                     @endcomponent
                 @endif
-
-                {{ $slot }}
+                <div class="toolbar row">
+                    <div class="col s12">
+                        <nav>
+                            <div class="nav-wrapper">
+                                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                    <li>
+                                        <a href="#" class="btn green waves-effect  waves-light">
+                                            Customers
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/shop/clients" class="btn green waves-effect  waves-light">
+                                            Clients
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="btn green waves-effect  waves-light">
+                                            Shop Status
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="btn green waves-effect waves-light">
+                                            Add Shop Workers
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="btn green waves-effect waves-light">
+                                            Todo List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="btn green waves-effect waves-light">
+                                            Todo for workers
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row content-wrap">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
 

@@ -2,7 +2,7 @@
     <a href="#">Customers</a>
 </li>
 <li>
-    <a href="#">Clients</a>
+    <a href="/shop/clients">Clients</a>
 </li>
 <li>
     <a href="#">Shop Status</a>

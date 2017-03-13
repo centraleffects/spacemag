@@ -23,19 +23,37 @@ require('./bootstrap');
 		// dom is now ready!
 		
 		// variable declaration goes here
-
+		
 
 		// initialization goes here
-		Materialize.updateTextFields();
-		$('.button-collapse').sideNav();
-		$('.do-nav-slideout').click(function(){
-			$('.button-collapse').sideNav('show'); 
+		initMaterialize();
+		
+
+	    // instantiation goes here
+	    $('.chips-salesspots').material_chip({
+			data: [{
+				tag: 'A1',
+			}, 
+			{
+				tag: 'C4',
+			}],
+			autocompleteData: {
+				'A1': null,
+				'A2': null,
+				'A3': null,
+				'A4': null,
+				'B1': null,
+				'B2': null,
+				'B3': null,
+				'B4': null,
+				'C1': null,
+				'C2': null,
+				'C3': null,
+				'C4': null 
+		    }
 		});
 
-	    $('.parallax').parallax();
-	    $('#password').strength_meter();
-
-	    //make restful the toolbar
+	    //make the toolbar restful
 	    $('.toolbar').on('click', 'li a', function(){
 	    	var page = $(this).attr('href').replace('#/','/admin/');
 	    	loadsubpage(page)
@@ -61,11 +79,13 @@ require('./bootstrap');
     		}else{
     			$('.content-wrap').html(result);
     		}
-    		reinitMaterialize();
+    		initMaterialize();
     	});
 	}
 
-	function reinitMaterialize(){
+	function initMaterialize(){
+		Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
+
 		$('.dropdown-button').dropdown({"hover": false});
 	    $('ul.tabs').tabs();
 	    $('.tab-demo').show().tabs();
@@ -78,5 +98,11 @@ require('./bootstrap');
 	    $('.scrollspy').scrollSpy();
 	    $('.button-collapse').sideNav();
 	    $('.datepicker').pickadate();
+		$('.do-nav-slideout').click(function(){
+			$('.button-collapse').sideNav('show'); 
+		});
+		$('.chips').material_chip();
+		$('select').material_select();
+	    // $('#password').strength_meter();
 	}
 }));
