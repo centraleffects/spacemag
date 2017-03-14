@@ -202,6 +202,7 @@ nav .brand-logo img{
 
 /* main content */
 body.page-admin{
+
 	padding-left: 0;
 	padding-right: 0;
 	margin: 0 0 180px;
@@ -230,7 +231,6 @@ body.page-admin{
 	-ms-filter: blur(10px);
 	filter: blur(10px);
 }
-
 
 /* footer */
 .no-bg { 
