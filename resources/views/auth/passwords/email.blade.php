@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title green-text centered">
-                            <i class="material-icons">email</i>Reset password
+                            <i class="fa fa-envelope"></i> Reset password
                         </span>
                         
                         <div class="container">
@@ -32,7 +32,9 @@
                         </div>
                     </div>
                     <div class="card-action centered">
-                        <button type="submit" class="btn green waves-effect waves-light">Send Password Reset Link</button>
+                        <button type="submit" class="btn green waves-effect waves-light">
+                            <i class="fa fa-send"></i> Send Password Reset Link
+                        </button>
                     </div>
                 </div>
             </form>

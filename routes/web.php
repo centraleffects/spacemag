@@ -41,6 +41,8 @@ Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
+	Route::get('customers', 'ShopOwnerController@customers');
+	Route::get('todo', 'ShopOwnerController@todo');
 });
 
 
@@ -58,4 +60,5 @@ Route::get('test-mail', function (){
 Route::get('try', function (){
 	// Route for testing purposes
 	// do your quick algorithm test here
+
 });

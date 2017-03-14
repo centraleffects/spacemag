@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title green-text centered">
-                            <i class="material-icons">assignment_ind</i>Register
+                            <i class="fa fa-user-plus"></i> Register
                         </span>
                         
                         <div class="container">
@@ -20,7 +20,7 @@
                                 @endif
 
                                 <a href="{{ url('login/fb') }}" class="btn blue lighten-2 waves-effect waves-light">
-                                    Sign Up with Facebook
+                                    <i class="fa fa-facebook-official"></i> Sign Up with Facebook
                                 </a>
                             </div>
                             <div class="div-seperator">or</div>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="card-action centered">
                         <button type="submit" class="btn green waves-effect waves-light">
-                            Register
+                            <i class="fa fa-check"></i> Register
                         </button>
                     </div>
                 </div>

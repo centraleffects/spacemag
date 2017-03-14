@@ -1,4 +1,4 @@
-<div class="card"><!-- Shop Information -->
+<div class="card hoverable"><!-- Shop Information -->
 	<div class="card-content">
 		<div class="card-title">Shop Information</div>
 		<div class="input-field">

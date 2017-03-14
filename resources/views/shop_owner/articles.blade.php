@@ -1,24 +1,28 @@
 @component('shop_owner.layouts.app')
-
-
 	<div class="col s3">
-		<div class="card" id="dashleft-sidebar">
+		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Articles</h5>
 			<ul class="collection">
 				<li class="collection-item green lighten-2 white-text-important">
-					@include('layouts._partials.dragicon')
+					@component('layouts._partials.dragicon')
+						@slot('style') fill-white @endslot
+					@endcomponent
 					<input type="text" value="Nike Shoes" />
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+					<a href="#!" title="Delete" class="white-text"><i class="fa fa-trash"></i></a>
 			    </li>
 
 			    <li class="collection-item red lighten-2 white-text-important">
-					@include('layouts._partials.dragicon')
+					@component('layouts._partials.dragicon')
+						@slot('style') fill-white @endslot
+					@endcomponent
 					<input type="text" value="Ice skating outfits"/>
 					<a href="#!" title="Delete" class="white-text"><i class="fa fa-trash"></i></a>
 			    </li>
 
 			    <li class="collection-item purple lighten-2 white-text-important">
-					@include('layouts._partials.dragicon')
+					@component('layouts._partials.dragicon')
+						@slot('style') fill-white @endslot
+					@endcomponent
 					<input type="text" value="Warm jackets"/>
 					<a href="#!" title="Delete" class="white-text"><i class="fa fa-trash"></i></a>
 			    </li>
@@ -32,7 +36,7 @@
 	</div>
 	<div class="col s6">
 		<div id="" class="row">
-			<div class="card"><!-- Client's Details -->
+			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
 					<div class="card-title">Article Details</div>
 					<div class="input-field">
@@ -111,5 +115,4 @@
 			@include('shop_owner.partials._shopinfo')
 		</div>
 	</div>
-
 @endcomponent

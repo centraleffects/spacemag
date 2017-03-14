@@ -1,8 +1,8 @@
 <li>
-    <a href="#">Customers</a>
+    <a href="{{ url('shop/customers') }}">Customers</a>
 </li>
 <li>
-    <a href="/shop/clients">Clients</a>
+    <a href="{{ url('shop/clients') }}">Clients</a>
 </li>
 <li>
     <a href="#">Shop Status</a>
@@ -11,7 +11,7 @@
     <a href="#!">Add Shop Workers</a>
 </li>
 <li>
-    <a href="#!">Todo List</a>
+    <a href="{{ url('shop/todo') }}">Todo List</a>
 </li>
 <li>
     <a href="#!">Todo for workers</a>

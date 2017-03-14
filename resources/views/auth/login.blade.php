@@ -8,12 +8,14 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title green-text centered">
-                            <i class="material-icons">lock_outline</i>Login
+                            <i class="fa fa-lock"></i> Login
                         </span>
                         
                         
                         <div class="input-field centered">
-                            <a href="{{ url('login/fb') }}" class="waves-effect waves-light btn blue lighten-2">Login with Facebook</a>
+                            <a href="{{ url('login/fb') }}" class="waves-effect waves-light btn blue lighten-2">
+                                <i class="fa fa-facebook-official"></i> Login with Facebook
+                            </a>
                         </div>
                         <div class="div-seperator">or</div>
                         {{ csrf_field() }}
@@ -41,8 +43,11 @@
                         
                     </div>
                     <div class="card-action centered">
-                        <a href="{{ route('password.request') }}">Forgot password</a>
-                        <button type="submit" class="btn green waves-effect waves-light">Login</button>
+                        <a href="{{ route('password.request') }}">
+                            <i class="fa fa-question-circle-o"></i> Forgot password</a>
+                        <button type="submit" class="btn green waves-effect waves-light">
+                            <i class="fa fa-sign-in"></i> Login
+                        </button>
                     </div>
                 </div>
             </form>

@@ -24,12 +24,12 @@
                             <div class="nav-wrapper">
                                 <ul id="nav-mobile" class="right hide-on-med-and-down">
                                     <li>
-                                        <a href="#" class="btn green waves-effect  waves-light">
+                                        <a href="{{ url('shop/customers') }}" class="btn green waves-effect  waves-light">
                                             Customers
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/shop/clients" class="btn green waves-effect  waves-light">
+                                        <a href="{{ url('shop/clients') }}" class="btn green waves-effect  waves-light">
                                             Clients
                                         </a>
                                     </li>
@@ -44,7 +44,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#!" class="btn green waves-effect waves-light">
+                                        <a href="{{ url('shop/todo') }}" class="btn green waves-effect waves-light">
                                             Todo List
                                         </a>
                                     </li>

@@ -86,9 +86,15 @@
 }
 
 
-
+/* buttons */
 a.btn {
     color: white;
+}
+
+.btn-small {
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0.5rem;
 }
 
 /* nav */
@@ -198,6 +204,9 @@ nav .brand-logo img{
 .white-text-important { 
 	color: white !important; 
 	fill: white !important; 
+}
+.fill-white {
+	fill: white !important;
 }
 
 /* main content */

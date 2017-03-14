@@ -25,9 +25,9 @@
 		<footer class="page-footer no-bg">
 			<div class="container">
 				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">Nyheter</h5>
-							<p class="white-text">
+					<div class="col l6 s12" style="mix-blend-mode: screen;">
+						<h5>Nyheter</h5>
+							<p>
 							Rebuy är nu ett registrerat varumärke.
 						</p>
 					</div>
