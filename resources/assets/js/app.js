@@ -53,6 +53,19 @@ require('./bootstrap');
 		    }
 		});
 
+		$('.chips-tags').material_chip({
+			data: [
+				{ tag: 'Jogging' },
+				{ tag: 'Running' },
+			],
+			autocompleteData: {
+				'Cycling': null,
+				'Jogging': null,
+				'Running': null,
+				'Swimming': null,
+			}
+		});
+
 	    //make the toolbar restful
 	    $('.toolbar').on('click', 'li a', function(){
 	    	var page = $(this).attr('href').replace('#/','/admin/');

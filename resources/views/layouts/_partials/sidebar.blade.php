@@ -7,7 +7,7 @@
             <li>
                 <div class="userView">
                     <div class="background">
-                        <img src="images/office.jpg">
+                        <img src="{{ url('images/office.jpg') }}">
                     </div>
                     <a href="#!user">
                         <img class="circle" src="{{ auth()->user()->avatar ? auth()->user()->avatar : '' }}">

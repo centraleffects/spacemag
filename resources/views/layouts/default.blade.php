@@ -7,7 +7,7 @@
         <!-- CSS  -->
         @include('layouts._partials._styles')
     </head>
-    <body class="page-{{ collect(\Request::segments())->implode('-') }} bg-clouds">
+    <body class="bg-clouds">
     	<div class="container">
     		<div class="section">
 	    		<div class="centered">
@@ -18,11 +18,11 @@
 		    	{{ $slot }}
 		    </div>
     	</div>
-    	<div class="container">
+    	<div class="container hide-on-small-only">
     		@include('layouts._partials.clouds')
     	</div>
     	
-		<footer class="page-footer">
+		<footer class="page-footer no-bg">
 			<div class="container">
 				<div class="row">
 					<div class="col l6 s12">

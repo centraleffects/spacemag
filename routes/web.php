@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
+	Route::get('clients/articles', 'ShopOwnerController@articles');
 });
 
 

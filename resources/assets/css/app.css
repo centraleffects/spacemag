@@ -195,9 +195,13 @@ nav .brand-logo img{
 /* colors */
 .green { background-color: #629d1c !important; }
 .green-text { color: #629d1c !important; }
+.white-text-important { 
+	color: white !important; 
+	fill: white !important; 
+}
 
 /* main content */
-body.page-admin, body.page-login{
+body.page-admin{
 	padding-left: 0;
 	padding-right: 0;
 	margin: 0 0 180px;
@@ -227,7 +231,13 @@ body.page-admin, body.page-login{
 	filter: blur(10px);
 }
 
-.page-admin footer.page-footer, .page-login footer.page-footer {
+
+/* footer */
+.no-bg { 
+	background: none; 
+	background-color: transparent !important;
+}
+.page-admin footer.page-footer {
 	clear: both;
     position: absolute;
     width: 100%;
