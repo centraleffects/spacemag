@@ -82,4 +82,9 @@ class ShopController extends Controller
     {
         //
     }
+
+    public function admin_list(){
+        $shops = Shop::all();
+        return $shops;
+    }
 }
