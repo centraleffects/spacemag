@@ -36,6 +36,12 @@ class ShopController extends Controller
     public function store(Request $request)
     {
         //
+        Shop::create(array(
+            'name' => Input::get('name'),
+            'description' => Input::get('description')
+        ));
+
+        return Response::json(array('success' => true));
     }
 
     /**
@@ -83,8 +89,13 @@ class ShopController extends Controller
         //
     }
 
+
+   /**
+     * Display list of shops
+     */
     public function admin_list(){
         $shops = Shop::all();
         return $shops;
     }
+
 }

@@ -210,7 +210,7 @@ nav .brand-logo img{
 }
 
 /* main content */
-body.page-admin{
+.page-admin{
 
 	padding-left: 0;
 	padding-right: 0;
@@ -246,13 +246,16 @@ body.page-admin{
 	background: none; 
 	background-color: transparent !important;
 }
-.page-admin footer.page-footer {
+footer.page-footer {
 	clear: both;
     position: absolute;
     width: 100%;
     bottom: 0;
     height: 180px;
     overflow: hidden;
+}
+.bg-clouds footer.page-footer{
+	position: relative;
 }
 .page-admin .navbar:first-child{
 	padding-left: 45px;
@@ -269,7 +272,7 @@ body.page-admin{
 }
 #dashleft-sidebar h5{
 	font-size: 20px;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 svg.itemRow-dragIcon{
 	width: 13px;
@@ -291,7 +294,7 @@ svg.itemRow-dragIcon{
     padding-bottom: 0;
     padding-top: 0;
 }
-#dashleft-sidebar li input{
+#dashleft-sidebar li input, #dashleft-sidebar li span{
 	border: none;
 	padding: 0;
 	margin: 0;

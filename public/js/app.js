@@ -9390,6 +9390,7 @@ __webpack_require__(4);
 	}
 
 	function initMaterialize() {
+
 		Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
 
 		$('.dropdown-button').dropdown({ "hover": false });
