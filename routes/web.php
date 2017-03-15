@@ -32,6 +32,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/shops', 'AdminController@shops'); 
     Route::get('/categories', 'AdminController@categories'); 
     Route::get('/transactions', 'AdminController@transactions'); 
+
+     //API calls for admin
+    Route::get('/shops/list', 'ShopController@admin_list'); 
+    
 });
 
 

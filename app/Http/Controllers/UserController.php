@@ -90,6 +90,15 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Display list of shops
+     */
+    public function admin_list(){
+        $user = User::all();
+        return $user;
+    }
+
+
     public function test(){
         $user = User::find(1);
 

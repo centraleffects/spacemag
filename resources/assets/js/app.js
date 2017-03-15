@@ -97,6 +97,7 @@ require('./bootstrap');
 	}
 
 	function initMaterialize(){
+		
 		Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
 
 		$('.dropdown-button').dropdown({"hover": false});
@@ -117,5 +118,6 @@ require('./bootstrap');
 		$('.chips').material_chip();
 		$('select').material_select();
 	    // $('#password').strength_meter();
+	    
 	}
 }));
