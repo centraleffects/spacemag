@@ -15,7 +15,7 @@ class ShopOwnerAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if(! $request->user()->isOwner() ) 
+        if( !auth()->check() or !$request->user()->isOwner() ) 
         {
             return redirect('home');   
         }

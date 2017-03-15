@@ -1,7 +1,7 @@
 @component('shop_owner.layouts.app')
 
 
-	<div class="col s3">
+	<div class="col s12 m3 l3">
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Clients</h5>
 			<ul class="collection">
@@ -19,7 +19,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="col s6">
+	<div class="col s12 m6 l6">
 		<div id="" class="row">
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
@@ -87,7 +87,7 @@
 			</div><!-- End Shop -->
 		</div>
 	</div>
-	<div class="col s3">
+	<div class="col s12 m3 l3">
 		<div class="row">
 			@include('shop_owner.partials._shopinfo')
 		</div>

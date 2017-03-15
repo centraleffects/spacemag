@@ -63,8 +63,8 @@
 	</div>
 	<div class="card-action">
 		<p>
-			<input type="checkbox" id="newsletter_subscription" name="newsletter_subscription" />
-			<label for="newsletter_subscription">Enable Newsletter</label>
+			<input type="checkbox" id="cb_newsletter_subscription" name="newsletter_subscription" />
+			<label for="cb_newsletter_subscription">Enable Newsletter</label>
 		</p>
 	</div>
 </div><!-- End Shop Information -->

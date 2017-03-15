@@ -63,6 +63,10 @@
 	text-align: center;
 }
 
+.inline {
+	display: inline-flex;
+}
+
 .div-seperator {
     color: #B9BCC0;
     font-size: 24px;
@@ -209,6 +213,77 @@ nav .brand-logo img{
 	fill: white !important;
 }
 
+.fill-grey {
+	fill: gray !important;
+}
+
+/* svg icons */
+.circular-button-view {
+	webkit-box-align: center;
+    -moz-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    -ms-flex-align: center;
+    border: 1px solid #B9BCC0;
+    border-radius: 50%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: transparent;
+    color: #B9BCC0;
+    fill: #B9BCC0;
+    display: -webkit-inline-box;
+    display: -moz-inline-box;
+    display: inline-box;
+    display: -webkit-inline-flex;
+    display: -moz-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-flex-shrink: 0;
+    -moz-flex-shrink: 0;
+    flex-shrink: 0;
+    -ms-flex-negative: 0;
+    height: 30px;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    box-pack: center;
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    -o-justify-content: center;
+    justify-content: center;
+    -ms-flex-pack: center;
+    -webkit-transition: border 200ms,box-shadow 200ms,color 200ms;
+    -moz-transition: border 200ms,box-shadow 200ms,color 200ms;
+    transition: border 200ms,box-shadow 200ms,color 200ms;
+    width: 30px;
+}
+
+.circular-button-view svg {
+	height: 12px;
+    width: 12px;
+}
+
+.circular-button-view:hover {
+	border-color: transparent;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px #00BCD4;
+    -moz-box-shadow: 0 0 0 3px #3BF7D1;
+    -webkit-box-shadow: 0 0 0 3px #00BCD4;
+    color: #00BCD4;
+    fill: #00BCD4;
+    background-color: #fff;
+    color: #00BCD4;
+    fill: #00BCD4;
+}
+
+/* todo tasks */
+
+
 /* main content */
 body.page-admin{
 
@@ -271,9 +346,10 @@ body.page-admin{
 	font-size: 20px;
     margin-top: 25px;
 }
+
 svg.itemRow-dragIcon{
 	width: 13px;
-    position: absolute;
+    // position: absolute;
     margin-left: -19px;
     margin-top: 15px;
     fill: #0089ec;

@@ -15,7 +15,7 @@ class ShopWorkerAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if(! $request->user()->isWorker() ){
+        if( !auth()->check() or !$request->user()->isWorker() ){
             return redirect('home');
         }
         
