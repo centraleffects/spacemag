@@ -8,10 +8,5 @@ Homestead.json
 Homestead.yaml
 .env
 /.vagrant
-/bower_components
 *.log
-/public/bower_components/*
 npm-debug.log
-/bower_components.7z
-/public/js
-/public/css
