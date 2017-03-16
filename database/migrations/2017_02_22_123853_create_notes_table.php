@@ -23,6 +23,7 @@ class CreateNotesTable extends Migration
             $table->longText('notes')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

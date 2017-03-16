@@ -27,6 +27,7 @@ class CreateArticlePricesTable extends Migration
             $table->enum('status', ['draft', 'printed', 'sold', 'deleted'])->default('draft');
 
             $table->timestamps();
+            $table->softDeletes();
         });
    
     }

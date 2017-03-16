@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ArticleController extends Controller
 {
+    
+    use SoftDeletes; 
+
     /**
      * Display a listing of the resource.
      *

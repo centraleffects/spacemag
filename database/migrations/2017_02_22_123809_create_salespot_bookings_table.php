@@ -31,6 +31,7 @@ class CreateSalespotBookingsTable extends Migration
             $table->smallInteger('is_paid')->default(0);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

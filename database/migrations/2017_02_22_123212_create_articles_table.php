@@ -25,7 +25,9 @@ class CreateArticlesTable extends Migration
             $table->smallInteger('sold_in_pieces')->default(0);
             $table->string('unit')->nullable();
             $table->string('type')->nullable();
+            
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

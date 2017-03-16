@@ -33,6 +33,7 @@ class CreateArticleLabelsTable extends Migration
             $table->enum('status', ["draft", "ready to print", "printed", "deleted"])->default("draft");
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

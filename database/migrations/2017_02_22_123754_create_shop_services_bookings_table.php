@@ -31,6 +31,7 @@ class CreateShopServicesBookingsTable extends Migration
             $table->dateTime('date_end')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

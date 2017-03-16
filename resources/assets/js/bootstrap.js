@@ -9,7 +9,7 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 
-/*require('./angular.min.js');*/
+window.angular = require('angular');
 
 require('../materialize/js/materialize.js');
 

@@ -31,6 +31,7 @@ class CreateSalespotsTable extends Migration
             $table->enum('status', ['rebuilding', 'painting', 'on repair'])->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

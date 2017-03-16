@@ -23,6 +23,7 @@ class CreateShopNewsletterSubscriptionsTable extends Migration
             $table->smallInteger('is_active')->default(1);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

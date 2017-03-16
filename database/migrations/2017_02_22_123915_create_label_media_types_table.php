@@ -23,6 +23,7 @@ class CreateLabelMediaTypesTable extends Migration
             $table->integer('number_of_labels')->default(1);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

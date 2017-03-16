@@ -25,6 +25,7 @@ class CreateShopCouponsTable extends Migration
             $table->smallInteger('is_active')->default(0);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

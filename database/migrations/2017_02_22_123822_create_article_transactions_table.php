@@ -34,6 +34,7 @@ class CreateArticleTransactionsTable extends Migration
             $table->decimal('original_price', 5,2)->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

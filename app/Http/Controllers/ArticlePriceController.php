@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\ArticlePrice;
 use Illuminate\Http\Request;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class ArticlePriceController extends Controller
 {
+    use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      *

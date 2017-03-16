@@ -29,6 +29,7 @@ class CreateBillingDetailsTable extends Migration
             $table->string('bank_account_no')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -7,14 +7,6 @@
 
 require('./bootstrap');
 
-
-// require('angular');
-
-
-// window.app = angular.module('rebuy', []);	
-
-
-
 // init
 (function (rebuy){
 	rebuy(window.jQuery, window, document);
@@ -121,3 +113,6 @@ require('./bootstrap');
 	    
 	}
 }));
+
+
+var app = angular.module('rebuy', []);

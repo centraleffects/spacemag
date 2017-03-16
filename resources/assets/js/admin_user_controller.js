@@ -14,7 +14,7 @@ app.controller('adminUserController', function($scope, $http) {
     ];
 
     $scope.init = function() {
-/*
+    /*
 		$http.get('/api/shops/list')
     	 .then( function(response){
     	 	$scope.shops.list = response;
@@ -24,5 +24,5 @@ app.controller('adminUserController', function($scope, $http) {
 	}
    /* 
     	console.log($scope.shops);*/
-   $scope.init();
+    $scope.init();
 });

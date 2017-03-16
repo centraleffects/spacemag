@@ -96,7 +96,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="s12 m3 l3">
+	<div class="col s12 m3 l3">
 		<div class="row">
 			@include('shop_owner.partials._shopinfo')
 		</div>

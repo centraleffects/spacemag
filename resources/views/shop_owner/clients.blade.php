@@ -1,6 +1,4 @@
 @component('shop_owner.layouts.app')
-
-
 	<div class="col s12 m3 l3">
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Clients</h5>
@@ -17,6 +15,7 @@
 					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>
+			<div class="card-action"></div>
 		</div>
 	</div>
 	<div class="col s12 m6 l6">

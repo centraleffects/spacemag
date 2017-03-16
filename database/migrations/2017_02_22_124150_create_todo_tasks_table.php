@@ -35,6 +35,7 @@ class CreateTodoTasksTable extends Migration
             $table->dateTime('date_finished')->nullable();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
