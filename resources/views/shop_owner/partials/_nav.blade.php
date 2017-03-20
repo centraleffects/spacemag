@@ -8,11 +8,11 @@
     <a href="#">Shop Status</a>
 </li>
 <li>
-    <a href="#!">Add Shop Workers</a>
+    <a href="{{ url('shop/workers') }}">Add Shop Workers</a>
 </li>
 <li>
     <a href="{{ url('shop/todo') }}">Todo List</a>
 </li>
 <li>
-    <a href="#!">Todo for workers</a>
+    <a href="{{ url('shop/workers/todo') }}">Todo for workers</a>
 </li>

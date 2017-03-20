@@ -350,6 +350,11 @@ footer.page-footer-custom {
     margin-top: 15px;
 }
 
+#dashleft-sidebar ul.collection {
+    max-height: 350px;
+    overflow-y: scroll;
+}
+
 svg.itemRow-dragIcon{
 	width: 13px;
     // position: absolute;
