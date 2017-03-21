@@ -24,7 +24,21 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        if( Request::isJson() ){ // only process json request
+            $input = Input::all();
+
+            $shop = new Shop;
+            $shop->name = $input['name'];
+            $shop->description = $input['description'];
+            $shop->url = $input['url'];
+            $shop->currency = $input['currency'];
+            // $shop->user_id = auth()->user()->id;
+            $shop->attach(auth()->user());
+
+            $shop->save();
+        }
+
+        return false;
     }
 
     /**
@@ -86,11 +100,19 @@ class ShopController extends Controller
      */
     public function destroy(Shop $shop)
     {
-        //
+        $response = ['success' => 0];
+        
+        if( Request::isJson() ){
+            if( $shop->delete() ){
+                $response['success'] = 1;
+            }
+        }
+
+        return $response;
     }
 
 
-   /**
+    /**
      * Display list of shops
      */
     public function admin_list(){

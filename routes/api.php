@@ -29,6 +29,8 @@ Route::group(['prefix' => 'test'], function(){
 Route::group(['prefix' => 'shops'], function (){
 	Route::get('all', 'ShopController@index');
 	Route::get('{$shop}', 'ShopController@show');
+	Route::post('create', 'ShopController@create');
+	Route::post('delete', 'ShopController@destroy');
 });
 
 Route::group(['prefix' => 'users'], function (){

@@ -63,16 +63,48 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 16:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
-(function webpackMissingModule() { throw new Error("Cannot find module \"/media/rex/data/htdocs/rebuy.se/rebuy/resources/assets/js/admin_shop_controller.js\""); }());
+module.exports = __webpack_require__(3);
 
+
+/***/ }),
+
+/***/ 21:
+/***/ (function(module, exports) {
+
+
+app.controller('userController', function ($scope, $http) {
+
+  $scope.shops = [{ name: 'Jani', country: 'Norway' }, { name: 'Hege', country: 'Sweden' }, { name: 'Kai', country: 'Denmark' }];
+
+  $scope.init = function () {
+    /*
+    $http.get('/api/shops/list')
+    	 .then( function(response){
+    	 	$scope.shops.list = response;
+    	 });*/
+    console.log('init started');
+  };
+  /* 
+   	console.log($scope.shops);*/
+  $scope.init();
+});
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+window.app = angular.module('rebuy', []);
+
+__webpack_require__(21);
 
 /***/ })
 

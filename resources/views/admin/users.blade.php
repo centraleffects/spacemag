@@ -167,7 +167,7 @@
 			</div>
 		</div>
 
-		<div ng-controller="adminUserController">
+		<div ng-controller="userController">
 		 		<ul ng-repeat="shop in shops">
 		 			<li>@{{shop.name}}</li>
 		 		</ul>

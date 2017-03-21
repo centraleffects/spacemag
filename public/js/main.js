@@ -63,41 +63,32 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+var app = angular.module('rebuy', []);
+
+__webpack_require__(9);
+
+/***/ }),
+
+/***/ 9:
 /***/ (function(module, exports) {
 
-
-var app = app || angular.module('rebuy', []);
-
-app.controller('adminUserController', function ($scope, $http) {
-
-  $scope.shops = [{ name: 'Jani', country: 'Norway' }, { name: 'Hege', country: 'Sweden' }, { name: 'Kai', country: 'Denmark' }];
-
-  $scope.init = function () {
-    /*
-    $http.get('/api/shops/list')
-    	 .then( function(response){
-    	 	$scope.shops.list = response;
-    	 });*/
-    console.log('init started');
-  };
-  /* 
-   	console.log($scope.shops);*/
-  $scope.init();
-});
+app.controller('dashboardController', function ($scope, $http) {});
 
 /***/ })
 

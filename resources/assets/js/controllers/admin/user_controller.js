@@ -1,7 +1,5 @@
 
-var app = app || angular.module('rebuy', []);
-
-app.controller('adminUserController', function($scope, $http) {
+app.controller('userController', function($scope, $http) {
 	
 	
 	$scope.shops = [

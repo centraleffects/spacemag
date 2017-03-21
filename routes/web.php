@@ -69,5 +69,8 @@ Route::get('test-mail', function (){
 Route::get('try', function (){
 	// Route for testing purposes
 	// do your quick algorithm test here
+	$response = ['success' => 0];
+        
+    return $response;
 
 });

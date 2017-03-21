@@ -20,8 +20,8 @@ mix.combine([
 	  'resources/assets/css/app.css'
    ], 'public/css/app.css');
 
+
 mix.js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
    .js('resources/assets/js/app.js', 'public/js/app.js')
-   .js('resources/assets/js/admin_shop_controller.js', 'public/js/admin_shop_controller.js')
-   .js('resources/assets/js/admin_user_controller.js', 'public/js/admin_user_controller.js');
-   
+   .js('resources/assets/js/main.js', 'public/js/main.js')
+   .js('resources/assets/js/admin.js', 'public/js/admin.js');

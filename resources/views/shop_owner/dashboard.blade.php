@@ -1,7 +1,7 @@
 @component('shop_owner.layouts.app')
 
 
-	<div class="col s12 m12 l3">
+	@slot('left')
 		<div  class="white" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>
 			<ul class="collection">
@@ -18,8 +18,8 @@
 			    </li>
 			</ul>
 		</div>
-	</div>
-	<div class="col s12 m12 l6">
+	@endslot
+	@slot('center')
 		<div id="list-info" class="white">
 			<div class="row" id="info-nav">
 				<input type="text" name="shop_name" placeholder="Shop name">
@@ -37,8 +37,10 @@
 				</ul>	
 			</div>
 		</div>
-	</div>
-	<div class="col s12 m12 l3">
-	</div>
+	@endslot
+	
+	@slot('right')
+	
+	@endslot
 
 @endcomponent
