@@ -9265,6 +9265,78 @@ return jQuery;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
+    $.ReBuy = {
+        alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
+            var btnYesLabel = btnYesLabel || 'OK',
+                modalWidth = modalWidth || '300',
+                callback = callback || 'function(){ return false; }',
+                modalId = 'alertDialog',
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                        <div class="modal-content">\
+                          <p>' + message + '</p>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
+                        </div>\
+                      </div>';
+
+            if ($('#' + modalId).length == 0) {
+                $('body').append(html);
+            } else {
+                $('#' + modalId).html(html);
+            }
+            $('.modal').modal();
+            $('#' + modalId).modal('open');
+            $('#' + modalId).find('.btn-yes-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+                callback();
+            });
+        },
+        confirmDialog: function confirmDialog(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
+            var btnYesLabel = btnYesLabel || 'OK',
+                btnNoLabel = btnNoLabel || 'Cancel',
+                modalWidth = modalWidth || '300',
+                doCallback = doCallback || 'function(){ return false; }',
+                modalId = 'confirmDialog',
+                alertDialogModal = $('#' + modalId),
+                $body = $('body'),
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                        <div class="modal-content">\
+                          <p>' + message + '</p>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#!" class=" modal-action btn-no-label waves-effect waves-green btn-flat">' + btnNoLabel + '</a>\
+                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
+                        </div>\
+                      </div>';
+
+            if ($('#' + modalId).length == 0) {
+                $('body').append(html);
+            } else {
+                $('#' + modalId).html(html);
+            }
+            $('.modal').modal();
+            $('#' + modalId).modal('open');
+            $('#' + modalId).find('.btn-yes-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+                doCallback();
+            });
+            $('#' + modalId).find('.btn-no-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+            });
+        }
+    };
+})(jQuery);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -9292,8 +9364,8 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 2 */,
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {
@@ -9303,7 +9375,7 @@ module.exports = function(module) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(7);
+__webpack_require__(8);
 
 // init
 (function (rebuy) {
@@ -9352,23 +9424,20 @@ __webpack_require__(7);
 		});
 
 		//make the toolbar restful
-		$('.toolbar').on('click', 'li a', function () {
-			var page = $(this).attr('href').replace('#/', '/admin/');
-			loadsubpage(page);
-		});
-
-		//redirect hash to proper location
-		var hash = window.location.hash;
-		if ($('.page-admin').length > 0) {
-			if (hash.length < 3) {
-				return false;
-			}
-			var page = hash.replace('#/', '/admin/');
-			if (window.loadsubpage !== page) {
-				loadsubpage(page);
-				window.loadsubpage = page;
-			}
-		}
+		/*$('.toolbar').on('click', 'li a', function(){
+  	var page = $(this).attr('href').replace('#/','/admin/');
+  	loadsubpage(page)
+  });
+    //redirect hash to proper location
+  var hash = window.location.hash;
+  if($('.page-admin').length > 0){
+  	if(hash.length < 3 ){ return false; }
+  	var page = hash.replace('#/','/admin/');
+  	if(window.loadsubpage !== page){
+  		loadsubpage(page);
+  		window.loadsubpage = page;
+  	}
+  }*/
 	});
 
 	// The rest of the codes goes here
@@ -9410,8 +9479,8 @@ __webpack_require__(7);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */,
-/* 5 */
+/* 5 */,
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**
@@ -42551,15 +42620,15 @@ $provide.value("$locale", {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 module.exports = angular;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {
@@ -42573,13 +42642,13 @@ window._ = __webpack_require__(13);
 
 window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(0);
 
-window.angular = __webpack_require__(6);
+window.angular = __webpack_require__(7);
 
 __webpack_require__(10);
 
 __webpack_require__(11);
 
-__webpack_require__(9);
+__webpack_require__(1);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -42596,79 +42665,7 @@ __webpack_require__(9);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */,
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
-    $.ReBuy = {
-        alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
-            var btnYesLabel = btnYesLabel || 'OK',
-                modalWidth = modalWidth || '300',
-                callback = callback || 'function(){ return false; }',
-                modalId = 'alertDialog',
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
-                        <div class="modal-content">\
-                          <p>' + message + '</p>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
-                        </div>\
-                      </div>';
-
-            if ($('#' + modalId).length == 0) {
-                $('body').append(html);
-            } else {
-                $('#' + modalId).html(html);
-            }
-            $('.modal').modal();
-            $('#' + modalId).modal('open');
-            $('#' + modalId).find('.btn-yes-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-                callback();
-            });
-        },
-        confirmDialog: function confirmDialog(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
-            var btnYesLabel = btnYesLabel || 'OK',
-                btnNoLabel = btnNoLabel || 'Cancel',
-                modalWidth = modalWidth || '300',
-                doCallback = doCallback || 'function(){ return false; }',
-                modalId = 'confirmDialog',
-                alertDialogModal = $('#' + modalId),
-                $body = $('body'),
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
-                        <div class="modal-content">\
-                          <p>' + message + '</p>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#!" class=" modal-action btn-no-label waves-effect waves-green btn-flat">' + btnNoLabel + '</a>\
-                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
-                        </div>\
-                      </div>';
-
-            if ($('#' + modalId).length == 0) {
-                $('body').append(html);
-            } else {
-                $('#' + modalId).html(html);
-            }
-            $('.modal').modal();
-            $('#' + modalId).modal('open');
-            $('#' + modalId).find('.btn-yes-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-                doCallback();
-            });
-            $('#' + modalId).find('.btn-no-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-            });
-        }
-    };
-})(jQuery);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
+/* 9 */,
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51271,7 +51268,7 @@ if (jQuery) {
     }
   }; // Plugin end
 })(jQuery);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0), __webpack_require__(0), __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0), __webpack_require__(0), __webpack_require__(2)(module)))
 
 /***/ }),
 /* 11 */
@@ -71171,7 +71168,7 @@ if (true) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16), __webpack_require__(2)(module)))
 
 /***/ }),
 /* 14 */
@@ -71223,7 +71220,7 @@ module.exports = g;
 /* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
 /***/ })

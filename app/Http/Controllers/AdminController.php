@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -86,8 +87,12 @@ class AdminController extends Controller
 
 
 
-    public function users(Request $request){
-        return view('admin.users');
+    public function users($id){
+       
+        $users = User::limit(30)->offset(0)->get();
+        $user  = User::findOrFail($id);
+
+        return view('admin.users', ['users' => $users, 'user' => $user ]);
     }
 
     public function shops(Request $request){

@@ -1,4 +1,13 @@
 
+body {
+     display: flex;
+     min-height: 100vh;
+     flex-direction: column;
+ }
+ main {
+     flex: 1 0 auto;
+ }
+
 /* clouds */
 .bg-clouds{
 	background: #5dbde9 url(/img/bg_top_front.gif) no-repeat center bottom -34px;
@@ -138,11 +147,7 @@ nav .brand-logo img{
     filter: grayscale(100%);
      opacity: 0.7;
 }
-.content-wrap{
-	margin-bottom: 0;
-	padding-left: 45px;
-    padding-right: 45px;
-}
+
 
 
 /* toolbar */
@@ -291,12 +296,8 @@ nav .brand-logo img{
 	padding-right: 0;
 	margin: 0 0 180px;
 }
-.maincontent{
-	min-height: 500px;
-	padding:0 !important;
-	margin: 0 45px 0 0;
-}
-.maincontent:before{
+
+main:before{
 	content: "";
 	position: fixed;
 	left: 0;
@@ -323,7 +324,7 @@ nav .brand-logo img{
 }
 footer.page-footer-custom {
 	clear: both;
-    position: absolute;
+   /* position: absolute;*/
     width: 100%;
     bottom: 0;
     height: 180px;
@@ -359,9 +360,10 @@ svg.itemRow-dragIcon{
 	width: 13px;
     // position: absolute;
     margin-left: -19px;
-    margin-top: 15px;
+    margin-top: 5px;
     fill: #0089ec;
     cursor: pointer;
+    position: absolute;
 }
 #dashleft-sidebar ul{
 	border: 0;
@@ -372,8 +374,9 @@ svg.itemRow-dragIcon{
     border-left: 0 !important;
     border-right: 0 !important;
     font-size: 14px;
-    padding-bottom: 0;
-    padding-top: 0;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 #dashleft-sidebar li input, #dashleft-sidebar li span{
 	border: none;
@@ -386,15 +389,25 @@ svg.itemRow-dragIcon{
 }
 #dashleft-sidebar li .edit-icon, #dashleft-sidebar li .delete-icon{
 	position: absolute;
-    margin-top: 15px;
+    margin-top: 2px;
     font-size: 17px;
     cursor: pointer;
+    right: 0;
 }
 
  #dashleft-sidebar li .delete-icon{
- 	margin-left: 27px;
+ 	margin-right: 3px;
+ }
+ #dashleft-sidebar li .edit-icon{
+ 	margin-right: 25px;
  }
 
+#dashleft-sidebar li .edit-icon, #dashleft-sidebar li .delete-icon, #dashleft-sidebar li svg.itemRow-dragIcon{
+	display: none;
+}
+#dashleft-sidebar li:hover .edit-icon, #dashleft-sidebar li:hover .delete-icon, #dashleft-sidebar li:hover svg.itemRow-dragIcon{
+	display: inline;
+}
 
 /* list info - center content*/
 #list-info{

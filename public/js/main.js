@@ -71,21 +71,21 @@
 /***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 var app = angular.module('rebuy', []);
 
-__webpack_require__(8);
+__webpack_require__(9);
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports) {
 
 app.controller('dashboardController', function ($scope, $http) {});

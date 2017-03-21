@@ -59,7 +59,7 @@ require('./bootstrap');
 		});
 
 	    //make the toolbar restful
-	    $('.toolbar').on('click', 'li a', function(){
+	    /*$('.toolbar').on('click', 'li a', function(){
 	    	var page = $(this).attr('href').replace('#/','/admin/');
 	    	loadsubpage(page)
 	    });
@@ -73,7 +73,7 @@ require('./bootstrap');
 	    		loadsubpage(page);
 	    		window.loadsubpage = page;
 	    	}
-	    }
+	    }*/
 	});
 
 	// The rest of the codes goes here
