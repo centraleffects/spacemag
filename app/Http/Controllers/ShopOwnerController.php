@@ -25,4 +25,12 @@ class ShopOwnerController extends Controller
     public function todo(){
         return view('shop_owner.todo');
     }
+
+    public function workers(){
+        return view('shop_owner.workers');
+    }
+
+    public function workersTodo(){
+        return view('shop_owner.workers_todo');
+    }
 }

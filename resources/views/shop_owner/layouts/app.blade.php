@@ -39,7 +39,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#!" class="btn green waves-effect waves-light">
+                                        <a href="{{ url('shop/workers') }}" class="btn green waves-effect waves-light">
                                             Add Shop Workers
                                         </a>
                                     </li>
@@ -49,7 +49,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#!" class="btn green waves-effect waves-light">
+                                        <a href="{{ url('shop/workers/todo') }}" class="btn green waves-effect waves-light">
                                             Todo for workers
                                         </a>
                                     </li>

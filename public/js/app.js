@@ -9265,6 +9265,78 @@ return jQuery;
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
+    $.ReBuy = {
+        alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
+            var btnYesLabel = btnYesLabel || 'OK',
+                modalWidth = modalWidth || '300',
+                callback = callback || 'function(){ return false; }',
+                modalId = 'alertDialog',
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                        <div class="modal-content">\
+                          <p>' + message + '</p>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
+                        </div>\
+                      </div>';
+
+            if ($('#' + modalId).length == 0) {
+                $('body').append(html);
+            } else {
+                $('#' + modalId).html(html);
+            }
+            $('.modal').modal();
+            $('#' + modalId).modal('open');
+            $('#' + modalId).find('.btn-yes-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+                callback();
+            });
+        },
+        confirmDialog: function confirmDialog(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
+            var btnYesLabel = btnYesLabel || 'OK',
+                btnNoLabel = btnNoLabel || 'Cancel',
+                modalWidth = modalWidth || '300',
+                doCallback = doCallback || 'function(){ return false; }',
+                modalId = 'confirmDialog',
+                alertDialogModal = $('#' + modalId),
+                $body = $('body'),
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                        <div class="modal-content">\
+                          <p>' + message + '</p>\
+                        </div>\
+                        <div class="modal-footer">\
+                          <a href="#!" class=" modal-action btn-no-label waves-effect waves-green btn-flat">' + btnNoLabel + '</a>\
+                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
+                        </div>\
+                      </div>';
+
+            if ($('#' + modalId).length == 0) {
+                $('body').append(html);
+            } else {
+                $('#' + modalId).html(html);
+            }
+            $('.modal').modal();
+            $('#' + modalId).modal('open');
+            $('#' + modalId).find('.btn-yes-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+                doCallback();
+            });
+            $('#' + modalId).find('.btn-no-label').on('click', function () {
+                $('#' + modalId).modal('close');
+                $('#' + modalId).remove();
+            });
+        }
+    };
+})(jQuery);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -9292,8 +9364,8 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 2 */,
-/* 3 */
+/* 3 */,
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {
@@ -9303,7 +9375,7 @@ module.exports = function(module) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(6);
+__webpack_require__(7);
 
 // init
 (function (rebuy) {
@@ -9409,7 +9481,7 @@ var app = angular.module('rebuy', []);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**
@@ -42549,15 +42621,15 @@ $provide.value("$locale", {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(4);
+__webpack_require__(5);
 module.exports = angular;
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {
@@ -42571,13 +42643,13 @@ window._ = __webpack_require__(11);
 
 window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(0);
 
-window.angular = __webpack_require__(5);
+window.angular = __webpack_require__(6);
 
 __webpack_require__(8);
 
 __webpack_require__(9);
 
-__webpack_require__(7);
+__webpack_require__(1);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -42591,78 +42663,6 @@ __webpack_require__(7);
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
-    $.ReBuy = {
-        alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
-            var btnYesLabel = btnYesLabel || 'OK',
-                modalWidth = modalWidth || '300',
-                callback = callback || 'function(){ return false; }',
-                modalId = 'alertDialog',
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
-                        <div class="modal-content">\
-                          <p>' + message + '</p>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
-                        </div>\
-                      </div>';
-
-            if ($('#' + modalId).length == 0) {
-                $('body').append(html);
-            } else {
-                $('#' + modalId).html(html);
-            }
-            $('.modal').modal();
-            $('#' + modalId).modal('open');
-            $('#' + modalId).find('.btn-yes-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-                callback();
-            });
-        },
-        confirmDialog: function confirmDialog(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
-            var btnYesLabel = btnYesLabel || 'OK',
-                btnNoLabel = btnNoLabel || 'Cancel',
-                modalWidth = modalWidth || '300',
-                doCallback = doCallback || 'function(){ return false; }',
-                modalId = 'confirmDialog',
-                alertDialogModal = $('#' + modalId),
-                $body = $('body'),
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
-                        <div class="modal-content">\
-                          <p>' + message + '</p>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#!" class=" modal-action btn-no-label waves-effect waves-green btn-flat">' + btnNoLabel + '</a>\
-                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
-                        </div>\
-                      </div>';
-
-            if ($('#' + modalId).length == 0) {
-                $('body').append(html);
-            } else {
-                $('#' + modalId).html(html);
-            }
-            $('.modal').modal();
-            $('#' + modalId).modal('open');
-            $('#' + modalId).find('.btn-yes-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-                doCallback();
-            });
-            $('#' + modalId).find('.btn-no-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-            });
-        }
-    };
-})(jQuery);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -51268,7 +51268,7 @@ if (jQuery) {
     }
   }; // Plugin end
 })(jQuery);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0), __webpack_require__(0), __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0), __webpack_require__(0), __webpack_require__(2)(module)))
 
 /***/ }),
 /* 9 */
@@ -71168,7 +71168,7 @@ if (true) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(2)(module)))
 
 /***/ }),
 /* 12 */
@@ -71220,7 +71220,7 @@ module.exports = g;
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(4);
 
 
 /***/ })

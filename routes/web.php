@@ -52,6 +52,8 @@ Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
 	Route::get('clients/articles', 'ShopOwnerController@articles');
 	Route::get('customers', 'ShopOwnerController@customers');
 	Route::get('todo', 'ShopOwnerController@todo');
+	Route::get('workers', 'ShopOwnerController@workers');
+	Route::get('workers/todo', 'ShopOwnerController@workersTodo');
 });
 
 
