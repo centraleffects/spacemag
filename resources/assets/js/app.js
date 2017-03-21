@@ -113,6 +113,3 @@ require('./bootstrap');
 	    
 	}
 }));
-
-
-var app = angular.module('rebuy', []);

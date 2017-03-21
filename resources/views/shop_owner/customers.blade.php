@@ -1,28 +1,33 @@
 @component('shop_owner.layouts.app')
-	<div class="col s12 m12 l3">
+	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
-			<ul class="collection">
-				<li class="collection-item">
-					@include('layouts._partials.dragicon')
-					<input type="text" value="John Doe">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
+			<div class="card-content">
+				<div class="card-title">
+					<i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers
+				</div>
+				<ul class="collection">
+					<li class="collection-item">
+						@include('layouts._partials.dragicon')
+						<input type="text" value="John Doe">
+						<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+				    </li>
 
-			    <li class="collection-item">
-					@include('layouts._partials.dragicon')
-					<input type="text" value="Johny Doer">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-			</ul>
+				    <li class="collection-item">
+						@include('layouts._partials.dragicon')
+						<input type="text" value="Johny Doer">
+						<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+				    </li>
+				</ul>
+			</div>
 			<div class="card-action">
 				<a class="btn waves-effect waves-light blue" href="{{ url('shop/customers/create') }}">
 					<i class="fa fa-plus"></i> Add New Customer
 				</a>
 			</div>
 		</div>
-	</div>
-	<div class="col s12 m12 l6">
+	@endslot
+	
+	@slot('center')
 		<div id="" class="row">
 			<div class="card hoverable"><!-- Customer's Details -->
 				<div class="card-content">
@@ -95,11 +100,12 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col s12 m12 l3">
+	@endslot
+
+	@slot('right')
 		<div class="row">
 			@include('shop_owner.partials._shopinfo')
 		</div>
-	</div>
+	@endslot
 
 @endcomponent

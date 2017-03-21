@@ -3,5 +3,5 @@
 @if( auth()->check() && auth()->user()->isAdmin() )
 <script src="{{ mix('js/admin_shop_controller.js') }}"></script>
 @elseif( auth()->check() && !auth()->user()->isAdmin() )
-
+	<script src="{{ mix('js/main.js') }}"></script>
 @endif

@@ -60,6 +60,15 @@
                 </div>
                 <div class="row content-wrap">
                     {{ $slot }}
+                    <div class="col s12 m12 l3">
+                        {{ $left or '' }}
+                    </div>
+                    <div class="col s12 m12 l6">
+                        {{ $center or '' }}
+                    </div>
+                    <div class="col s12 m12 l3">
+                        {{ $right or '' }}
+                    </div>
                 </div>
             </div>
         </div>

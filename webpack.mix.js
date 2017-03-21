@@ -21,5 +21,6 @@ mix.combine([
    ], 'public/css/app.css');
 
 mix.js('resources/assets/js/app.js', 'public/js/app.js')
-   .js('resources/assets/js/admin_shop_controller.js', 'public/js/admin_shop_controller.js');
+   .js('resources/assets/js/admin_shop_controller.js', 'public/js/admin_shop_controller.js')
+   .js('resources/assets/js/main.js', 'public/js/main.js');
    

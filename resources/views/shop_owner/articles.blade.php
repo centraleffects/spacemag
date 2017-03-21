@@ -1,5 +1,5 @@
 @component('shop_owner.layouts.app')
-	<div class="col s12 m12 l3">
+	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Articles</h5>
 			<ul class="collection">
@@ -33,8 +33,8 @@
 				</button>
 			</div>
 		</div>
-	</div>
-	<div class="col s12 m12 l6">
+	@endslot
+	@slot('center')
 		<div id="" class="row">
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
@@ -109,10 +109,10 @@
 				</div>
 			</div><!-- end Client's Details -->
 		</div>
-	</div>
-	<div class="col  s12 m12 l3">
+	@endslot
+	@slot('right')
 		<div class="row">
 			@include('shop_owner.partials._shopinfo')
 		</div>
-	</div>
+	@endslot
 @endcomponent

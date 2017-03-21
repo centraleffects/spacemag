@@ -1,5 +1,6 @@
 {
   "/js/app.js": "/js/app.js",
+  "/js/main.js": "/js/main.js",
   "/js/admin_shop_controller.js": "/js/admin_shop_controller.js",
   "/css/vendor.css": "/css/vendor.css",
   "/css/app.css": "/css/app.css"
