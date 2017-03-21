@@ -1,4 +1,4 @@
-@component('admin.layouts.app')
+
 <div class="col s3">
 	<div  class="card hoverable" id="dashleft-sidebar">
 		<h5><i class="material-icons">face</i> List of Users</h5>
@@ -175,6 +175,3 @@
 			
 
 </div>
-
-
-@endcomponent

@@ -9270,7 +9270,7 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
-    $.ReBuy = {
+    $.reBuy = {
         alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
             var btnYesLabel = btnYesLabel || 'OK',
                 modalWidth = modalWidth || '300',
@@ -9332,8 +9332,33 @@ return jQuery;
                 $('#' + modalId).modal('close');
                 $('#' + modalId).remove();
             });
+        },
+        initMaterialize: function initMaterialize() {
+
+            Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
+
+            $('.dropdown-button').dropdown({ "hover": false });
+            $('ul.tabs').tabs();
+            $('.tab-demo').show().tabs();
+            $('.parallax').parallax();
+            $('.modal').modal();
+            $('.tooltipped').tooltip({ "delay": 45 });
+            $('.collapsible-accordion').collapsible();
+            $('.collapsible-expandable').collapsible({ "accordion": false });
+            $('.materialboxed').materialbox();
+            $('.scrollspy').scrollSpy();
+            $('.button-collapse').sideNav();
+            $('.datepicker').pickadate();
+            $('.do-nav-slideout').click(function () {
+                $('.button-collapse').sideNav('show');
+            });
+            $('.chips').material_chip();
+            $('select').material_select();
+            // $('#password').strength_meter();
         }
     };
+
+    window.reBuy = $.reBuy;
 })(jQuery);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
