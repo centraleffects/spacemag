@@ -27,11 +27,16 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'AdminController@index'); // Matches The "admin/" URL
-    Route::get('/dashboard', 'AdminController@index'); 
+    Route::get('/dashboard', 'AdminController@index', function(){
+    	 return View::make('dashboard'); 
+    }); // Matches The "admin/" URL); 
     Route::get('/users', 'AdminController@users'); 
     Route::get('/shops', 'AdminController@shops'); 
     Route::get('/categories', 'AdminController@categories'); 
     Route::get('/transactions', 'AdminController@transactions'); 
+
+    Route::get('/users/{id?}',['uses' =>'AdminController@users']);
+    Route::get('/users/delete/{delete?}',['uses' =>'AdminController@users']);
 
      //API calls for admin
     Route::get('/shops/list', 'ShopController@admin_list'); 
