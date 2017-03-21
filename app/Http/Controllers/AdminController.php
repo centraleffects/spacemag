@@ -20,9 +20,9 @@ class AdminController extends Controller
     }
 
 
-    public function users($id){
+    public function users(){
        
-        $users = User::limit(30)->offset(0)->get();
+   /*     $users = User::limit(30)->offset(0)->get();
         $user_details_default = (object)[
                     'id'         => 0,
                     'first_name' => '',
@@ -42,9 +42,10 @@ class AdminController extends Controller
         if($id){
             $user_details  = User::findOrFail($id);
         }
-        $user_details =  !empty($user_details) ? $user_details : $user_details_default;
+        $user_details =  !empty($user_details) ? $user_details : $user_details_default;*/
 
-        return view('admin.users', ['users' => $users, 'user_details' => $user_details ]);
+       // return view('admin.users', ['users' => $users, 'user_details' => $user_details ]);
+        return view('admin.users');
     }
 
     public function shops(Request $request){
