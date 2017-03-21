@@ -1,8 +1,7 @@
 @component('admin.layouts.app')
-
 <div class="col s3">
 	<div  class="card hoverable" id="dashleft-sidebar">
-		<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Users</h5>
+		<h5><i class="material-icons">face</i> List of Users</h5>
 		<ul class="collection">
 
 			@foreach($users as $user)
@@ -19,21 +18,22 @@
 </div>
 <div class="col s12 m6 l6">
 		<div id="" class="row">
+		{{ Form::open(array('url' => "api/users/update/$user_details->id" )) }}
 			<div class="card hoverable"><!-- Customer's Details -->
 				<div class="card-content">
 					<span class="card-title">User Details</span>
 					<p></p>
 					<div class="client-details">
 						<div class="input-field">
-							<input type="text" name="name" value="{{$user->first_name}}" />
+							<input type="text" name="name" value="{{ $user_details->first_name ?: '' }}" />
 							<label>First Name</label>
 						</div>
 						<div class="input-field">
-							<input type="text" name="name" value="{{$user->last_name}}" />
+							<input type="text" name="name" value="{{ $user_details->last_name  ?: '' }}" />
 							<label>Last Name</label>
 						</div>
 						<div class="input-field">
-							<input type="email" name="email" class="validate" value="{{$user->email}}">
+							<input type="email" name="email" class="validate" value="{{ $user_details->email  ?: '' }}">
 							<label>Email</label>
 						</div>
 
@@ -44,62 +44,63 @@
 
 						<div class="input-field">
 							<select name="gender">
-								<option value="Male">Male</option>
-								<option value="Female">Female</option>
+								<option value="m" {{ $user_details->gender == 'm' ? 'selected="selected"' : '' }} >Male</option>
+								<option value="f" {{ $user_details->gender == 'f' ? 'selected="selected"' : '' }} >Female</option>
 							</select>
 							<label>Gender</label>
 						</div>
 
 						<div class="input-field">
 							<select name="gender">
-								<option value="admin">Administrator</option>
-								<option value="owner" selected="selected">Shop Owner</option>
-								<option value="client">Client</option>
-								<option value="customer">Customer</option>
+								<option value="admin"  {{ $user_details->role == 'admin' ? 'selected="selected"' : '' }} >Administrator</option>
+								<option value="owner"  {{ $user_details->role == 'owner' ? 'selected="selected"' : '' }} >Shop Owner</option>
+								<option value="worker"  {{ $user_details->role == 'worker' ? 'selected="selected"' : '' }} >Shop Worker</option>
+								<option value="client"  {{ $user_details->role == 'client' ? 'selected="selected"' : '' }} >Client</option>
+								<option value="customer" {{ $user_details->role == 'customer' ? 'selected="selected"' : '' }} >Customer</option>
 							</select>
 							<label>Type</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="address_1" class="" value="">
+							<input type="text" name="address_1" class="" value="{{ $user_details->address_1  ?: '' }}" autocomplete="false">
 							<label>Address 1</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="address_2" class="" value="">
+							<input type="text" name="address_2" class="" value="{{ $user_details->address_2  ?: '' }}">
 							<label>Address 2</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="city" class="" value="">
+							<input type="text" name="city" class="" value="{{ $user_details->city  ?: '' }}">
 							<label>City</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="zip_code" class="" value="">
-							<label>Zip Code</label>
+							<input type="text" name="zip_code" class="" value="{{ $user_details->zip_code  ?: '' }}">
+							<label>Zip Code</label>	
 						</div>
 
 						<div class="input-field">
 							<select name="country">
-								<option value="swe" selected="selected">Sweden</option>
+								<option value="swe" {{ $user_details->country == 'swe' ? 'selected="selected"' : '' }}>Sweden</option>
 							</select>
 							<label>Country</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="telephone" class="" value="">
+							<input type="text" name="telephone" class="" value="{{ $user_details->telephone  ?: '' }}">
 							<label>Telephone</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="mobile" class="" value="">
+							<input type="text" name="mobile" class="" value="{{ $user_details->mobile  ?: '' }}">
 							<label>Mobile</label>
 						</div>
 
 						<div class="input-field">
 							<select name="lang">
-								<option value="en" selected="selected">English</option>
+								<option value="en" {{ $user_details->lang == 'en' ? 'selected="selected"' : '' }}>English</option>
 							</select>
 							<label>Default Language</label>
 						</div>
@@ -111,14 +112,13 @@
 						<button class="btn waves-effect waves-light orange" title="Generate Password">
 							<i class="fa fa-random"></i> Generate Password
 						</button>
-						<button class="btn waves-effect waves-light green" title="Generate Password">
-							<i class="fa fa-random"></i> Update Information
+						<button class="btn waves-effect waves-light green"  type="submit" title="Generate Password">
+							<i class="fa fa-floppy-o" aria-hidden="true"></i> {{ $user_details->id == '0' ? 'Save Information' : 'Update Information' }}
 						</button>
 					</div>
 				</div>
 			</div><!-- end Customer's Details -->
-
-			
+			{{ Form::close() }}
 		</div>
 	</div>
 <div class="col s3">
@@ -166,18 +166,15 @@
 				</button>
 			</div>
 		</div>
+
+		<div ng-controller="adminUserController">
+		 		<ul ng-repeat="shop in shops">
+		 			<li>@{{shop.name}}</li>
+		 		</ul>
+		 </div>
+			
+
 </div>
 
- <div class="fixed-action-btn">
-    <a class="btn-floating btn-large red">
-      <i class="large material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
-  </div>
-	
+
 @endcomponent

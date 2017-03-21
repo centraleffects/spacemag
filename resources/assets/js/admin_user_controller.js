@@ -1,8 +1,5 @@
 
-var app = angular.module('rebuy', [], function($interpolateProvider) {
-	$interpolateProvider.startSymbol('<%');
-	$interpolateProvider.endSymbol('%>');
-});
+var app = app || angular.module('rebuy', []);
 
 app.controller('adminUserController', function($scope, $http) {
 	
@@ -12,6 +9,8 @@ app.controller('adminUserController', function($scope, $http) {
         {name:'Hege',country:'Sweden'},
         {name:'Kai',country:'Denmark'}
     ];
+
+
 
     $scope.init = function() {
     /*

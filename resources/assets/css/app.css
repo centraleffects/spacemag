@@ -351,11 +351,6 @@ footer.page-footer-custom {
     margin-top: 15px;
 }
 
-#dashleft-sidebar ul.collection {
-    max-height: 350px;
-    overflow-y: scroll;
-}
-
 svg.itemRow-dragIcon{
 	width: 13px;
     // position: absolute;
@@ -364,6 +359,14 @@ svg.itemRow-dragIcon{
     fill: #0089ec;
     cursor: pointer;
     position: absolute;
+}
+#dashleft-sidebar h5{
+    padding-left: 26px;
+}
+#dashleft-sidebar h5 i{
+    margin-top: -1px;
+    position: absolute;
+    margin-left: -27px;
 }
 #dashleft-sidebar ul{
 	border: 0;
@@ -378,6 +381,7 @@ svg.itemRow-dragIcon{
     padding-top: 5px;
     padding-bottom: 5px;
 }
+
 #dashleft-sidebar li input, #dashleft-sidebar li span{
 	border: none;
 	padding: 0;

@@ -19,8 +19,7 @@ use Illuminate\Http\Request;
 // });
 
 
-Route::get('users', 'UserController@index');
-Route::get('users/{user}', 'UserController@show');
+
 
 Route::group(['prefix' => 'test'], function(){
 	Route::get('users', 'UserController@test');
@@ -30,4 +29,10 @@ Route::group(['prefix' => 'test'], function(){
 Route::group(['prefix' => 'shops'], function (){
 	Route::get('all', 'ShopController@index');
 	Route::get('{$shop}', 'ShopController@show');
+});
+
+Route::group(['prefix' => 'users'], function (){
+	Route::get('/', 'UserController@index');
+	Route::get('{user}', 'UserController@show');
+	Route::post('update/{user}', 'UserController@update');
 });

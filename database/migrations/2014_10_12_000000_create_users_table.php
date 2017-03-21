@@ -38,6 +38,7 @@ class CreateUsersTable extends Migration
             $table->string('address_2')->nullable();
             $table->string('city')->nullable();
             $table->string('zip_code')->nullable();
+            $table->string('country')->nullable();
 
             $table->smallInteger('signed_agreement')->default(0);
             $table->smallInteger('is_email_confirmed')->default(0);

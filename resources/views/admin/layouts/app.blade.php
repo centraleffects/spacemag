@@ -62,6 +62,7 @@
 
     </section>
 
+    @include( 'admin.partials._fixedbuttons')
 
     @if(Session::has("flash_message"))
         <script type="text/javascript">

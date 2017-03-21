@@ -1,6 +1,7 @@
 {
   "/js/app.js": "/js/app.js",
   "/js/rebuy.lib.js": "/js/rebuy.lib.js",
+  "/js/admin_user_controller.js": "/js/admin_user_controller.js",
   "/js/admin_shop_controller.js": "/js/admin_shop_controller.js",
   "/css/vendor.css": "/css/vendor.css",
   "/css/app.css": "/css/app.css"
