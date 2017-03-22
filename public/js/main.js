@@ -63,12 +63,19 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 19:
+/***/ 10:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5);
@@ -79,16 +86,9 @@ module.exports = __webpack_require__(5);
 /***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
-var app = angular.module('rebuy', []);
+window.app = angular.module('rebuy', []);
 
-__webpack_require__(9);
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
+__webpack_require__(10);
 
 /***/ })
 

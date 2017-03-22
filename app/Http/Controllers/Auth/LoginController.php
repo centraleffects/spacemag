@@ -97,7 +97,7 @@ class LoginController extends Controller
             $user->gender = $data->gender;
             $user->facebook_id = $fb_user->id;
             $user->password = bcrypt(str_random(10)); // use a random password
-
+            $user->api_token = str_random(60); // token that we will use for our api routes
             $user->avatar = $fb_user->avatar;
             $user->avatar_original = $fb_user->avatar_original;
 

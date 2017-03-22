@@ -15,26 +15,27 @@ use Illuminate\Http\Request;
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 	
-//     return $request->user();
+//     return dd($request->user());
 // });
 
 
 
 
-Route::group(['prefix' => 'test'], function(){
+Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function(){
 	Route::get('users', 'UserController@test');
 });
 
 
-Route::group(['prefix' => 'shops'], function (){
-	Route::get('all', 'ShopController@index');
-	Route::get('{$shop}', 'ShopController@show');
+Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
+	Route::get('/', 'ShopController@index');
+	Route::get('{shop}', 'ShopController@show');
 	Route::post('create', 'ShopController@create');
 	Route::post('delete', 'ShopController@destroy');
 });
 
-Route::group(['prefix' => 'users'], function (){
+Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'UserController@index');
 	Route::get('{user}', 'UserController@show');
 	Route::post('update/{user}', 'UserController@update');
+	Route::post('{user}/shops', 'ShopController@get');
 });

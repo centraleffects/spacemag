@@ -44,6 +44,7 @@ class CreateUsersTable extends Migration
             $table->smallInteger('is_email_confirmed')->default(0);
 
             $table->string('lang')->default('se'); // defaults to Swedish
+            $table->string('api_token', 60)->unique();
 
             $table->rememberToken();
             $table->timestamps();

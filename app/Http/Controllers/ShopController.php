@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Shop;
 use Illuminate\Http\Request;
+use App\User;
+use Auth;
 
 class ShopController extends Controller
 {
@@ -14,7 +16,9 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('shop_owner.dashboard');
+        if( Auth::guard('api')->check() && Auth::guard('api')->user()->isAdmin() )
+            return Shop::all();
+        return Auth::guard('api')->user()->shops()->get();
     }
 
     /**
@@ -69,16 +73,7 @@ class ShopController extends Controller
         return $shop;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Shop  $shop
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Shop $shop)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -118,6 +113,17 @@ class ShopController extends Controller
     public function admin_list(){
         $shops = Shop::all();
         return $shops;
+    }
+
+    public function get(User $user){
+        if( Auth::guard('api')->user()->id == $user->id )
+            return $user->shops()->get();
+
+        return [
+            "error" => "Unauthorize access.", 
+            "code" => 403, 
+            "success" => false
+        ];
     }
 
 }

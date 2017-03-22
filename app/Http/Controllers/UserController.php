@@ -40,6 +40,13 @@ class UserController extends Controller
     {
         $input = \Input::all();
 
+        $validator = $this->verify($input);
+
+        if ($validator->fails())
+            return ['validation_errors' => $validator->messages()->messages(), 'success' => false];
+
+        $user = new User;
+
     }
 
     /**

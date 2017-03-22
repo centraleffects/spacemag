@@ -1,24 +1,20 @@
 @component('shop_owner.layouts.app')
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
-			<div class="card-content">
-				<div class="card-title">
-					<i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers
-				</div>
-				<ul class="collection">
-					<li class="collection-item">
-						@include('layouts._partials.dragicon')
-						<input type="text" value="John Doe">
-						<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-				    </li>
+			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
+			<ul class="collection">
+				<li class="collection-item">
+					@include('layouts._partials.dragicon')
+					<input type="text" value="John Doe">
+					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+			    </li>
 
-				    <li class="collection-item">
-						@include('layouts._partials.dragicon')
-						<input type="text" value="Johny Doer">
-						<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-				    </li>
-				</ul>
-			</div>
+			    <li class="collection-item">
+					@include('layouts._partials.dragicon')
+					<input type="text" value="Johny Doer">
+					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+			    </li>
+			</ul>
 			<div class="card-action">
 				<a class="btn waves-effect waves-light blue" href="{{ url('shop/customers/create') }}">
 					<i class="fa fa-plus"></i> Add New Customer
