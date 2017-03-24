@@ -2,17 +2,21 @@
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
+			<div class="input-field">
+				<input type="text" name="search" />
+				<label>Search for Customer</label>
+			</div>
 			<ul class="collection">
 				<li class="collection-item">
 					@include('layouts._partials.dragicon')
-					<input type="text" value="John Doe">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+					<span>John Doe</span>
+					<a href="#!" class="right" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 
 			    <li class="collection-item">
 					@include('layouts._partials.dragicon')
-					<input type="text" value="Johny Doer">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+					<span>Johny Doer</span>
+					<a href="#!" class="right" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>
 			<div class="card-action">
