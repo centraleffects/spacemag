@@ -66,17 +66,27 @@ Route::get('test-mail', function (){
 	Mail::to($user->email)->send(new Welcome);
 });
 
-Route::get('try', function (){
+/**
+ * Store the incoming blog post.
+ *
+ * @param  StoreUser  $request
+ * @return Response
+ */
+Route::post('try', function (){
+	// dd($request);
 	// Route for testing purposes
 	// do your quick algorithm test here
 	
-	$shop = new App\Shop;
-	$shop->name = "Rebuy Shop";
-	$shop->description = "";
-	$shop->url = "";
-	$shop->currency = "";
+	// $shop = new App\Shop;
+	// $shop->name = "Rebuy Shop";
+	// $shop->description = "";
+	// $shop->url = "";
+	// $shop->currency = "";
 	
-	auth()->user()->shops()->save($shop);
+	// auth()->user()->shops()->save($shop);
 
-	dd($shop);
+	// dd($shop);
+
+
+
 });

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Validator;
+
+use Auth;
+
+use App\Http\Requests\StoreUser;
 
 
 use App\User;
@@ -13,6 +16,7 @@ use App\Shop;
 
 class UserController extends Controller
 {   
+    protected $rules;
 
     function __construct()
     {
@@ -69,21 +73,16 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user)
-    {
+
+    public function update(StoreUser $request){
         $input = Input::all();
-        
+
         $response = ['success' => 0];
 
-        $validator = $this->verify($input);
-
-        if ($validator->fails())
-            return ['validation_errors' => $validator->messages()->messages(), 'success' => false];
-
-
+        $user = Auth::guard('api')->user();
         $user->address_1 = $input['address_1'];
 
-        if( $user->save() )
+        if( $user->update() )
             $response['success'] = 1; 
 
         return $response;
@@ -117,25 +116,8 @@ class UserController extends Controller
 
         dd($shops);
     }
-    
-
-    private function rules(){
-        return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'gender' => 'required',
-            'role' => 'required',
-            'address_1' => 'required',
-            'address_2' => 'alpha_num',
-            'city' => 'alpha_num',
-            'zip_code' => 'required|numeric',
-            'telephone' => 'required|numeric',
-            'mobile' => 'required|numeric',
-        ]; 
-    }
 
     public function verify($input){
-        return Validator::make($input, $this->rules());
+        return Validator::make($input, $this->rules);
     }
 }

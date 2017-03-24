@@ -36,6 +36,10 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'UserController@index');
 	Route::get('{user}', 'UserController@show');
-	Route::post('update/{user}', 'UserController@update');
+	Route::post('update', 'UserController@update');
 	Route::post('{user}/shops', 'ShopController@get');
+});
+
+Route::group(['prefix' => 'workers', 'middleware' => 'auth:api'], function (){
+	Route::get('/', 'UserController@workers');
 });
