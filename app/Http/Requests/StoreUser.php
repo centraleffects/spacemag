@@ -37,4 +37,5 @@ class StoreUser extends FormRequest
             'mobile' => 'required|numeric',
         ];
     }
+
 }

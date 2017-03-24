@@ -9,8 +9,9 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 
-window.angular = require('angular');
-
+//window.angular = require('angular');
+require('./angular/angular.min.js');
+require('./angular/angular-route.js');
 require('../materialize/js/materialize.js');
 
 require('../password_strength/password_strength_lightweight.js');

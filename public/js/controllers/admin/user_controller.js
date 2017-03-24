@@ -63,15 +63,33 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 16:
+/***/ 1:
+/***/ (function(module, exports) {
+
+
+rebuyApp.controller('UserController', function ($scope, $http) {
+
+    $scope.users = [];
+
+    $scope.init = function () {
+
+        $scope.users = reBuy.angularGet($http, '/api/users/list');
+    };
+
+    $scope.init();
+});
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
-(function webpackMissingModule() { throw new Error("Cannot find module \"/media/rex/data/htdocs/rebuy.se/rebuy/resources/assets/js/admin_shop_controller.js\""); }());
+module.exports = __webpack_require__(1);
 
 
 /***/ })

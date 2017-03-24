@@ -1,25 +1,14 @@
 
-app.controller('userController', function($scope, $http) {
-	
-	
-	$scope.shops = [
-        {name:'Jani',country:'Norway'},
-        {name:'Hege',country:'Sweden'},
-        {name:'Kai',country:'Denmark'}
-    ];
+rebuyApp.controller('UserController', function($scope, $http) {
 
-
+    $scope.users = [];
 
     $scope.init = function() {
-    /*
-		$http.get('/api/shops/list')
-    	 .then( function(response){
-    	 	$scope.shops.list = response;
-    	 });*/
-    	 console.log('init started');
+
+		$scope.users = reBuy.angularGet($http,'/api/users/list');
+
 
 	}
-   /* 
-    	console.log($scope.shops);*/
+
     $scope.init();
 });

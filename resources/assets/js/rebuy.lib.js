@@ -1,12 +1,12 @@
 (function($){
     $.reBuy = {
-        alertDialog : function (message, btnYesLabel, modalWidth, callback){
+        alert : function (message, btnYesLabel, modalWidth, callback){
              var btnYesLabel = btnYesLabel || 'OK',
-                 modalWidth  = modalWidth  || '300',
+                 modalWidth  = modalWidth  || '300px',
                  callback    = callback    || 'function(){ return false; }',
                  modalId     = 'alertDialog',
                  html =
-                    '<div id="'+modalId+'" class="modal" style="width:' + modalWidth + 'px">\
+                    '<div id="'+modalId+'" class="modal" style="width:' + modalWidth + '">\
                         <div class="modal-content">\
                           <p>'+ message +'</p>\
                         </div>\
@@ -25,11 +25,14 @@
                 $('#' + modalId).find('.btn-yes-label').on('click', function(){
                         $('#' + modalId).modal('close');
                         $('#' + modalId).remove();
-                        callback();
+                        try {
+                          callback();
+                        }catch(e){}
+                        
                     });
 
         },
-        confirmDialog : function (message, doCallback,  btnYesLabel,  btnNoLabel, modalWidth){
+        confirm : function (message, doCallback,  btnYesLabel,  btnNoLabel, modalWidth){
              var btnYesLabel = btnYesLabel || 'OK',
                  btnNoLabel  = btnNoLabel  || 'Cancel',
                  modalWidth  = modalWidth  || '300',
@@ -58,7 +61,9 @@
                 $('#' + modalId).find('.btn-yes-label').on('click', function(){
                         $('#' + modalId).modal('close');
                         $('#' + modalId).remove();
-                        doCallback();
+                        try {
+                          doCallback();
+                        }catch(e){}
                     })
                 $('#' + modalId).find('.btn-no-label').on('click', function(){
                         $('#' + modalId).modal('close');
@@ -88,6 +93,20 @@
             $('select').material_select();
             // $('#password').strength_meter();
     
+        },
+        toast : function(message){
+           Materialize.toast(message, 4000);
+        },
+        angularGet : function($http,$path){
+          var res;
+          $http.get($path)
+           .then( function(response){
+             return response;
+           }, function(response){
+               // $.reBuy.alert('Error '+response.status+' ['+response.statusText+'] \
+               //in accessing  <a href="'+$path+'" target="_blank">'+$path+'</a>');
+                return response;
+             });
         }
     }
 

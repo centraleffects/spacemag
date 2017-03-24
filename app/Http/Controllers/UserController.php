@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
+// use App\Http\Requests\StoreUser;
+
 
 use App\User;
 use App\Shop;
@@ -88,6 +90,17 @@ class UserController extends Controller
 
         return $response;
     }
+    /*public function update(StoreUser $request){
+        $input = Input::all();
+        $response = ['success' => 0];
+
+        $user->address_1 = $input['address_1'];
+
+        if( $user->save() )
+            $response['success'] = 1;
+
+        return $response;
+    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -102,11 +115,16 @@ class UserController extends Controller
 
 
     /**
-     * Display list of shops
+     * Display list of users
      */
-    public function admin_list(){
-        $user = User::all();
-        return $user;
+    public function getlist(){
+        
+        $limit = 30;
+        $offset = 0;
+
+        $users = User::limit($limit)->offset($offset)->get();
+
+        return $users;
     }
 
 

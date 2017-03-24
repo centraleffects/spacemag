@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9266,17 +9266,17 @@ return jQuery;
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
     $.reBuy = {
-        alertDialog: function alertDialog(message, btnYesLabel, modalWidth, callback) {
+        alert: function alert(message, btnYesLabel, modalWidth, callback) {
             var btnYesLabel = btnYesLabel || 'OK',
-                modalWidth = modalWidth || '300',
+                modalWidth = modalWidth || '300px',
                 callback = callback || 'function(){ return false; }',
                 modalId = 'alertDialog',
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
+                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + '">\
                         <div class="modal-content">\
                           <p>' + message + '</p>\
                         </div>\
@@ -9295,10 +9295,12 @@ return jQuery;
             $('#' + modalId).find('.btn-yes-label').on('click', function () {
                 $('#' + modalId).modal('close');
                 $('#' + modalId).remove();
-                callback();
+                try {
+                    callback();
+                } catch (e) {}
             });
         },
-        confirmDialog: function confirmDialog(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
+        confirm: function confirm(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
             var btnYesLabel = btnYesLabel || 'OK',
                 btnNoLabel = btnNoLabel || 'Cancel',
                 modalWidth = modalWidth || '300',
@@ -9326,7 +9328,9 @@ return jQuery;
             $('#' + modalId).find('.btn-yes-label').on('click', function () {
                 $('#' + modalId).modal('close');
                 $('#' + modalId).remove();
-                doCallback();
+                try {
+                    doCallback();
+                } catch (e) {}
             });
             $('#' + modalId).find('.btn-no-label').on('click', function () {
                 $('#' + modalId).modal('close');
@@ -9355,6 +9359,19 @@ return jQuery;
             $('.chips').material_chip();
             $('select').material_select();
             // $('#password').strength_meter();
+        },
+        toast: function toast(message) {
+            Materialize.toast(message, 4000);
+        },
+        angularGet: function angularGet($http, $path) {
+            var res;
+            $http.get($path).then(function (response) {
+                return response;
+            }, function (response) {
+                // $.reBuy.alert('Error '+response.status+' ['+response.statusText+'] \
+                //in accessing  <a href="'+$path+'" target="_blank">'+$path+'</a>');
+                return response;
+            });
         }
     };
 
@@ -9364,10 +9381,10 @@ return jQuery;
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(1);
+module.exports = __webpack_require__(2);
 
 
 /***/ })
