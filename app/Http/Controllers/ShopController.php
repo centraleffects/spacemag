@@ -27,7 +27,7 @@ class ShopController extends Controller
     {
         if( Auth::guard('api')->check() && Auth::guard('api')->user()->isAdmin() )
             return Shop::all();
-        return Auth::guard('api')->user()->shops()->get();
+        return Auth::guard('api')->user()->shops()->paginate(10);
     }
 
     /**
@@ -62,11 +62,6 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // Shop::create(array(
-        //     'name' => Input::get('name'),
-        //     'description' => Input::get('description')
-        // ));
         $input = Input::all();
 
         $shop = new Shop;
@@ -133,13 +128,17 @@ class ShopController extends Controller
 
     public function get(User $user){
         if( Auth::guard('api')->user()->id == $user->id )
-            return $user->shops()->get();
+            return $user->shops()->paginate(10);
 
         return [
             "error" => "Unauthorize access.", 
             "code" => 403, 
             "success" => false
         ];
+    }
+
+    public function users(Shop $shop){
+        return $shop->users()->paginate(10);
     }
 
 }

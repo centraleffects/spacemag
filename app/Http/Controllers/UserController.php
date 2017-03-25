@@ -9,9 +9,6 @@ use Auth;
 
 use App\Http\Requests\StoreUser;
 
-// use App\Http\Requests\StoreUser;
-
-
 use App\User;
 use App\Shop;
 
@@ -32,7 +29,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return User::paginate(50);
     }
 
 
@@ -118,7 +115,7 @@ class UserController extends Controller
      */
     public function getlist(){
 
-        $users = User::paginate();
+	   $user = User::paginate(50);
 
         return $users;
     }
@@ -129,9 +126,5 @@ class UserController extends Controller
         $shops = $user->shops()->first();
 
         dd($shops);
-    }
-
-    public function verify($input){
-        return Validator::make($input, $this->rules);
     }
 }

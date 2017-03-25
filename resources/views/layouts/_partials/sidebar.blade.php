@@ -44,7 +44,7 @@
                 <a menu-link href="#/dashboard" icon="md md-blur-on">Dashboard</a>
             @endif
             <li>
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="#!" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     Logout
                 </a>
 

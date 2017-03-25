@@ -172,6 +172,7 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
 
         /*
          * Application Service Providers...
