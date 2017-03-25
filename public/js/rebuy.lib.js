@@ -9362,16 +9362,6 @@ return jQuery;
         },
         toast: function toast(message) {
             Materialize.toast(message, 4000);
-        },
-        angularGet: function angularGet($http, $path) {
-            var res;
-            $http.get($path).then(function (response) {
-                return response;
-            }, function (response) {
-                // $.reBuy.alert('Error '+response.status+' ['+response.statusText+'] \
-                //in accessing  <a href="'+$path+'" target="_blank">'+$path+'</a>');
-                return response;
-            });
         }
     };
 

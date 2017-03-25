@@ -17,7 +17,8 @@ mix.combine([
 	  'resources/assets/css/font-awesome.css'
    ], 'public/css/vendor.css')
    .combine([
-	  'resources/assets/css/app.css'
+	  'resources/assets/css/app.css',
+     'resources/assets/css/admin.css'
    ], 'public/css/app.css');
 
 

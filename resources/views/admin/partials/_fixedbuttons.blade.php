@@ -4,7 +4,7 @@
   </a>
   <ul>
     <li>
-        <a href="{{ url('admin/users') }}" class="btn-floating red tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="New User">
+        <a href="#!" onClick="newUser()" class="btn-floating red tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="New User">
             <i class="material-icons">face</i>
         </a>
     </li>

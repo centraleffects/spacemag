@@ -21,31 +21,11 @@ class AdminController extends Controller
 
 
     public function users(){
-       
-   /*     $users = User::limit(30)->offset(0)->get();
-        $user_details_default = (object)[
-                    'id'         => 0,
-                    'first_name' => '',
-                    'last_name' => '',
-                    'email' => '',
-                    'gender' => '',
-                    'role' => 'customer',
-                    'address_1' => '',
-                    'address_2' => '',
-                    'city' => '',
-                    'zip_code' => '',
-                    'country' => 'swe',
-                    'telephone' => '',
-                    'mobile' => '',
-                    'lang' => 'en'
-                ];
-        if($id){
-            $user_details  = User::findOrFail($id);
-        }
-        $user_details =  !empty($user_details) ? $user_details : $user_details_default;*/
-
-       // return view('admin.users', ['users' => $users, 'user_details' => $user_details ]);
         return view('admin.users');
+    }
+
+     public function loggedProfile(){
+        return \Auth::user();
     }
 
     public function shops(Request $request){

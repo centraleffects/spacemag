@@ -9,6 +9,15 @@ use Auth;
 
 class ShopController extends Controller
 {
+    protected $rules;
+
+    function __construct()
+    {
+        $this->rules = [
+            "name" => "required"
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -54,12 +63,19 @@ class ShopController extends Controller
     public function store(Request $request)
     {
         //
-        Shop::create(array(
-            'name' => Input::get('name'),
-            'description' => Input::get('description')
-        ));
+        // Shop::create(array(
+        //     'name' => Input::get('name'),
+        //     'description' => Input::get('description')
+        // ));
+        $input = Input::all();
 
-        return Response::json(array('success' => true));
+        $shop = new Shop;
+        $shop->name = $input['name'];
+        $shop->description = $input['description'];
+
+        Auth::guard('api')->user()->shops()->save($shop);
+
+        return array('success' => true);
     }
 
     /**

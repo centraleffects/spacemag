@@ -1,4 +1,4 @@
-
+@component('admin.layouts.app')
 <div class="col s3" ng-controller="adminShopController">
 	<div  class="white" id="dashleft-sidebar" ng-model="shops">
 		<h5><i class="material-icons">store</i> List of Shops</h5>
@@ -35,3 +35,4 @@
 </div>
 <div class="col s3">
 </div>
+@endcomponent
