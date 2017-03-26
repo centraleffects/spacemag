@@ -487,3 +487,11 @@ svg.itemRow-dragIcon{
 #info-nav #lsinfo-option li > a{
 	font-size: 12px;
 }
+.error-field{
+    position: absolute;
+    margin-top: -18px;
+    right: 0;
+}
+.cursor-pointer{
+    cursor: pointer;
+}

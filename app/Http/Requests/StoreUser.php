@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Auth;
+
 class StoreUser extends FormRequest
 {
     /**
@@ -23,15 +23,14 @@ class StoreUser extends FormRequest
      */
     public function rules()
     {
+
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,'.$_POST['id'],
             'gender' => 'required',
             'role' => 'required',
             'address_1' => 'required',
-            'address_2' => 'alpha_num',
-            'city' => 'alpha_num',
             'zip_code' => 'required|numeric',
             'telephone' => 'required|numeric',
             'mobile' => 'required|numeric',

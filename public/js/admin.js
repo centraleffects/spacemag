@@ -9267,9 +9267,9 @@ return jQuery;
 /***/ }),
 
 /***/ 1:
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-
+/* WEBPACK VAR INJECTION */(function($) {
 rebuyApp.service('userService', function ($http, $timeout) {
     this.userList = function () {
         return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
@@ -9278,7 +9278,7 @@ rebuyApp.service('userService', function ($http, $timeout) {
     };
 });
 
-rebuyApp.controller('UserController', function ($scope, userService, $timeout) {
+rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
 
     $scope.users = {};
     $scope.selectedUser = {};
@@ -9294,6 +9294,7 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout) {
             userService.userList().then(function (response) {
                 $scope.users = response.data;
                 $scope.selectedUser = $scope.users.data[0];
+                $scope.selectedUserKey = 0;
             });
         }, 1000);
     };
@@ -9313,21 +9314,71 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout) {
         }, 1500);
     });
 
+    displayError = function displayError(response) {
+        angular.element('.input-field .error-field').each(function (i, e) {
+            angular.element(e).remove();
+        });
+        angular.forEach(response.data, function (v, k) {
+            angular.element('#' + k).closest('div').append('<small class="error-field red-text">' + v[0] + '</small>');
+        });
+        materializeInit();
+    };
     materializeInit = function materializeInit() {
         Materialize.updateTextFields();
         angular.element('select').material_select();
     };
     newUser = function newUser(form) {
         angular.element('#clientDetails #resetdetails').trigger('click');
+        angular.element('.input-field .error-field').each(function (i, e) {
+            angular.element(e).remove();
+        });
     };
+
     updateInfo = function updateInfo() {
-        window.reBuy.alert('User details have been updated! Thank you.');
+        var url = '/api/users/update';
+        $scope.selectedUser['_method'] = 'PATCH';
+        if (!$scope.selectedUser.id) {
+            url = '/api/users/store';
+            $scope.selectedUser['_method'] = 'POST';
+        }
+        $http({
+            method: 'POST',
+            url: url + '?api_token=' + window.adminJS.me.api_token,
+            data: $.param($scope.selectedUser),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            cache: $templateCache
+        }).then(function (response) {
+            window.reBuy.alert('User details have been updated! Thank you.');
+        }, function (response) {
+            displayError(response);
+        });
     };
     deleteUser = function deleteUser() {
+        var newList = {};
+        angular.forEach($scope.users, function (v, k) {
+            if (k !== $scope.selectedUserKey) {
+                newList.push(v);
+            }
+        });
+        $scope.users = newList;
+        console.log($scope.users);
+        /*$http({
+              method: 'POST',
+              url: url + '?api_token=' + window.adminJS.me.api_token,
+              data: $scope.selectedUser,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              cache: $templateCache
+        }).then(function(response) {
+             window.reBuy.alert('User details have been updated! Thank you.');
+        }, function(response) {
+            displayError(response);
+        });*/
         window.reBuy.alert('User details had been deleted! Thank you.');
     };
+
     $scope.init();
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 

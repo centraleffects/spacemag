@@ -35,11 +35,16 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
+	//Users
 	Route::get('/', 'UserController@index');
 	Route::get('/list', 'UserController@getlist');
-	Route::get('{user}', 'UserController@show');
+	Route::get('/{user}', 'UserController@show');
 
-	Route::post('update', 'UserController@update');
+	Route::patch('/update', 'UserController@update');
+	Route::post('/delete', 'UserController@delete');
+	Route::post('/store', 'UserController@store');
+
+	//Shops
 	Route::post('{user}/shops', 'ShopController@get');
 });
 

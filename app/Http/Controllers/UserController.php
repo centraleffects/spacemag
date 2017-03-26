@@ -75,28 +75,25 @@ class UserController extends Controller
 
     public function update(StoreUser $request){
         $input = Input::all();
-
+        dd($input);
         $response = ['success' => 0];
 
         $user = Auth::guard('api')->user();
-        $user->address_1 = $input['address_1'];
+        //dd($input['data']);
+
+       // $user->address_1 = $input['address_1'];
+        foreach($input['data'] as $key => $val){
+            if($val <>""){
+                $user->{$key} = $val;
+            }
+        }
 
         if( $user->update() )
             $response['success'] = 1; 
 
         return $response;
     }
-    /*public function update(StoreUser $request){
-        $input = Input::all();
-        $response = ['success' => 0];
 
-        $user->address_1 = $input['address_1'];
-
-        if( $user->save() )
-            $response['success'] = 1;
-
-        return $response;
-    }*/
 
     /**
      * Remove the specified resource from storage.
@@ -115,7 +112,7 @@ class UserController extends Controller
      */
     public function getlist(){
 
-	   $user = User::paginate(50);
+	   $users = User::paginate(50);
 
         return $users;
     }
