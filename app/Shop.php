@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Shop extends Model
 {
@@ -20,9 +21,10 @@ class Shop extends Model
      * returns the list of Workers in this Shop
      */
     public function users(){
-    	return $this->hasMany('App\User')
-    				->withPivot('user_id', 'shop_id')
-    				->withTimestamps();
+        // return $this->hasMany('App\User','id', 'shop_id');
+    	// return $this->hasMany('App\User')
+     //        ->withPivot('shop');
+        return $this->belongsToMany('App\User')->withTimestamps();
     }
 
     /**
@@ -37,9 +39,7 @@ class Shop extends Model
      * returns the articles within this Shop
      */
     public function articles(){
-    	return $this->hasMany('App\Article')
-    				->withPivot('article_id', 'shop_id')
-    				->withTimestamps();
+    	return $this->hasMany('App\Article', 'article_id', 'shop_id');
     }
 
     /**

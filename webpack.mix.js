@@ -15,11 +15,11 @@ mix.combine([
 	  'resources/assets/password_strength/password_strength.css',
 	  'resources/assets/materialize/css/materialize.css',
 	  'resources/assets/css/font-awesome.css'
-   ], 'public/css/vendor.css')
-   .combine([
+    ], 'public/css/vendor.css')
+    .combine([
 	  'resources/assets/css/app.css',
      'resources/assets/css/admin.css'
-   ], 'public/css/app.css');
+    ], 'public/css/app.css');
 
 
 mix.js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')

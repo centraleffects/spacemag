@@ -9,8 +9,13 @@ class ShopOwnerController extends Controller
 {
     public function includeUserOnJS()
     {
+        $shop = session()->has("selected_shop") ? 
+                session()->get("selected_shop") : 
+                auth()->user()->shops()->first();
+                
         JavaScript::put([
-            'user' => auth()->user()
+            'user' => auth()->user(),
+            'selectedShop' => $shop
         ]);
     }
 

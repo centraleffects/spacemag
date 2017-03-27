@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreShop;
+
 use App\Shop;
 use Illuminate\Http\Request;
 use App\User;
@@ -30,29 +32,6 @@ class ShopController extends Controller
         return Auth::guard('api')->user()->shops()->paginate(10);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        if( Request::isJson() ){ // only process json request
-            $input = Input::all();
-
-            $shop = new Shop;
-            $shop->name = $input['name'];
-            $shop->description = $input['description'];
-            $shop->url = $input['url'];
-            $shop->currency = $input['currency'];
-            // $shop->user_id = auth()->user()->id;
-            $shop->attach(auth()->user());
-
-            $shop->save();
-        }
-
-        return false;
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -60,7 +39,7 @@ class ShopController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreShop $request)
     {
         $input = Input::all();
 
@@ -93,7 +72,7 @@ class ShopController extends Controller
      * @param  \App\Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shop $shop)
+    public function update(StoreShop $request)
     {
         //
     }
