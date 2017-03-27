@@ -23,11 +23,10 @@ class StoreUser extends FormRequest
      */
     public function rules()
     {
-
         return [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users,'.$_POST['id'],
+            'email' => 'required|email|unique:users,id',
             'gender' => 'required',
             'role' => 'required',
             'address_1' => 'required',

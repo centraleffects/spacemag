@@ -9369,7 +9369,7 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               cache: $templateCache
         }).then(function(response) {
-             window.reBuy.alert('User details have been updated! Thank you.');
+              window.reBuy.alert('User details have been updated! Thank you.');
         }, function(response) {
             displayError(response);
         });*/
