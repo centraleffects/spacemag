@@ -21,7 +21,7 @@
 	<div class="col s12 m6 l6">
 			<div class="row">
 				<div class="card hoverable"><!-- Customer's Details -->
-					<form name="clientDetails" id="clientDetails">
+					<form name="clientDetails" id="clientDetails" autocomplete="false">
 					<div class="card-content">
 						<span class="card-title">User Details - @{{selectedUser.first_name}} <i data-activates="lsinfo-option" class="fa fa-ellipsis-v grey-text lighten-2 dropdown-button right cursor-pointer" ng-show="selectedUser.id" aria-hidden="true" id="info-option"></i>
 						<ul id="lsinfo-option" class="dropdown-content">
@@ -42,7 +42,10 @@
 								<input type="text" name="email"   id="email" ng-model="selectedUser.email" ng-show="!selectedUser.id"/>
 								<input type="text" ng-show="selectedUser.id" readonly="readonly" value="@{{selectedUser.email}}" />
 								<label>Email</label>
-								<small ng-show="!selectedUser.id" class="right help-inline" ng-show="!selectedUser.id">A generated password will be sent to this address</small>
+							</div>
+							<div class="input-field"  ng-show="!selectedUser.id">
+								<input type="text" name="password"   id="password" ng-model="selectedUser.password"/>
+								<label>Password</label>
 								<small ng-show="selectedUser.id" class="right help-inline" ng-show="!selectedUser.id">Click here to generate a new password</small>
 							</div>
 							<div class="input-field">
@@ -110,7 +113,7 @@
 							<button class="btn waves-effect waves-light blue hide" id="resetdetails" ng-click="events.viewUser(null,{})">
 								<i class="fa fa-random"></i> Clear
 							</button>
-							<button class="btn waves-effect waves-light green"  type="submit" title="Generate Password" onclick="updateInfo()">
+							<button class="btn waves-effect waves-light green right"  type="submit" title="Generate Password" onclick="updateInfo()">
 								<i class="fa fa-floppy-o" aria-hidden="true"></i> @{{ !selectedUser.id ? 'Save New Information' : 'Update Information' }}
 							</button><br><br>
 						</div>
@@ -120,7 +123,7 @@
 			</div>
 		</div>
 	<div class="col s3">
-			<div class="card hoverable" ng-show="selectedUser.role==='owner'"><!-- Shop -->
+			<div class="card hoverable" ng-show="selectedUser.role==='owner' && selectedUser.id"><!-- Shop -->
 				<div class="card-content">
 					<div class="card-title">Shop Name</div>
 					<div class="row">

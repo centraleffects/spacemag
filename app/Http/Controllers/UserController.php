@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
+
 use Auth;
 
 use App\Http\Requests\StoreUser;
@@ -41,9 +42,37 @@ class UserController extends Controller
      */
     public function store(StoreUser $request)
     {
-        $input = \Input::all();
+        $input = Input::all();
 
         $user = new User;
+
+        $response = ['success' => 0];
+
+        $user->first_name  = $input['first_name'];
+        $user->last_name  = $input['last_name'];
+        $user->email  = $input['email'];
+        $user->gender  = $input['gender'];
+        $user->role  = $input['role'];
+        $user->telephone  = $input['telephone'];
+        $user->mobile  = $input['mobile'];
+        $user->social_security_id  = !empty($input['social_security_id']) ? $input['social_security_id'] : '';
+        $user->address_1  = $input['address_1'];
+        $user->address_2  = !empty($input['address_2']) ? $input['address_2'] : '';
+        $user->city  = $input['city'];
+        $user->zip_code  = $input['zip_code'];
+        $user->country  = $input['country'];
+        $user->lang  = $input['lang'];
+
+        $user->password = bcrypt($input['password']);
+
+        $user->api_token = str_random(60);
+
+        if( $user->save() ){
+
+            $response['success'] = 1; 
+        }
+
+        return $response;
 
     }
 
@@ -70,21 +99,30 @@ class UserController extends Controller
 
     public function update(StoreUser $request){
         $input = Input::all();
-        dd($input);
+
         $response = ['success' => 0];
 
-        $user = Auth::guard('api')->user();
-        //dd($input['data']);
+        $user = User::find($input['id']);
+        
+        $user->first_name  = $input['first_name'];
+        $user->last_name  = $input['last_name'];
+       // $user->email  = $input['email'];
+        $user->gender  = $input['gender'];
+        $user->role  = $input['role'];
+        $user->telephone  = $input['telephone'];
+        $user->mobile  = $input['mobile'];
+        //$user->social_security_id  = $input['social_security_id'];
+        $user->address_1  = $input['address_1'];
+        $user->address_2  = $input['address_2'];
+        $user->city  = $input['city'];
+        $user->zip_code  = $input['zip_code'];
+        $user->country  = $input['country'];
+        $user->lang  = $input['lang'];
 
-       // $user->address_1 = $input['address_1'];
-        foreach($input['data'] as $key => $val){
-            if($val <>""){
-                $user->{$key} = $val;
-            }
-        }
+        if( $user->update() ){
 
-        if( $user->update() )
             $response['success'] = 1; 
+        }
 
         return $response;
     }
@@ -97,8 +135,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
-    {
-        $user->delete();
+
+    {   
+
+        if( $user->delete() )
+            return ['success' => 1];
+        
+        return ['success' => 0];
+
     }
 
 
