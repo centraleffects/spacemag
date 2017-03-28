@@ -8,16 +8,10 @@
 				<label>Search for Customer</label>
 			</div>
 			<ul class="collection">
-				<li class="collection-item">
+				<li class="collection-item" ng-repeat="customer in customers">
 					@include('layouts._partials.dragicon')
-					<span>John Doe</span>
-					<a href="#!" class="right" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-
-			    <li class="collection-item">
-					@include('layouts._partials.dragicon')
-					<span>Johny Doer</span>
-					<a href="#!" class="right" title="Delete"><i class="fa fa-trash"></i></a>
+					<span>@{{ customer.first_name+' '+customer.last_name }}</span>
+					<a href="#!" class="right" title="Delete" ng-click='removeCustomer(@{{ customer.id }})'><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>
 			<div class="card-action">

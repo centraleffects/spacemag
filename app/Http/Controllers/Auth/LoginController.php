@@ -75,6 +75,7 @@ class LoginController extends Controller
         $res = $client->get($url);
 
         $data = json_decode( $res->getBody()->getContents() );
+        // $data = json_decode( file_get_contents($url) );
 
         // find the user with a facebok id
         $user = User::where('facebook_id', '=', $fb_user->id)->first();

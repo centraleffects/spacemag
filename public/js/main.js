@@ -86,6 +86,7 @@ module.exports = __webpack_require__(6);
 /***/ 23:
 /***/ (function(module, exports) {
 
+console.log(selectedShop);
 app.controller('CustomerController', function ($scope, $http) {
 	$scope.customers = function () {
 
@@ -96,10 +97,12 @@ app.controller('CustomerController', function ($scope, $http) {
 			// this callback will be called asynchronously
 			// when the response is available
 			console.log(response);
+			return response;
 		}, function errorCallback(response) {
 			// called asynchronously if an error occurs
 			// or server returns response with an error status.
 			console.warn(response);
+			return [];
 		});
 	};
 });

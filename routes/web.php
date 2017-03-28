@@ -71,7 +71,7 @@ Route::get('test-mail', function (){
  * @param  StoreUser  $request
  * @return Response
  */
-Route::post('try', function (){
+Route::get('try', function (){
 	// dd($request);
 	// Route for testing purposes
 	// do your quick algorithm test here
@@ -86,6 +86,10 @@ Route::post('try', function (){
 
 	// dd($shop);
 
-
+	return [
+        'client_id' => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET'),
+        'redirect' => env('FB_REDIRECT'),
+    ];
 
 });
