@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class User extends Authenticatable
 {
@@ -26,7 +27,9 @@ class User extends Authenticatable
      * returns the Shops that this user owned
      */
     public function shops(){
-        return $this->hasMany('App\Shop');
+        // return $this->hasMany('App\Shop')
+        //     ->withPivot('user');
+        return $this->belongsToMany('App\Shop')->withTimestamps();
     }
 
 

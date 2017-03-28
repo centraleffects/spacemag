@@ -1,4 +1,5 @@
 @component('shop_owner.layouts.app')
+	@slot('controller') ng-controller="CustomerController" @endslot
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>

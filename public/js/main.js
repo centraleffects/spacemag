@@ -83,12 +83,36 @@ module.exports = __webpack_require__(6);
 
 /***/ }),
 
+/***/ 23:
+/***/ (function(module, exports) {
+
+app.controller('CustomerController', function ($scope, $http) {
+	$scope.customers = function () {
+
+		$http({
+			method: 'GET',
+			url: '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token
+		}).then(function successCallback(response) {
+			// this callback will be called asynchronously
+			// when the response is available
+			console.log(response);
+		}, function errorCallback(response) {
+			// called asynchronously if an error occurs
+			// or server returns response with an error status.
+			console.warn(response);
+		});
+	};
+});
+
+/***/ }),
+
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
 __webpack_require__(10);
+__webpack_require__(23);
 
 /***/ })
 

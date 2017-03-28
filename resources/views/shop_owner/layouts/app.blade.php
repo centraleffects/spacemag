@@ -1,6 +1,6 @@
 @include('layouts._partials.header')
 
-<div class="row">
+<div class="row" {{ $controller or '' }}>
 
     @include('layouts._partials.sidebar')
 
