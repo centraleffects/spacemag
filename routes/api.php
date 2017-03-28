@@ -41,7 +41,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::get('/{user}', 'UserController@show');
 
 	Route::patch('/update', 'UserController@update');
-	Route::post('/delete', 'UserController@delete');
+	Route::post('/delete', 'UserController@destroy');
 	Route::post('/store', 'UserController@store');
 
 	//Shops

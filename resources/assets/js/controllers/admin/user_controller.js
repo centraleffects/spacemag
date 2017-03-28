@@ -24,31 +24,55 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
 
     $scope.init = function() {
-        
         $timeout(function () {
            userService.userList().then(function(response) {
                 $scope.users = response.data;
                 $scope.selectedUser = $scope.users.data[0];
+                $scope.selectedUser.password = '';
                 $scope.selectedUserKey = 0;
               });
         },1000);
-        
-	}
+	  }
+
     $scope.events = {
         viewUser : function(key,value){
-            $scope.selectedUserKey = key;
-            $scope.selectedUser = value;
+            if(key==0){
+                $scope.selectedUserKey = null;
+                value.password = '';
+                $scope.selectedUser = {};
+                location.hash = '#!';
+            }else{
+                $scope.selectedUserKey = key;
+                value.password = '';
+                $scope.selectedUser = value;
+                location.hash = '#!/'+value.id;
+            }
+            
             materializeInit();
+            $timeout(function () {
+              materializeInit();
+            },500);
         }
     }
 
     //watch our collection and sending changes to server
     //@TODO push back to server
-    $scope.$watchCollection( $scope.selectedUser, function() {
+    $scope.$watchCollection( $scope.selectedUser, function(newVal, oldVal) {
         $timeout(function () {
             materializeInit();
         },1500);
     }); 
+
+    updateUserList = function(){
+      $timeout(function () {
+           userService.userList().then(function(response) {
+                $scope.users = response.data;
+                $scope.selectedUser = $scope.users.data[0];
+                $scope.selectedUser.password = '';
+                $scope.selectedUserKey = 0;
+              });
+        },1000);
+    }
 
     displayError = function(response){
         angular.element('.input-field .error-field').each(function(i,e){
@@ -68,6 +92,15 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
        angular.element('.input-field .error-field').each(function(i,e){
             angular.element(e).remove();
         });
+       $scope.selectedUser = {};
+       $scope.selectedUser.password = '';
+       $scope.selectedUserKey = null;
+    }
+
+    hideError =  function(){
+      angular.element('.input-field .error-field').each(function(i,e){
+            angular.element(e).remove();
+        });
     }
 
     updateInfo = function(){
@@ -77,6 +110,7 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
             url = '/api/users/store';
             $scope.selectedUser['_method'] = 'POST';
         }
+        hideError();
         $http({
               method: 'POST',
               url: url + '?api_token=' + window.adminJS.me.api_token,
@@ -84,33 +118,32 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               cache: $templateCache
         }).then(function(response) {
-            window.reBuy.alert('User details have been updated! Thank you.');
+          if(!$scope.selectedUser.id){
+             updateUserList();
+             window.reBuy.alert('User details have been created! Thank you.');
+          }else{
+             window.reBuy.alert('User details have been updated! Thank you.');
+          }
+          
         }, function(response) {
             displayError(response);
         });
     }
     deleteUser = function(){
-        var newList = {};
-        angular.forEach($scope.users,function(v,k){
-            if(k !== $scope.selectedUserKey){
-                 newList.push(v);
-            }
-        });
-        $scope.users = newList;
-        console.log($scope.users);
-        /*$http({
+        var url = '/api/users/delete';
+        $http({
               method: 'POST',
               url: url + '?api_token=' + window.adminJS.me.api_token,
               data: $scope.selectedUser,
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               cache: $templateCache
         }).then(function(response) {
-
-            window.reBuy.alert('User details have been updated! Thank you.');
+            updateUserList();
+            window.reBuy.alert('User details had been deleted! Thank you.');
         }, function(response) {
-            displayError(response);
-        });*/
-        window.reBuy.alert('User details had been deleted! Thank you.');
+            window.reBuy.alert(response.data);
+        });
+        
     }
 
     $scope.init();
