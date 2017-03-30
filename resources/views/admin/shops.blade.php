@@ -14,6 +14,11 @@
 	</div>
 </div>
 <div class="col s6">
+	<div class="scrollspy" id="floorplan-container">
+		<img src="/floorplan/floor1.jpg"/>
+	</div>
+</div>
+<div class="col s3">
 	<div id="list-info" class="white">
 		<div class="row" id="info-nav">
 			<input type="text" name="shop_name" placeholder="Shop name">
@@ -32,7 +37,5 @@
 			</ul>	
 		</div>
 	</div>
-</div>
-<div class="col s3">
 </div>
 @endcomponent

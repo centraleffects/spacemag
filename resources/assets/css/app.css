@@ -401,9 +401,10 @@ svg.itemRow-dragIcon{
 
  #dashleft-sidebar li .delete-icon{
  	margin-right: 3px;
+    display: none;
  }
  #dashleft-sidebar li .edit-icon{
- 	margin-right: 25px;
+ 	mmargin-right: 3px;
  }
 
 #dashleft-sidebar li .edit-icon, #dashleft-sidebar li .delete-icon, #dashleft-sidebar li svg.itemRow-dragIcon{

@@ -11,7 +11,6 @@
 						<a href="#">
 							<i class="fa fa-pencil-square-o edit-icon right" aria-hidden="true"></i>
 						</a>
-						<i class="fa fa-trash delete-icon right" aria-hidden="true"></i>
 					</li>
 
 				
@@ -25,7 +24,7 @@
 					<div class="card-content">
 						<span class="card-title">User Details - @{{selectedUser.first_name}} <i data-activates="lsinfo-option" class="fa fa-ellipsis-v grey-text lighten-2 dropdown-button right cursor-pointer" ng-show="selectedUser.id" aria-hidden="true" id="info-option"></i>
 						<ul id="lsinfo-option" class="dropdown-content">
-						  <li><a href="#!"  onclick="$.reBuy.confirm('Are you sure to delete this user?',function(){deleteUser()});"><i class="fa fa-times" aria-hidden="true"></i> DEL</a></li>
+						  <li><a href="#!"  onclick="$.reBuy.confirm('Are you sure to delete this user?',function(){ deleteUser(); });"><i class="fa fa-times" aria-hidden="true"></i> DEL</a></li>
 						</ul></span>
 						<p></p>
 						<div class="client-details">

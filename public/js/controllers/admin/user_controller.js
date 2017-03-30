@@ -9393,8 +9393,9 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
             displayError(response);
         });
     };
+
     deleteUser = function deleteUser() {
-        var url = '/api/users/delete';
+        var url = '/api/users/delete/' + $scope.selectedUser.id;
         $http({
             method: 'POST',
             url: url + '?api_token=' + window.adminJS.me.api_token,
