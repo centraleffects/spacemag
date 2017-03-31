@@ -5,10 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Shop extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [ 'id' ];
-    protected $table = "shops";
+    protected $dates = [ 'deleted_at' ];
 
     /**
      * returns the Owner of this Shop

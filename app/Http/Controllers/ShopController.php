@@ -11,14 +11,6 @@ use Auth;
 
 class ShopController extends Controller
 {
-    protected $rules;
-
-    function __construct()
-    {
-        $this->rules = [
-            "name" => "required"
-        ];
-    }
 
     /**
      * Display a listing of the resource.
@@ -116,8 +108,16 @@ class ShopController extends Controller
         ];
     }
 
+    // Shop customers
     public function users(Shop $shop){
-        return $shop->users()->paginate(10);
+        return $shop->users()->get();
+    }
+
+    public function removeUser(Shop $shop, User $user){
+        if( $shop->users()->detach($user) )
+            return ['success' => 1];
+
+        return ['success' => 0];
     }
 
 }

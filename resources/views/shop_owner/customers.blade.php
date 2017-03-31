@@ -1,21 +1,29 @@
 @component('shop_owner.layouts.app')
 	@slot('controller') ng-controller="CustomerController" @endslot
+
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
-			<div class="input-field">
-				<input type="text" name="search" />
-				<label>Search for Customer</label>
-			</div>
+			@component('layouts._partials.search')
+				@slot('search_name') clients @endslot
+			@endcomponent
 			<ul class="collection">
-				<li class="collection-item" ng-repeat="customer in customers">
+				<li class="collection-item customers" ng-repeat="x in customers | filter:search">
 					@include('layouts._partials.dragicon')
-					<span>@{{ customer.first_name+' '+customer.last_name }}</span>
-					<a href="#!" class="right" title="Delete" ng-click='removeCustomer(@{{ customer.id }})'><i class="fa fa-trash"></i></a>
+					<span ng-click="viewCustomer($index)">@{{ x.first_name+' '+x.last_name }}</span>
+					<a class="right" title="Delete" ng-click="removeCustomer($index)">
+						<i class="fa fa-trash"></i>
+					</a>
+			    </li>
+			    <li ng-show="customers.length === 0">
+				    <span>
+				    	<i class="fa fa-user-times"></i>
+				    	This shop doesn't have any customer at the moment.
+				    </span>
 			    </li>
 			</ul>
 			<div class="card-action">
-				<a class="btn waves-effect waves-light blue" href="{{ url('shop/customers/create') }}">
+				<a class="btn waves-effect waves-light blue" href="#!" ng-click="addNewCustomer()">
 					<i class="fa fa-plus"></i> Add New Customer
 				</a>
 			</div>
@@ -23,19 +31,24 @@
 	@endslot
 	
 	@slot('center')
-		<div id="" class="row">
-			<div class="card hoverable"><!-- Customer's Details -->
+		<div id="customer_details" class="row">
+			<div class="card hoverable" ng-show="hasSelectedCustomer"><!-- Customer's Details -->
 				<div class="card-content">
-					<span class="card-title">Customer's Details</span>
+					<div class="card-title">
+						Customer's Details 
+						@component('layouts._partials.close_card')
+							hasSelectedCustomer=false
+						@endcomponent
+					</div>
 					<p></p>
 					<div class="client-details">
 						<div class="input-field">
-							<input type="text" name="name" value="John Doe" />
+							<input type="text" name="name" value="@{{ currentlySelectedCustomer.first_name+' '+currentlySelectedCustomer.last_name }}" readonly />
 							<label>Name</label>
 						</div>
 
 						<div class="input-field">
-							<input type="email" name="email" class="validate" value="johndoe@example.com">
+							<input type="email" name="email" value="@{{ currentlySelectedCustomer.email }}" readonly />
 							<label>Email</label>
 						</div>
 
@@ -43,7 +56,7 @@
 				</div>
 				<div class="card-action row">
 					<div class="col">
-						<button class="btn waves-effect waves-light green" title="Generate Password">
+						<button class="btn waves-effect waves-light green" title="Generate Password" ng-click="generatePassword()">
 							<i class="fa fa-random"></i> Generate Password
 						</button>
 					</div>
@@ -75,9 +88,11 @@
 				</div>
 			</div><!-- End Shop -->
 
-			<div class="card hoverable"><!-- Send Invitation -->
+			<div class="card hoverable" ng-show="addNew" id="add_new"><!-- Send Invitation -->
 				<div class="card-content">
-					<div class="card-title"> Invite</div>
+					<div class="card-title">
+						Invite @include('layouts._partials.close_card')
+					</div>
 
 					<div class="input-field">
 						<input type="text" name="name" />

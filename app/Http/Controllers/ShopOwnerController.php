@@ -7,15 +7,16 @@ use JavaScript;
 
 class ShopOwnerController extends Controller
 {
+
     public function includeUserOnJS()
     {
-
-        if( !session()->has("selected_shop") ){
+        // dd(auth()->user()->shops()->first()->users()->get());
+        if( !session()->has("selected_shop") && auth()->check() ){
             session()->put("selected_shop", auth()->user()->shops()->first());
         }
 
         $shop = session()->get('selected_shop');
-        
+
         JavaScript::put([
             'user' => auth()->user(),
             'selectedShop' => $shop

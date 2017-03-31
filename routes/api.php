@@ -32,6 +32,7 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::post('create', 'ShopController@create');
 	Route::post('delete', 'ShopController@destroy');
 	Route::get('{shop}/users', 'ShopController@users');
+	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
