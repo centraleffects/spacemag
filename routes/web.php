@@ -86,10 +86,29 @@ Route::get('try', function (){
 
 	// dd($shop);
 
-	return [
-        'client_id' => env('FB_CLIENT_ID'),
-        'client_secret' => env('FB_CLIENT_SECRET'),
-        'redirect' => env('FB_REDIRECT'),
-    ];
+	// return [
+ //        'client_id' => env('FB_CLIENT_ID'),
+ //        'client_secret' => env('FB_CLIENT_SECRET'),
+ //        'redirect' => env('FB_REDIRECT'),
+ //    ];
+	$str = '{
+   "og_object": {
+      "likes": {
+         "data": [
+            
+         ],
+         "summary": {
+            "total_count": 6080247
+         }
+      },
+      "id": "10151063484068358"
+   },
+   "share": {
+      "comment_count": 5822,
+      "share_count": 162565362
+   },
+   "id": "http://facebook.com"
+}';
+  var_dump( json_decode($str,true) );
 
 });

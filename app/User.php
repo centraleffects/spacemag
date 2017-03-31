@@ -6,12 +6,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     protected $guarded = [ 'id' ];
-    protected $table = "users";   
+    protected $dates = [ 'deleted_at' ];   
 
     /**
      * The attributes that should be hidden for arrays.
@@ -27,9 +30,10 @@ class User extends Authenticatable
      * returns the Shops that this user owned
      */
     public function shops(){
+        return $this->hasMany('App\Shop');
         // return $this->hasMany('App\Shop')
         //     ->withPivot('user');
-        return $this->belongsToMany('App\Shop')->withTimestamps();
+        // return $this->belongsToMany('App\Shop')->withTimestamps();
     }
 
 

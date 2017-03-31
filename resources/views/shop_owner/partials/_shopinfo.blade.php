@@ -2,15 +2,15 @@
 	<div class="card-content">
 		<div class="card-title">Shop Information</div>
 		<div class="input-field">
-			<input type="text" name="name" value="Rebuy Shop" />
+			<input type="text" name="name" value="@{{selectedShop.name}}" />
 			<label>Name</label>
 		</div>
 		<div class="input-field">
-			<input type="text" name="url" value="rebuy.com" />
+			<input type="text" name="url" value="@{{selectedShop.url}}" />
 			<label>Home page</label>
 		</div>
 		<div class="input-field">
-			<input type="text" name="postel">
+			<input type="text" name="@{{selectedShop.postel}}" />
 			<label>Postel</label>
 		</div>
 		<div class="input-field">

@@ -1,39 +1,48 @@
 @component('shop_owner.layouts.app')
+	@slot('controller') ng-controller="ClientController" @endslot
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Clients</h5>
+			@component('layouts._partials.search')
+				@slot('search_name') clients @endslot
+			@endcomponent
 			<ul class="collection">
-				<li class="collection-item">
+			    <li class="collection-item customers" ng-repeat="x in clients | filter:search">
 					@include('layouts._partials.dragicon')
-					<input type="text" value="John Doe">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+					<span ng-click="viewClient($index)">@{{ x.first_name+' '+x.last_name }}</span>
+					<a class="right" title="Delete" ng-click="removeClient($index)">
+						<i class="fa fa-trash"></i>
+					</a>
 			    </li>
-
-			    <li class="collection-item">
-					@include('layouts._partials.dragicon')
-					<input type="text" value="Johny Doer">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+			    <li ng-show="noClientAvailable">
+				    <span>
+				    	<i class="fa fa-user-times"></i>
+				    	This shop doesn't have any client at the moment.
+				    </span>
 			    </li>
 			</ul>
 		</div>
 	@endslot
 	@slot('center')
 		<div id="" class="row">
-			<div class="card hoverable"><!-- Client's Details -->
+			<div class="card hoverable" ng-show="hasSelectedClient"><!-- Client's Details -->
 				<div class="card-content">
-					<span class="card-title">Client's Details</span>
+					<span class="card-title">Client's Details
+						@component('layouts._partials.close_card')
+							hasSelectedClient=false
+						@endcomponent
+					</span>
 					<p></p>
 					<div class="client-details">
 						<div class="input-field">
-							<input type="text" name="name" value="John Doe" />
+							<input type="text" name="name" value="@{{ selectedClient.first_name+' '+selectedClient.last_name }}" readonly />
 							<label>Name</label>
 						</div>
 
 						<div class="input-field">
-							<input type="email" name="email" class="validate" value="johndoe@example.com">
+							<input type="email" name="email" value="@{{ selectedClient.email }}" readonly />
 							<label>Email</label>
 						</div>
-
 					</div>
 				</div>
 				<div class="card-action row">
@@ -63,7 +72,7 @@
 					<div class="card-title">Shop Name</div>
 					<div class="row">
 						<div class="col">
-							<p>1. Rebuy Shop</p>
+							<p>@{{ $index+1 }}. @{{ selectedShop.name }}</p>
 						</div>
 						<div class="col">
 							<p>

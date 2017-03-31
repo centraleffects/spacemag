@@ -1,21 +1,21 @@
-function CustomerCtrl ($scope, $http, $timeout, $rootScope){
+function WorkerCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.selectedShop = selectedShop;
-	$scope.customers = [];
-	$scope.hasSelectedCustomer = false;
-	$scope.currentlySelectedCustomer = null;
+	$scope.workers = [];
+	$scope.hasSelectedWorker = false;
+	$scope.selectedWorker = null;
 	$scope.addNew = false;
 
 	$scope.init = function (){
-		$scope.getCustomers();
+		$scope.getWorkers();
 	};
 
-	$scope.getCustomers = function (){
+	$scope.getWorkers = function (){
 		var url = '/api/shops/'+selectedShop.id+'/users?api_token='+window.user.api_token;
 		$http.get(url).then(function (response){
 			console.log(response);
-			$scope.customers = response.data;
+			$scope.workers = response.data;
 
-			if( $scope.customers.length > 0 ){
+			if( $scope.workers.length > 0 ){
 				$rootScope.listIsEmpty = false;
 			}else{
 				$rootScope.listIsEmpty = true;
@@ -26,24 +26,24 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 		});
 	};
 
-	$scope.viewCustomer = function (index){
-		$scope.hasSelectedCustomer = true;
-		$scope.currentlySelectedCustomer = $scope.customers[index];
+	$scope.viewWorker = function (index){
+		$scope.hasSelectedWorker = true;
+		$scope.selectedWorker = $scope.workers[index];
 		Materialize.updateTextFields();
 	};
 
-	$scope.removeCustomer = function (index){
-		var customer = $scope.customers[index];
+	$scope.removeWorker = function (index){
+		var customer = $scope.workers[index];
 		var url = '/api/shops/'+selectedShop.id+'/users/'+customer.id+'/remove?api_token='+window.user.api_token;
 		window.$.reBuy.confirm("Are you sure to remove this customer?", function (){
 			$http.delete(url).then(function (response){
-				// $scope.customers = response.data;
+				// $scope.workers = response.data;
 				console.log(response);
 				if( response.data.success == 1 ){
-					$scope.customers.splice(index);
+					$scope.workers.splice(index);
 				}
 
-				if( $scope.customers.length < 1 ){
+				if( $scope.workers.length < 1 ){
 					$rootScope.listIsEmpty = true;
 				}
 
@@ -54,7 +54,7 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 	};
 
 	$scope.generatePassword = function (){
-		if( $scope.hasSelectedCustomer ){
+		if( $scope.hasSelectedWorker ){
 			$http.post('/api/shops/'+selectedShop.id+'/users/sendpassword').then(function (response){
 				console.warn(response);
 			}, function (response){
@@ -63,7 +63,7 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 		}
 	};
 
-	$scope.addNewCustomer = function (){
+	$scope.addNewWorker = function (){
 		$scope.addNew = true;
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
 	};
@@ -73,4 +73,4 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.init();
 }
 
-app.controller('CustomerController', CustomerCtrl);
+app.controller('WorkerController', WorkerCtrl);

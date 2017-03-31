@@ -1,12 +1,13 @@
 
 body {
-     display: flex;
-     min-height: 100vh;
-     flex-direction: column;
- }
- main {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
      flex: 1 0 auto;
- }
+}
 
 /* clouds */
 .bg-clouds{
@@ -98,6 +99,33 @@ body {
 	margin: 0px 8px;
 }
 
+.search-div {
+    margin-top: 15px;
+}
+
+/* cards */
+.close-card:hover {
+    cursor: pointer;
+    border-color: transparent;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px #00BCD4;
+    -moz-box-shadow: 0 0 0 3px #3BF7D1;
+    -webkit-box-shadow: 0 0 0 3px #00BCD4;
+    color: #00BCD4;
+    fill: #00BCD4;
+    background-color: #fff;
+    color: #00BCD4;
+    width: 30px;
+    fill: #00BCD4;
+    height: 30px;
+    text-align: center;
+}
+
+.close-card{
+    webkit-transition: border 200ms,box-shadow 200ms,color 200ms;
+    -moz-transition: border 200ms,box-shadow 200ms,color 200ms;
+    transition: border 200ms,box-shadow 200ms,color 200ms;
+}
 
 /* buttons */
 a.btn {
@@ -252,7 +280,6 @@ nav .brand-logo img{
     -moz-flex-shrink: 0;
     flex-shrink: 0;
     -ms-flex-negative: 0;
-    height: 30px;
     -webkit-box-pack: center;
     -moz-box-pack: center;
     box-pack: center;
@@ -265,7 +292,8 @@ nav .brand-logo img{
     -webkit-transition: border 200ms,box-shadow 200ms,color 200ms;
     -moz-transition: border 200ms,box-shadow 200ms,color 200ms;
     transition: border 200ms,box-shadow 200ms,color 200ms;
-    width: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .circular-button-view svg {
@@ -287,7 +315,14 @@ nav .brand-logo img{
 }
 
 /* todo tasks */
+.task-item .assignee .item img {
+    width: 25px;
+    height: 25px;
+}
 
+.task-item .description {
+    margin-left: 6px;
+}
 
 /* main content */
 .page-admin{
