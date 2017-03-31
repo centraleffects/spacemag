@@ -63,27 +63,12 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 10:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
-
-/***/ }),
-
-/***/ 21:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-
-/***/ 23:
 /***/ (function(module, exports) {
 
 console.log(selectedShop);
@@ -109,13 +94,28 @@ app.controller('CustomerController', function ($scope, $http) {
 
 /***/ }),
 
+/***/ 11:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
+__webpack_require__(11);
 __webpack_require__(10);
-__webpack_require__(23);
 
 /***/ })
 

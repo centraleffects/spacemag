@@ -13,10 +13,16 @@
 		</ul>
 	</div>
 </div>
-<div class="col s6">
-	<div class="scrollspy" id="floorplan-container">
-		<img src="/floorplan/floor1.jpg"/>
+<div class="col s6 map-area-container" id="mapsection">
+	<div class="scrollspy panzoom-parent map-area" id="floorplan-container">
+		<img class="panzoom" ng-click="events.addShopSpot($(this))" src="/floorplan/floor1.jpg" width="2426" height="1121" data-width="2426" data-height="1121"/>
 	</div>
+	<div class="buttons">
+        <button class="zoom-in">Zoom In</button>
+        <button class="zoom-out">Zoom Out</button>
+        <input type="range" class="zoom-range">
+        <button class="reset">Reset</button>
+      </div>
 </div>
 <div class="col s3">
 	<div id="list-info" class="white">
