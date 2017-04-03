@@ -55,7 +55,9 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('facebook')->redirect();
+        $socialite = Socialite::driver('facebook');
+        // dd($socialite);
+        return $socialite->redirect();
     }
 
     /**
@@ -66,8 +68,7 @@ class LoginController extends Controller
     public function handleProviderCallback()
     {
         $fb_user = Socialite::driver('facebook')->user();
-            
-        // dd($fb_user);
+        
         $client = new \GuzzleHttp\Client();
 
         $fields = 'first_name,last_name,gender';
