@@ -1,10 +1,5 @@
 
-var app = angular.module('rebuy', [], function($interpolateProvider) {
-	$interpolateProvider.startSymbol('<%');
-	$interpolateProvider.endSymbol('%>');
-});
-
-app.controller('adminShopController', function($scope, $http) {
+rebuyApp.controller('adminShopController', function($scope, $http) {
 	
 	
 	$scope.shops = [
@@ -13,16 +8,51 @@ app.controller('adminShopController', function($scope, $http) {
         {name:'Kai',country:'Denmark'}
     ];
 
+    $scope.events = {
+        addShopSpot : function(x,y){
+
+                var $floorplan = angular.element('#floorplan-container'),
+                    $shopspot = angular.element('<div class="shopspot"></div>'),
+                    $map = angular.element('#floorplan-container img');
+
+                $floorplan.append($shopspot.css({ left : x+'px', top : y+'px' }));
+         }
+    }
+
     $scope.init = function() {
-/*
+        
+        $scope.bindEvents();
+
+        /*
 		$http.get('/api/shops/list')
     	 .then( function(response){
     	 	$scope.shops.list = response;
     	 });*/
-    	 console.log('init started');
-
 	}
-   /* 
-    	console.log($scope.shops);*/
+    
+    $scope.bindEvents = function(){
+        (function($) {
+
+               /* var $section = $('#mapsection').first();
+                $section.find('.panzoom').panzoom({
+                $zoomIn: $section.find(".zoom-in"),
+                $zoomOut: $section.find(".zoom-out"),
+                $zoomRange: $section.find(".zoom-range"),
+                $reset: $section.find(".reset")
+              });
+*/
+              angular.element('img.panzoom').click(function(e) {
+
+                var offset = angular.element(this).offset();
+                $scope.events.addShopSpot(e.pageX,e.pageY);
+
+              });
+
+              $('.shopspot').draggable();
+
+        })(jQuery);
+    }
+
+
    $scope.init();
 });

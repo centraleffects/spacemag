@@ -436,9 +436,10 @@ svg.itemRow-dragIcon{
 
  #dashleft-sidebar li .delete-icon{
  	margin-right: 3px;
+    display: none;
  }
  #dashleft-sidebar li .edit-icon{
- 	margin-right: 25px;
+ 	mmargin-right: 3px;
  }
 
 #dashleft-sidebar li .edit-icon, #dashleft-sidebar li .delete-icon, #dashleft-sidebar li svg.itemRow-dragIcon{
@@ -529,4 +530,16 @@ svg.itemRow-dragIcon{
 }
 .cursor-pointer{
     cursor: pointer;
+}
+
+.panzoom-parent { border: 2px solid #333; width: 2426px; height: 1121px; }
+.panzoom-parent .panzoom { border: 2px dashed #666; }
+.buttons { margin: 40px 0 0; }
+.shopspot{
+	background: red;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 99;
 }

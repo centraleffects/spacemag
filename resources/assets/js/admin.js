@@ -26,4 +26,8 @@ window.rebuyApp.config(['$httpProvider', function($httpProvider) {
 	 window.adminJS = $.adminJS;
 })(jQuery);
 
+require('./lib/jquery.panzoom');
+require('./lib/jquery.mousewheel');
+require('./lib/jquery-ui');
 require('./controllers/admin/user_controller');
+require('./controllers/admin/shop_controller');
