@@ -31,16 +31,11 @@
 	<div class="col s3">
 		<div id="list-info" class="white">
 			<div class="row" id="info-nav">
-				<input type="text" name="shop_name" placeholder="Shop name">
-				<i data-activates="lsinfo-option" class="fa fa-ellipsis-v grey-text lighten-2 dropdown-button" aria-hidden="true" id="info-option"></i>
-				<ul id="lsinfo-option" class="dropdown-content">
-				  <li><a href="#!"  onclick="$.ReBuy.alertDialog('test');"><i class="fa fa-times" aria-hidden="true"></i> REMOVE</a></li>
-				  <li><a href="#!"  onclick="$.ReBuy.confirmDialog('test', function(){ console.log('ok'); });"><i class="fa fa-times" aria-hidden="true"></i> REMOVE 2</a></li>
-				</ul>
+				<input type="text" name="shop_name" placeholder="Shop name"  ng-model="selectedShop.name">
 			</div>
 			<div class="row" id="info-content">
 				<ul class="collection">
-					<li class="collection-item"><textarea name="shop_description">Description</textarea></li>
+					<li class="collection-item"><textarea name="shop_description" ng-model="selectedShop.description" rows="50">Description</textarea></li>
 					<li class="collection-item"><input type="text" name="shop_url" placeholder="Homepage"></li>
 					<li class="collection-item"><input type="text" name="shop_currency" placeholder="Currency"><small class="grey-text lighten-2">This is a test</small></li>
 					<li class="collection-item"><input type="text" name="shop_postel" placeholder="Postel"></li>

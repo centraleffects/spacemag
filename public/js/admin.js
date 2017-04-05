@@ -9463,74 +9463,73 @@ __webpack_require__(10);
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {
 rebuyApp.service('shopService', function ($http, $timeout) {
-    this.shopList = function () {
-        return $http.get('/api/shops/?api_token=' + window.adminJS.me.api_token).then(function (data) {
-            return data;
-        });
-    };
+  this.shopList = function () {
+    return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
+      return data;
+    });
+  };
 });
 
 rebuyApp.controller('adminShopController', function ($scope, shopService, $timeout, $templateCache, $http) {
 
-    $scope.shops = {};
-    $scope.selectedShop = {};
-    $scope.selectedShopKey = null;
-    $scope.genderOptions = [{ 'value': 'm', 'text': 'Male' }, { 'value': 'f', 'text': 'Female' }];
-    $scope.roleOptions = [{ 'value': 'admin', 'text': 'Administrator' }, { 'value': 'owner', 'text': 'Shop Owner' }, { 'value': 'worker', 'text': 'Shop Worker' }, { 'value': 'cliet', 'text': 'Client' }, { 'value': 'customer', 'text': 'Customer' }];
-    $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
-    $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
+  $scope.shops = {};
+  $scope.selectedShop = {};
+  $scope.selectedShopKey = null;
 
-    $scope.init = function () {
-        $timeout(function () {
-            shopService.shopList().then(function (response) {
-                $scope.shops = response.data;
-                console.log(response);
-            });
-        }, 1000);
-    };
+  $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+  $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
 
-    $scope.events = {
-        viewShop: function viewShop(key, value) {
-            if (key == 0) {
-                $scope.selectedShopKey = null;
-                $scope.selectedShop = {};
-                location.hash = '#!';
-            } else {
-                $scope.selectedShopKey = key;
-                value.password = '';
-                $scope.selectedShop = value;
-                location.hash = '#!/' + value.id;
-            }
+  $scope.init = function () {
+    $timeout(function () {
+      shopService.shopList().then(function (response) {
+        $scope.shops = response.data;
+        $scope.selectedShop = $scope.shops.data[0];
+        $scope.selectedShopKey = 0;
+      });
+    }, 1500);
 
-            materializeInit();
-            $timeout(function () {
-                materializeInit();
-            }, 500);
-        }
-    };
+    $scope.bindEvents();
+  };
 
-    $scope.bindEvents = function () {
-        (function ($) {
+  $scope.events = {
+    viewShop: function viewShop(key, value) {
 
-            var $section = $('#mapsection').first();
-            $section.find('.panzoom').panzoom({
-                $zoomIn: $section.find(".zoom-in"),
-                $zoomOut: $section.find(".zoom-out"),
-                $zoomRange: $section.find(".zoom-range"),
-                $reset: $section.find(".reset")
-            });
+      $scope.selectedShopKey = key;
+      value.password = '';
+      $scope.selectedShop = value;
+      location.hash = '#!/' + value.id;
 
-            angular.element('img.panzoom').click(function (e) {
+      $timeout(function () {
+        //materializeInit();
+      }, 500);
+    },
+    addShopSpot: function addShopSpot(x, y) {
+      var $section = angular.element('#mapsection');
+      $section.append('<div class="shopspot" style="left:' + x + 'px;top:' + y + 'px"></div>');
+    }
+  };
 
-                var offset = angular.element(this).offset();
-                $scope.events.addShopSpot(e.pageX, e.pageY);
-            });
+  $scope.bindEvents = function () {
+    (function ($) {
 
-            $('.shopspot').draggable();
-        })(jQuery);
-    };
+      var $section = $('#mapsection').first();
+      $section.find('.panzoom').panzoom({
+        $zoomIn: $section.find(".zoom-in"),
+        $zoomOut: $section.find(".zoom-out"),
+        $zoomRange: $section.find(".zoom-range"),
+        $reset: $section.find(".reset")
+      });
 
-    $scope.init();
+      angular.element('img.panzoom').click(function (e) {
+
+        var offset = angular.element(this).offset();
+        $scope.events.addShopSpot(e.pageX, e.pageY);
+      });
+
+      $('.shopspot').draggable();
+    })(jQuery);
+  };
+  $scope.init();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

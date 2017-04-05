@@ -112,4 +112,10 @@ class ShopController extends Controller
         return ['success' => 0];
     }
 
+    public function getlist(){
+
+        $shops = Shop::paginate(50);
+
+        return $shops;
+    }
 }
