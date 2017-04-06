@@ -1,5 +1,9 @@
 
-.panzoom-parent { border: 2px solid #333; width: 2426px; height: 1121px; }
+.panzoom-parent { 
+	border: 2px solid #333; 
+	width: 100%; 
+	overflow: auto;
+}
 .panzoom-parent .panzoom { border: 2px dashed #666; }
 .buttons { margin: 40px 0 0; }
 .shopspot{
@@ -9,4 +13,7 @@
     border-radius: 50%;
     position: absolute;
     z-index: 99;
+}
+#info-content textarea{
+	min-height: 300px;
 }

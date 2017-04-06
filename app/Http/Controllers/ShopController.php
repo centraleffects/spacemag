@@ -89,14 +89,6 @@ class ShopController extends Controller
     }
 
 
-    /**
-     * Display list of shops
-     */
-    public function admin_list(){
-        $shops = Shop::all();
-        return $shops;
-    }
-
     public function get(User $user){
         if( Auth::guard('api')->user()->id == $user->id )
             return $user->shops()->paginate(10);
@@ -120,4 +112,10 @@ class ShopController extends Controller
         return ['success' => 0];
     }
 
+    public function getlist(){
+
+        $shops = Shop::paginate(50);
+
+        return $shops;
+    }
 }

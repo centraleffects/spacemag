@@ -455,7 +455,6 @@ svg.itemRow-dragIcon{
 	width: 100%;
 	min-height: 500px;
 	padding: 5px;
-	max-height: 700px;
 }
 #info-nav{
 	border-bottom: 1px solid #ccc;
@@ -532,7 +531,11 @@ svg.itemRow-dragIcon{
     cursor: pointer;
 }
 
-.panzoom-parent { border: 2px solid #333; width: 2426px; height: 1121px; }
+.panzoom-parent { 
+	border: 2px solid #333; 
+	width: 100%; 
+	overflow: auto;
+}
 .panzoom-parent .panzoom { border: 2px dashed #666; }
 .buttons { margin: 40px 0 0; }
 .shopspot{
@@ -542,4 +545,7 @@ svg.itemRow-dragIcon{
     border-radius: 50%;
     position: absolute;
     z-index: 99;
+}
+#info-content textarea{
+	min-height: 300px;
 }

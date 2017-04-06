@@ -9462,44 +9462,65 @@ __webpack_require__(10);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {
-rebuyApp.controller('adminShopController', function ($scope, $http) {
-
-    $scope.shops = [{ name: 'Jani', country: 'Norway' }, { name: 'Hege', country: 'Sweden' }, { name: 'Kai', country: 'Denmark' }];
-
-    $scope.events = {
-        addShopSpot: function addShopSpot(x, y) {
-
-            var $floorplan = angular.element('#floorplan-container'),
-                $shopspot = angular.element('<div class="shopspot"></div>'),
-                $map = angular.element('#floorplan-container img');
-
-            $floorplan.append($shopspot.css({ left: x + 'px', top: y + 'px' }));
-        }
+rebuyApp.service('shopService', function ($http, $timeout) {
+    this.shopList = function () {
+        return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
+            return data;
+        });
     };
+});
+
+rebuyApp.controller('adminShopController', function ($scope, shopService, $timeout, $templateCache, $http) {
+
+    $scope.shops = {};
+    $scope.selectedShop = {};
+    $scope.selectedShopKey = null;
+
+    $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+    $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
 
     $scope.init = function () {
+        $timeout(function () {
+            shopService.shopList().then(function (response) {
+                $scope.shops = response.data;
+                $scope.selectedShop = $scope.shops.data[0];
+                $scope.selectedShopKey = 0;
+            });
+        }, 1500);
 
         $scope.bindEvents();
+    };
 
-        /*
-        $http.get('/api/shops/list')
-        .then( function(response){
-        $scope.shops.list = response;
-        });*/
+    $scope.events = {
+        viewShop: function viewShop(key, value) {
+
+            $scope.selectedShopKey = key;
+            value.password = '';
+            $scope.selectedShop = value;
+            location.hash = '#!/' + value.id;
+
+            $timeout(function () {
+                //materializeInit();
+            }, 500);
+        },
+        addShopSpot: function addShopSpot(x, y) {
+            var $section = angular.element('.panzoom');
+            $section.append('<div class="shopspot" style="margin-left:' + x + 'px; margin-top:' + y + 'px"></div>');
+        }
     };
 
     $scope.bindEvents = function () {
         (function ($) {
 
-            /* var $section = $('#mapsection').first();
-             $section.find('.panzoom').panzoom({
-             $zoomIn: $section.find(".zoom-in"),
-             $zoomOut: $section.find(".zoom-out"),
-             $zoomRange: $section.find(".zoom-range"),
-             $reset: $section.find(".reset")
+            var $section = $('#mapsection').first();
+            $section.find('.panzoom').panzoom({
+                $zoomIn: $section.find(".zoom-in"),
+                $zoomOut: $section.find(".zoom-out"),
+                $zoomRange: $section.find(".zoom-range"),
+                $reset: $section.find(".reset")
             });
-            */
-            angular.element('img.panzoom').click(function (e) {
+
+            angular.element('.panzoom').dblclick(function (e) {
 
                 var offset = angular.element(this).offset();
                 $scope.events.addShopSpot(e.pageX, e.pageY);
@@ -9508,7 +9529,6 @@ rebuyApp.controller('adminShopController', function ($scope, $http) {
             $('.shopspot').draggable();
         })(jQuery);
     };
-
     $scope.init();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
