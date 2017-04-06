@@ -19,7 +19,7 @@
 	</div>
 	<div class="col s6 map-area-container" id="mapsection">
 		<div class="scrollspy panzoom-parent map-area" id="floorplan-container">
-			<img class="panzoom" ng-click="events.addShopSpot($(this))" src="/floorplan/floor1.jpg" width="2426" height="1121" data-width="2426" data-height="1121"/>
+			<div class="panzoom" ng-click="events.addShopSpot($(this))" style="background: url(/floorplan/floor1.jpg);width: 2426px; height: 1121px;" width="2426" height="1121" data-width="2426" data-height="1121"/></div>
 		</div>
 		<div class="buttons">
 	        <button class="zoom-in">Zoom In</button>
@@ -29,17 +29,28 @@
 	      </div>
 	</div>
 	<div class="col s3">
-		<div id="list-info" class="white">
+		<div id="list-info" class="card hoverable">
 			<div class="row" id="info-nav">
 				<input type="text" name="shop_name" placeholder="Shop name"  ng-model="selectedShop.name">
 			</div>
-			<div class="row" id="info-content">
+			<div class="row card-content" id="info-content">
 				<ul class="collection">
-					<li class="collection-item"><textarea name="shop_description" ng-model="selectedShop.description" rows="50">Description</textarea></li>
-					<li class="collection-item"><input type="text" name="shop_url" placeholder="Homepage"></li>
-					<li class="collection-item"><input type="text" name="shop_currency" placeholder="Currency"><small class="grey-text lighten-2">This is a test</small></li>
+					<li class="collection-item"><textarea name="shop_description" ng-model="selectedShop.description" rows="50" placeholder="Description"></textarea></li>
+					<li class="collection-item"><input type="text" name="shop_url" ng-model="selectedShop.url" placeholder="Homepage"></li>
+					<li class="collection-item"><input type="text" name="shop_currency" ng-model="selectedShop.currency" placeholder="Currency"></li>
 					<li class="collection-item"><input type="text" name="shop_postel" placeholder="Postel"></li>
 				</ul>	
+			</div>
+			<div class="card-action row">
+				<div class="col">
+					<br>
+					<button class="btn waves-effect waves-light blue hide" id="resetdetails" ng-click="events.viewUser(null,{})">
+						<i class="fa fa-random"></i> Clear
+					</button>
+					<button class="btn waves-effect waves-light green right"  type="submit" title="Generate Password" onclick="updateInfo()">
+						<i class="fa fa-floppy-o" aria-hidden="true"></i> @{{ !selectedShop.id ? 'Save' : 'Update' }}
+					</button><br><br>
+				</div>
 			</div>
 		</div>
 	</div>

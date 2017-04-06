@@ -455,7 +455,6 @@ svg.itemRow-dragIcon{
 	width: 100%;
 	min-height: 500px;
 	padding: 5px;
-	max-height: 700px;
 }
 #info-nav{
 	border-bottom: 1px solid #ccc;
@@ -546,4 +545,7 @@ svg.itemRow-dragIcon{
     border-radius: 50%;
     position: absolute;
     z-index: 99;
+}
+#info-content textarea{
+	min-height: 300px;
 }

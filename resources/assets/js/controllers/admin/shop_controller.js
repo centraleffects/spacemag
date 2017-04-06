@@ -31,7 +31,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
 
     $scope.events = {
         viewShop : function(key,value){
-          
+
             $scope.selectedShopKey = key;
             value.password = '';
             $scope.selectedShop = value;
@@ -42,8 +42,8 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
             },500);
         },
         addShopSpot : function(x,y){
-            var $section = angular.element('#mapsection');
-                $section.append('<div class="shopspot" style="left:' + x + 'px;top:' + y + 'px"></div>');
+            var $section = angular.element('.panzoom');
+                $section.append('<div class="shopspot" style="margin-left:' + x + 'px; margin-top:' + y + 'px"></div>');
         }
     }
     
@@ -58,7 +58,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                     $reset: $section.find(".reset")
                   });
 
-              angular.element('img.panzoom').click(function(e) {
+              angular.element('.panzoom').dblclick(function(e) {
 
                 var offset = angular.element(this).offset();
                 $scope.events.addShopSpot(e.pageX,e.pageY);
