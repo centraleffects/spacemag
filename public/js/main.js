@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9266,116 +9266,276 @@ return jQuery;
 
 /***/ }),
 
-/***/ 2:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
-    $.reBuy = {
-        alert: function alert(message, btnYesLabel, modalWidth, callback) {
-            var btnYesLabel = btnYesLabel || 'OK',
-                modalWidth = modalWidth || '300px',
-                callback = callback || 'function(){ return false; }',
-                modalId = 'alertDialog',
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + '">\
-                        <div class="modal-content">\
-                          <p>' + message + '</p>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
-                        </div>\
-                      </div>';
+/* WEBPACK VAR INJECTION */(function($) {function ClientCtrl($scope, $http, $timeout, $rootScope) {
+	$scope.selectedShop = selectedShop;
+	$scope.clients = [];
+	$scope.hasSelectedClient = false;
+	$scope.selectedClient = null;
+	$scope.addNew = false;
+	$scope.noClientAvailable = false;
 
-            if ($('#' + modalId).length == 0) {
-                $('body').append(html);
-            } else {
-                $('#' + modalId).html(html);
-            }
-            $('.modal').modal();
-            $('#' + modalId).modal('open');
-            $('#' + modalId).find('.btn-yes-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-                try {
-                    callback();
-                } catch (e) {}
-            });
-        },
-        confirm: function confirm(message, doCallback, btnYesLabel, btnNoLabel, modalWidth) {
-            var btnYesLabel = btnYesLabel || 'OK',
-                btnNoLabel = btnNoLabel || 'Cancel',
-                modalWidth = modalWidth || '300',
-                doCallback = doCallback || 'function(){ return false; }',
-                modalId = 'confirmDialog',
-                alertDialogModal = $('#' + modalId),
-                $body = $('body'),
-                html = '<div id="' + modalId + '" class="modal" style="width:' + modalWidth + 'px">\
-                        <div class="modal-content">\
-                          <p>' + message + '</p>\
-                        </div>\
-                        <div class="modal-footer">\
-                          <a href="#!" class=" modal-action btn-no-label waves-effect waves-green btn-flat">' + btnNoLabel + '</a>\
-                          <a href="#!" class=" modal-action btn-yes-label waves-effect waves-green btn-flat">' + btnYesLabel + '</a>\
-                        </div>\
-                      </div>';
+	$scope.init = function () {
+		$scope.getClients();
+	};
 
-            if ($('#' + modalId).length == 0) {
-                $('body').append(html);
-            } else {
-                $('#' + modalId).html(html);
-            }
-            $('.modal').modal();
-            $('#' + modalId).modal('open');
-            $('#' + modalId).find('.btn-yes-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-                try {
-                    doCallback();
-                } catch (e) {}
-            });
-            $('#' + modalId).find('.btn-no-label').on('click', function () {
-                $('#' + modalId).modal('close');
-                $('#' + modalId).remove();
-            });
-        },
-        initMaterialize: function initMaterialize() {
+	$scope.getClients = function () {
+		var url = '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token;
+		$http.get(url).then(function (response) {
+			console.log(response);
+			$scope.clients = response.data;
 
-            Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
+			if ($scope.clients.length > 0) {
+				$rootScope.listIsEmpty = false;
+			} else {
+				$rootScope.listIsEmpty = true;
+			}
+		}, function (response) {
+			console.warn(response);
+		});
+	};
 
-            $('.dropdown-button').dropdown({ "hover": false });
-            $('ul.tabs').tabs();
-            $('.tab-demo').show().tabs();
-            $('.parallax').parallax();
-            $('.modal').modal();
-            $('.tooltipped').tooltip({ "delay": 45 });
-            $('.collapsible-accordion').collapsible();
-            $('.collapsible-expandable').collapsible({ "accordion": false });
-            $('.materialboxed').materialbox();
-            $('.scrollspy').scrollSpy();
-            $('.button-collapse').sideNav();
-            $('.datepicker').pickadate();
-            $('.do-nav-slideout').click(function () {
-                $('.button-collapse').sideNav('show');
-            });
-            $('.chips').material_chip();
-            $('select').material_select();
-            // $('#password').strength_meter();
-        },
-        toast: function toast(message) {
-            Materialize.toast(message, 4000);
-        }
-    };
+	$scope.viewClient = function (index) {
+		$scope.hasSelectedClient = true;
+		$scope.selectedClient = $scope.clients[index];
+		Materialize.updateTextFields();
+	};
 
-    window.reBuy = $.reBuy;
-})(jQuery);
+	$scope.removeClient = function (index) {
+		var customer = $scope.clients[index];
+		var url = '/api/shops/' + selectedShop.id + '/users/' + customer.id + '/remove?api_token=' + window.user.api_token;
+		window.$.reBuy.confirm("Are you sure to remove this customer?", function () {
+			$http.delete(url).then(function (response) {
+				// $scope.clients = response.data;
+				console.log(response);
+				if (response.data.success == 1) {
+					$scope.clients.splice(index);
+					if ($scope.clients.length < 1) {
+						$rootScope.listIsEmpty = true;
+					}
+				}
+			}, function (response) {
+				console.warn(response);
+			});
+		});
+	};
+
+	$scope.generatePassword = function () {
+		if ($scope.hasSelectedClient) {
+			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
+				console.warn(response);
+			}, function (response) {
+				console.warn(response);
+			});
+		}
+	};
+
+	$scope.addNew = function () {
+		$scope.addNew = true;
+		$("html, body").animate({ scrollTop: $('#new_customer').offset().top }, 1000);
+	};
+
+	// init
+	$scope.init();
+}
+
+app.controller('ClientController', ClientCtrl);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 29:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
+	$scope.selectedShop = selectedShop;
+	$scope.customers = [];
+	$scope.hasSelectedCustomer = false;
+	$scope.currentlySelectedCustomer = null;
+	$scope.addNew = false;
 
+	$scope.init = function () {
+		$scope.getCustomers();
+	};
+
+	$scope.getCustomers = function () {
+		var url = '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token;
+		$http.get(url).then(function (response) {
+			console.log(response);
+			$scope.customers = response.data;
+
+			if ($scope.customers.length > 0) {
+				$rootScope.listIsEmpty = false;
+			} else {
+				$rootScope.listIsEmpty = true;
+			}
+		}, function (response) {
+			console.warn(response);
+		});
+	};
+
+	$scope.viewCustomer = function (index) {
+		$scope.hasSelectedCustomer = true;
+		$scope.currentlySelectedCustomer = $scope.customers[index];
+		Materialize.updateTextFields();
+	};
+
+	$scope.removeCustomer = function (index) {
+		var customer = $scope.customers[index];
+		var url = '/api/shops/' + selectedShop.id + '/users/' + customer.id + '/remove?api_token=' + window.user.api_token;
+		window.$.reBuy.confirm("Are you sure to remove this customer?", function () {
+			$http.delete(url).then(function (response) {
+				// $scope.customers = response.data;
+				console.log(response);
+				if (response.data.success == 1) {
+					$scope.customers.splice(index);
+				}
+
+				if ($scope.customers.length < 1) {
+					$rootScope.listIsEmpty = true;
+				}
+			}, function (response) {
+				console.warn(response);
+			});
+		});
+	};
+
+	$scope.generatePassword = function () {
+		if ($scope.hasSelectedCustomer) {
+			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
+				console.warn(response);
+			}, function (response) {
+				console.warn(response);
+			});
+		}
+	};
+
+	$scope.addNewCustomer = function () {
+		$scope.addNew = true;
+		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+	};
+
+	// init
+	$scope.init();
+}
+
+app.controller('CustomerController', CustomerCtrl);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 14:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
+	$scope.selectedShop = selectedShop;
+	$scope.workers = [];
+	$scope.hasSelectedWorker = false;
+	$scope.selectedWorker = null;
+	$scope.addNew = false;
+
+	$scope.init = function () {
+		$scope.getWorkers();
+	};
+
+	$scope.getWorkers = function () {
+		var url = '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token;
+		$http.get(url).then(function (response) {
+			console.log(response);
+			$scope.workers = response.data;
+
+			if ($scope.workers.length > 0) {
+				$rootScope.listIsEmpty = false;
+			} else {
+				$rootScope.listIsEmpty = true;
+			}
+		}, function (response) {
+			console.warn(response);
+		});
+	};
+
+	$scope.viewWorker = function (index) {
+		$scope.hasSelectedWorker = true;
+		$scope.selectedWorker = $scope.workers[index];
+		Materialize.updateTextFields();
+	};
+
+	$scope.removeWorker = function (index) {
+		var customer = $scope.workers[index];
+		var url = '/api/shops/' + selectedShop.id + '/users/' + customer.id + '/remove?api_token=' + window.user.api_token;
+		window.$.reBuy.confirm("Are you sure to remove this customer?", function () {
+			$http.delete(url).then(function (response) {
+				// $scope.workers = response.data;
+				console.log(response);
+				if (response.data.success == 1) {
+					$scope.workers.splice(index);
+				}
+
+				if ($scope.workers.length < 1) {
+					$rootScope.listIsEmpty = true;
+				}
+			}, function (response) {
+				console.warn(response);
+			});
+		});
+	};
+
+	$scope.generatePassword = function () {
+		if ($scope.hasSelectedWorker) {
+			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
+				console.warn(response);
+			}, function (response) {
+				console.warn(response);
+			});
+		}
+	};
+
+	$scope.addNewWorker = function () {
+		$scope.addNew = true;
+		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+	};
+
+	// init
+	$scope.init();
+}
+
+app.controller('WorkerController', WorkerCtrl);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
+/***/ 6:
+/***/ (function(module, exports, __webpack_require__) {
+
+window.app = angular.module('rebuy', []);
+
+__webpack_require__(13);
+__webpack_require__(12);
+__webpack_require__(11);
+__webpack_require__(14);
+
+app.run(function ($rootScope) {
+    $rootScope.currentUser = window.user;
+    $rootScope.currentlySelectedShop = window.shop;
+    $rootScope.listIsEmpty = false;
+});
 
 /***/ })
 

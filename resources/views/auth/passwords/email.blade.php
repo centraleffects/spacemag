@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <div class="card-action centered">
-                        <button type="submit" class="btn green waves-effect waves-light">
+                        <button type="submit" class="btn green waves-effect waves-light" ng-click="sendPasswordReset">
                             <i class="fa fa-send"></i> Send Password Reset Link
                         </button>
                     </div>

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -15197,7 +15197,7 @@ __webpack_require__(9);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {
-window._ = __webpack_require__(15);
+window._ = __webpack_require__(21);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -15210,9 +15210,9 @@ window.$ = __webpack_provided_window_dot_jQuery = __webpack_require__(0);
 //window.angular = require('angular');
 __webpack_require__(8);
 __webpack_require__(7);
-__webpack_require__(12);
+__webpack_require__(18);
 
-__webpack_require__(13);
+__webpack_require__(19);
 
 __webpack_require__(2);
 
@@ -15233,7 +15233,13 @@ __webpack_require__(2);
 /***/ }),
 /* 10 */,
 /* 11 */,
-/* 12 */
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, $, __webpack_provided_window_dot_jQuery, module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_LOCAL_MODULE_0__;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -16516,13 +16522,13 @@ jQuery.Velocity ? console.log("Velocity is already loaded. You may be needlessly
       }
     }, destroy: function destroy() {
       this.element && lc(this, !1), this.handlers = {}, this.session = {}, this.input.destroy(), this.element = null;
-    } }, n(hc, { INPUT_START: O, INPUT_MOVE: P, INPUT_END: Q, INPUT_CANCEL: R, STATE_POSSIBLE: Rb, STATE_BEGAN: Sb, STATE_CHANGED: Tb, STATE_ENDED: Ub, STATE_RECOGNIZED: Vb, STATE_CANCELLED: Wb, STATE_FAILED: Xb, DIRECTION_NONE: S, DIRECTION_LEFT: T, DIRECTION_RIGHT: U, DIRECTION_UP: V, DIRECTION_DOWN: W, DIRECTION_HORIZONTAL: X, DIRECTION_VERTICAL: Y, DIRECTION_ALL: Z, Manager: kc, Input: ab, TouchAction: Pb, TouchInput: Eb, MouseInput: rb, PointerEventInput: wb, TouchMouseInput: Gb, SingleTouchInput: Ab, Recognizer: Yb, AttrRecognizer: ac, Tap: gc, Pan: bc, Swipe: fc, Pinch: cc, Rotate: ec, Press: dc, on: t, off: u, each: m, merge: o, extend: n, inherit: p, bindFn: q, prefixed: B }), ( false ? 'undefined' : _typeof(__webpack_require__(16))) == g && __webpack_require__(17) ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+    } }, n(hc, { INPUT_START: O, INPUT_MOVE: P, INPUT_END: Q, INPUT_CANCEL: R, STATE_POSSIBLE: Rb, STATE_BEGAN: Sb, STATE_CHANGED: Tb, STATE_ENDED: Ub, STATE_RECOGNIZED: Vb, STATE_CANCELLED: Wb, STATE_FAILED: Xb, DIRECTION_NONE: S, DIRECTION_LEFT: T, DIRECTION_RIGHT: U, DIRECTION_UP: V, DIRECTION_DOWN: W, DIRECTION_HORIZONTAL: X, DIRECTION_VERTICAL: Y, DIRECTION_ALL: Z, Manager: kc, Input: ab, TouchAction: Pb, TouchInput: Eb, MouseInput: rb, PointerEventInput: wb, TouchMouseInput: Gb, SingleTouchInput: Ab, Recognizer: Yb, AttrRecognizer: ac, Tap: gc, Pan: bc, Swipe: fc, Pinch: cc, Rotate: ec, Press: dc, on: t, off: u, each: m, merge: o, extend: n, inherit: p, bindFn: q, prefixed: B }), ( false ? 'undefined' : _typeof(__webpack_require__(22))) == g && __webpack_require__(23) ? !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
     return hc;
   }.call(exports, __webpack_require__, exports, module),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : "undefined" != typeof module && module.exports ? module.exports = hc : a[c] = hc;
 }(window, document, "Hammer");;(function (factory) {
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(14)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(0), __webpack_require__(20)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -23838,7 +23844,7 @@ if (jQuery) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0), __webpack_require__(0), __webpack_require__(3)(module)))
 
 /***/ }),
-/* 13 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/* 
@@ -23996,7 +24002,7 @@ Dependencies:
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 14 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -26646,7 +26652,7 @@ if (true) {
 
 
 /***/ }),
-/* 15 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -43735,10 +43741,10 @@ if (true) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(3)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(24), __webpack_require__(3)(module)))
 
 /***/ }),
-/* 16 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
@@ -43747,7 +43753,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 17 */
+/* 23 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -43756,7 +43762,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 18 */
+/* 24 */
 /***/ (function(module, exports) {
 
 var g;
@@ -43783,8 +43789,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 19 */,
-/* 20 */
+/* 25 */,
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(5);

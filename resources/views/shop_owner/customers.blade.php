@@ -5,7 +5,7 @@
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
 			@component('layouts._partials.search')
-				@slot('search_name') clients @endslot
+				@slot('search_name') customers @endslot
 			@endcomponent
 			<ul class="collection">
 				<li class="collection-item customers" ng-repeat="x in customers | filter:search">

@@ -67,16 +67,16 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $fb_user = Socialite::driver('facebook')->user();
-        
+        $socialite = Socialite::driver('facebook');
+        $fb_user = $socialite->user();
+
         $client = new \GuzzleHttp\Client();
 
         $fields = 'first_name,last_name,gender';
-        $url = "https://graph.facebook.com/v2.8/$fb_user->id?fields=$fields&oauth_token=$fb_user->token";
+        $url = "https://graph.facebook.com/v2.8/me?fields=$fields&oauth_token=$fb_user->token";
         $res = $client->get($url);
 
         $data = json_decode( $res->getBody()->getContents() );
-        // $data = json_decode( file_get_contents($url) );
 
         // find the user with a facebok id
         $user = User::where('facebook_id', '=', $fb_user->id)->first();

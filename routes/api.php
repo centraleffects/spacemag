@@ -45,6 +45,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::post('/delete/{user}', 'UserController@destroy');
 	Route::post('/store', 'UserController@store');
 
+	Route::post('/resets-password', 'Illuminate\Foundation\Auth\SendsPasswordResetEmails@sendResetLinkEmail');
+
 	//Shops
 	Route::post('{user}/shops', 'ShopController@get');
 });
