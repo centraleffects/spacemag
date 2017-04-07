@@ -35,15 +35,29 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
             $scope.selectedShopKey = key;
             value.password = '';
             $scope.selectedShop = value;
-            location.hash = '#!/'+value.id;
+            if(value.id){
+              location.hash = '#!/' + value.id;
+            }else{
+              location.hash = '#!/';
+            }
+            
             
             $timeout(function () {
               //materializeInit();
+              angular.element('.shopspot').removeClass('green');
+              angular.element('#sp'+value.id).addClass('green');
             },500);
         },
         addShopSpot : function(x,y){
-            var $section = angular.element('.panzoom');
-                $section.append('<div class="shopspot" style="margin-left:' + x + 'px; margin-top:' + y + 'px"></div>');
+              
+                var key = Object.keys($scope.shops.data).length;
+                    id = parseInt($scope.shops.data[key-1].id) + 1;
+                $scope.shops.data[key] = { name : 'New Shop', id : id, 'x_coordinate' : x, 'y_coordinate' : y };
+                angular.element('#dashleft-sidebar ul li:first-child').click();
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+                $timeout(function () {
+                  angular.element('#dashleft-sidebar ul li#sh' + id).click();
+                },500);
         }
     }
     
@@ -60,8 +74,11 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
 
               angular.element('.panzoom').dblclick(function(e) {
 
-                var offset = angular.element(this).offset();
-                $scope.events.addShopSpot(e.pageX,e.pageY);
+                 var parentOffset = $(this).offset(); 
+                 var relX = (e.pageX - parentOffset.left) - 12;
+                 var relY = (e.pageY - parentOffset.top) - 12;
+
+                 $scope.events.addShopSpot(relX,relY);
 
               });
 
@@ -69,5 +86,16 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
 
         })(jQuery);
     }
+
+    //watch our collection and sending changes to server
+    //@TODO push back to server
+    $scope.$watchCollection( $scope.selectedShop, function(newVal, oldVal) {
+        $timeout(function () {
+           // / materializeInit();
+            angular.element('.tooltipped').tooltip({delay: 50, html : true});
+        },1500);
+    }); 
+
+
    $scope.init();
 });
