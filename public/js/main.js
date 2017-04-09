@@ -9266,7 +9266,22 @@ return jQuery;
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
@@ -9363,7 +9378,7 @@ app.controller('ArticleController', ArticleCtrl);
 
 /***/ }),
 
-/***/ 12:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ClientCtrl($scope, $http, $timeout, $rootScope) {
@@ -9443,7 +9458,7 @@ app.controller('ClientController', ClientCtrl);
 
 /***/ }),
 
-/***/ 13:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9454,6 +9469,7 @@ app.controller('ClientController', ClientCtrl);
 	$scope.addNew = false;
 	$scope.new_firstName = '';
 	$scope.new_Email = '';
+	$scope.isDisabled = false;
 
 	$scope.init = function () {
 		$scope.getCustomers();
@@ -9464,16 +9480,19 @@ app.controller('ClientController', ClientCtrl);
 		$http.get(url).then(function (response) {
 			console.log(response);
 			$scope.customers = response.data;
-
-			if ($scope.customers.length > 0) {
-				$rootScope.listIsEmpty = false;
-			} else {
-				$rootScope.listIsEmpty = true;
-			}
 		}, function (response) {
 			console.warn(response);
 		});
 	};
+
+	$scope.$watch('customers', function () {
+		if ($scope.customers.length > 0) {
+			$scope.listIsEmpty = false;
+		} else {
+			$scope.listIsEmpty = true;
+		}
+		console.log('hey, myVar has changed!');
+	});
 
 	$scope.viewCustomer = function (index) {
 		$scope.hasSelectedCustomer = true;
@@ -9516,17 +9535,29 @@ app.controller('ClientController', ClientCtrl);
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
 	};
 
-	$scope.invite = function (button) {
+	$scope.invite = function (btn) {
+		var button = $(btn);
 		var data = {
 			name: $scope.new_firstName,
 			email: $scope.new_Email
 		},
 		    url = '/api/shops/' + selectedShop.id + '/invite?api_token=' + window.user.api_token;
-		button.attr("disabled", "disabled").addClass("disabled");
+		$scope.isDisabled = true;
 
 		$http.post(url, data).then(function (response) {
 			console.log(response);
+			if (response.data.success == 1) {
+				Materialize.toast(data.email + " has been invited to subscribe to " + selectedShop.name, 8000);
+			} else {
+				if (response.data.msg) {
+					Materialize.toast(response.data.msg, 8000);
+				} else {
+					Materialize.toast("Opps, something went wrong. Please try again later.", 8000);
+				}
+			}
+			$scope.isDisabled = false;
 		}, function (response) {
+			$scope.isDisabled = false;
 			if (response.data) {
 				window.$.reBuy.showErrors(response.data, $("#add_new"), 8000);
 			}
@@ -9542,14 +9573,7 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
-
-/***/ }),
-
-/***/ 15:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9629,24 +9653,16 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
 __webpack_require__(14);
-__webpack_require__(13);
-__webpack_require__(12);
-__webpack_require__(15);
-__webpack_require__(11);
+__webpack_require__(33);
+__webpack_require__(32);
+__webpack_require__(34);
+__webpack_require__(31);
 
 app.run(function ($rootScope) {
     $rootScope.currentUser = window.user;

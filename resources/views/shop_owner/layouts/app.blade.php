@@ -15,6 +15,11 @@
                         @slot('alert_type') 
                             {{ session()->get('flash_message')['type'] }}
                         @endslot
+
+                        @if( isset( session()->get('flash_message')['is_important'] ) )
+                            @slot('is_important') alert-important @endslot
+                        @endif
+                        
                         {{ session()->get('flash_message')['msg'] }}
                     @endcomponent
                 @endif
@@ -83,15 +88,6 @@
         </div>
 
     </section>
-
-
-    @if(Session::has("flash_message"))
-        <script type="text/javascript">
-            $("div.alert").not(".alert-important").delay(5000).slideUp(function(){
-                $(this).remove();
-            });
-        </script>
-    @endif
 </div>
 
 @include('layouts._partials.footer')

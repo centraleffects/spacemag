@@ -71,11 +71,17 @@ class ShopOwnerController extends Controller
 
         $user = auth()->user();
 
+        // prevents duplicate by clicking the Subscribe button from email multiple times
+        if( $shop->users()->find($user->id) != null )
+            return redirect('shop')->withFlash_message([
+                    'msg' => 'You have already subscribed to '.$shop->name,
+                    'type' => 'danger',
+                    'is_important' => true
+                ]);
         if( $shop->users()->save($user) )
-            // return ['success' => 1];
             return redirect('shop')->withFlash_message([
                     'msg' => 'You are now subscribed to '.$shop->name,
-                    'type' => 'info'
+                    'type' => 'success'
                 ]);
 
         return ['success' => 0];

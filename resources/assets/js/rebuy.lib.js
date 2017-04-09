@@ -2,10 +2,6 @@
     $.reBuy = {
         disableBtn : function (btn){
             btn.attr("disabled", "disabled").addClass("disabled");
-            var icon = null;
-            if( btn.children('i').length > 0 ){
-                icon = btn.children('i').clone();
-            }
         },
 
         enableBtn : function (btn){
@@ -59,24 +55,24 @@
                 $('.modal').modal();
                 $('#' + modalId).modal('open');
                 $('#' + modalId).find('.btn-yes-label').on('click', function(){
-                        $('#' + modalId).modal('close');
-                        $('#' + modalId).remove();
-                        try {
-                          callback();
-                        }catch(e){}
-                        
-                    });
+                    $('#' + modalId).modal('close');
+                    $('#' + modalId).remove();
+                    try {
+                      callback();
+                    }catch(e){}
+                    
+                });
 
         },
         confirm : function (message, doCallback,  btnYesLabel,  btnNoLabel, modalWidth){
-             var btnYesLabel = btnYesLabel || 'OK',
-                 btnNoLabel  = btnNoLabel  || 'Cancel',
-                 modalWidth  = modalWidth  || '300',
-                 doCallback    = doCallback    || 'function(){ return false; }',
-                 modalId     = 'confirmDialog',
-                 alertDialogModal = $('#' + modalId),
-                 $body       = $('body'),
-                 html =
+            var btnYesLabel = btnYesLabel || 'OK',
+                btnNoLabel  = btnNoLabel  || 'Cancel',
+                modalWidth  = modalWidth  || '300',
+                doCallback  = doCallback  || 'function(){ return false; }',
+                modalId     = 'confirmDialog',
+                alertDialogModal = $('#' + modalId),
+                $body       = $('body'),
+                html =
                     '<div id="'+modalId+'" class="modal" style="width:' + modalWidth + 'px">\
                         <div class="modal-content">\
                           <p>'+ message +'</p>\
@@ -95,17 +91,18 @@
                 $('.modal').modal()
                 $('#' + modalId).modal('open');
                 $('#' + modalId).find('.btn-yes-label').on('click', function(){
-                        $('#' + modalId).modal('close');
-                        $('#' + modalId).remove();
-                        try {
-                          doCallback();
-                        }catch(e){}
-                    })
+                    $('#' + modalId).modal('close');
+                    $('#' + modalId).remove();
+                    try {
+                      doCallback();
+                    }catch(e){}
+                });
                 $('#' + modalId).find('.btn-no-label').on('click', function(){
-                        $('#' + modalId).modal('close');
-                        $('#' + modalId).remove();
-                    });
+                    $('#' + modalId).modal('close');
+                    $('#' + modalId).remove();
+                });
         },
+        
         initMaterialize : function(){
 
             Materialize.updateTextFields(); // auto toogle textfields which are pre-filled

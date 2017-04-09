@@ -143,6 +143,18 @@ class ShopController extends Controller
                 $user->role = 'customer';
                 $user->save();
                 $user->plain_password = $password;
+            }else{
+                // prevents duplicate of subscribers
+                if( $shop->users()->find($user->id) != null  )
+                    return ['success' => 0, 'msg' => 'This user is already a subscriber of '.$shop->name];
+
+                // prevents owner to invite himself
+                if( auth()->user()->email == $input['email'] )
+                    return [
+                        'success' => 0, 
+                        'msg' => "Sorry, you can't invite yourself to be a subscriber of your own Shop."
+                    ];
+
             }
 
             $mail = new ShopInvitation($shop, $user);

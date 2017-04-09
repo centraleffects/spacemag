@@ -9273,10 +9273,6 @@ return jQuery;
     $.reBuy = {
         disableBtn: function disableBtn(btn) {
             btn.attr("disabled", "disabled").addClass("disabled");
-            var icon = null;
-            if (btn.children('i').length > 0) {
-                icon = btn.children('i').clone();
-            }
         },
 
         enableBtn: function enableBtn(btn) {
@@ -9371,6 +9367,7 @@ return jQuery;
                 $('#' + modalId).remove();
             });
         },
+
         initMaterialize: function initMaterialize() {
 
             Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
