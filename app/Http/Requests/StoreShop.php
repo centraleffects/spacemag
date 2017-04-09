@@ -13,7 +13,8 @@ class StoreShop extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        // return false;
+        return auth()->check() && auth()->user()->isAdmin();
     }
 
     /**

@@ -9266,22 +9266,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
-
-/***/ }),
-
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-
-/***/ 31:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
@@ -9378,7 +9363,7 @@ app.controller('ArticleController', ArticleCtrl);
 
 /***/ }),
 
-/***/ 32:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ClientCtrl($scope, $http, $timeout, $rootScope) {
@@ -9458,7 +9443,7 @@ app.controller('ClientController', ClientCtrl);
 
 /***/ }),
 
-/***/ 33:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9573,7 +9558,14 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 34:
+/***/ 14:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9653,16 +9645,24 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
 __webpack_require__(14);
-__webpack_require__(33);
-__webpack_require__(32);
-__webpack_require__(34);
-__webpack_require__(31);
+__webpack_require__(13);
+__webpack_require__(12);
+__webpack_require__(15);
+__webpack_require__(11);
 
 app.run(function ($rootScope) {
     $rootScope.currentUser = window.user;

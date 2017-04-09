@@ -17,13 +17,11 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     $scope.countryOptions = [{'value': 'swe','text' : 'Sweden'}];
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
 
+    var vm = this;
+
     $scope.init = function() {
         $timeout(function () {
-           shopService.shopList().then(function(response) {
-                $scope.shops = response.data;
-                $scope.selectedShop = $scope.shops.data[0];
-                $scope.selectedShopKey = 0;
-              });
+           updateList();
         },1500);
 
         $scope.bindEvents();
@@ -33,17 +31,86 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
         viewShop : function(key,value){
 
             $scope.selectedShopKey = key;
-            value.password = '';
             $scope.selectedShop = value;
-            location.hash = '#!/'+value.id;
+            if(value.id){
+              location.hash = '#!/' + value.id;
+            }else{
+              location.hash = '#!/';
+            }
+            
             
             $timeout(function () {
               //materializeInit();
+              angular.element('.shopspot').removeClass('green');
+              angular.element('#sp'+value.id).addClass('green');
             },500);
         },
         addShopSpot : function(x,y){
-            var $section = angular.element('.panzoom');
-                $section.append('<div class="shopspot" style="margin-left:' + x + 'px; margin-top:' + y + 'px"></div>');
+              
+                var key = Object.keys($scope.shops.data).length;
+                    id = parseInt($scope.shops.data[key-1].id) + 1;
+                $scope.shops.data[key] = { name : 'New Shop', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
+                angular.element('#dashleft-sidebar ul li:first-child').click();
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+                $timeout(function () {
+                  angular.element('#dashleft-sidebar ul li#sh' + id).click();
+                },500);
+        },
+        cancelSelectedIfNew: function(){
+          if($scope.selectedShop.isNew){
+            var data = [];
+             for (var k in $scope.shops.data){
+                 if (typeof $scope.shops.data[k] !== 'function') {
+                  if($scope.shops.data[k].id !== $scope.selectedShop.id){
+                    data.push($scope.shops.data[k]);
+                  }
+                }
+              }
+              $scope.shops.data = data;
+              $timeout(function () {
+                  angular.element('#dashleft-sidebar ul li:first-child').click();
+                  $scope.selectedShop = $scope.shops.data[0];
+                  $scope.selectedShopKey = 0;
+                },500);
+              
+          }
+        },
+        updateSelected : function(){
+            var url = '/api/shops/update';
+            $http({
+              method: 'POST',
+              url: url + '?api_token=' + window.adminJS.me.api_token,
+              data: $.param($scope.selectedShop),
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              cache: $templateCache
+            }).then(function(response) {
+              if($scope.selectedShop.isNew){
+                 window.reBuy.alert('Shop details have been created! Thank you.');
+              }else{
+                 window.reBuy.alert('Shop details have been updated! Thank you.');
+              }
+              updateList();
+            }, function(response) {
+                //displayError(response);
+            });
+        },
+        deleteSelected : function(){
+
+            window.reBuy.confirm('Are you sure to delete this shop?', function(){
+                var url = '/api/shops/delete';
+                $http({
+                  method: 'POST',
+                  url: url + '?api_token=' + window.adminJS.me.api_token,
+                  data: $.param($scope.selectedShop),
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                  cache: $templateCache
+                }).then(function(response) {
+                  window.reBuy.alert('Shop details have been deleted! Thank you.');
+                  updateList();
+                }, function(response) {
+                    //displayError(response);
+                });
+            });
         }
     }
     
@@ -60,14 +127,29 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
 
               angular.element('.panzoom').dblclick(function(e) {
 
-                var offset = angular.element(this).offset();
-                $scope.events.addShopSpot(e.pageX,e.pageY);
+                 var parentOffset = $(this).offset(); 
+                 var relX = (e.pageX - parentOffset.left) - 12;
+                 var relY = (e.pageY - parentOffset.top) - 12;
+
+                 $scope.events.addShopSpot(relX,relY);
 
               });
 
-              $('.shopspot').draggable();
+              //@TODO: should use $watch to handle model changes
+              angular.element('input[name="shop_name"]').keyup(function(){
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+              });
 
         })(jQuery);
     }
+
+    var updateList = function(){
+            shopService.shopList().then(function(response) {
+              $scope.shops = response.data;
+              $scope.selectedShop = $scope.shops.data[0];
+              $scope.selectedShopKey = 0;
+            });
+        }
+
    $scope.init();
 });
