@@ -8,14 +8,14 @@
 				@slot('search_name') customers @endslot
 			@endcomponent
 			<ul class="collection">
-				<li class="collection-item customers" ng-repeat="x in customers | filter:search">
+				<li class="collection-item" ng-repeat="x in customers | filter:search">
 					@include('layouts._partials.dragicon')
 					<span ng-click="viewCustomer($index)">@{{ x.first_name+' '+x.last_name }}</span>
 					<a class="right" title="Delete" ng-click="removeCustomer($index)">
 						<i class="fa fa-trash"></i>
 					</a>
 			    </li>
-			    <li ng-show="customers.length === 0">
+			    <li ng-show="emptyList()">
 				    <span>
 				    	<i class="fa fa-user-times"></i>
 				    	This shop doesn't have any customer at the moment.
@@ -32,23 +32,23 @@
 	
 	@slot('center')
 		<div id="customer_details" class="row">
-			<div class="card hoverable" ng-show="hasSelectedCustomer"><!-- Customer's Details -->
+			<div class="card hoverable" ng-show="hasSelectedUser"><!-- Customer's Details -->
 				<div class="card-content">
 					<div class="card-title">
 						Customer's Details 
 						@component('layouts._partials.close_card')
-							hasSelectedCustomer=false
+							hasSelectedUser=false
 						@endcomponent
 					</div>
 					<p></p>
 					<div class="client-details">
 						<div class="input-field">
-							<input type="text" name="name" value="@{{ currentlySelectedCustomer.first_name+' '+currentlySelectedCustomer.last_name }}" readonly />
+							<input type="text" name="name" value="@{{ selectedUser.first_name+' '+selectedUser.last_name }}" readonly />
 							<label>Name</label>
 						</div>
 
 						<div class="input-field">
-							<input type="email" name="email" value="@{{ currentlySelectedCustomer.email }}" readonly />
+							<input type="email" name="email" value="@{{ selectedUser.email }}" readonly />
 							<label>Email</label>
 						</div>
 
@@ -56,7 +56,7 @@
 				</div>
 				<div class="card-action row">
 					<div class="col">
-						<button class="btn waves-effect waves-light green" title="Generate Password" ng-click="generatePassword()">
+						<button class="btn waves-effect waves-light green" title="Generate Password" ng-click="generatePassword()" ng-disabled="isGeneratingPassword">
 							<i class="fa fa-random"></i> Generate Password
 						</button>
 					</div>
@@ -66,9 +66,9 @@
 			<div class="card hoverable"><!-- Shop -->
 				<div class="card-content">
 					<div class="card-title">Shop Name</div>
-					<div class="row">
+					<div class="row" ng-show="hasSelectedUser">
 						<div class="col">
-							<p>1. Rebuy Shop</p>
+							<p>@{{ selectedShop.name }}</p>
 						</div>
 						<div class="col">
 							<p>
@@ -81,6 +81,9 @@
 								<i class="fa fa-sign-in"></i> Login Customer A/C
 							</a>
 						</div>
+					</div>
+					<div class="row" ng-hide="hasSelectedUser">
+						Nothing to show here. Select or Add a customer to this shop right now.
 					</div>
 				</div>
 				<div class="card-action">
@@ -95,11 +98,11 @@
 					</div>
 
 					<div class="input-field">
-						<input type="text" name="name" class="validate" ng-model="new_firstName" required />
+						<input type="text" name="name" class="validate" ng-model="newUser.first_name" required />
 						<label>Name of Customer</label>
 					</div>
 					<div class="input-field ">
-						<input type="email" name="email" class="validate" ng-model="new_Email" required />
+						<input type="email" name="email" class="validate" ng-model="newUser.email" required />
 						<label>Email Address</label>
 					</div>
 				</div>

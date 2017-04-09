@@ -34,10 +34,10 @@
 
         alert : function (message, btnYesLabel, modalWidth, callback){
             var btnYesLabel = btnYesLabel || 'OK',
-                 modalWidth  = modalWidth  || '300px',
-                 callback    = callback    || 'function(){ return false; }',
-                 modalId     = 'alertDialog',
-                 html =
+                modalWidth  = modalWidth  || '300px',
+                callback    = callback    || 'function(){ return false; }',
+                modalId     = 'alertDialog',
+                html =
                     '<div id="'+modalId+'" class="modal" style="width:' + modalWidth + '">\
                         <div class="modal-content">\
                           <p>'+ message +'</p>\
@@ -127,8 +127,11 @@
             // $('#password').strength_meter();
     
         },
-        toast : function(message){
-           Materialize.toast(message, 4000);
+        toast : function(message, timeout){
+            if( typeof(timeout) == 'undefined' ){
+                timeout = 4000;
+            }
+           Materialize.toast(message, timeout);
         }
     }
 

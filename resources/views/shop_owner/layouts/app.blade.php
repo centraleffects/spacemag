@@ -1,6 +1,7 @@
+<header>
 @include('layouts._partials.header')
-
-<div class="row" {{ $controller or '' }}>
+</header>
+<main class="col s12" {{ $controller or '' }}>
 
     @include('layouts._partials.sidebar')
 
@@ -27,7 +28,7 @@
                     <div class="col s12">
                         <nav>
                             <div class="nav-wrapper">
-                                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                                <ul id="nav-mobile" class="right hide-on-med-and-down">
 
                                     @if( auth()->user()->isOwner() )
                                         <li>
@@ -88,6 +89,6 @@
         </div>
 
     </section>
-</div>
+</main>
 
 @include('layouts._partials.footer')

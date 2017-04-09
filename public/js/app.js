@@ -9390,8 +9390,11 @@ return jQuery;
             $('select').material_select();
             // $('#password').strength_meter();
         },
-        toast: function toast(message) {
-            Materialize.toast(message, 4000);
+        toast: function toast(message, timeout) {
+            if (typeof timeout == 'undefined') {
+                timeout = 4000;
+            }
+            Materialize.toast(message, timeout);
         }
     };
 

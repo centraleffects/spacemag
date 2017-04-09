@@ -9266,7 +9266,22 @@ return jQuery;
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
@@ -9363,16 +9378,13 @@ app.controller('ArticleController', ArticleCtrl);
 
 /***/ }),
 
-/***/ 12:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 32:
+/***/ (function(module, exports) {
 
-/* WEBPACK VAR INJECTION */(function($) {function ClientCtrl($scope, $http, $timeout, $rootScope) {
-	$scope.selectedShop = selectedShop;
+function ClientCtrl($scope, $http, $timeout, $rootScope) {
 	$scope.clients = [];
-	$scope.hasSelectedClient = false;
-	$scope.selectedClient = null;
-	$scope.addNew = false;
-	$scope.noClientAvailable = false;
+	$scope.hasSelectedUser = false;
+	$scope.selectedUser = null;
 
 	$scope.init = function () {
 		$scope.getClients();
@@ -9383,20 +9395,16 @@ app.controller('ArticleController', ArticleCtrl);
 		$http.get(url).then(function (response) {
 			console.log(response);
 			$scope.clients = response.data;
-
-			if ($scope.clients.length > 0) {
-				$rootScope.listIsEmpty = false;
-			} else {
-				$rootScope.listIsEmpty = true;
-			}
 		}, function (response) {
 			console.warn(response);
 		});
 	};
 
 	$scope.viewClient = function (index) {
-		$scope.hasSelectedClient = true;
-		$scope.selectedClient = $scope.clients[index];
+		$scope.hasSelectedUser = true;
+		$scope.selectedUser = $scope.clients[index];
+		$rootScope.selectedUser = $scope.selectedUser;
+		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
 		Materialize.updateTextFields();
 	};
 
@@ -9408,10 +9416,8 @@ app.controller('ArticleController', ArticleCtrl);
 				// $scope.clients = response.data;
 				console.log(response);
 				if (response.data.success == 1) {
+					$rootScope.selectedUser = null;
 					$scope.clients.splice(index);
-					if ($scope.clients.length < 1) {
-						$rootScope.listIsEmpty = true;
-					}
 				}
 			}, function (response) {
 				console.warn(response);
@@ -9419,19 +9425,9 @@ app.controller('ArticleController', ArticleCtrl);
 		});
 	};
 
-	$scope.generatePassword = function () {
-		if ($scope.hasSelectedClient) {
-			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
-				console.warn(response);
-			}, function (response) {
-				console.warn(response);
-			});
-		}
-	};
-
-	$scope.addNew = function () {
-		$scope.addNew = true;
-		$("html, body").animate({ scrollTop: $('#new_customer').offset().top }, 1000);
+	$scope.emptyList = function () {
+		if ($scope.clients.length > 0) return false;
+		return true;
 	};
 
 	// init
@@ -9439,21 +9435,23 @@ app.controller('ArticleController', ArticleCtrl);
 }
 
 app.controller('ClientController', ClientCtrl);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 
-/***/ 13:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
-	$scope.selectedShop = selectedShop;
 	$scope.customers = [];
-	$scope.hasSelectedCustomer = false;
-	$scope.currentlySelectedCustomer = null;
 	$scope.addNew = false;
-	$scope.new_firstName = '';
-	$scope.new_Email = '';
+	$scope.newUser = {
+		first_name: '',
+		email: ''
+	};
+
+	$scope.selectedUser = null;
+	$scope.hasSelectedUser = false;
+
 	$scope.isDisabled = false;
 
 	$scope.init = function () {
@@ -9480,19 +9478,22 @@ app.controller('ClientController', ClientCtrl);
 	});
 
 	$scope.viewCustomer = function (index) {
-		$scope.hasSelectedCustomer = true;
-		$scope.currentlySelectedCustomer = $scope.customers[index];
+		$scope.hasSelectedUser = true;
+		$scope.selectedUser = $scope.customers[index];
+		$rootScope.selectedUser = $scope.selectedUser;
+		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
 		Materialize.updateTextFields();
 	};
 
 	$scope.removeCustomer = function (index) {
 		var customer = $scope.customers[index];
 		var url = '/api/shops/' + selectedShop.id + '/users/' + customer.id + '/remove?api_token=' + window.user.api_token;
-		window.$.reBuy.confirm("Are you sure to remove this customer?", function () {
+		window.reBuy.confirm("Are you sure to remove this customer?", function () {
 			$http.delete(url).then(function (response) {
 				// $scope.customers = response.data;
 				console.log(response);
 				if (response.data.success == 1) {
+					$scope.selectedUser = null;
 					$scope.customers.splice(index);
 				}
 
@@ -9505,26 +9506,29 @@ app.controller('ClientController', ClientCtrl);
 		});
 	};
 
-	$scope.generatePassword = function () {
-		if ($scope.hasSelectedCustomer) {
-			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
-				console.warn(response);
-			}, function (response) {
-				console.warn(response);
-			});
-		}
+	$scope.emptyList = function () {
+		if ($scope.customers.length > 0) return false;
+		return true;
 	};
 
 	$scope.addNewCustomer = function () {
 		$scope.addNew = true;
+		$scope.resetUser();
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+	};
+
+	$scope.resetUser = function () {
+		$scope.newUser = {
+			first_name: '',
+			email: ''
+		};
 	};
 
 	$scope.invite = function (btn) {
 		var button = $(btn);
 		var data = {
-			name: $scope.new_firstName,
-			email: $scope.new_Email
+			name: $scope.newUser.first_name,
+			email: $scope.newUser.email
 		},
 		    url = '/api/shops/' + selectedShop.id + '/invite?api_token=' + window.user.api_token;
 		$scope.isDisabled = true;
@@ -9532,20 +9536,21 @@ app.controller('ClientController', ClientCtrl);
 		$http.post(url, data).then(function (response) {
 			console.log(response);
 			if (response.data.success == 1) {
-				Materialize.toast(data.email + " has been invited to subscribe to " + selectedShop.name, 8000);
+				$scope.resetUser();
+				window.reBuy.toast(data.email + " has been invited to subscribe to " + selectedShop.name, 8000);
 			} else {
 				if (response.data.msg) {
-					Materialize.toast(response.data.msg, 8000);
+					window.reBuy.alert(response.data.msg);
 				} else {
-					Materialize.toast("Opps, something went wrong. Please try again later.", 8000);
+					window.reBuy.alert("Opps, something went wrong. Please try again later.");
 				}
 			}
-			$scope.isDisabled = false;
 		}, function (response) {
-			$scope.isDisabled = false;
 			if (response.data) {
-				window.$.reBuy.showErrors(response.data, $("#add_new"), 8000);
+				window.reBuy.showErrors(response.data, $("#add_new"), 8000);
 			}
+		}).then(function () {
+			$scope.isDisabled = false;
 		});
 	};
 
@@ -9558,14 +9563,7 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
-
-/***/ }),
-
-/***/ 15:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9645,29 +9643,62 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
 __webpack_require__(14);
-__webpack_require__(13);
-__webpack_require__(12);
-__webpack_require__(15);
-__webpack_require__(11);
+__webpack_require__(33);
+__webpack_require__(32);
+__webpack_require__(34);
+__webpack_require__(31);
 
-app.run(function ($rootScope) {
-    $rootScope.currentUser = window.user;
-    $rootScope.currentlySelectedShop = window.shop;
-    $rootScope.listIsEmpty = false;
+/* below is shared between all controllers*/
+app.run(function ($rootScope, $http) {
+	$rootScope.selectedUser = null;
+	$rootScope.hasSelectedUser = false;
+	$rootScope.isGeneratingPassword = false;
+	$rootScope.selectedShop = window.selectedShop;
+
+	// @HeadsUp! selectedShop variable was declared in the ShopOwnerController using JavaScript Facade
+	$rootScope.generatePassword = function () {
+		if ($rootScope.selectedUser != null) {
+			$rootScope.isGeneratingPassword = true;
+			var url = '/api/shops/' + selectedShop.id + '/users/' + $rootScope.selectedUser.id + '/passwordreset?api_token=' + user.api_token;
+			$http.post(url).then(function (response) {
+				if (response.data.success == 1) {
+					window.reBuy.toast('A password for user with email ' + $rootScope.selectedUser.email + " has been re-generated.", 8000);
+				} else {
+					if (response.data.msg) {
+						window.reBuy.alert(response.data.msg, 8000);
+					} else {
+						window.reBuy.alert("Opps, something went wrong. Please try again later.");
+					}
+				}
+			}, function (response) {
+				console.warn(response);
+			}).then(function () {
+				$rootScope.isGeneratingPassword = false;
+			});
+		} else {
+			return false;
+		}
+	};
+
+	$rootScope.newletterSubscription = function () {
+		alert("hello fox");
+		var url = '/api/shops/newsletter-subscription/' + $rootScope.selectedUser.id + '?api_token=' + window.user.api_token;
+		$http.post(url).then(function (response) {
+			if (response.data.success == 1) {
+				window.reBuy.toast(response.data.msg);
+			} else {
+				window.reBuy.alert(response.data.msg);
+			}
+		}, function (response) {
+			console.warn(response);
+		});
+	};
 });
 
 /***/ })

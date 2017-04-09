@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use JavaScript;
+use Mail;
 
 use App\Shop;
+use App\User;
+use App\Mail\PasswordReset;
+use App\Http\Requests\ShopInvitationRequest;
+use App\Mail\ShopInvitation;
 
 class ShopOwnerController extends Controller
 {
@@ -89,5 +95,69 @@ class ShopOwnerController extends Controller
 
     public function addWorker(){
         
+    }
+
+    public function generatePassword(Shop $shop, User $user){
+        // verify if requested user is attached to the current shop
+        if( $shop->users()->find($user->id) != null ){
+            try {
+                $password = str_random(8);
+                $user->password = bcrypt($password);
+                $user->save();
+                $user->raw_password = $password;
+                $mail = new PasswordReset($user);
+                Mail::to($user->email)->send($mail);
+
+                return ['success' => 1];
+            } catch (\Exception $e) {
+                return ['success' => 0];
+            }
+        }
+
+        return ['success' => 0, 'msg' => 'The specified user is not a customer of this shop.'];
+    }
+
+    public function invite(Shop $shop, ShopInvitationRequest $request){
+        try {
+            $input = Input::all();
+
+            $user = User::where('email', '=', $input['email'])->first();
+            // dd($user);
+            $password = str_random(8);
+
+            if( $user == null ){
+                $user = new User;
+                $user->first_name = $input['name'];
+                $user->last_name = "";
+                $user->password = bcrypt($password);
+                $user->email = $input['email'];
+                $user->api_token = str_random(60);
+                $user->role = 'customer';
+                $user->save();
+                $user->plain_password = $password;
+            }else{
+                // prevents duplicate of subscribers
+                if( $shop->users()->find($user->id) != null  )
+                    return ['success' => 0, 'msg' => 'This user is already a subscriber of '.$shop->name];
+
+                // prevents owner to invite himself
+                if( auth()->user()->email == $input['email'] )
+                    return [
+                        'success' => 0, 
+                        'msg' => "Sorry, you can't invite yourself to be a subscriber of your own Shop."
+                    ];
+
+            }
+
+            $mail = new ShopInvitation($shop, $user);
+
+            Mail::to($input['email'])->send($mail);
+
+            return ['success' => 1];
+
+        } catch (\Exception $e) {
+            dd($e);
+            return ['success' => 0];
+        }
     }
 }

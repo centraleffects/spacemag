@@ -1,10 +1,7 @@
 function ClientCtrl ($scope, $http, $timeout, $rootScope){
-	$scope.selectedShop = selectedShop;
 	$scope.clients = [];
-	$scope.hasSelectedClient = false;
-	$scope.selectedClient = null;
-	$scope.addNew = false;
-	$scope.noClientAvailable = false;
+	$scope.hasSelectedUser = false;
+	$scope.selectedUser = null;
 
 	$scope.init = function (){
 		$scope.getClients();
@@ -16,20 +13,16 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 			console.log(response);
 			$scope.clients = response.data;
 
-			if( $scope.clients.length > 0 ){
-				$rootScope.listIsEmpty = false;
-			}else{
-				$rootScope.listIsEmpty = true;
-			}
-
 		}, function (response){
 			console.warn(response);
 		});
 	};
 
 	$scope.viewClient = function (index){
-		$scope.hasSelectedClient = true;
-		$scope.selectedClient = $scope.clients[index];
+		$scope.hasSelectedUser = true;
+		$scope.selectedUser = $scope.clients[index];
+		$rootScope.selectedUser = $scope.selectedUser;
+		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
 		Materialize.updateTextFields();
 	};
 
@@ -41,10 +34,8 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 				// $scope.clients = response.data;
 				console.log(response);
 				if( response.data.success == 1 ){
+					$rootScope.selectedUser = null;
 					$scope.clients.splice(index);
-					if( $scope.clients.length < 1 ){
-						$rootScope.listIsEmpty = true;
-					}
 				}
 			}, function (response){
 				console.warn(response);
@@ -52,20 +43,11 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 		});
 	};
 
-	$scope.generatePassword = function (){
-		if( $scope.hasSelectedClient ){
-			$http.post('/api/shops/'+selectedShop.id+'/users/sendpassword').then(function (response){
-				console.warn(response);
-			}, function (response){
-				console.warn(response);
-			});
-		}
-	};
-
-	$scope.addNew = function (){
-		$scope.addNew = true;
-		$("html, body").animate({ scrollTop: $('#new_customer').offset().top }, 1000);
-	};
+	$scope.emptyList = function (){
+		if( $scope.clients.length > 0 )
+			return false;
+		return true;
+	}
 
 
 	// init
