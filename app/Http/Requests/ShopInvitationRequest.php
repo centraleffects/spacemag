@@ -14,7 +14,7 @@ class ShopInvitationRequest extends FormRequest
     public function authorize()
     {
         // return true;
-        return auth()->check() && (auth()->user()->isOwner || auth()->user()->isClient());
+        return auth()->check() && (auth()->user()->isOwner() || auth()->user()->isClient());
     }
 
     /**

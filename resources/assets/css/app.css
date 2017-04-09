@@ -227,6 +227,7 @@ nav .brand-logo img{
 .alert {
     padding: 15px;
     margin-bottom: 20px;
+    margin-top: 10px;
     border: 1px solid transparent;
     border-radius: 4px;
 }
@@ -257,7 +258,7 @@ nav .brand-logo img{
     .alert-dismissable .close, .alert-dismissible .close {
         position: relative;
         top: -2px;
-        right: -21px;
+        right: -14px;
         color: inherit;
     }
 

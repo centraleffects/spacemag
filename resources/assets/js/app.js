@@ -1,4 +1,3 @@
-
 require('./bootstrap');
 
 // init
@@ -48,7 +47,12 @@ require('./bootstrap');
 			}
 		});
 
-
+		/* for session flash messages */
+		$("div.alert").not(".alert-important").delay(5000).slideUp(function(){
+	        $(this).remove();
+	    });
 	});
 
 }));
+
+

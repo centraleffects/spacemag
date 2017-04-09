@@ -1,10 +1,10 @@
 window.app = angular.module('rebuy', []);
 
 require('./controllers/shopowner/dashboardController');
-require('./controllers/shopowner/customers_controller');
-require('./controllers/shopowner/clients_controller');
-require('./controllers/shopowner/workers_controller');
-require('./controllers/shopowner/articles_controller');
+require('./controllers/shopowner/customersController');
+require('./controllers/shopowner/clientsController');
+require('./controllers/shopowner/workersController');
+require('./controllers/shopowner/articlesController');
 
 
 app.run(function($rootScope) {

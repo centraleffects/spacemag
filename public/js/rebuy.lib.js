@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9273,10 +9273,6 @@ return jQuery;
     $.reBuy = {
         disableBtn: function disableBtn(btn) {
             btn.attr("disabled", "disabled").addClass("disabled");
-            var icon = null;
-            if (btn.children('i').length > 0) {
-                icon = btn.children('i').clone();
-            }
         },
 
         enableBtn: function enableBtn(btn) {
@@ -9371,6 +9367,7 @@ return jQuery;
                 $('#' + modalId).remove();
             });
         },
+
         initMaterialize: function initMaterialize() {
 
             Materialize.updateTextFields(); // auto toogle textfields which are pre-filled
@@ -9405,7 +9402,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 29:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);
