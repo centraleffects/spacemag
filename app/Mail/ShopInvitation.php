@@ -7,18 +7,25 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ResetsPassword extends Mailable
+use App\User;
+use App\Shop;
+
+class ShopInvitation extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $user, $shop;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Shop $shop, User $user)
     {
-        //
+
+        $this->user = $user;
+        $this->shop = $shop;
     }
 
     /**
@@ -28,6 +35,6 @@ class ResetsPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.welcome');
+        return $this->markdown('emails.shop.invitation');
     }
 }

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9271,6 +9271,40 @@ return jQuery;
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {(function ($) {
     $.reBuy = {
+        disableBtn: function disableBtn(btn) {
+            btn.attr("disabled", "disabled").addClass("disabled");
+            var icon = null;
+            if (btn.children('i').length > 0) {
+                icon = btn.children('i').clone();
+            }
+        },
+
+        enableBtn: function enableBtn(btn) {
+            btn.removeAttr("disabled").removeClass("disabled");
+        },
+
+        showErrors: function showErrors(errors, form, timeout) {
+            if (form) {
+                $.each(errors, function (i, error) {
+                    var errorContainer = $('<span class="help-block red-text lighten-1">' + '<strong>' + error[0] + '</strong>' + '</span>');
+
+                    form.find('[name="' + i + '"]').parent("div").after(errorContainer);
+                });
+            } else {
+                console.error("showErrors: no $(form) specified.");
+            }
+
+            var $timeout = 5000;
+
+            if (timeout) {
+                $timeout = timeout;
+            }
+
+            setTimeout(function () {
+                $("span.help-block").fadeOut();
+            }, $timeout);
+        },
+
         alert: function alert(message, btnYesLabel, modalWidth, callback) {
             var btnYesLabel = btnYesLabel || 'OK',
                 modalWidth = modalWidth || '300px',
@@ -9371,7 +9405,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 29:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JavaScript;
 
+use App\Shop;
+
 class ShopOwnerController extends Controller
 {
 
     public function includeUserOnJS()
     {
-        // dd(auth()->user()->shops()->first()->users()->get());
         if( !session()->has("selected_shop") && auth()->check() ){
             session()->put("selected_shop", auth()->user()->shops()->first());
         }
@@ -56,5 +57,31 @@ class ShopOwnerController extends Controller
     public function workersTodo(){
         $this->includeUserOnJS();
         return view('shop_owner.workers_todo');
+    }
+
+    /**
+     * This function is called when a target user confirms his subscribption to the Shop
+     *
+     */
+    public function subscribe(Shop $shop){
+        if( !auth()->check() ){
+            session()->put('url.intended', url('shops/'.$shop->id.'/subscribe'));
+            return redirect('login');
+        }
+
+        $user = auth()->user();
+
+        if( $shop->users()->save($user) )
+            // return ['success' => 1];
+            return redirect('shop')->withFlash_message([
+                    'msg' => 'You are now subscribed to '.$shop->name,
+                    'type' => 'info'
+                ]);
+
+        return ['success' => 0];
+    }
+
+    public function addWorker(){
+        
     }
 }

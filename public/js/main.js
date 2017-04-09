@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9269,6 +9269,103 @@ return jQuery;
 /***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
+/* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
+	$scope.selectedShop = selectedShop;
+	$scope.articles = [];
+	$scope.hasSelectedArticle = false;
+	$scope.currentlySelectedArticle = null;
+	$scope.addNew = false;
+	$scope.new_firstName = '';
+	$scope.new_Email = '';
+
+	$scope.init = function () {
+		$scope.getArticles();
+	};
+
+	$scope.getArticles = function () {
+		var url = '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token;
+		$http.get(url).then(function (response) {
+			console.log(response);
+			$scope.articles = response.data;
+
+			if ($scope.articles.length > 0) {
+				$rootScope.listIsEmpty = false;
+			} else {
+				$rootScope.listIsEmpty = true;
+			}
+		}, function (response) {
+			console.warn(response);
+		});
+	};
+
+	$scope.viewArticle = function (index) {
+		$scope.hasSelectedArticle = true;
+		$scope.currentlySelectedArticle = $scope.articles[index];
+		Materialize.updateTextFields();
+	};
+
+	$scope.removeArticle = function (index) {
+		var customer = $scope.articles[index];
+		var url = '/api/shops/' + selectedShop.id + '/users/' + customer.id + '/remove?api_token=' + window.user.api_token;
+		window.$.reBuy.confirm("Are you sure to remove this customer?", function () {
+			$http.delete(url).then(function (response) {
+				// $scope.articles = response.data;
+				console.log(response);
+				if (response.data.success == 1) {
+					$scope.articles.splice(index);
+				}
+
+				if ($scope.articles.length < 1) {
+					$rootScope.listIsEmpty = true;
+				}
+			}, function (response) {
+				console.warn(response);
+			});
+		});
+	};
+
+	$scope.generatePassword = function () {
+		if ($scope.hasSelectedArticle) {
+			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
+				console.warn(response);
+			}, function (response) {
+				console.warn(response);
+			});
+		}
+	};
+
+	$scope.addNewArticle = function () {
+		$scope.addNew = true;
+		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+	};
+
+	$scope.invite = function () {
+		var data = {
+			name: $scope.new_firstName,
+			email: $scope.new_Email
+		},
+		    url = '/api/shops/' + selectedShop.id + '/invite?api_token=' + window.user.api_token;
+		$http.post(url, data).then(function (response) {
+			console.log(response);
+		}, function (response) {
+			if (response.data) {
+				window.$.reBuy.showErrors(response.data, $("#add_new"), 8000);
+			}
+		});
+	};
+
+	// init
+	$scope.init();
+}
+
+app.controller('ArticleController', ArticleCtrl);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
 /* WEBPACK VAR INJECTION */(function($) {function ClientCtrl($scope, $http, $timeout, $rootScope) {
 	$scope.selectedShop = selectedShop;
 	$scope.clients = [];
@@ -9346,7 +9443,7 @@ app.controller('ClientController', ClientCtrl);
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9355,6 +9452,8 @@ app.controller('ClientController', ClientCtrl);
 	$scope.hasSelectedCustomer = false;
 	$scope.currentlySelectedCustomer = null;
 	$scope.addNew = false;
+	$scope.new_firstName = '';
+	$scope.new_Email = '';
 
 	$scope.init = function () {
 		$scope.getCustomers();
@@ -9417,6 +9516,23 @@ app.controller('ClientController', ClientCtrl);
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
 	};
 
+	$scope.invite = function (button) {
+		var data = {
+			name: $scope.new_firstName,
+			email: $scope.new_Email
+		},
+		    url = '/api/shops/' + selectedShop.id + '/invite?api_token=' + window.user.api_token;
+		button.attr("disabled", "disabled").addClass("disabled");
+
+		$http.post(url, data).then(function (response) {
+			console.log(response);
+		}, function (response) {
+			if (response.data) {
+				window.$.reBuy.showErrors(response.data, $("#add_new"), 8000);
+			}
+		});
+	};
+
 	// init
 	$scope.init();
 }
@@ -9426,14 +9542,14 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, exports) {
 
 app.controller('dashboardController', function ($scope, $http) {});
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9513,7 +9629,7 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
-/***/ 28:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(6);
@@ -9526,10 +9642,11 @@ module.exports = __webpack_require__(6);
 
 window.app = angular.module('rebuy', []);
 
+__webpack_require__(14);
 __webpack_require__(13);
 __webpack_require__(12);
+__webpack_require__(15);
 __webpack_require__(11);
-__webpack_require__(14);
 
 app.run(function ($rootScope) {
     $rootScope.currentUser = window.user;

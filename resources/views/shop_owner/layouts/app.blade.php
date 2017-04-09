@@ -22,37 +22,46 @@
                     <div class="col s12">
                         <nav>
                             <div class="nav-wrapper">
-                                <ul id="nav-mobile" class="right hide-on-med-and-down">
-                                    <li>
-                                        <a href="{{ url('shop/customers') }}" class="btn green waves-effect  waves-light">
-                                            Customers
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('shop/clients') }}" class="btn green waves-effect  waves-light">
-                                            Clients
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="btn green waves-effect  waves-light">
-                                            Shop Status
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('shop/workers') }}" class="btn green waves-effect waves-light">
-                                            Add Shop Workers
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('shop/todo') }}" class="btn green waves-effect waves-light">
-                                            Todo List
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('shop/workers/todo') }}" class="btn green waves-effect waves-light">
-                                            Todo for workers
-                                        </a>
-                                    </li>
+                                <ul id="nav-mobile" class="left hide-on-med-and-down">
+
+                                    @if( auth()->user()->isOwner() )
+                                        <li>
+                                            <a href="{{ url('shop/customers') }}" class="btn green waves-effect  waves-light">
+                                                Customers
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('shop/clients') }}" class="btn green waves-effect  waves-light">
+                                                Clients
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="btn green waves-effect  waves-light">
+                                                Shop Status
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('shop/workers') }}" class="btn green waves-effect waves-light">
+                                                Add Shop Workers
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('shop/todo') }}" class="btn green waves-effect waves-light">
+                                                Todo List
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('shop/workers/todo') }}" class="btn green waves-effect waves-light">
+                                                Todo for workers
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ url('shops') }}" class="btn green waves-effect waves-light">
+                                                Shops
+                                            </a>
+                                        </li>                                        
+                                    @endif
                                 </ul>
                             </div>
                         </nav>

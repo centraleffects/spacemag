@@ -42,6 +42,10 @@ class LoginController extends Controller
     protected function authenticated($user)
     {
 
+        if( session()->has('url.intended') ){
+            return redirect()->intended( session()->get('url.intended') );
+        }
+
         if( auth()->user()->isAdmin() )
             return \Redirect::to('admin');
 

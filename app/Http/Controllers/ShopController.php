@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Mail;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
+
 use App\Http\Requests\StoreShop;
+use App\Http\Requests\ShopInvitationRequest;
+use App\Mail\ShopInvitation;
 
 use App\Shop;
-use Illuminate\Http\Request;
 use App\User;
-use Auth;
+
 
 class ShopController extends Controller
 {
@@ -117,5 +123,36 @@ class ShopController extends Controller
         $shops = Shop::paginate(50);
 
         return $shops;
+    }
+
+    public function invite(Shop $shop, ShopInvitationRequest $request){
+        try {
+            $input = Input::all();
+
+            $user = User::where('email', '=', $input['email'])->first();
+
+            $password = str_random(8);
+
+            if( !$user ){
+                $user = new User;
+                $user->first_name = $input['name'];
+                $user->last_name = "";
+                $user->password = bcrypt($password);
+                $user->email = $input['email'];
+                $user->api_token = str_random(60);
+                $user->role = 'customer';
+                $user->save();
+                $user->plain_password = $password;
+            }
+
+            $mail = new ShopInvitation($shop, $user);
+
+            Mail::to($input['email'])->send($mail);
+
+            return ['success' => 1];
+
+        } catch (\Exception $e) {
+            return ['success' => 0];
+        }
     }
 }

@@ -35,8 +35,8 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('{shop}/users', 'ShopController@users');
 	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
 
-	
-
+	Route::post('/{user}/resets-password', 'ClientController@generatePassword');
+	Route::post('/{shop}/invite', 'ShopController@invite');
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
@@ -48,8 +48,6 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::patch('/update', 'UserController@update');
 	Route::post('/delete/{user}', 'UserController@destroy');
 	Route::post('/store', 'UserController@store');
-
-	Route::post('/resets-password', 'Illuminate\Foundation\Auth\SendsPasswordResetEmails@sendResetLinkEmail');
 
 	//Shops
 	Route::post('{user}/shops', 'ShopController@get');
