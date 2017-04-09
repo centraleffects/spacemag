@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9266,7 +9266,22 @@ return jQuery;
 
 /***/ }),
 
-/***/ 11:
+/***/ 13:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
@@ -9363,7 +9378,7 @@ app.controller('ArticleController', ArticleCtrl);
 
 /***/ }),
 
-/***/ 12:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ClientCtrl($scope, $http, $timeout, $rootScope) {
@@ -9443,7 +9458,7 @@ app.controller('ClientController', ClientCtrl);
 
 /***/ }),
 
-/***/ 13:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9558,14 +9573,7 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
-
-/***/ }),
-
-/***/ 15:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9645,24 +9653,16 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
-__webpack_require__(14);
 __webpack_require__(13);
-__webpack_require__(12);
-__webpack_require__(15);
-__webpack_require__(11);
+__webpack_require__(33);
+__webpack_require__(32);
+__webpack_require__(34);
+__webpack_require__(31);
 
 app.run(function ($rootScope) {
     $rootScope.currentUser = window.user;

@@ -32,6 +32,10 @@ class AdminController extends Controller
         return view('admin.shops');
     }
 
+    public function spots(Request $request){
+        return view('admin.spots');
+    }
+
     public function categories(Request $request){
         return view('admin.categories');
     }

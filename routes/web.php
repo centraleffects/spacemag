@@ -30,6 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/dashboard', 'AdminController@index');
     Route::get('/users', 'AdminController@users'); 
     Route::get('/shops', 'AdminController@shops'); 
+    Route::get('/shops/{id?}', 'AdminController@spots'); 
     Route::get('/categories', 'AdminController@categories'); 
     Route::get('/transactions', 'AdminController@transactions'); 
 
@@ -38,8 +39,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
     Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
-     //API calls for admin
-    Route::get('/shops/list', 'ShopController@admin_list'); 
     
 });
 

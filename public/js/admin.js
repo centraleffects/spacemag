@@ -9268,14 +9268,6 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
-rebuyApp.service('userService', function ($http, $timeout) {
-    this.userList = function () {
-        return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-            return data;
-        });
-    };
-});
-
 rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
 
     $scope.users = {};
@@ -9453,8 +9445,13 @@ window.rebuyApp.config(['$httpProvider', function ($httpProvider) {
 __webpack_require__(17);
 __webpack_require__(16);
 __webpack_require__(15);
+
+__webpack_require__(37);
+__webpack_require__(36);
+
 __webpack_require__(1);
 __webpack_require__(10);
+__webpack_require__(35);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -9467,20 +9464,6 @@ __webpack_require__(10);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($, jQuery) {
-rebuyApp.service('shopService', function ($http, $timeout) {
-  this.shopList = function () {
-    return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-      return data;
-    });
-  };
-
-  this.ownerList = function () {
-    return $http.get('/api/shops/owners?api_token=' + window.adminJS.me.api_token).then(function (data) {
-      return data;
-    });
-  };
-});
-
 rebuyApp.controller('adminShopController', function ($scope, shopService, $timeout, $templateCache, $http) {
 
   $scope.shops = {};
@@ -9565,7 +9548,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         }
         updateList();
       }, function (response) {
-        //displayError(response);
+        window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
       });
     },
     deleteSelected: function deleteSelected() {
@@ -9582,7 +9565,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
           window.reBuy.toast('Shop details have been deleted! Thank you.');
           updateList();
         }, function (response) {
-          //displayError(response);
+          window.reBuy.toast('ERROR: Unable to delete the selected shop.');
         });
       });
     }
@@ -13264,6 +13247,213 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 
 module.exports = __webpack_require__(4);
 
+
+/***/ }),
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($, jQuery) {
+rebuyApp.controller('adminSpotController', function ($scope, shopService, $timeout, $templateCache, $http) {
+
+  $scope.shops = {};
+  $scope.selectedShop = {};
+  $scope.selectedShopKey = null;
+
+  $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+  $scope.currencyOptions = [{ 'value': 'usd', 'text': 'US Dollar' }];
+  $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
+  $scope.owners = [];
+
+  var vm = this;
+
+  $scope.init = function () {
+    $timeout(function () {
+      updateList();
+    }, 1500);
+
+    $scope.bindEvents();
+  };
+
+  $scope.events = {
+    viewShop: function viewShop(key, value) {
+
+      $scope.selectedShopKey = key;
+      $scope.selectedShop = value;
+      if (value.id) {
+        location.hash = '#!/' + value.id;
+      } else {
+        location.hash = '#!/';
+      }
+
+      materializeInit();
+      $timeout(function () {
+        materializeInit();
+        angular.element('.shopspot').removeClass('green');
+        angular.element('#sp' + value.id).addClass('green');
+      }, 500);
+    },
+    addShopSpot: function addShopSpot(x, y) {
+
+      var key = Object.keys($scope.shops.data).length;
+      id = parseInt($scope.shops.data[key - 1].id) + 1;
+      $scope.shops.data[key] = { name: 'New Shop', id: id, 'x_coordinate': x, 'y_coordinate': y, isNew: true };
+      angular.element('#dashleft-sidebar ul li:first-child').click();
+      angular.element('.tooltipped').tooltip({ delay: 50, html: true });
+      $timeout(function () {
+        angular.element('#dashleft-sidebar ul li#sh' + id).click();
+      }, 500);
+    },
+    cancelSelectedIfNew: function cancelSelectedIfNew() {
+      if ($scope.selectedShop.isNew) {
+        var data = [];
+        for (var k in $scope.shops.data) {
+          if (typeof $scope.shops.data[k] !== 'function') {
+            if ($scope.shops.data[k].id !== $scope.selectedShop.id) {
+              data.push($scope.shops.data[k]);
+            }
+          }
+        }
+        $scope.shops.data = data;
+        $timeout(function () {
+          angular.element('#dashleft-sidebar ul li:first-child').click();
+          $scope.selectedShop = $scope.shops.data[0];
+          $scope.selectedShopKey = 0;
+        }, 500);
+      }
+    },
+    updateSelected: function updateSelected() {
+      var url = '/api/shops/update';
+      $http({
+        method: 'POST',
+        url: url + '?api_token=' + window.adminJS.me.api_token,
+        data: $.param($scope.selectedShop),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        cache: $templateCache
+      }).then(function (response) {
+        if ($scope.selectedShop.isNew) {
+          window.reBuy.toast('Shop details have been created! Thank you.');
+        } else {
+          window.reBuy.toast('Shop details have been updated! Thank you.');
+        }
+        updateList();
+      }, function (response) {
+        window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
+      });
+    },
+    deleteSelected: function deleteSelected() {
+
+      window.reBuy.confirm('Are you sure to delete this shop?', function () {
+        var url = '/api/shops/delete';
+        $http({
+          method: 'POST',
+          url: url + '?api_token=' + window.adminJS.me.api_token,
+          data: $.param($scope.selectedShop),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          cache: $templateCache
+        }).then(function (response) {
+          window.reBuy.toast('Shop details have been deleted! Thank you.');
+          updateList();
+        }, function (response) {
+          window.reBuy.toast('ERROR: Unable to delete the selected shop.');
+        });
+      });
+    }
+  };
+
+  $scope.bindEvents = function () {
+    (function ($) {
+
+      var $section = $('#mapsection').first();
+      $section.find('.panzoom').panzoom({
+        $zoomIn: $section.find(".zoom-in"),
+        $zoomOut: $section.find(".zoom-out"),
+        $zoomRange: $section.find(".zoom-range"),
+        $reset: $section.find(".reset")
+      });
+
+      angular.element('.panzoom').dblclick(function (e) {
+
+        var parentOffset = $(this).offset();
+        var relX = e.pageX - parentOffset.left - 12;
+        var relY = e.pageY - parentOffset.top - 12;
+
+        $scope.events.addShopSpot(relX, relY);
+      });
+
+      //@TODO: should use $watch to handle model changes
+      angular.element('input[name="shop_name"]').keyup(function () {
+        angular.element('.tooltipped').tooltip({ delay: 50, html: true });
+      });
+    })(jQuery);
+  };
+
+  updateList = function updateList() {
+
+    shopService.ownerList().then(function (response) {
+      $scope.owners = [];
+      for (var k in response.data) {
+        $scope.owners.push({ id: response.data[k].id, name: response.data[k].first_name + ' ' + response.data[k].last_name });
+      }
+    });
+
+    $timeout(function () {
+      shopService.shopList().then(function (response) {
+        $scope.shops = response.data;
+        $scope.selectedShop = $scope.shops.data[0];
+        $scope.selectedShopKey = 0;
+      });
+    }, 500);
+    $timeout(function () {
+      materializeInit();
+    }, 1000);
+  };
+  materializeInit = function materializeInit() {
+    Materialize.updateTextFields();
+    angular.element('select').material_select();
+  };
+
+  $scope.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports) {
+
+rebuyApp.service('shopService', function ($http, $timeout) {
+     this.shopList = function () {
+          return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
+               return data;
+          });
+     };
+
+     this.ownerList = function () {
+          return $http.get('/api/shops/owners?api_token=' + window.adminJS.me.api_token).then(function (data) {
+               return data;
+          });
+     };
+});
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+rebuyApp.service('userService', function ($http, $timeout) {
+  this.userList = function () {
+    return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
+      return data;
+    });
+  };
+});
 
 /***/ })
 /******/ ]);

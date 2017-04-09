@@ -9270,14 +9270,6 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
-rebuyApp.service('userService', function ($http, $timeout) {
-    this.userList = function () {
-        return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-            return data;
-        });
-    };
-});
-
 rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
 
     $scope.users = {};

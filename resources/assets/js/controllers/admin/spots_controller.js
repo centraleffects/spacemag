@@ -1,5 +1,5 @@
 
-rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http) {
+rebuyApp.controller('adminSpotController', function($scope, shopService, $timeout, $templateCache, $http) {
 	
 	  $scope.shops = {};
     $scope.selectedShop = {};
