@@ -185,4 +185,8 @@ class ShopController extends Controller
             return ['success' => 0];
         }
     }
+
+    public function listOwners(){
+        return User::where('role', '=', 'owner')->get();
+    }
 }

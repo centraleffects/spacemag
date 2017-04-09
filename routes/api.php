@@ -29,6 +29,7 @@ Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function(){
 Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'ShopController@index');
 	Route::get('list', 'ShopController@getlist');
+	Route::get('owners', 'ShopController@listOwners');
 	Route::get('{shop}', 'ShopController@show');
 	Route::get('{shop}/users', 'ShopController@users');
 

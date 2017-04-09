@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9299,17 +9299,22 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
 
     $scope.events = {
         viewUser: function viewUser(key, value) {
-            if (key == 0) {
-                $scope.selectedUserKey = null;
-                value.password = '';
-                $scope.selectedUser = {};
-                location.hash = '#!';
-            } else {
-                $scope.selectedUserKey = key;
-                value.password = '';
-                $scope.selectedUser = value;
-                location.hash = '#!/' + value.id;
-            }
+            /* if(key==0){
+                 $scope.selectedUserKey = null;
+                 value.password = '';
+                 $scope.selectedUser = {};
+                 location.hash = '#!';
+             }else{
+                 $scope.selectedUserKey = key;
+                 value.password = '';
+                 $scope.selectedUser = value;
+                 location.hash = '#!/'+value.id;
+             }*/
+
+            $scope.selectedUserKey = key;
+            value.password = '';
+            $scope.selectedUser = value;
+            location.hash = '#!/' + value.id;
 
             materializeInit();
             $timeout(function () {
@@ -9383,9 +9388,9 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
         }).then(function (response) {
             if (!$scope.selectedUser.id) {
                 updateUserList();
-                window.reBuy.alert('User details have been created! Thank you.');
+                window.reBuy.toast('User details have been created! Thank you.');
             } else {
-                window.reBuy.alert('User details have been updated! Thank you.');
+                window.reBuy.toast('User details have been updated! Thank you.');
             }
         }, function (response) {
             displayError(response);
@@ -9402,7 +9407,7 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
             cache: $templateCache
         }).then(function (response) {
             updateUserList();
-            window.reBuy.alert('User details had been deleted! Thank you.');
+            window.reBuy.toast('User details had been deleted! Thank you.');
         }, function (response) {
             window.reBuy.alert(response.data);
         });
@@ -9445,9 +9450,9 @@ window.rebuyApp.config(['$httpProvider', function ($httpProvider) {
 	window.adminJS = $.adminJS;
 })(jQuery);
 
-__webpack_require__(18);
 __webpack_require__(17);
 __webpack_require__(16);
+__webpack_require__(15);
 __webpack_require__(1);
 __webpack_require__(10);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -9468,6 +9473,12 @@ rebuyApp.service('shopService', function ($http, $timeout) {
       return data;
     });
   };
+
+  this.ownerList = function () {
+    return $http.get('/api/shops/owners?api_token=' + window.adminJS.me.api_token).then(function (data) {
+      return data;
+    });
+  };
 });
 
 rebuyApp.controller('adminShopController', function ($scope, shopService, $timeout, $templateCache, $http) {
@@ -9477,7 +9488,9 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
   $scope.selectedShopKey = null;
 
   $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+  $scope.currencyOptions = [{ 'value': 'usd', 'text': 'US Dollar' }];
   $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
+  $scope.owners = [];
 
   var vm = this;
 
@@ -9500,8 +9513,9 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         location.hash = '#!/';
       }
 
+      materializeInit();
       $timeout(function () {
-        //materializeInit();
+        materializeInit();
         angular.element('.shopspot').removeClass('green');
         angular.element('#sp' + value.id).addClass('green');
       }, 500);
@@ -9545,9 +9559,9 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         cache: $templateCache
       }).then(function (response) {
         if ($scope.selectedShop.isNew) {
-          window.reBuy.alert('Shop details have been created! Thank you.');
+          window.reBuy.toast('Shop details have been created! Thank you.');
         } else {
-          window.reBuy.alert('Shop details have been updated! Thank you.');
+          window.reBuy.toast('Shop details have been updated! Thank you.');
         }
         updateList();
       }, function (response) {
@@ -9565,7 +9579,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           cache: $templateCache
         }).then(function (response) {
-          window.reBuy.alert('Shop details have been deleted! Thank you.');
+          window.reBuy.toast('Shop details have been deleted! Thank you.');
           updateList();
         }, function (response) {
           //displayError(response);
@@ -9601,12 +9615,29 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
     })(jQuery);
   };
 
-  var updateList = function updateList() {
-    shopService.shopList().then(function (response) {
-      $scope.shops = response.data;
-      $scope.selectedShop = $scope.shops.data[0];
-      $scope.selectedShopKey = 0;
+  updateList = function updateList() {
+
+    shopService.ownerList().then(function (response) {
+      $scope.owners = [];
+      for (var k in response.data) {
+        $scope.owners.push({ id: response.data[k].id, name: response.data[k].first_name + ' ' + response.data[k].last_name });
+      }
     });
+
+    $timeout(function () {
+      shopService.shopList().then(function (response) {
+        $scope.shops = response.data;
+        $scope.selectedShop = $scope.shops.data[0];
+        $scope.selectedShopKey = 0;
+      });
+    }, 500);
+    $timeout(function () {
+      materializeInit();
+    }, 1000);
+  };
+  materializeInit = function materializeInit() {
+    Materialize.updateTextFields();
+    angular.element('select').material_select();
   };
 
   $scope.init();
@@ -9618,8 +9649,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */,
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};/*! jQuery UI - v1.12.1 - 2016-09-14
@@ -11724,7 +11754,7 @@ if($.uiBackCompat!==false){// Backcompat for tooltipClass option
 $.widget("ui.tooltip",$.ui.tooltip,{options:{tooltipClass:null},_tooltip:function _tooltip(){var tooltipData=this._superApply(arguments);if(this.options.tooltipClass){tooltipData.tooltip.addClass(this.options.tooltipClass);}return tooltipData;}});}var widgetsTooltip=$.ui.tooltip;});
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -11967,7 +11997,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -13222,14 +13252,14 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 });
 
 /***/ }),
+/* 18 */,
 /* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */,
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(4);

@@ -41,9 +41,23 @@
 				<ul class="collection">
 					<li class="collection-item"><textarea name="shop_description" ng-model="selectedShop.description" rows="50" placeholder="Description"></textarea></li>
 					<li class="collection-item"><input type="text" name="shop_url" ng-model="selectedShop.url" placeholder="Homepage"></li>
-					<li class="collection-item"><input type="text" name="shop_currency" ng-model="selectedShop.currency" placeholder="Currency"></li>
 					<li class="collection-item"><input type="text" name="shop_postel" placeholder="Postel"></li>
-				</ul>	
+				</ul>
+			</div>
+			<div class="row card-content">
+				<div class="input-field">
+					<select name="currency"   id="currency" ng-model="selectedShop.currency" 
+							ng-options="currency.value as currency.text for currency in currencyOptions">
+					</select>
+					<label>Currency</label>
+				</div>
+				<div class="input-field">
+					<select name="user_id"   id="user_id" ng-model="selectedShop.user_id"
+							ng-options="owner.id as owner.name for owner in owners">
+							<option value="">Select Owner</option>
+					</select>
+					<label>Shop Owner</label>
+				</div>	
 			</div>
 			<div class="card-action row">
 				<div class="col">

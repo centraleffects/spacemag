@@ -33,6 +33,7 @@ class StoreUser extends FormRequest
             'zip_code' => 'required|numeric',
             'telephone' => 'required|numeric',
             'mobile' => 'required|numeric',
+            'country' => 'required',
         ];
     }
 

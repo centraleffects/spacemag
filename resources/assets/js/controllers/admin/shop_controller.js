@@ -6,6 +6,14 @@ rebuyApp.service('shopService', function($http, $timeout) {
                return data;
               });
    }
+
+   this.ownerList = function() {
+        return $http.get('/api/shops/owners?api_token='+window.adminJS.me.api_token)
+             .then(function(data) {
+               return data;
+              });
+   }
+
  });
 
 rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http) {
@@ -15,7 +23,9 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     $scope.selectedShopKey = null;
 
     $scope.countryOptions = [{'value': 'swe','text' : 'Sweden'}];
+    $scope.currencyOptions = [{'value': 'usd','text' : 'US Dollar'}];
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
+    $scope.owners = [];
 
     var vm = this;
 
@@ -38,9 +48,9 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
               location.hash = '#!/';
             }
             
-            
+            materializeInit();
             $timeout(function () {
-              //materializeInit();
+              materializeInit();
               angular.element('.shopspot').removeClass('green');
               angular.element('#sp'+value.id).addClass('green');
             },500);
@@ -85,9 +95,9 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
               cache: $templateCache
             }).then(function(response) {
               if($scope.selectedShop.isNew){
-                 window.reBuy.alert('Shop details have been created! Thank you.');
+                 window.reBuy.toast('Shop details have been created! Thank you.');
               }else{
-                 window.reBuy.alert('Shop details have been updated! Thank you.');
+                 window.reBuy.toast('Shop details have been updated! Thank you.');
               }
               updateList();
             }, function(response) {
@@ -105,7 +115,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                   headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                   cache: $templateCache
                 }).then(function(response) {
-                  window.reBuy.alert('Shop details have been deleted! Thank you.');
+                  window.reBuy.toast('Shop details have been deleted! Thank you.');
                   updateList();
                 }, function(response) {
                     //displayError(response);
@@ -143,13 +153,31 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
         })(jQuery);
     }
 
-    var updateList = function(){
-            shopService.shopList().then(function(response) {
-              $scope.shops = response.data;
-              $scope.selectedShop = $scope.shops.data[0];
-              $scope.selectedShopKey = 0;
+    updateList = function(){
+ 
+            shopService.ownerList().then(function(response){
+             $scope.owners =  [];
+              for (var k in response.data){
+                $scope.owners.push({ id : response.data[k].id, name : response.data[k].first_name + ' ' + response.data[k].last_name });
+              }
             });
+
+            $timeout(function () {
+              shopService.shopList().then(function(response) {
+                $scope.shops = response.data;
+                $scope.selectedShop = $scope.shops.data[0];
+                $scope.selectedShopKey = 0;
+              });
+            },500);
+            $timeout(function () {
+              materializeInit();
+            },1000);
+            
         }
+    materializeInit = function(){
+        Materialize.updateTextFields();
+        angular.element('select').material_select();
+    } 
 
    $scope.init();
 });
