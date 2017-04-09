@@ -150,6 +150,4 @@ class ShopController extends Controller
 
         return $shops;
     }
-
-    
 }

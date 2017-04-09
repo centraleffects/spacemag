@@ -53,7 +53,7 @@
 						</button>
 					</div>
 					<div class="col s12 m12 l4">
-						<button class="btn waves-effect waves-light green" title="Login Client Account">
+						<button class="btn waves-effect waves-light green" title="Login Client Account"  ng-click="loginAs()">
 							<i class="fa fa-sign-in"></i>
 							<span class="hide-on-small-only"> Login Client A/c</span>
 						</button>
@@ -76,7 +76,7 @@
 						</div>
 						<div class="col">
 							<p>
-								<input type="checkbox" id="newsletter_subscription" name="newsletter_subscription" value="true" ng-change="newletterSubscription()"/>
+								<input type="checkbox" id="newsletter_subscription" name="newsletter_subscription" value="true"/>
 								<label for="newsletter_subscription">Enable Newsletter</label>
 							</p>
 						</div>

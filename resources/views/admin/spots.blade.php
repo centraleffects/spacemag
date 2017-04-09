@@ -2,7 +2,7 @@
 <div ng-controller="adminShopController">
 	<div class="col s3">
 		<div  class="white" id="dashleft-sidebar" ng-model="shops">
-			<h5><i class="material-icons">store</i> List of Shops</h5>
+			<h5><i class="material-icons">store</i> List of Salespots</h5>
 			<ul class="collection" ng-repeat="(key, shop) in shops.data">
 
 						<li id="@{{'sh'+ shop.id}}" class="collection-item" ng-click="events.viewShop(key,shop)">
@@ -19,7 +19,7 @@
 	</div>
 	<div class="col s6 map-area-container" id="mapsection">
 		<div class="scrollspy panzoom-parent map-area" id="floorplan-container">
-			<div class="panzoom"  style="background: url(/floorplan/floor1.jpg);width: 2426px; height: 1121px;" width="2426" height="1121" data-width="2426" data-height="1121"/>
+			<div class="panzoom"  style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" width="2426" height="1121" data-width="2426" data-height="1121"/>
 				<div ng-repeat="(key, shop) in shops.data">
 					<div class="shopspot tooltipped" 
 							id="@{{'sp'+ shop.id}}" 

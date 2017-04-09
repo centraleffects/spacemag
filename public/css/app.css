@@ -245,6 +245,12 @@ nav .brand-logo img{
     border: 1px solid transparent;
     border-radius: 4px;
 }
+    .alert-imphasis{
+        margin: 0;
+        font-style: italic;
+        border-radius: 0;
+    }
+
 	.alert.alert-success {
 	    color: #3c763d;
 	    background-color: #dff0d8;

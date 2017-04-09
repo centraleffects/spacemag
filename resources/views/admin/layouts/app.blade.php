@@ -27,6 +27,7 @@
                                      <li><a href="/admin/dashboard" class="btn btn-flat waves-effect green  waves-light">Dashboard</a></li>
                                      <li><a href="/admin/users" class="btn btn-flat waves-effect  green waves-light">Users</a></li>
                                      <li><a href="/admin/shops" class="btn btn-flat waves-effect  green waves-light">Shops</a></li>
+                                     <li><a href="/admin/shops/1" class="btn btn-flat waves-effect  green waves-light">Salespots</a></li>
                                      <li><a href="/admin/categories" class="btn btn-flat waves-effect  green waves-light">Categories</a></li>
                                      <li><a href="/admin/transactions" class="btn btn-flat waves-effect  green waves-light">Transactions</a></li>
                                   </ul>

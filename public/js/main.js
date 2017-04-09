@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9266,22 +9266,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports) {
-
-app.controller('dashboardController', function ($scope, $http) {});
-
-/***/ }),
-
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-
-/***/ 31:
+/***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
@@ -9378,7 +9363,7 @@ app.controller('ArticleController', ArticleCtrl);
 
 /***/ }),
 
-/***/ 32:
+/***/ 13:
 /***/ (function(module, exports) {
 
 function ClientCtrl($scope, $http, $timeout, $rootScope) {
@@ -9438,7 +9423,7 @@ app.controller('ClientController', ClientCtrl);
 
 /***/ }),
 
-/***/ 33:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9563,7 +9548,14 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 34:
+/***/ 15:
+/***/ (function(module, exports) {
+
+app.controller('dashboardController', function ($scope, $http) {});
+
+/***/ }),
+
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9643,16 +9635,24 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
+/***/ 32:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
+
+/***/ }),
+
 /***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
+__webpack_require__(15);
 __webpack_require__(14);
-__webpack_require__(33);
-__webpack_require__(32);
-__webpack_require__(34);
-__webpack_require__(31);
+__webpack_require__(13);
+__webpack_require__(16);
+__webpack_require__(12);
 
 /* below is shared between all controllers*/
 app.run(function ($rootScope, $http) {
@@ -9686,8 +9686,14 @@ app.run(function ($rootScope, $http) {
 		}
 	};
 
+	$rootScope.loginAs = function () {
+		console.log($rootScope.selectedUser);
+		if ($rootScope.selectedUser != null) {
+			window.location = '/shop/login-as/' + $rootScope.selectedUser.id;
+		}
+	};
+
 	$rootScope.newletterSubscription = function () {
-		alert("hello fox");
 		var url = '/api/shops/newsletter-subscription/' + $rootScope.selectedUser.id + '?api_token=' + window.user.api_token;
 		$http.post(url).then(function (response) {
 			if (response.data.success == 1) {

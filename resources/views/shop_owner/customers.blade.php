@@ -77,7 +77,7 @@
 							</p>
 						</div>
 						<div class="col">
-							<a class="chip waves-effect waves-light green white-text">
+							<a class="chip waves-effect waves-light green white-text" ng-click="loginAs()">
 								<i class="fa fa-sign-in"></i> Login Customer A/C
 							</a>
 						</div>

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9268,14 +9268,6 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
-rebuyApp.service('userService', function ($http, $timeout) {
-    this.userList = function () {
-        return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-            return data;
-        });
-    };
-});
-
 rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
 
     $scope.users = {};
@@ -9299,17 +9291,22 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
 
     $scope.events = {
         viewUser: function viewUser(key, value) {
-            if (key == 0) {
-                $scope.selectedUserKey = null;
-                value.password = '';
-                $scope.selectedUser = {};
-                location.hash = '#!';
-            } else {
-                $scope.selectedUserKey = key;
-                value.password = '';
-                $scope.selectedUser = value;
-                location.hash = '#!/' + value.id;
-            }
+            /* if(key==0){
+                 $scope.selectedUserKey = null;
+                 value.password = '';
+                 $scope.selectedUser = {};
+                 location.hash = '#!';
+             }else{
+                 $scope.selectedUserKey = key;
+                 value.password = '';
+                 $scope.selectedUser = value;
+                 location.hash = '#!/'+value.id;
+             }*/
+
+            $scope.selectedUserKey = key;
+            value.password = '';
+            $scope.selectedUser = value;
+            location.hash = '#!/' + value.id;
 
             materializeInit();
             $timeout(function () {
@@ -9383,9 +9380,9 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
         }).then(function (response) {
             if (!$scope.selectedUser.id) {
                 updateUserList();
-                window.reBuy.alert('User details have been created! Thank you.');
+                window.reBuy.toast('User details have been created! Thank you.');
             } else {
-                window.reBuy.alert('User details have been updated! Thank you.');
+                window.reBuy.toast('User details have been updated! Thank you.');
             }
         }, function (response) {
             displayError(response);
@@ -9402,7 +9399,7 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
             cache: $templateCache
         }).then(function (response) {
             updateUserList();
-            window.reBuy.alert('User details had been deleted! Thank you.');
+            window.reBuy.toast('User details had been deleted! Thank you.');
         }, function (response) {
             window.reBuy.alert(response.data);
         });
@@ -9445,11 +9442,16 @@ window.rebuyApp.config(['$httpProvider', function ($httpProvider) {
 	window.adminJS = $.adminJS;
 })(jQuery);
 
+__webpack_require__(19);
 __webpack_require__(18);
 __webpack_require__(17);
-__webpack_require__(16);
+
+__webpack_require__(21);
+__webpack_require__(20);
+
 __webpack_require__(1);
 __webpack_require__(10);
+__webpack_require__(11);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -9462,14 +9464,6 @@ __webpack_require__(10);
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($, jQuery) {
-rebuyApp.service('shopService', function ($http, $timeout) {
-  this.shopList = function () {
-    return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-      return data;
-    });
-  };
-});
-
 rebuyApp.controller('adminShopController', function ($scope, shopService, $timeout, $templateCache, $http) {
 
   $scope.shops = {};
@@ -9477,7 +9471,9 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
   $scope.selectedShopKey = null;
 
   $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+  $scope.currencyOptions = [{ 'value': 'usd', 'text': 'US Dollar' }];
   $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
+  $scope.owners = [];
 
   var vm = this;
 
@@ -9500,8 +9496,9 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         location.hash = '#!/';
       }
 
+      materializeInit();
       $timeout(function () {
-        //materializeInit();
+        materializeInit();
         angular.element('.shopspot').removeClass('green');
         angular.element('#sp' + value.id).addClass('green');
       }, 500);
@@ -9545,13 +9542,13 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         cache: $templateCache
       }).then(function (response) {
         if ($scope.selectedShop.isNew) {
-          window.reBuy.alert('Shop details have been created! Thank you.');
+          window.reBuy.toast('Shop details have been created! Thank you.');
         } else {
-          window.reBuy.alert('Shop details have been updated! Thank you.');
+          window.reBuy.toast('Shop details have been updated! Thank you.');
         }
         updateList();
       }, function (response) {
-        //displayError(response);
+        window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
       });
     },
     deleteSelected: function deleteSelected() {
@@ -9565,10 +9562,10 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
           cache: $templateCache
         }).then(function (response) {
-          window.reBuy.alert('Shop details have been deleted! Thank you.');
+          window.reBuy.toast('Shop details have been deleted! Thank you.');
           updateList();
         }, function (response) {
-          //displayError(response);
+          window.reBuy.toast('ERROR: Unable to delete the selected shop.');
         });
       });
     }
@@ -9601,12 +9598,29 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
     })(jQuery);
   };
 
-  var updateList = function updateList() {
-    shopService.shopList().then(function (response) {
-      $scope.shops = response.data;
-      $scope.selectedShop = $scope.shops.data[0];
-      $scope.selectedShopKey = 0;
+  updateList = function updateList() {
+
+    shopService.ownerList().then(function (response) {
+      $scope.owners = [];
+      for (var k in response.data) {
+        $scope.owners.push({ id: response.data[k].id, name: response.data[k].first_name + ' ' + response.data[k].last_name });
+      }
     });
+
+    $timeout(function () {
+      shopService.shopList().then(function (response) {
+        $scope.shops = response.data;
+        $scope.selectedShop = $scope.shops.data[0];
+        $scope.selectedShopKey = 0;
+      });
+    }, 500);
+    $timeout(function () {
+      materializeInit();
+    }, 1000);
+  };
+  materializeInit = function materializeInit() {
+    Materialize.updateTextFields();
+    angular.element('select').material_select();
   };
 
   $scope.init();
@@ -9614,12 +9628,180 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-/* 11 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($, jQuery) {
+rebuyApp.controller('adminSpotController', function ($scope, shopService, $timeout, $templateCache, $http) {
+
+  $scope.shops = {};
+  $scope.selectedShop = {};
+  $scope.selectedShopKey = null;
+
+  $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+  $scope.currencyOptions = [{ 'value': 'usd', 'text': 'US Dollar' }];
+  $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
+  $scope.owners = [];
+
+  var vm = this;
+
+  $scope.init = function () {
+    $timeout(function () {
+      updateList();
+    }, 1500);
+
+    $scope.bindEvents();
+  };
+
+  $scope.events = {
+    viewShop: function viewShop(key, value) {
+
+      $scope.selectedShopKey = key;
+      $scope.selectedShop = value;
+      if (value.id) {
+        location.hash = '#!/' + value.id;
+      } else {
+        location.hash = '#!/';
+      }
+
+      materializeInit();
+      $timeout(function () {
+        materializeInit();
+        angular.element('.shopspot').removeClass('green');
+        angular.element('#sp' + value.id).addClass('green');
+      }, 500);
+    },
+    addShopSpot: function addShopSpot(x, y) {
+
+      var key = Object.keys($scope.shops.data).length;
+      id = parseInt($scope.shops.data[key - 1].id) + 1;
+      $scope.shops.data[key] = { name: 'New Shop', id: id, 'x_coordinate': x, 'y_coordinate': y, isNew: true };
+      angular.element('#dashleft-sidebar ul li:first-child').click();
+      angular.element('.tooltipped').tooltip({ delay: 50, html: true });
+      $timeout(function () {
+        angular.element('#dashleft-sidebar ul li#sh' + id).click();
+      }, 500);
+    },
+    cancelSelectedIfNew: function cancelSelectedIfNew() {
+      if ($scope.selectedShop.isNew) {
+        var data = [];
+        for (var k in $scope.shops.data) {
+          if (typeof $scope.shops.data[k] !== 'function') {
+            if ($scope.shops.data[k].id !== $scope.selectedShop.id) {
+              data.push($scope.shops.data[k]);
+            }
+          }
+        }
+        $scope.shops.data = data;
+        $timeout(function () {
+          angular.element('#dashleft-sidebar ul li:first-child').click();
+          $scope.selectedShop = $scope.shops.data[0];
+          $scope.selectedShopKey = 0;
+        }, 500);
+      }
+    },
+    updateSelected: function updateSelected() {
+      var url = '/api/shops/update';
+      $http({
+        method: 'POST',
+        url: url + '?api_token=' + window.adminJS.me.api_token,
+        data: $.param($scope.selectedShop),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        cache: $templateCache
+      }).then(function (response) {
+        if ($scope.selectedShop.isNew) {
+          window.reBuy.toast('Shop details have been created! Thank you.');
+        } else {
+          window.reBuy.toast('Shop details have been updated! Thank you.');
+        }
+        updateList();
+      }, function (response) {
+        window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
+      });
+    },
+    deleteSelected: function deleteSelected() {
+
+      window.reBuy.confirm('Are you sure to delete this shop?', function () {
+        var url = '/api/shops/delete';
+        $http({
+          method: 'POST',
+          url: url + '?api_token=' + window.adminJS.me.api_token,
+          data: $.param($scope.selectedShop),
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          cache: $templateCache
+        }).then(function (response) {
+          window.reBuy.toast('Shop details have been deleted! Thank you.');
+          updateList();
+        }, function (response) {
+          window.reBuy.toast('ERROR: Unable to delete the selected shop.');
+        });
+      });
+    }
+  };
+
+  $scope.bindEvents = function () {
+    (function ($) {
+
+      var $section = $('#mapsection').first();
+      $section.find('.panzoom').panzoom({
+        $zoomIn: $section.find(".zoom-in"),
+        $zoomOut: $section.find(".zoom-out"),
+        $zoomRange: $section.find(".zoom-range"),
+        $reset: $section.find(".reset")
+      });
+
+      angular.element('.panzoom').dblclick(function (e) {
+
+        var parentOffset = $(this).offset();
+        var relX = e.pageX - parentOffset.left - 12;
+        var relY = e.pageY - parentOffset.top - 12;
+
+        $scope.events.addShopSpot(relX, relY);
+      });
+
+      //@TODO: should use $watch to handle model changes
+      angular.element('input[name="shop_name"]').keyup(function () {
+        angular.element('.tooltipped').tooltip({ delay: 50, html: true });
+      });
+    })(jQuery);
+  };
+
+  updateList = function updateList() {
+
+    shopService.ownerList().then(function (response) {
+      $scope.owners = [];
+      for (var k in response.data) {
+        $scope.owners.push({ id: response.data[k].id, name: response.data[k].first_name + ' ' + response.data[k].last_name });
+      }
+    });
+
+    $timeout(function () {
+      shopService.shopList().then(function (response) {
+        $scope.shops = response.data;
+        $scope.selectedShop = $scope.shops.data[0];
+        $scope.selectedShopKey = 0;
+      });
+    }, 500);
+    $timeout(function () {
+      materializeInit();
+    }, 1000);
+  };
+  materializeInit = function materializeInit() {
+    Materialize.updateTextFields();
+    angular.element('select').material_select();
+  };
+
+  $scope.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
+
+/***/ }),
 /* 12 */,
 /* 13 */,
 /* 14 */,
 /* 15 */,
-/* 16 */
+/* 16 */,
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};/*! jQuery UI - v1.12.1 - 2016-09-14
@@ -11724,7 +11906,7 @@ if($.uiBackCompat!==false){// Backcompat for tooltipClass option
 $.widget("ui.tooltip",$.ui.tooltip,{options:{tooltipClass:null},_tooltip:function _tooltip(){var tooltipData=this._superApply(arguments);if(this.options.tooltipClass){tooltipData.tooltip.addClass(this.options.tooltipClass);}return tooltipData;}});}var widgetsTooltip=$.ui.tooltip;});
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -11967,7 +12149,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -13222,14 +13404,44 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 });
 
 /***/ }),
-/* 19 */,
-/* 20 */,
-/* 21 */,
+/* 20 */
+/***/ (function(module, exports) {
+
+rebuyApp.service('shopService', function ($http, $timeout) {
+   this.shopList = function () {
+      return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
+         return data;
+      });
+   };
+
+   this.ownerList = function () {
+      return $http.get('/api/shops/owners?api_token=' + window.adminJS.me.api_token).then(function (data) {
+         return data;
+      });
+   };
+});
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+rebuyApp.service('userService', function ($http, $timeout) {
+  this.userList = function () {
+    return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
+      return data;
+    });
+  };
+});
+
+/***/ }),
 /* 22 */,
 /* 23 */,
 /* 24 */,
 /* 25 */,
-/* 26 */
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(4);

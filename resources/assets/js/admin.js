@@ -29,5 +29,10 @@ window.rebuyApp.config(['$httpProvider', function($httpProvider) {
 require('./lib/jquery.panzoom');
 require('./lib/jquery.mousewheel');
 require('./lib/jquery-ui');
+
+require('./services/admin/userServices');
+require('./services/admin/shopServices');
+
 require('./controllers/admin/user_controller');
 require('./controllers/admin/shop_controller');
+require('./controllers/admin/spots_controller');

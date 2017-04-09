@@ -160,4 +160,45 @@ class ShopOwnerController extends Controller
             return ['success' => 0];
         }
     }
+
+    public function loginAsSomeone(User $user, Request $request){
+        if( session()->has('selected_shop') ){
+            $shop = session()->get('selected_shop');
+
+            $auth_user_id = auth()->user()->id;
+
+            // validate if user actually own this shop
+            // and make sure the loggedin user is not also the specified user
+            if( $shop->owner()->first()->id == $auth_user_id && $auth_user_id != $user->id ){
+                $request->session()->flush();
+                $request->session()->regenerate();
+
+                auth()->loginUsingId($user->id);
+
+                // the shopowner who logged in as customer/client
+                session()->put('loggedin_as_someone', ['id' => $auth_user_id, 'url' => url()->previous()]);
+                return redirect('shop');
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    public function loginBack(Request $request){
+        if( $request->session()->has('loggedin_as_someone') ){
+            $real_auth = session()->get('loggedin_as_someone');
+
+            $request->session()->flush();
+            $request->session()->regenerate();
+
+            auth()->loginUsingId($real_auth['id']);
+
+            return redirect($real_auth['url'])->withFlash_message([
+                    'type' => 'info',
+                    'msg' => "Welcome back ".ucfirst(auth()->user()->first_name)."!"
+                ]);
+        }
+
+        return redirect()->back();
+    }
 }

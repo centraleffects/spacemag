@@ -20,9 +20,20 @@
                         @if( isset( session()->get('flash_message')['is_important'] ) )
                             @slot('is_important') alert-important @endslot
                         @endif
+
+                        @if( isset( session()->get('flash_message')['custom_class'] ) )
+                            @slot('custom_class') session->get('flash_message')['custom_class'] @endslot
+                        @endif
                         
                         {{ session()->get('flash_message')['msg'] }}
                     @endcomponent
+                @endif
+
+                @if( session()->has('loggedin_as_someone') )
+                <div class="alert alert-success alert-important alert-imphasis" role="alert">
+                    You are loggedin as customer: {{ auth()->user()->first_name.' '.auth()->user()->last_name }} ({{ auth()->user()->email }}).
+                    <a class="btn orange btn-small" href="{{ url('shop/login-back') }}">End</a>    
+                </div>
                 @endif
                 <div class="toolbar row">
                     <div class="col s12">

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9270,14 +9270,6 @@ return jQuery;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {
-rebuyApp.service('userService', function ($http, $timeout) {
-    this.userList = function () {
-        return $http.get('/api/users/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-            return data;
-        });
-    };
-});
-
 rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
 
     $scope.users = {};
@@ -9301,17 +9293,22 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
 
     $scope.events = {
         viewUser: function viewUser(key, value) {
-            if (key == 0) {
-                $scope.selectedUserKey = null;
-                value.password = '';
-                $scope.selectedUser = {};
-                location.hash = '#!';
-            } else {
-                $scope.selectedUserKey = key;
-                value.password = '';
-                $scope.selectedUser = value;
-                location.hash = '#!/' + value.id;
-            }
+            /* if(key==0){
+                 $scope.selectedUserKey = null;
+                 value.password = '';
+                 $scope.selectedUser = {};
+                 location.hash = '#!';
+             }else{
+                 $scope.selectedUserKey = key;
+                 value.password = '';
+                 $scope.selectedUser = value;
+                 location.hash = '#!/'+value.id;
+             }*/
+
+            $scope.selectedUserKey = key;
+            value.password = '';
+            $scope.selectedUser = value;
+            location.hash = '#!/' + value.id;
 
             materializeInit();
             $timeout(function () {
@@ -9385,9 +9382,9 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
         }).then(function (response) {
             if (!$scope.selectedUser.id) {
                 updateUserList();
-                window.reBuy.alert('User details have been created! Thank you.');
+                window.reBuy.toast('User details have been created! Thank you.');
             } else {
-                window.reBuy.alert('User details have been updated! Thank you.');
+                window.reBuy.toast('User details have been updated! Thank you.');
             }
         }, function (response) {
             displayError(response);
@@ -9404,7 +9401,7 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
             cache: $templateCache
         }).then(function (response) {
             updateUserList();
-            window.reBuy.alert('User details had been deleted! Thank you.');
+            window.reBuy.toast('User details had been deleted! Thank you.');
         }, function (response) {
             window.reBuy.alert(response.data);
         });
@@ -9416,7 +9413,7 @@ rebuyApp.controller('UserController', function ($scope, userService, $timeout, $
 
 /***/ }),
 
-/***/ 28:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(1);

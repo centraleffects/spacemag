@@ -1,14 +1,4 @@
 
-rebuyApp.service('userService', function($http, $timeout) {
-   this.userList = function() {
-        return $http.get('/api/users/list?api_token='+window.adminJS.me.api_token)
-             .then(function(data) {
-               return data;
-              });
-   }
- });
-
-
 rebuyApp.controller('UserController', function($scope, userService, $timeout, $templateCache, $http) {
 
     $scope.users = {};
@@ -36,7 +26,7 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
 
     $scope.events = {
         viewUser : function(key,value){
-            if(key==0){
+           /* if(key==0){
                 $scope.selectedUserKey = null;
                 value.password = '';
                 $scope.selectedUser = {};
@@ -46,7 +36,12 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
                 value.password = '';
                 $scope.selectedUser = value;
                 location.hash = '#!/'+value.id;
-            }
+            }*/
+
+            $scope.selectedUserKey = key;
+            value.password = '';
+            $scope.selectedUser = value;
+            location.hash = '#!/'+value.id;
             
             materializeInit();
             $timeout(function () {
@@ -120,9 +115,9 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
         }).then(function(response) {
           if(!$scope.selectedUser.id){
              updateUserList();
-             window.reBuy.alert('User details have been created! Thank you.');
+             window.reBuy.toast('User details have been created! Thank you.');
           }else{
-             window.reBuy.alert('User details have been updated! Thank you.');
+             window.reBuy.toast('User details have been updated! Thank you.');
           }
           
         }, function(response) {
@@ -140,7 +135,7 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
               cache: $templateCache
         }).then(function(response) {
             updateUserList();
-            window.reBuy.alert('User details had been deleted! Thank you.');
+            window.reBuy.toast('User details had been deleted! Thank you.');
         }, function(response) {
             window.reBuy.alert(response.data);
         });

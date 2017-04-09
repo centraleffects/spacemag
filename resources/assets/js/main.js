@@ -39,8 +39,14 @@ app.run(function($rootScope, $http) {
 		}
 	};
 
+	$rootScope.loginAs = function (){
+		console.log($rootScope.selectedUser);
+		if( $rootScope.selectedUser != null ){
+			window.location = '/shop/login-as/'+$rootScope.selectedUser.id;
+		}
+	};
+
 	$rootScope.newletterSubscription = function (){
-		alert("hello fox");
 		var url = '/api/shops/newsletter-subscription/'+$rootScope.selectedUser.id+
 					'?api_token='+window.user.api_token;
 		$http.post(url).then(function (response){
@@ -52,6 +58,6 @@ app.run(function($rootScope, $http) {
 		}, function (response){
 			console.warn(response);
 		});
-	}
+	};
 
 });
