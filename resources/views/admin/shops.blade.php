@@ -48,11 +48,14 @@
 			<div class="card-action row">
 				<div class="col">
 					<br>
-					<button class="btn waves-effect waves-light blue hide" id="resetdetails" ng-click="events.viewUser(null,{})">
-						<i class="fa fa-random"></i> Clear
+					<button class="btn waves-effect waves-light blue" ng-show="selectedShop.isNew" ng-click="events.cancelSelectedIfNew()">
+					 Cancel
 					</button>
-					<button class="btn waves-effect waves-light green right"  type="submit" title="Generate Password" onclick="updateInfo()">
-						<i class="fa fa-floppy-o" aria-hidden="true"></i> @{{ !selectedShop.id ? 'Save' : 'Update' }}
+					<button class="btn waves-effect waves-light blue" ng-show="!selectedShop.isNew" ng-click="events.deleteSelected()">
+					 Delete
+					</button>
+					<button class="btn waves-effect waves-light green right"  type="submit" ng-click="events.updateSelected()">
+						@{{ selectedShop.isNew ? 'Save' : 'Update' }}
 					</button><br><br>
 				</div>
 			</div>

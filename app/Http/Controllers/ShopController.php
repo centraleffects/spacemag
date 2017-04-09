@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreShop;
-
-use App\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
+use App\Http\Requests\StoreShop;
+use App\Shop;
 use App\User;
 use Auth;
 
@@ -66,7 +67,33 @@ class ShopController extends Controller
      */
     public function update(StoreShop $request)
     {
-        //
+        $response = ['success' => 0];
+        $input = Input::all();
+        if(isset($input['isNew'])){
+            unset($input['id']);
+            unset($input['isNew']);
+            $shop = new Shop();
+        }else{
+           $shop = Shop::find($input['id']);  
+        }
+
+         if(!isset($input['user_id'])){
+                $input['user_id'] = 0;
+            }
+
+        foreach($input as $k=>$v){
+
+            if($v<>'' and $k <> '$$hashKey' and $k <> 'api_token'){
+                $shop->{$k} = $v;
+            }
+        }
+       
+        if( $shop->save() ){
+            $response['success'] = 1;
+        }
+        
+
+        return $response;
     }
 
     /**
@@ -79,10 +106,12 @@ class ShopController extends Controller
     {
         $response = ['success' => 0];
         
-        if( Request::isJson() ){
-            if( $shop->delete() ){
-                $response['success'] = 1;
-            }
+        $input = Input::all();
+
+        $shop = Shop::find($input['id']);  
+
+        if( $shop->delete() ){
+            $response['success'] = 1;
         }
 
         return $response;
