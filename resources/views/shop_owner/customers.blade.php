@@ -5,7 +5,7 @@
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
 			@component('layouts._partials.search')
-				@slot('search_name') clients @endslot
+				@slot('search_name') customers @endslot
 			@endcomponent
 			<ul class="collection">
 				<li class="collection-item customers" ng-repeat="x in customers | filter:search">
@@ -95,17 +95,18 @@
 					</div>
 
 					<div class="input-field">
-						<input type="text" name="name" />
+						<input type="text" name="name" class="validate" ng-model="new_firstName" required />
 						<label>Name of Customer</label>
 					</div>
 					<div class="input-field ">
-						<input type="email" name="email" class="validate" />
+						<input type="email" name="email" class="validate" ng-model="new_Email" required />
 						<label>Email Address</label>
 					</div>
 				</div>
 				<div class="card-action">
-					<button class="btn waves-effect waves-light green">
-						<i class="fa fa-send"></i> Send invitation link/password
+					<button class="btn waves-effect waves-light green" ng-click="invite($(this))" >
+						<i class="glyphicon glyphicon-refresh spinning" ng-show="loading"></i>
+						<i class="fa fa-send" ng-show="!loading"></i> Send invitation link/password
 					</button>
 				</div>
 			</div>

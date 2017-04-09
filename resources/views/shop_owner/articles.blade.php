@@ -1,4 +1,6 @@
 @component('shop_owner.layouts.app')
+	@slot('controller') ng-controller="ArticleController" @endslot
+
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Articles</h5>
@@ -7,28 +9,28 @@
 					@component('layouts._partials.dragicon')
 						@slot('style') fill-white @endslot
 					@endcomponent
-					<input type="text" value="Nike Shoes" />
-					<a href="#!" title="Delete" class="white-text"><i class="fa fa-trash"></i></a>
-			    </li>
-
-			    <li class="collection-item red lighten-2 white-text-important">
-					@component('layouts._partials.dragicon')
-						@slot('style') fill-white @endslot
-					@endcomponent
-					<input type="text" value="Ice skating outfits"/>
-					<a href="#!" title="Delete" class="white-text"><i class="fa fa-trash"></i></a>
+					<span>Nike Shoes</span>
+					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 
 			    <li class="collection-item purple lighten-2 white-text-important">
 					@component('layouts._partials.dragicon')
 						@slot('style') fill-white @endslot
 					@endcomponent
-					<input type="text" value="Warm jackets"/>
-					<a href="#!" title="Delete" class="white-text"><i class="fa fa-trash"></i></a>
+					<span>Ice Skating outfits</span>
+					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
+			    </li>
+
+			    <li class="collection-item red lighten-2 white-text-important">
+					@component('layouts._partials.dragicon')
+						@slot('style') fill-white @endslot
+					@endcomponent
+					<span>Warm Jackets</span>
+					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>
 			<div class="card-action">
-				<button class="btn blue waves-effect waves-light">
+				<button class="btn blue waves-effect waves-light" ng-click="addNewArticle()">
 					<i class="fa fa-plus"></i> Add New Article
 				</button>
 			</div>

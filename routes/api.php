@@ -30,12 +30,15 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'ShopController@index');
 	Route::get('list', 'ShopController@getlist');
 	Route::get('{shop}', 'ShopController@show');
+	Route::get('{shop}/users', 'ShopController@users');
+
+	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
+	
 	Route::post('create', 'ShopController@create');
 	Route::post('delete', 'ShopController@destroy');
-	Route::get('{shop}/users', 'ShopController@users');
-	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
-
 	Route::post('/update', 'ShopController@update');
+	Route::post('/{user}/resets-password', 'ClientController@generatePassword');
+	Route::post('/{shop}/invite', 'ShopController@invite');
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){

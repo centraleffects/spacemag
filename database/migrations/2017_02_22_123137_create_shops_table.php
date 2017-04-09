@@ -22,7 +22,6 @@ class CreateShopsTable extends Migration
             $table->string('url')->nullable();
             $table->string('currency')->nullable();
             $table->string('slug')->nullable();
-
             $table->string('x')->nullable();
             $table->string('y')->nullable();
             

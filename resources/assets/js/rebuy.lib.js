@@ -1,7 +1,43 @@
 (function($){
     $.reBuy = {
+        disableBtn : function (btn){
+            btn.attr("disabled", "disabled").addClass("disabled");
+            var icon = null;
+            if( btn.children('i').length > 0 ){
+                icon = btn.children('i').clone();
+            }
+        },
+
+        enableBtn : function (btn){
+            btn.removeAttr("disabled").removeClass("disabled");
+        },
+
+        showErrors : function (errors, form, timeout){            
+            if( form ){
+                $.each(errors, function (i, error){
+                    var errorContainer = $('<span class="help-block red-text lighten-1">'+
+                                    '<strong>'+error[0]+'</strong>'+
+                                '</span>');
+
+                    form.find('[name="'+i+'"]').parent("div").after(errorContainer);
+                });
+            }else{
+                console.error("showErrors: no $(form) specified.");
+            }
+
+            var $timeout = 5000;
+
+            if( timeout ){
+                $timeout = timeout;
+            }
+
+            setTimeout(function() {
+                $("span.help-block").fadeOut();
+            }, $timeout);
+        }, 
+
         alert : function (message, btnYesLabel, modalWidth, callback){
-             var btnYesLabel = btnYesLabel || 'OK',
+            var btnYesLabel = btnYesLabel || 'OK',
                  modalWidth  = modalWidth  || '300px',
                  callback    = callback    || 'function(){ return false; }',
                  modalId     = 'alertDialog',

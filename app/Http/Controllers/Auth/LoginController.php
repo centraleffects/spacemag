@@ -42,6 +42,10 @@ class LoginController extends Controller
     protected function authenticated($user)
     {
 
+        if( session()->has('url.intended') ){
+            return redirect()->intended( session()->get('url.intended') );
+        }
+
         if( auth()->user()->isAdmin() )
             return \Redirect::to('admin');
 
@@ -55,7 +59,9 @@ class LoginController extends Controller
      */
     public function redirectToProvider()
     {
-        return Socialite::driver('facebook')->redirect();
+        $socialite = Socialite::driver('facebook');
+        // dd($socialite);
+        return $socialite->redirect();
     }
 
     /**
@@ -65,17 +71,16 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $fb_user = Socialite::driver('facebook')->user();
-            
-        // dd($fb_user);
+        $socialite = Socialite::driver('facebook');
+        $fb_user = $socialite->user();
+
         $client = new \GuzzleHttp\Client();
 
         $fields = 'first_name,last_name,gender';
-        $url = "https://graph.facebook.com/v2.8/$fb_user->id?fields=$fields&oauth_token=$fb_user->token";
+        $url = "https://graph.facebook.com/v2.8/me?fields=$fields&oauth_token=$fb_user->token";
         $res = $client->get($url);
 
         $data = json_decode( $res->getBody()->getContents() );
-        // $data = json_decode( file_get_contents($url) );
 
         // find the user with a facebok id
         $user = User::where('facebook_id', '=', $fb_user->id)->first();
@@ -101,6 +106,7 @@ class LoginController extends Controller
             $user->api_token = str_random(60); // token that we will use for our api routes
             $user->avatar = $fb_user->avatar;
             $user->avatar_original = $fb_user->avatar_original;
+            $user->role = 'admin'; // temporary only
 
             if( $user->save() ){
                 \Auth::loginUsingId($user->id);

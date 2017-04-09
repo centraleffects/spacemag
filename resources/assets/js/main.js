@@ -4,6 +4,7 @@ require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customers_controller');
 require('./controllers/shopowner/clients_controller');
 require('./controllers/shopowner/workers_controller');
+require('./controllers/shopowner/articles_controller');
 
 
 app.run(function($rootScope) {

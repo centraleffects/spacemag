@@ -27,7 +27,7 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'AdminController@index'); // Matches The "admin/" URL
-    Route::get('/dashboard', 'AdminController@index'); // Matches The "admin/" URL); 
+    Route::get('/dashboard', 'AdminController@index');
     Route::get('/users', 'AdminController@users'); 
     Route::get('/shops', 'AdminController@shops'); 
     Route::get('/categories', 'AdminController@categories'); 
@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
 });
 
-Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
+Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
@@ -52,6 +52,8 @@ Route::group(['prefix' => 'shop', 'middleware' => 'owner'], function (){
 	Route::get('workers', 'ShopOwnerController@workers');
 	Route::get('workers/todo', 'ShopOwnerController@workersTodo');
 });
+
+Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
 
 
 Route::get('test-event', function (){
@@ -65,50 +67,10 @@ Route::get('test-mail', function (){
 	Mail::to($user->email)->send(new Welcome);
 });
 
-/**
- * Store the incoming blog post.
- *
- * @param  StoreUser  $request
- * @return Response
- */
+
 Route::get('try', function (){
 	// dd($request);
 	// Route for testing purposes
 	// do your quick algorithm test here
-	
-	// $shop = new App\Shop;
-	// $shop->name = "Rebuy Shop";
-	// $shop->description = "";
-	// $shop->url = "";
-	// $shop->currency = "";
-	
-	// auth()->user()->shops()->save($shop);
-
-	// dd($shop);
-
-	// return [
- //        'client_id' => env('FB_CLIENT_ID'),
- //        'client_secret' => env('FB_CLIENT_SECRET'),
- //        'redirect' => env('FB_REDIRECT'),
- //    ];
-	$str = '{
-   "og_object": {
-      "likes": {
-         "data": [
-            
-         ],
-         "summary": {
-            "total_count": 6080247
-         }
-      },
-      "id": "10151063484068358"
-   },
-   "share": {
-      "comment_count": 5822,
-      "share_count": 162565362
-   },
-   "id": "http://facebook.com"
-}';
-  var_dump( json_decode($str,true) );
 
 });
