@@ -46,13 +46,15 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
-	Route::get('customers', 'ShopOwnerController@customers');
+	Route::get('customers', 'ShopOwnerController@customers')->middleware('owner');
 	Route::get('todo', 'ShopOwnerController@todo');
 	Route::get('workers', 'ShopOwnerController@workers');
 	Route::get('workers/todo', 'ShopOwnerController@workersTodo');
 });
 
 Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
+Route::get('shop/login-as/{user}', 'ShopOwnerController@loginAsSomeone')->middleware('owner');
+Route::get('shop/login-back', 'ShopOwnerController@loginBack')->middleware('auth.basic');
 
 
 Route::get('test-event', function (){

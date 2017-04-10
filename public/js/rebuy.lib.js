@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9391,8 +9391,11 @@ return jQuery;
             $('select').material_select();
             // $('#password').strength_meter();
         },
-        toast: function toast(message) {
-            Materialize.toast(message, 4000);
+        toast: function toast(message, timeout) {
+            if (typeof timeout == 'undefined') {
+                timeout = 4000;
+            }
+            Materialize.toast(message, timeout);
         }
     };
 
@@ -9402,7 +9405,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 29:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(2);

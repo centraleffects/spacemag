@@ -6,9 +6,58 @@ require('./controllers/shopowner/clientsController');
 require('./controllers/shopowner/workersController');
 require('./controllers/shopowner/articlesController');
 
+/* below is shared between all controllers*/
+app.run(function($rootScope, $http) {
+	$rootScope.selectedUser = null;
+	$rootScope.hasSelectedUser = false;
+	$rootScope.isGeneratingPassword = false;
+	$rootScope.selectedShop = window.selectedShop;
 
-app.run(function($rootScope) {
-    $rootScope.currentUser =  window.user;
-    $rootScope.currentlySelectedShop = window.shop;
-	$rootScope.listIsEmpty = false;
+	// @HeadsUp! selectedShop variable was declared in the ShopOwnerController using JavaScript Facade
+	$rootScope.generatePassword = function (){
+		if( $rootScope.selectedUser != null ){
+			$rootScope.isGeneratingPassword = true;
+			var url = '/api/shops/'+selectedShop.id+'/users/'+$rootScope.selectedUser.id+
+						'/passwordreset?api_token='+user.api_token;
+			$http.post(url).then(function (response){
+				if( response.data.success == 1 ){
+					window.reBuy.toast('A password for user with email '+$rootScope.selectedUser.email+" has been re-generated.", 8000);
+				}else{
+					if( response.data.msg ){
+						window.reBuy.alert(response.data.msg, 8000);
+					}else{
+						window.reBuy.alert("Opps, something went wrong. Please try again later.");
+					}
+				}
+			}, function (response){
+				console.warn(response);
+			}).then(function (){
+				$rootScope.isGeneratingPassword = false;
+			});
+		}else{
+			return false;
+		}
+	};
+
+	$rootScope.loginAs = function (){
+		console.log($rootScope.selectedUser);
+		if( $rootScope.selectedUser != null ){
+			window.location = '/shop/login-as/'+$rootScope.selectedUser.id;
+		}
+	};
+
+	$rootScope.newletterSubscription = function (){
+		var url = '/api/shops/newsletter-subscription/'+$rootScope.selectedUser.id+
+					'?api_token='+window.user.api_token;
+		$http.post(url).then(function (response){
+			if( response.data.success == 1 ){
+				window.reBuy.toast(response.data.msg)
+			}else{
+				window.reBuy.alert(response.data.msg);
+			}
+		}, function (response){
+			console.warn(response);
+		});
+	};
+
 });

@@ -38,8 +38,8 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::post('create', 'ShopController@create');
 	Route::post('delete', 'ShopController@destroy');
 	Route::post('/update', 'ShopController@update');
-	Route::post('/{user}/resets-password', 'ClientController@generatePassword');
-	Route::post('/{shop}/invite', 'ShopController@invite');
+	Route::post('{shop}/users/{user}/passwordreset', 'ShopOwnerController@generatePassword');
+	Route::post('/{shop}/invite', 'ShopOwnerController@invite');
 });
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
