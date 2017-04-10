@@ -601,3 +601,12 @@ li.collection-item.active a {
 #info-content textarea{
 	min-height: 300px;
 }
+#spots #dashleft-sidebar .collapsible-header h5 i {
+	margin-top: -12px;
+}
+#spots #dashleft-sidebar li{
+	padding-left: 0;
+}
+#salespot .collapsible-body{
+	border-bottom: 0 !important;
+}
