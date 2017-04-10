@@ -106,7 +106,7 @@ class LoginController extends Controller
             $user->api_token = str_random(60); // token that we will use for our api routes
             $user->avatar = $fb_user->avatar;
             $user->avatar_original = $fb_user->avatar_original;
-            $user->role = 'admin'; // temporary only
+            $user->role = 'customer';
 
             if( $user->save() ){
                 \Auth::loginUsingId($user->id);
