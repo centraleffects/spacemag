@@ -74,7 +74,7 @@
                                         </li>
                                     @else
                                         <li>
-                                            <a href="{{ url('shops') }}" class="btn green waves-effect waves-light">
+                                            <a href="{{ url('shop') }}" class="btn green waves-effect waves-light">
                                                 Shops
                                             </a>
                                         </li>                                        

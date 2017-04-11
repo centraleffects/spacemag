@@ -20,6 +20,6 @@
 
 @else
 	<li>
-		<a href="{{ url('shops') }}">Shops</a>
+		<a href="{{ url('shop') }}">Shops</a>
 	</li>
 @endif

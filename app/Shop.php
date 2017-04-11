@@ -12,23 +12,22 @@ class Shop extends Model
     use SoftDeletes;
 
     protected $guarded = [ 'id' ];
-    protected $dates = [ 'deleted_at' ];
+    protected $dates = [ 'created_at', 'updated_at', 'deleted_at' ];
 
     /**
      * returns the Owner of this Shop
      */
     public function owner(){
-    	return $this->belongsTo('App\User', 'user_id');
+    	return $this->belongsTo('App\User');
     }  
 
     /**
      * returns the list of Workers in this Shop
      */
     public function users(){
-        // return $this->hasMany('App\User','id', 'shop_id');
-    	// return $this->hasMany('App\User')
-     //        ->withPivot('shop');
-        return $this->belongsToMany('App\User')->withTimestamps();
+        return $this->belongsToMany('App\User')
+                ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
+                ->withTimestamps();
     }
 
     /**
@@ -43,7 +42,7 @@ class Shop extends Model
      * returns the articles within this Shop
      */
     public function articles(){
-    	return $this->hasMany('App\Article', 'article_id', 'shop_id');
+    	return $this->hasMany('App\Article');
     }
 
     /**
@@ -69,4 +68,8 @@ class Shop extends Model
     public function todoTasks(){
         return $this->hasManyThrough('App\TodoTask', 'App\Salespot');
     }
+
+    // public function newsletterSubscriptions(){
+    //     return $this->hasMany('App\ShopNewsletterSubscription', 'shop_id');
+    // }
 }

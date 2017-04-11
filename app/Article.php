@@ -21,10 +21,11 @@ class Article extends Model
     	return $this->hasMany('App\Prices');
     }
 
+    /**
+     * Returns list of shops with this article
+     */
     public function shops(){
-    	return $this->belongsToMany('App\Shop')
-    				->withPivot('article_id', 'shop_id')
-    				->withTimestamps();
+    	return $this->belongsToMany('App\Shop');
     }
 
     public function transactions(){

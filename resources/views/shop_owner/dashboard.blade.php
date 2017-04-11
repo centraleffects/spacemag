@@ -1,6 +1,4 @@
 @component('shop_owner.layouts.app')
-
-
 	@slot('left')
 		<div  class="white" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>

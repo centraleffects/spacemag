@@ -29,13 +29,22 @@ class User extends Authenticatable
     /**
      * returns the Shops that this user owned
      */
-    public function shops(){
-        return $this->hasMany('App\Shop', 'user_id');
-        // return $this->hasMany('App\Shop')
-        //     ->withPivot('user');
-        // return $this->belongsToMany('App\Shop')->withTimestamps();
+    public function ownedShops(){
+        return $this->hasMany('App\Shop');
     }
 
+
+    /**
+     * Returns the Shops that this user is associated with
+     */
+    public function shops(){
+        return $this->belongsToMany('App\Shop')->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
+            ->withTimestamps();
+    }
+
+    // public function newsletterSubscriptions(){
+    //     return $this->hasMany('App\ShopNewsletterSubscription', 'user_id');
+    // }
 
     /**
      * returns the articles that this user has created.
