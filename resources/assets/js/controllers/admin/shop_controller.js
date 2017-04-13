@@ -21,12 +21,14 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
       }
 
     $scope.events = {
-        viewShop : function(key,value){
-
-            $scope.selectedShopKey = key;
-            $scope.selectedShop = value;
-            if(value.id){
-              location.hash = '#!/' + value.id;
+        viewShop : function($this){
+            shop = $this.shop;
+            angular.element('.list-shops').removeClass('active');
+            angular.element('#sh'+shop.id).addClass('active');
+            $scope.selectedShopKey = $this.key;
+            $scope.selectedShop = shop;
+            if(shop.id){
+              location.hash = '#!/' + shop.id;
             }else{
               location.hash = '#!/';
             }
@@ -34,8 +36,6 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
             materializeInit();
             $timeout(function () {
               materializeInit();
-              angular.element('.shopspot').removeClass('green');
-              angular.element('#sp'+value.id).addClass('green');
             },500);
         },
         addShopSpot : function(x,y){
@@ -69,6 +69,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
           }
         },
         updateSelected : function(){
+
             var url = '/api/shops/update';
             $http({
               method: 'POST',
