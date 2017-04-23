@@ -2,7 +2,7 @@
 <div ng-controller="UserController">
 	<div class="col s3">
 		<div  class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="material-icons">face</i> List of Users</h5>
+			<h5><i class="material-icons">face</i> Users</h5>
 			<ul class="collection" ng-repeat="(key, user) in users.data">
 
 					<li class="collection-item" ng-click="events.viewUser(key,user)">

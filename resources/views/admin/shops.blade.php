@@ -3,7 +3,8 @@
 	<div class="col s3">
 		<div class="card hoverable" ng-model="shops">
 			<div class="row card-content">
-				<span class="card-title"><i class="material-icons">store</i> List of Shops</span>
+				<span class="badge right"><a href="#!" class="left waves-effect waves-light btn" ng-click="events.viewShop([])">New Shop</a></span>
+				<span class="card-title">Shops</span>
 				<div class="collection">
 							<a href="#!" 
 									class="list-shops collection-item" 

@@ -3,7 +3,6 @@
   "/js/admin.js": "/js/admin.js",
   "/js/main.js": "/js/main.js",
   "/js/rebuy.lib.js": "/js/rebuy.lib.js",
-  "/js/controllers/admin/user_controller.js": "/js/controllers/admin/user_controller.js",
   "/css/vendor.css": "/css/vendor.css",
   "/css/app.css": "/css/app.css"
 }

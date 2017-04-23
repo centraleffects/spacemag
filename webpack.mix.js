@@ -25,5 +25,4 @@ mix.combine([
 mix.js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
    .js('resources/assets/js/app.js', 'public/js/app.js')
    .js('resources/assets/js/main.js', 'public/js/main.js')
-   .js('resources/assets/js/admin.js', 'public/js/admin.js')
-   .js('resources/assets/js/controllers/admin/user_controller.js', 'public/js/controllers/admin/user_controller.js');
+   .js('resources/assets/js/admin.js', 'public/js/admin.js');

@@ -152,6 +152,7 @@ class ShopController extends Controller
     }
 
     public function listOwners(){
-        return User::where( ['role' => 'owner'] )->get();
+        $users =  User::where( ['role' => 'owner'] )->get();
+        return $users;
     }
 }

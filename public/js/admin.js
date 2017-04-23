@@ -9264,155 +9264,9 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function($) {
-rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
-
-    $scope.users = {};
-    $scope.selectedUser = {};
-    $scope.selectedUserKey = null;
-    $scope.genderOptions = [{ 'value': 'm', 'text': 'Male' }, { 'value': 'f', 'text': 'Female' }];
-    $scope.roleOptions = [{ 'value': 'admin', 'text': 'Administrator' }, { 'value': 'owner', 'text': 'Shop Owner' }, { 'value': 'worker', 'text': 'Shop Worker' }, { 'value': 'cliet', 'text': 'Client' }, { 'value': 'customer', 'text': 'Customer' }];
-    $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
-    $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
-
-    $scope.init = function () {
-        $timeout(function () {
-            userService.userList().then(function (response) {
-                $scope.users = response.data;
-                $scope.selectedUser = $scope.users.data[0];
-                $scope.selectedUser.password = '';
-                $scope.selectedUserKey = 0;
-            });
-        }, 1000);
-    };
-
-    $scope.events = {
-        viewUser: function viewUser(key, value) {
-            /* if(key==0){
-                 $scope.selectedUserKey = null;
-                 value.password = '';
-                 $scope.selectedUser = {};
-                 location.hash = '#!';
-             }else{
-                 $scope.selectedUserKey = key;
-                 value.password = '';
-                 $scope.selectedUser = value;
-                 location.hash = '#!/'+value.id;
-             }*/
-
-            $scope.selectedUserKey = key;
-            value.password = '';
-            $scope.selectedUser = value;
-            location.hash = '#!/' + value.id;
-
-            materializeInit();
-            $timeout(function () {
-                materializeInit();
-            }, 500);
-        }
-    };
-
-    //watch our collection and sending changes to server
-    //@TODO push back to server
-    $scope.$watchCollection($scope.selectedUser, function (newVal, oldVal) {
-        $timeout(function () {
-            materializeInit();
-        }, 1500);
-    });
-
-    updateUserList = function updateUserList() {
-        $timeout(function () {
-            userService.userList().then(function (response) {
-                $scope.users = response.data;
-                $scope.selectedUser = $scope.users.data[0];
-                $scope.selectedUser.password = '';
-                $scope.selectedUserKey = 0;
-            });
-        }, 1000);
-    };
-
-    displayError = function displayError(response) {
-        angular.element('.input-field .error-field').each(function (i, e) {
-            angular.element(e).remove();
-        });
-        angular.forEach(response.data, function (v, k) {
-            angular.element('#' + k).closest('div').append('<small class="error-field red-text">' + v[0] + '</small>');
-        });
-        materializeInit();
-    };
-    materializeInit = function materializeInit() {
-        Materialize.updateTextFields();
-        angular.element('select').material_select();
-    };
-    newUser = function newUser(form) {
-        angular.element('#clientDetails #resetdetails').trigger('click');
-        angular.element('.input-field .error-field').each(function (i, e) {
-            angular.element(e).remove();
-        });
-        $scope.selectedUser = {};
-        $scope.selectedUser.password = '';
-        $scope.selectedUserKey = null;
-    };
-
-    hideError = function hideError() {
-        angular.element('.input-field .error-field').each(function (i, e) {
-            angular.element(e).remove();
-        });
-    };
-
-    updateInfo = function updateInfo() {
-        var url = '/api/users/update';
-        $scope.selectedUser['_method'] = 'PATCH';
-        if (!$scope.selectedUser.id) {
-            url = '/api/users/store';
-            $scope.selectedUser['_method'] = 'POST';
-        }
-        hideError();
-        $http({
-            method: 'POST',
-            url: url + '?api_token=' + window.adminJS.me.api_token,
-            data: $.param($scope.selectedUser),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            cache: $templateCache
-        }).then(function (response) {
-            if (!$scope.selectedUser.id) {
-                updateUserList();
-                window.reBuy.toast('User details have been created! Thank you.');
-            } else {
-                window.reBuy.toast('User details have been updated! Thank you.');
-            }
-        }, function (response) {
-            displayError(response);
-        });
-    };
-
-    deleteUser = function deleteUser() {
-        var url = '/api/users/delete/' + $scope.selectedUser.id;
-        $http({
-            method: 'POST',
-            url: url + '?api_token=' + window.adminJS.me.api_token,
-            data: $scope.selectedUser,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            cache: $templateCache
-        }).then(function (response) {
-            updateUserList();
-            window.reBuy.toast('User details had been deleted! Thank you.');
-        }, function (response) {
-            window.reBuy.alert(response.data);
-        });
-    };
-
-    $scope.init();
-});
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
+/* 1 */,
 /* 2 */,
-/* 3 */,
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*
@@ -9423,7 +9277,7 @@ window.rebuyApp = angular.module('rebuy', []);
 
 window.rebuyApp.config(['$httpProvider', function ($httpProvider) {
 	$httpProvider.defaults.useXDomain = true;
-	delete $httpProvider.defaults.headers.common['X-Requested-With'];
+	$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 }]);
 
 (function ($) {
@@ -9449,21 +9303,21 @@ __webpack_require__(17);
 __webpack_require__(21);
 __webpack_require__(20);
 
-__webpack_require__(1);
-__webpack_require__(10);
 __webpack_require__(11);
+__webpack_require__(9);
+__webpack_require__(10);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 4 */,
 /* 5 */,
 /* 6 */,
 /* 7 */,
 /* 8 */,
-/* 9 */,
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($, jQuery) {
+/* WEBPACK VAR INJECTION */(function($) {
 rebuyApp.controller('adminShopController', function ($scope, shopService, $timeout, $templateCache, $http) {
 
   $scope.shops = {};
@@ -9474,19 +9328,23 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
   $scope.currencyOptions = [{ 'value': 'usd', 'text': 'US Dollar' }];
   $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
   $scope.owners = [];
-
+  var promise;
   var vm = this;
-
   $scope.init = function () {
     $timeout(function () {
-      updateList();
-    }, 1500);
-
-    $scope.bindEvents();
+      vm.updateList();
+    }, 1000);
   };
 
   $scope.events = {
     viewShop: function viewShop($this) {
+      if (!$this) {
+        var key = Object.keys($scope.shops.data).length;
+        id = parseInt($scope.shops.data[key - 1].id) + 1;
+        $scope.shops.data[key] = { name: 'New Shop', id: id, 'x_coordinate': x, 'y_coordinate': y, isNew: true };
+        angular.element('#dashleft-sidebar ul li:first-child').click();
+        return false;
+      }
       shop = $this.shop;
       angular.element('.list-shops').removeClass('active');
       angular.element('#sh' + shop.id).addClass('active');
@@ -9498,9 +9356,9 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         location.hash = '#!/';
       }
 
-      materializeInit();
+      vm.materializeInit();
       $timeout(function () {
-        materializeInit();
+        vm.materializeInit();
       }, 500);
     },
     addShopSpot: function addShopSpot(x, y) {
@@ -9547,7 +9405,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         } else {
           window.reBuy.toast('Shop details have been updated! Thank you.');
         }
-        updateList();
+        vm.updateList();
       }, function (response) {
         window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
       });
@@ -9564,7 +9422,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
           cache: $templateCache
         }).then(function (response) {
           window.reBuy.toast('Shop details have been deleted! Thank you.');
-          updateList();
+          vm.updateList();
         }, function (response) {
           window.reBuy.toast('ERROR: Unable to delete the selected shop.');
         });
@@ -9572,64 +9430,35 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
     }
   };
 
-  $scope.bindEvents = function () {
-    (function ($) {
+  vm.updateList = function () {
 
-      var $section = $('#mapsection').first();
-      $section.find('.panzoom').panzoom({
-        $zoomIn: $section.find(".zoom-in"),
-        $zoomOut: $section.find(".zoom-out"),
-        $zoomRange: $section.find(".zoom-range"),
-        $reset: $section.find(".reset")
-      });
-
-      angular.element('.panzoom').dblclick(function (e) {
-
-        var parentOffset = $(this).offset();
-        var relX = e.pageX - parentOffset.left - 12;
-        var relY = e.pageY - parentOffset.top - 12;
-
-        $scope.events.addShopSpot(relX, relY);
-      });
-
-      //@TODO: should use $watch to handle model changes
-      angular.element('input[name="shop_name"]').keyup(function () {
-        angular.element('.tooltipped').tooltip({ delay: 50, html: true });
-      });
-    })(jQuery);
-  };
-
-  updateList = function updateList() {
-
-    shopService.ownerList().then(function (response) {
+    shopService.ownerList().then(function (ownerList) {
       $scope.owners = [];
-      for (var k in response.data) {
-        $scope.owners.push({ id: response.data[k].id, name: response.data[k].first_name + ' ' + response.data[k].last_name });
-      }
+      Object.keys(ownerList).forEach(function (k) {
+        $scope.owners.push({ id: ownerList[k].id, name: ownerList[k].first_name + ' ' + ownerList[k].last_name });
+      });
+      vm.materializeInit();
     });
 
-    $timeout(function () {
-      shopService.shopList().then(function (response) {
-        $scope.shops = response.data;
-        $scope.selectedShop = $scope.shops.data[0];
-        $scope.selectedShopKey = 0;
-      });
-    }, 500);
-    $timeout(function () {
-      materializeInit();
-    }, 1000);
+    shopService.shopList().then(function (shopList) {
+      $scope.shops = shopList;
+      $scope.selectedShop = $scope.shops.data[0];
+      $scope.selectedShopKey = 0;
+      vm.materializeInit();
+    });
   };
-  materializeInit = function materializeInit() {
+
+  vm.materializeInit = function () {
     Materialize.updateTextFields();
     angular.element('select').material_select();
   };
 
   $scope.init();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(0)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {
@@ -9817,6 +9646,152 @@ rebuyApp.controller('adminSpotController', function ($scope, shopService, $timeo
   };
 
   $scope.init();
+});
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {
+rebuyApp.controller('UserController', function ($scope, userService, $timeout, $templateCache, $http) {
+
+    $scope.users = {};
+    $scope.selectedUser = {};
+    $scope.selectedUserKey = null;
+    $scope.genderOptions = [{ 'value': 'm', 'text': 'Male' }, { 'value': 'f', 'text': 'Female' }];
+    $scope.roleOptions = [{ 'value': 'admin', 'text': 'Administrator' }, { 'value': 'owner', 'text': 'Shop Owner' }, { 'value': 'worker', 'text': 'Shop Worker' }, { 'value': 'cliet', 'text': 'Client' }, { 'value': 'customer', 'text': 'Customer' }];
+    $scope.countryOptions = [{ 'value': 'swe', 'text': 'Sweden' }];
+    $scope.langOptions = [{ 'value': 'en', 'text': 'English' }, { 'value': 'se', 'text': 'Swedish' }];
+
+    $scope.init = function () {
+        $timeout(function () {
+            userService.userList().then(function (response) {
+                $scope.users = response.data;
+                $scope.selectedUser = $scope.users.data[0];
+                $scope.selectedUser.password = '';
+                $scope.selectedUserKey = 0;
+            });
+        }, 1000);
+    };
+
+    $scope.events = {
+        viewUser: function viewUser(key, value) {
+            /* if(key==0){
+                 $scope.selectedUserKey = null;
+                 value.password = '';
+                 $scope.selectedUser = {};
+                 location.hash = '#!';
+             }else{
+                 $scope.selectedUserKey = key;
+                 value.password = '';
+                 $scope.selectedUser = value;
+                 location.hash = '#!/'+value.id;
+             }*/
+
+            $scope.selectedUserKey = key;
+            value.password = '';
+            $scope.selectedUser = value;
+            location.hash = '#!/' + value.id;
+
+            materializeInit();
+            $timeout(function () {
+                materializeInit();
+            }, 500);
+        }
+    };
+
+    //watch our collection and sending changes to server
+    //@TODO push back to server
+    $scope.$watchCollection($scope.selectedUser, function (newVal, oldVal) {
+        $timeout(function () {
+            materializeInit();
+        }, 1500);
+    });
+
+    updateUserList = function updateUserList() {
+        $timeout(function () {
+            userService.userList().then(function (response) {
+                $scope.users = response.data;
+                $scope.selectedUser = $scope.users.data[0];
+                $scope.selectedUser.password = '';
+                $scope.selectedUserKey = 0;
+            });
+        }, 1000);
+    };
+
+    displayError = function displayError(response) {
+        angular.element('.input-field .error-field').each(function (i, e) {
+            angular.element(e).remove();
+        });
+        angular.forEach(response.data, function (v, k) {
+            angular.element('#' + k).closest('div').append('<small class="error-field red-text">' + v[0] + '</small>');
+        });
+        materializeInit();
+    };
+    materializeInit = function materializeInit() {
+        Materialize.updateTextFields();
+        angular.element('select').material_select();
+    };
+    newUser = function newUser(form) {
+        angular.element('#clientDetails #resetdetails').trigger('click');
+        angular.element('.input-field .error-field').each(function (i, e) {
+            angular.element(e).remove();
+        });
+        $scope.selectedUser = {};
+        $scope.selectedUser.password = '';
+        $scope.selectedUserKey = null;
+    };
+
+    hideError = function hideError() {
+        angular.element('.input-field .error-field').each(function (i, e) {
+            angular.element(e).remove();
+        });
+    };
+
+    updateInfo = function updateInfo() {
+        var url = '/api/users/update';
+        $scope.selectedUser['_method'] = 'PATCH';
+        if (!$scope.selectedUser.id) {
+            url = '/api/users/store';
+            $scope.selectedUser['_method'] = 'POST';
+        }
+        hideError();
+        $http({
+            method: 'POST',
+            url: url + '?api_token=' + window.adminJS.me.api_token,
+            data: $.param($scope.selectedUser),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            cache: $templateCache
+        }).then(function (response) {
+            if (!$scope.selectedUser.id) {
+                updateUserList();
+                window.reBuy.toast('User details have been created! Thank you.');
+            } else {
+                window.reBuy.toast('User details have been updated! Thank you.');
+            }
+        }, function (response) {
+            displayError(response);
+        });
+    };
+
+    deleteUser = function deleteUser() {
+        var url = '/api/users/delete/' + $scope.selectedUser.id;
+        $http({
+            method: 'POST',
+            url: url + '?api_token=' + window.adminJS.me.api_token,
+            data: $scope.selectedUser,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            cache: $templateCache
+        }).then(function (response) {
+            updateUserList();
+            window.reBuy.toast('User details had been deleted! Thank you.');
+        }, function (response) {
+            window.reBuy.alert(response.data);
+        });
+    };
+
+    $scope.init();
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
@@ -13432,18 +13407,32 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 /* 20 */
 /***/ (function(module, exports) {
 
-rebuyApp.service('shopService', function ($http, $timeout) {
-     this.shopList = function () {
-          return $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (data) {
-               return data;
-          });
-     };
 
-     this.ownerList = function () {
-          return $http.get('/api/shops/owners?api_token=' + window.adminJS.me.api_token).then(function (data) {
-               return data;
-          });
-     };
+rebuyApp.factory('shopService', function ($http, $timeout) {
+  var promiseShopList, promiseOwnerList;
+  var shopService = {
+    shopList: function shopList() {
+      if (!promiseShopList) {
+        // $http returns a promise, which has a then function, which also returns a promise
+        promiseShopList = $http.get('/api/shops/list?api_token=' + window.adminJS.me.api_token).then(function (response) {
+          // The then function here is an opportunity to modify the response
+          // The return value gets picked up by the then in the controller.
+          return response.data;
+        });
+      }
+      // Return the promise to the controller
+      return promiseShopList;
+    },
+    ownerList: function ownerList() {
+      if (!promiseOwnerList) {
+        promiseOwnerList = $http.get('/api/shops/owners?api_token=' + window.adminJS.me.api_token).then(function (response) {
+          return response.data;
+        });
+      }
+      return promiseOwnerList;
+    }
+  };
+  return shopService;
 });
 
 /***/ }),
@@ -13469,7 +13458,7 @@ rebuyApp.service('userService', function ($http, $timeout) {
 /* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(4);
+module.exports = __webpack_require__(3);
 
 
 /***/ })
