@@ -51,6 +51,15 @@ require('./bootstrap');
 		$("div.alert").not(".alert-important").delay(5000).slideUp(function(){
 	        $(this).remove();
 	    });
+
+	    $(document).on("click", ".collection-item", function (){
+	    	$(".collection-item").removeClass("active");
+	    	$(this).addClass("active");
+	    });
+
+	    $(document).on("click", ".close-card", function (){
+	    	$(".collection-item").removeClass("active");
+	    });
 	});
 
 }));

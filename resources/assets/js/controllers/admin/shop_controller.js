@@ -1,7 +1,7 @@
 
 rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http) {
 	
-	  $scope.shops = {};
+	$scope.shops = {};
     $scope.selectedShop = {};
     $scope.selectedShopKey = null;
 
@@ -156,11 +156,12 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
               materializeInit();
             },1000);
             
-        }
+    }
+
     materializeInit = function(){
         Materialize.updateTextFields();
         angular.element('select').material_select();
     } 
 
-   $scope.init();
+    $scope.init();
 });

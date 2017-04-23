@@ -8,9 +8,9 @@
 				@slot('search_name') customers @endslot
 			@endcomponent
 			<ul class="collection">
-				<li class="collection-item" ng-repeat="x in customers | filter:search">
+				<li class="collection-item" ng-repeat="x in customers | filter:search" ng-click="viewCustomer($index)">
 					@include('layouts._partials.dragicon')
-					<span ng-click="viewCustomer($index)">@{{ x.first_name+' '+x.last_name }}</span>
+					<span>@{{ x.first_name+' '+x.last_name }}</span>
 					<a class="right" title="Delete" ng-click="removeCustomer($index)">
 						<i class="fa fa-trash"></i>
 					</a>
@@ -72,7 +72,7 @@
 						</div>
 						<div class="col">
 							<p>
-								<input type="checkbox" id="newsletter_subscription" name="newsletter_subscription" value="true" />
+								<input type="checkbox" class="newsletter-subscription" ng-model="newsletter_subscription" ng-click="newsletterSubscription($event)" id="newsletter_subscription" />
 								<label for="newsletter_subscription">Enable Newsletter</label>
 							</p>
 						</div>
