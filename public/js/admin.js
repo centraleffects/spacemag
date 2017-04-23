@@ -9486,12 +9486,14 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
   };
 
   $scope.events = {
-    viewShop: function viewShop(key, value) {
-
-      $scope.selectedShopKey = key;
-      $scope.selectedShop = value;
-      if (value.id) {
-        location.hash = '#!/' + value.id;
+    viewShop: function viewShop($this) {
+      shop = $this.shop;
+      angular.element('.list-shops').removeClass('active');
+      angular.element('#sh' + shop.id).addClass('active');
+      $scope.selectedShopKey = $this.key;
+      $scope.selectedShop = shop;
+      if (shop.id) {
+        location.hash = '#!/' + shop.id;
       } else {
         location.hash = '#!/';
       }
@@ -9499,8 +9501,6 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
       materializeInit();
       $timeout(function () {
         materializeInit();
-        angular.element('.shopspot').removeClass('green');
-        angular.element('#sp' + value.id).addClass('green');
       }, 500);
     },
     addShopSpot: function addShopSpot(x, y) {
@@ -9533,6 +9533,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
       }
     },
     updateSelected: function updateSelected() {
+
       var url = '/api/shops/update';
       $http({
         method: 'POST',
