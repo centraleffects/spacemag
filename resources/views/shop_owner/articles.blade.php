@@ -58,11 +58,11 @@
 					</div>
 					<div class="input-field">
 						<input type="number" name="original_price" />
-						<label>Original Cost</label>
+						<label>Original Cost (Kr)</label>
 					</div>
 					<div class="input-field">
 						<input type="number" name="price" />
-						<label>Sold Cost</label>
+						<label>Sold Cost (Kr)</label>
 					</div>
 					<div class="input-field row">
 						<p>Print status of Label</p>
