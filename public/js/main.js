@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9283,7 +9283,7 @@ return jQuery;
 	};
 
 	$scope.getArticles = function () {
-		var url = '/api/articles?api_token=' + window.user.api_token;
+		var url = '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token;
 		$http.get(url).then(function (response) {
 			console.log(response);
 			$scope.articles = response.data;
@@ -9305,9 +9305,9 @@ return jQuery;
 	};
 
 	$scope.removeArticle = function (index) {
-		var article = $scope.articles[index];
-		var url = '/api/articles/' + article.id + '/remove?api_token=' + window.user.api_token;
-		window.$.reBuy.confirm("Are you sure to remove this article?", function () {
+		var customer = $scope.articles[index];
+		var url = '/api/shops/' + selectedShop.id + '/users/' + customer.id + '/remove?api_token=' + window.user.api_token;
+		window.$.reBuy.confirm("Are you sure to remove this customer?", function () {
 			$http.delete(url).then(function (response) {
 				// $scope.articles = response.data;
 				console.log(response);
@@ -9324,9 +9324,34 @@ return jQuery;
 		});
 	};
 
+	$scope.generatePassword = function () {
+		if ($scope.hasSelectedArticle) {
+			$http.post('/api/shops/' + selectedShop.id + '/users/sendpassword').then(function (response) {
+				console.warn(response);
+			}, function (response) {
+				console.warn(response);
+			});
+		}
+	};
+
 	$scope.addNewArticle = function () {
 		$scope.addNew = true;
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+	};
+
+	$scope.invite = function () {
+		var data = {
+			name: $scope.new_firstName,
+			email: $scope.new_Email
+		},
+		    url = '/api/shops/' + selectedShop.id + '/invite?api_token=' + window.user.api_token;
+		$http.post(url, data).then(function (response) {
+			console.log(response);
+		}, function (response) {
+			if (response.data) {
+				window.$.reBuy.showErrors(response.data, $("#add_new"), 8000);
+			}
+		});
 	};
 
 	// init
@@ -9365,7 +9390,6 @@ function ClientCtrl($scope, $http, $timeout, $rootScope) {
 		$scope.selectedUser = $scope.clients[index];
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
-		$rootScope.newsletter_subscription = $rootScope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
 		Materialize.updateTextFields();
 	};
 
@@ -9402,8 +9426,8 @@ app.controller('ClientController', ClientCtrl);
 /***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, customerServices, $http, $timeout, $rootScope) {
-	$scope.customers = [{}];
+/* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
+	$scope.customers = [];
 	$scope.addNew = false;
 	$scope.newUser = {
 		first_name: '',
@@ -9416,11 +9440,17 @@ app.controller('ClientController', ClientCtrl);
 	$scope.isDisabled = false;
 
 	$scope.init = function () {
-		$timeout(function () {
-			updateList();
-		}, 1500);
+		$scope.getCustomers();
+	};
 
-		$scope.customers = customerServices.customerList();
+	$scope.getCustomers = function () {
+		var url = '/api/shops/' + selectedShop.id + '/users?api_token=' + window.user.api_token;
+		$http.get(url).then(function (response) {
+			console.log(response);
+			$scope.customers = response.data;
+		}, function (response) {
+			console.warn(response);
+		});
 	};
 
 	$scope.$watch('customers', function () {
@@ -9437,7 +9467,6 @@ app.controller('ClientController', ClientCtrl);
 		$scope.selectedUser = $scope.customers[index];
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
-		$rootScope.newsletter_subscription = $rootScope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
 		Materialize.updateTextFields();
 	};
 
@@ -9508,28 +9537,6 @@ app.controller('ClientController', ClientCtrl);
 		}).then(function () {
 			$scope.isDisabled = false;
 		});
-	};
-
-	updateList = function updateList() {
-
-		customerServices.customerList().then(function (response) {
-			$scope.customers = response.data;
-		});
-		// $timeout(function () {
-		// 	customerServices.shopList().then(function(response) {
-		// 		$scope.shops = response.data;
-		// 		$scope.selectedShop = $scope.shops.data[0];
-		// 		$scope.selectedShopKey = 0;
-		// 		});
-		// 	}, 500);
-
-		$timeout(function () {
-			materializeInit();
-		}, 1000);
-	};
-
-	materializeInit = function materializeInit() {
-		Materialize.updateTextFields();
 	};
 
 	// init
@@ -9628,21 +9635,7 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
-/***/ 22:
-/***/ (function(module, exports) {
-
-app.service('customerServices', function ($http, $timeout) {
-    this.customerList = function () {
-        var url = '/api/shops/' + window.selectedShop.id + '/users?api_token=' + window.user.api_token;
-        return $http.get(url).then(function (data) {
-            return data;
-        });
-    };
-});
-
-/***/ }),
-
-/***/ 33:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(6);
@@ -9654,8 +9647,6 @@ module.exports = __webpack_require__(6);
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
-
-__webpack_require__(22);
 
 __webpack_require__(16);
 __webpack_require__(15);
@@ -9669,7 +9660,6 @@ app.run(function ($rootScope, $http) {
 	$rootScope.hasSelectedUser = false;
 	$rootScope.isGeneratingPassword = false;
 	$rootScope.selectedShop = window.selectedShop;
-	$rootScope.newsletter_subscription = false;
 
 	// @HeadsUp! selectedShop variable was declared in the ShopOwnerController using JavaScript Facade
 	$rootScope.generatePassword = function () {
@@ -9703,22 +9693,16 @@ app.run(function ($rootScope, $http) {
 		}
 	};
 
-	$rootScope.newsletterSubscription = function ($event) {
-		var checkbox = $event.target;
-		var url = '/api/shops/' + selectedShop.id + '/newsletter-subscription/' + $rootScope.selectedUser.id + '?api_token=' + window.user.api_token,
-		    data = { newsletter_subscription: checkbox.checked ? true : false },
-		    action = checkbox.checked ? "subscribed" : "unsubscribed";
-
-		$http.post(url, data).then(function (response) {
+	$rootScope.newletterSubscription = function () {
+		var url = '/api/shops/newsletter-subscription/' + $rootScope.selectedUser.id + '?api_token=' + window.user.api_token;
+		$http.post(url).then(function (response) {
 			if (response.data.success == 1) {
-				$rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked ? 1 : 0;
-				window.reBuy.toast("User successfully " + action + " to " + selectedShop.name + " newsletter.");
+				window.reBuy.toast(response.data.msg);
 			} else {
-				window.reBuy.alert("Unable to process your request right now.");
+				window.reBuy.alert(response.data.msg);
 			}
 		}, function (response) {
 			console.warn(response);
-			window.reBuy.alert("Something went wrong. Please try again later. If problem continue to exist, contact admin suppport.");
 		});
 	};
 });
