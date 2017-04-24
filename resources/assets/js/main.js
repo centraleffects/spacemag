@@ -1,5 +1,8 @@
 window.app = angular.module('rebuy', []);
 
+
+require('./services/shopowner/customerServices');
+
 require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customersController');
 require('./controllers/shopowner/clientsController');
@@ -12,6 +15,7 @@ app.run(function($rootScope, $http) {
 	$rootScope.hasSelectedUser = false;
 	$rootScope.isGeneratingPassword = false;
 	$rootScope.selectedShop = window.selectedShop;
+	$rootScope.newsletter_subscription = false;
 
 	// @HeadsUp! selectedShop variable was declared in the ShopOwnerController using JavaScript Facade
 	$rootScope.generatePassword = function (){
@@ -46,17 +50,23 @@ app.run(function($rootScope, $http) {
 		}
 	};
 
-	$rootScope.newletterSubscription = function (){
-		var url = '/api/shops/newsletter-subscription/'+$rootScope.selectedUser.id+
-					'?api_token='+window.user.api_token;
-		$http.post(url).then(function (response){
+	$rootScope.newsletterSubscription = function ($event){
+		var checkbox = $event.target;
+		var url = '/api/shops/'+selectedShop.id+'/newsletter-subscription/'+$rootScope.selectedUser.id+
+					'?api_token='+window.user.api_token,
+			data = { newsletter_subscription: checkbox.checked ? true : false },
+			action = checkbox.checked ? "subscribed" : "unsubscribed";
+
+		$http.post(url, data).then(function (response){
 			if( response.data.success == 1 ){
-				window.reBuy.toast(response.data.msg)
+				$rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked ? 1 : 0;
+				window.reBuy.toast("User successfully "+action+" to "+selectedShop.name+" newsletter.");
 			}else{
-				window.reBuy.alert(response.data.msg);
+				window.reBuy.alert("Unable to process your request right now.");
 			}
 		}, function (response){
 			console.warn(response);
+			window.reBuy.alert("Something went wrong. Please try again later. If problem continue to exist, contact admin suppport.");
 		});
 	};
 

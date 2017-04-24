@@ -12,7 +12,7 @@ function ArticleCtrl ($scope, $http, $timeout, $rootScope){
 	};
 
 	$scope.getArticles = function (){
-		var url = '/api/shops/'+selectedShop.id+'/users?api_token='+window.user.api_token;
+		var url = '/api/articles?api_token='+window.user.api_token;
 		$http.get(url).then(function (response){
 			console.log(response);
 			$scope.articles = response.data;
@@ -35,9 +35,9 @@ function ArticleCtrl ($scope, $http, $timeout, $rootScope){
 	};
 
 	$scope.removeArticle = function (index){
-		var customer = $scope.articles[index];
-		var url = '/api/shops/'+selectedShop.id+'/users/'+customer.id+'/remove?api_token='+window.user.api_token;
-		window.$.reBuy.confirm("Are you sure to remove this customer?", function (){
+		var article = $scope.articles[index];
+		var url = '/api/articles/'+article.id+'/remove?api_token='+window.user.api_token;
+		window.$.reBuy.confirm("Are you sure to remove this article?", function (){
 			$http.delete(url).then(function (response){
 				// $scope.articles = response.data;
 				console.log(response);
@@ -55,35 +55,10 @@ function ArticleCtrl ($scope, $http, $timeout, $rootScope){
 		});
 	};
 
-	$scope.generatePassword = function (){
-		if( $scope.hasSelectedArticle ){
-			$http.post('/api/shops/'+selectedShop.id+'/users/sendpassword').then(function (response){
-				console.warn(response);
-			}, function (response){
-				console.warn(response);
-			});
-		}
-	};
-
 	$scope.addNewArticle = function (){
 		$scope.addNew = true;
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
 	};
-
-	$scope.invite = function (){
-		var data = {
-				name: $scope.new_firstName,
-				email: $scope.new_Email
-			},
-			url = '/api/shops/'+selectedShop.id+'/invite?api_token='+window.user.api_token;
-		$http.post(url, data).then(function (response){
-			console.log(response);
-		}, function (response){
-			if( response.data ){
-				window.$.reBuy.showErrors(response.data, $("#add_new"), 8000);
-			}
-		})
-	} 
 
 
 	// init
