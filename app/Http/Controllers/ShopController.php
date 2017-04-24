@@ -155,4 +155,5 @@ class ShopController extends Controller
         $users =  User::where( ['role' => 'owner'] )->get();
         return $users;
     }
+
 }

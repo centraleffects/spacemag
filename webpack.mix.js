@@ -14,7 +14,8 @@ const { mix } = require('laravel-mix');
 mix.combine([
 	  'resources/assets/password_strength/password_strength.css',
 	  'resources/assets/materialize/css/materialize.css',
-	  'resources/assets/css/font-awesome.css'
+	  'resources/assets/css/font-awesome.css',
+    'resources/assets/css/lib/jquery-ui.css'
     ], 'public/css/vendor.css')
     .combine([
 	  'resources/assets/css/app.css',
@@ -22,7 +23,8 @@ mix.combine([
     ], 'public/css/app.css');
 
 
-mix.js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
+mix.js('resources/assets/js/lib/jquery-ui.js', 'public/js/jquery-ui.js')
+   .js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
    .js('resources/assets/js/app.js', 'public/js/app.js')
    .js('resources/assets/js/main.js', 'public/js/main.js')
    .js('resources/assets/js/admin.js', 'public/js/admin.js');

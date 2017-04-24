@@ -1,6 +1,8 @@
 
-rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http) {
-	
+rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http, $location) {
+	  
+    $scope.currentTab = 'shop';
+
 	  $scope.shops = {};
     $scope.selectedShop = {};
     $scope.selectedShopKey = null;
@@ -9,8 +11,15 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     $scope.currencyOptions = [{'value': 'usd','text' : 'US Dollar'}];
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
     $scope.owners = [];
-    var promise;
+    $scope.categories = [];
+
+    $scope.spots = {};
+    $scope.spots.data = {};
+    $scope.selectedSpot = {};
+    $scope.selectedSpotKey = null;
+
     var vm = this;
+
     $scope.init = function() {
         $timeout(function () {
            vm.updateList();
@@ -42,15 +51,13 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
               vm.materializeInit();
             },500);
         },
-        addShopSpot : function(x,y){
+        addShopSpot : function(){
               
                 var key = Object.keys($scope.shops.data).length;
                     id = parseInt($scope.shops.data[key-1].id) + 1;
-                $scope.shops.data[key] = { name : 'New Shop', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
-                angular.element('#dashleft-sidebar ul li:first-child').click();
-                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+                $scope.shops.data[key] = { name : 'New Shop', id : id, isNew : true };
                 $timeout(function () {
-                  angular.element('#dashleft-sidebar ul li#sh' + id).click();
+                 angular.element('#sh'+id).click();
                 },500);
         },
         cancelSelectedIfNew: function(){
@@ -109,7 +116,109 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                     window.reBuy.toast('ERROR: Unable to delete the selected shop.');
                 });
             });
+        },
+
+        viewTab: function(tab){
+          if(!tab){
+            $scope.currentTab = 'shop';
+          }else{
+            $scope.currentTab = tab;
+          }
+          
+        },
+
+        addSaleSpot : function(x,y){
+                console.log(x,y);
+                if(Object.keys($scope.spots.data).length){
+                    var key = Object.keys($scope.spots.data).length;
+                        id = parseInt($scope.spots.data[key-1].id) + 1;
+                  }else{
+                     var key = 0, id = 1;
+                  }
+                
+                $scope.spots.data[key] = { name : 'New Spot', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
+                if(key==0){
+                  $scope.selectedSpot = $scope.spots.data[key];
+                  $scope.selectedSpotKey = 0;
+                }
+
+                angular.element('#dashleft-sidebar #salespot ul li:first-child').click();
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+               
+
+                $timeout(function () {
+                  angular.element('#dashleft-sidebar #salespot  ul li#sp' + id).click();
+                },200);
+        },
+
+        viewSpot : function(key,value){
+
+            $scope.selectedSpotKey = key;
+            $scope.selectedSpot = value;
+            if(value.id){
+              location.hash = '#!/' + value.id;
+            }else{
+              location.hash = '#!/';
+            }
+            
+            vm.materializeInit();
+            $timeout(function () {
+              vm.materializeInit();
+              angular.element('.shopspot').removeClass('green');
+              angular.element('#spt'+value.id).addClass('green');
+            },500);
+        },
+
+        doDrag : function($this){
+            console.log($this);
+            angular.element('.panzoom').panzoom({ disableZoom : true });
         }
+    }
+
+    $scope.bindEvents = function(){
+        (function($) {
+
+              var $section = $('#mapsection').first(),
+                  $panzoom = $section.find('.panzoom');
+                  $panzoom.panzoom();
+
+              angular.element('#spot-panzoom').dblclick(function(e) {
+
+                 var parentOffset = $(this).offset(); 
+                 var relX = (e.pageX - parentOffset.left) - 12;
+                 var relY = (e.pageY - parentOffset.top) - 12;
+
+                 $scope.events.addSaleSpot(relX,relY);
+
+              });
+
+              angular.element('body')
+                    .on('mouseover click', '.shopspot', function(e){
+                         var $this = angular.element(this);
+                            $panzoom.panzoom("disable");
+                            $(this).css('cursor','pointer');
+                            $(this).resizable();
+                            $(this).draggable();
+                      })
+                    .on('mousedown', '.panzoom', function(e){
+                        $timeout(function () {
+                            $panzoom.panzoom("enable");
+                            $('.shopspot').draggable();
+                         },500);
+                      })
+                    .on('mouseout', '.shopspot', function(e){
+
+                      })
+                    .on('click', '.panzoom', function(e){
+
+                      })
+
+              //@TODO: should use $watch to handle model changes
+              angular.element('input[name="name"]').keyup(function(){
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+              });
+
+        })(jQuery);
     }
 
     vm.updateList = function(){
@@ -135,5 +244,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
         angular.element('select').material_select();
     }
 
+
     $scope.init();
+    $scope.bindEvents();
 });

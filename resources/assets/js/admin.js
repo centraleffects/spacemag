@@ -2,7 +2,7 @@
   JS 
 */
 
-window.rebuyApp = angular.module('rebuy',[]);
+window.rebuyApp = angular.module('rebuy', []);
 
 window.rebuyApp.config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;

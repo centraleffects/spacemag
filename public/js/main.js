@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -9266,7 +9266,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function ArticleCtrl($scope, $http, $timeout, $rootScope) {
@@ -9363,7 +9363,7 @@ app.controller('ArticleController', ArticleCtrl);
 
 /***/ }),
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, exports) {
 
 function ClientCtrl($scope, $http, $timeout, $rootScope) {
@@ -9423,7 +9423,7 @@ app.controller('ClientController', ClientCtrl);
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function CustomerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9548,14 +9548,14 @@ app.controller('CustomerController', CustomerCtrl);
 
 /***/ }),
 
-/***/ 15:
+/***/ 16:
 /***/ (function(module, exports) {
 
 app.controller('dashboardController', function ($scope, $http) {});
 
 /***/ }),
 
-/***/ 16:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {function WorkerCtrl($scope, $http, $timeout, $rootScope) {
@@ -9635,24 +9635,24 @@ app.controller('WorkerController', WorkerCtrl);
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(5);
+module.exports = __webpack_require__(6);
 
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /***/ (function(module, exports, __webpack_require__) {
 
 window.app = angular.module('rebuy', []);
 
+__webpack_require__(16);
 __webpack_require__(15);
 __webpack_require__(14);
+__webpack_require__(17);
 __webpack_require__(13);
-__webpack_require__(16);
-__webpack_require__(12);
 
 /* below is shared between all controllers*/
 app.run(function ($rootScope, $http) {
