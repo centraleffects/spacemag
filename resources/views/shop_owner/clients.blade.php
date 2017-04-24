@@ -76,7 +76,7 @@
 						</div>
 						<div class="col">
 							<p>
-								<input type="checkbox" class="newsletter-subscription" ng-model="newsletter_subscription" ng-click="newsletterSubscription($event)" id="newsletter_subscription" />
+								<input type="checkbox" class="newsletter-subscription" ng-model="selectedUser.pivot.newsletter_subscribed" ng-click="newsletterSubscription($event)" id="newsletter_subscription" />
 								<label for="newsletter_subscription">Enable Newsletter</label>
 							</p>
 						</div>

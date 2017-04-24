@@ -2,6 +2,7 @@ window.app = angular.module('rebuy', []);
 
 
 require('./services/shopowner/customerServices');
+require('./services/shopowner/articleServices');
 
 require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customersController');
@@ -10,7 +11,7 @@ require('./controllers/shopowner/workersController');
 require('./controllers/shopowner/articlesController');
 
 /* below is shared between all controllers*/
-app.run(function($rootScope, $http) {
+app.run(function($rootScope, $http, $timeout) {
 	$rootScope.selectedUser = null;
 	$rootScope.hasSelectedUser = false;
 	$rootScope.isGeneratingPassword = false;
@@ -51,18 +52,24 @@ app.run(function($rootScope, $http) {
 	};
 
 	$rootScope.newsletterSubscription = function ($event){
-		var checkbox = $event.target;
-		var url = '/api/shops/'+selectedShop.id+'/newsletter-subscription/'+$rootScope.selectedUser.id+
+		var checkbox = $event.target,
+			value = checkbox.checked, // let's do the reverse (if checkbox is checked, that means the user wants to uncheck it)
+			url = '/api/shops/'+selectedShop.id+'/newsletter-subscription/'+$rootScope.selectedUser.id+
 					'?api_token='+window.user.api_token,
-			data = { newsletter_subscription: checkbox.checked ? true : false },
+			data = { newsletter_subscription: value },
 			action = checkbox.checked ? "subscribed" : "unsubscribed";
+
+		// trigger checkbox
+		
 
 		$http.post(url, data).then(function (response){
 			if( response.data.success == 1 ){
-				$rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked ? 1 : 0;
-				window.reBuy.toast("User successfully "+action+" to "+selectedShop.name+" newsletter.");
+				$rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked;
+				window.reBuy.toast(response.data.msg);
 			}else{
-				window.reBuy.alert("Unable to process your request right now.");
+				// reset checkbox toggle
+				$rootScope.newsletter_subscribed = checkbox.checked ? false : true;
+				window.reBuy.alert(response.data.msg);
 			}
 		}, function (response){
 			console.warn(response);
@@ -70,4 +77,20 @@ app.run(function($rootScope, $http) {
 		});
 	};
 
+	/** @usage: the customService is actually customService.customList() function **/
+	$rootScope.updateList = function ($scope, customService, resourceList){
+ 
+		customService().then(function(response){
+			$scope[resourceList] = response.data;
+		});
+
+		$timeout(function () {
+			materializeInit();
+		},1000);
+	}
 });
+
+
+materializeInit = function (){
+	Materialize.updateTextFields();
+}

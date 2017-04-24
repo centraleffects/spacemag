@@ -23,7 +23,7 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 		$scope.selectedUser = $scope.clients[index];
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
-		$rootScope.newsletter_subscription = $rootScope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
+		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
 		Materialize.updateTextFields();
 	};
 

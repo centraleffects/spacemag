@@ -42,10 +42,6 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    // public function newsletterSubscriptions(){
-    //     return $this->hasMany('App\ShopNewsletterSubscription', 'user_id');
-    // }
-
     /**
      * returns the articles that this user has created.
      */

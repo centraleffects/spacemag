@@ -6,7 +6,7 @@ rebuyApp.controller('adminSpotController', function($scope, shopService, $timeou
     $scope.selectedShopKey = null;
 
     $scope.spots = {};
-     $scope.spots.data = {};
+    $scope.spots.data = {};
     $scope.selectedSpot = {};
     $scope.selectedSpotKey = null;
 

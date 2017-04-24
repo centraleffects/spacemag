@@ -5,27 +5,11 @@
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Articles</h5>
 			<ul class="collection">
-				<li class="collection-item green lighten-2 white-text-important" ng-repeat="x in articles" ng-click="viewArticle($index)">
+				<li class="collection-item lighten-2 white-text-important" ng-repeat="x in articles" ng-click="viewArticle($index)">
 					@component('layouts._partials.dragicon')
 						@slot('style') fill-white @endslot
 					@endcomponent
 					<span>@{{ x.name }}</span>
-					<a href="#!" class="right @{{ x.color }}-text" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-
-			    <li class="collection-item purple lighten-2 white-text-important">
-					@component('layouts._partials.dragicon')
-						@slot('style') fill-white @endslot
-					@endcomponent
-					<span>Ice Skating outfits</span>
-					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-
-			    <li class="collection-item red lighten-2 white-text-important">
-					@component('layouts._partials.dragicon')
-						@slot('style') fill-white @endslot
-					@endcomponent
-					<span>Warm Jackets</span>
 					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>

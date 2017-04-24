@@ -18,11 +18,11 @@ class Shop extends Model
      * returns the Owner of this Shop
      */
     public function owner(){
-    	return $this->belongsTo('App\User');
+    	return $this->belongsTo('App\User', 'user_id');
     }  
 
     /**
-     * returns the list of Workers in this Shop
+     * returns the list of customers/clients in this Shop
      */
     public function users(){
         return $this->belongsToMany('App\User')

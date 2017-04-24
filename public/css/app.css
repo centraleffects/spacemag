@@ -118,7 +118,7 @@ main {
 }
 
 /* cards */
-/*.close-card:hover {
+.close-card:hover {
     cursor: pointer;
     border-color: transparent;
     cursor: pointer;
@@ -139,7 +139,7 @@ main {
     webkit-transition: border 200ms,box-shadow 200ms,color 200ms;
     -moz-transition: border 200ms,box-shadow 200ms,color 200ms;
     transition: border 200ms,box-shadow 200ms,color 200ms;
-}*/
+}
 
 /* buttons */
 button.close {
@@ -608,6 +608,6 @@ li.collection-item.active a {
 #salespot .collapsible-body{
 	border-bottom: 0 !important;
 }
-.card{
-	margin:0;
-}
+// .card{
+// 	margin:0;
+// }

@@ -12,11 +12,10 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 	$scope.isDisabled = false;
 
 	$scope.init = function (){
-		$timeout(function () {
-           updateList();
-        },1500);
-
 		$scope.customers = customerServices.customerList();
+		$timeout(function () {
+           $rootScope.updateList($scope, customerServices.customerList, "customers");
+        },1500);
 	}
 
 	$scope.$watch('customers', function() {	    
@@ -33,8 +32,8 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		$scope.selectedUser = $scope.customers[index];
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
-		$rootScope.newsletter_subscription = $rootScope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
-		Materialize.updateTextFields();
+		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
+		materializeInit();
 	}
 
 	$scope.removeCustomer = function (index){
@@ -42,8 +41,6 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		var url = '/api/shops/'+selectedShop.id+'/users/'+customer.id+'/remove?api_token='+window.user.api_token;
 		window.reBuy.confirm("Are you sure to remove this customer?", function (){
 			$http.delete(url).then(function (response){
-				// $scope.customers = response.data;
-				console.log(response);
 				if( response.data.success == 1 ){
 					$scope.selectedUser = null;
 					$scope.customers.splice(index);
@@ -59,6 +56,7 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		});
 	}
 
+	// checks if the resource is empty
 	$scope.emptyList = function (){
 		if( $scope.customers.length > 0 )
 			return false;
@@ -108,28 +106,25 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		});
 	}
 
-	updateList = function(){
+	// updateList = function(){
  
-		customerServices.customerList().then(function(response){
-			$scope.customers = response.data;
-		});
-		// $timeout(function () {
-		// 	customerServices.shopList().then(function(response) {
-		// 		$scope.shops = response.data;
-		// 		$scope.selectedShop = $scope.shops.data[0];
-		// 		$scope.selectedShopKey = 0;
-		// 		});
-		// 	}, 500);
+	// 	customerServices.customerList().then(function(response){
+	// 		$scope.customers = response.data;
+	// 	});
+	// 	// $timeout(function () {
+	// 	// 	customerServices.shopList().then(function(response) {
+	// 	// 		$scope.shops = response.data;
+	// 	// 		$scope.selectedShop = $scope.shops.data[0];
+	// 	// 		$scope.selectedShopKey = 0;
+	// 	// 		});
+	// 	// 	}, 500);
 
-		$timeout(function () {
-			materializeInit();
-		},1000);
+	// 	$timeout(function () {
+	// 		materializeInit();
+	// 	},1000);
             
-    } 
+ //    } 
 
-    materializeInit = function(){
-        Materialize.updateTextFields();
-    } 
 
 	// init
 	$scope.init();

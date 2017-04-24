@@ -21,7 +21,7 @@ class CreateShopUserTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('newsletter_subscribed')->default(0);
+            $table->boolean('newsletter_subscribed')->default(false);
 
             $table->timestamps();
             $table->softDeletes();

@@ -203,11 +203,19 @@ class ShopOwnerController extends Controller
     }
 
     public function toggleNewsletterSubscription(Shop $shop, User $user){
-        $val = Input::get('newsletter_subscription') ? 1 : 0;
+        $val = Input::get('newsletter_subscription');
         $timestamp = $user->shops()->find($shop->id)->pivot->created_at; // gets id of pivot table for shops and users
         $res = $user->shops()->newPivotStatementForId($shop->id)->where('created_at', '=', $timestamp)
             ->update([ 'newsletter_subscribed' => $val ]);
 
-        return ['success' => $res ? 1 : 0];
+        $action = $val ? "subscribed" : "unsubscribed";
+
+        if( $res ){
+            $msg = ucfirst($user->first_name)." is now {$action} to {$shop->name} newsletter.";
+        }else{
+            $msg = "No changes have been made.";
+        }
+
+        return ['success' => $res ? 1 : 0, 'msg' => $msg];
     }
 }

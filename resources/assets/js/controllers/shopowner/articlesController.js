@@ -1,4 +1,4 @@
-function ArticleCtrl ($scope, $http, $timeout, $rootScope){
+function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 	$scope.selectedShop = selectedShop;
 	$scope.articles = [];
 	$scope.hasSelectedArticle = false;
@@ -8,25 +8,30 @@ function ArticleCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.new_Email = '';
 
 	$scope.init = function (){
-		$scope.getArticles();
-	};
+		$timeout(function () {
+           $rootScope.updateList($scope, articleServices.articleList, "articles");
+        },1500);
 
-	$scope.getArticles = function (){
-		var url = '/api/articles?api_token='+window.user.api_token;
-		$http.get(url).then(function (response){
-			console.log(response);
-			$scope.articles = response.data;
+		// $scope.articles = articleServices.articleList();
+	}
 
-			if( $scope.articles.length > 0 ){
-				$rootScope.listIsEmpty = false;
-			}else{
-				$rootScope.listIsEmpty = true;
-			}
+	$scope.$watch('articles', function() {	    
+        if( $scope.articles.length > 0 ){
+			$scope.listIsEmpty = false;
+		}else{
+			$scope.listIsEmpty = true;
+		}
+        console.log('hey, myVar has changed!');
+    });
 
-		}, function (response){
-			console.warn(response);
-		});
-	};
+	$scope.$watch('articles', function() {	    
+        if( $scope.articles.length > 0 ){
+			$scope.listIsEmpty = false;
+		}else{
+			$scope.listIsEmpty = true;
+		}
+        console.log('hey, myVar has changed!');
+    });
 
 	$scope.viewArticle = function (index){
 		$scope.hasSelectedArticle = true;

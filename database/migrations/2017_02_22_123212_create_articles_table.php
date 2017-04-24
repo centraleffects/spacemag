@@ -21,8 +21,8 @@ class CreateArticlesTable extends Migration
             $table->string('name')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('quantity', 5, 2)->nullable();
-            $table->smallInteger('sold_in_bulk')->default(0);
-            $table->smallInteger('sold_in_pieces')->default(0);
+            $table->boolean('sold_in_bulk')->default(0);
+            $table->boolean('sold_in_pieces')->default(0);
             $table->string('unit')->nullable();
             $table->string('type')->nullable();
 
