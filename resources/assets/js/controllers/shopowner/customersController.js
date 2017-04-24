@@ -1,10 +1,10 @@
-function CustomerCtrl ($scope, $http, $timeout, $rootScope){
-	$scope.customers = [];
+function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
+	$scope.customers = [{}];
 	$scope.addNew = false;
 	$scope.newUser = {
 		first_name: '',
 		email: ''
-	};
+	}
 
 	$scope.selectedUser = null;
 	$scope.hasSelectedUser = false;
@@ -12,19 +12,12 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.isDisabled = false;
 
 	$scope.init = function (){
-		$scope.getCustomers();
-	};
+		$timeout(function () {
+           updateList();
+        },1500);
 
-	$scope.getCustomers = function (){
-		var url = '/api/shops/'+selectedShop.id+'/users?api_token='+window.user.api_token;
-		$http.get(url).then(function (response){
-			console.log(response);
-			$scope.customers = response.data;
-
-		}, function (response){
-			console.warn(response);
-		});
-	};
+		$scope.customers = customerServices.customerList();
+	}
 
 	$scope.$watch('customers', function() {	    
         if( $scope.customers.length > 0 ){
@@ -40,8 +33,9 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 		$scope.selectedUser = $scope.customers[index];
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
+		$rootScope.newsletter_subscription = $rootScope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
 		Materialize.updateTextFields();
-	};
+	}
 
 	$scope.removeCustomer = function (index){
 		var customer = $scope.customers[index];
@@ -63,7 +57,7 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 				console.warn(response);
 			});
 		});
-	};
+	}
 
 	$scope.emptyList = function (){
 		if( $scope.customers.length > 0 )
@@ -75,13 +69,13 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 		$scope.addNew = true;
 		$scope.resetUser();
 		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
-	};
+	}
 
 	$scope.resetUser = function (){
 		$scope.newUser = {
 			first_name: '',
 			email: ''
-		};
+		}
 	}
 
 	$scope.invite = function (btn){
@@ -112,8 +106,30 @@ function CustomerCtrl ($scope, $http, $timeout, $rootScope){
 		}).then(function (){
 			$scope.isDisabled = false;
 		});
-	} 
+	}
 
+	updateList = function(){
+ 
+		customerServices.customerList().then(function(response){
+			$scope.customers = response.data;
+		});
+		// $timeout(function () {
+		// 	customerServices.shopList().then(function(response) {
+		// 		$scope.shops = response.data;
+		// 		$scope.selectedShop = $scope.shops.data[0];
+		// 		$scope.selectedShopKey = 0;
+		// 		});
+		// 	}, 500);
+
+		$timeout(function () {
+			materializeInit();
+		},1000);
+            
+    } 
+
+    materializeInit = function(){
+        Materialize.updateTextFields();
+    } 
 
 	// init
 	$scope.init();

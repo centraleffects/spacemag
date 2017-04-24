@@ -19,7 +19,7 @@ class ShopOwnerController extends Controller
     public function includeUserOnJS()
     {
         if( !session()->has("selected_shop") && auth()->check() ){
-            session()->put("selected_shop", auth()->user()->shops()->first());
+            session()->put("selected_shop", auth()->user()->ownedShops()->first());
         }
 
         $shop = session()->get('selected_shop');
@@ -200,5 +200,14 @@ class ShopOwnerController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function toggleNewsletterSubscription(Shop $shop, User $user){
+        $val = Input::get('newsletter_subscription') ? 1 : 0;
+        $timestamp = $user->shops()->find($shop->id)->pivot->created_at; // gets id of pivot table for shops and users
+        $res = $user->shops()->newPivotStatementForId($shop->id)->where('created_at', '=', $timestamp)
+            ->update([ 'newsletter_subscribed' => $val ]);
+
+        return ['success' => $res ? 1 : 0];
     }
 }

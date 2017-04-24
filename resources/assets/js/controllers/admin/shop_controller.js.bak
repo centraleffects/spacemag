@@ -1,32 +1,34 @@
 
 rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http) {
 	
-	$scope.shops = {};
+	  $scope.shops = {};
     $scope.selectedShop = {};
     $scope.selectedShopKey = null;
 
     $scope.countryOptions = [{'value': 'swe','text' : 'Sweden'}];
     $scope.currencyOptions = [{'value': 'usd','text' : 'US Dollar'}];
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
-    $scope.owners = [];
+    $scope.owners = {};
+
+    $scope.dump = {};
 
     var vm = this;
 
     $scope.init = function() {
         $timeout(function () {
            updateList();
-        },1500);
-
-        $scope.bindEvents();
+        },1000);
       }
 
     $scope.events = {
-        viewShop : function(key,value){
-
-            $scope.selectedShopKey = key;
-            $scope.selectedShop = value;
-            if(value.id){
-              location.hash = '#!/' + value.id;
+        viewShop : function($this){
+            shop = $this.shop;
+            angular.element('.list-shops').removeClass('active');
+            angular.element('#sh'+shop.id).addClass('active');
+            $scope.selectedShopKey = $this.key;
+            $scope.selectedShop = shop;
+            if(shop.id){
+              location.hash = '#!/' + shop.id;
             }else{
               location.hash = '#!/';
             }
@@ -34,8 +36,6 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
             materializeInit();
             $timeout(function () {
               materializeInit();
-              angular.element('.shopspot').removeClass('green');
-              angular.element('#sp'+value.id).addClass('green');
             },500);
         },
         addShopSpot : function(x,y){
@@ -69,6 +69,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
           }
         },
         updateSelected : function(){
+
             var url = '/api/shops/update';
             $http({
               method: 'POST',
@@ -140,28 +141,36 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
  
             shopService.ownerList().then(function(response){
              $scope.owners =  [];
-              for (var k in response.data){
-                $scope.owners.push({ id : response.data[k].id, name : response.data[k].first_name + ' ' + response.data[k].last_name });
+              for (var k in angular.fromJson(response.data)){
+                $scope.$apply(function(){
+                  $scope.owners.push({ id : response.data[k].id, name : response.data[k].first_name + ' ' + response.data[k].last_name });
+                });
               }
+              $timeout(function () {
+                 $scope.$apply(function(){
+                    $scope.dump = JSON.stringify($scope.owners);
+                    console.log($scope.dump);
+                });
+              },2000);
             });
 
             $timeout(function () {
               shopService.shopList().then(function(response) {
-                $scope.shops = response.data;
+                $scope.shops = angular.fromJson(response.data);
                 $scope.selectedShop = $scope.shops.data[0];
                 $scope.selectedShopKey = 0;
               });
-            },500);
+            },100);
             $timeout(function () {
               materializeInit();
             },1000);
             
-    }
-
+        }
     materializeInit = function(){
         Materialize.updateTextFields();
         angular.element('select').material_select();
     } 
 
-    $scope.init();
+   $scope.init();
+   $scope.bindEvents();
 });

@@ -8,11 +8,10 @@
 .buttons { margin: 40px 0 0; }
 .shopspot{
 	background: red;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     position: absolute;
-    z-index: 99;
+    z-index: 999;
 }
 #info-content textarea{
 	min-height: 300px;
@@ -25,7 +24,4 @@
 }
 #salespot .collapsible-body{
 	border-bottom: 0 !important;
-}
-.card{
-	margin:0;
 }
