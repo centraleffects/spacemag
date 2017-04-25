@@ -11,6 +11,7 @@ app.controller('dashboardController', function($scope, shopService, $timeout, $t
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
     $scope.owners = [];
     $scope.categories = [];
+    $scope.spotStatusOptions = [{'value': 'rebuilding','text' : 'Rebuilding'},{'value': 'painting','text' : 'Painting'},{'value': 'on repair','text' : 'On Repair'}];;
 
     $scope.spots = {};
     $scope.spots.data = {};
