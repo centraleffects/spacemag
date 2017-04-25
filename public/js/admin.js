@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 29);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -11475,7 +11475,7 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
         vm.materializeInit();
       }, 500);
     },
-    addShopSpot: function addShopSpot() {
+    addShop: function addShop() {
 
       var key = Object.keys($scope.shops.data).length;
       id = parseInt($scope.shops.data[key - 1].id) + 1;
@@ -11638,16 +11638,22 @@ rebuyApp.controller('adminShopController', function ($scope, shopService, $timeo
     shopService.ownerList().then(function (ownerList) {
       $scope.owners = [];
       Object.keys(ownerList).forEach(function (k) {
-        $scope.owners.push({ id: ownerList[k].id, name: ownerList[k].first_name + ' ' + ownerList[k].last_name });
+        $scope.owners.push({ id: ownerList[k].id, name: ownerList[k].first_name + ' ' + ownerList[k].last_name + ' (' + ownerList[k].email + ')' });
       });
       vm.materializeInit();
     });
 
     shopService.shopList().then(function (shopList) {
       $scope.shops = shopList;
-      $scope.selectedShop = $scope.shops.data[0];
-      $scope.selectedShopKey = 0;
-      vm.materializeInit();
+      if ($scope.shops) {
+        $scope.selectedShop = $scope.shops.data[0];
+        $scope.selectedShopKey = 0;
+      } else {
+        $scope.events.addShop();
+      }
+      $timeout(function () {
+        vm.materializeInit();
+      }, 1000);
     });
   };
 
@@ -13643,7 +13649,8 @@ rebuyApp.service('userService', function ($http, $timeout) {
 /* 26 */,
 /* 27 */,
 /* 28 */,
-/* 29 */
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(4);

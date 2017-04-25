@@ -505,8 +505,6 @@ svg.itemRow-dragIcon{
 }
 #info-nav{
 	border-bottom: 1px solid #ccc;
-	margin-left: -7px;
-	margin-right: -7px;
 	padding: 15px;
 }
 
@@ -608,4 +606,8 @@ li.collection-item.active a {
 }
 #salespot .collapsible-body{
 	border-bottom: 0 !important;
+}
+.shopinfo .collection .collection-item.active {
+    background-color: #fff;
+    color:rgba(0, 0, 0, 0.87);
 }
