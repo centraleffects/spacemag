@@ -43,6 +43,11 @@
 
                                     @if( auth()->user()->isOwner() )
                                         <li>
+                                            <a href="{{ url('shop') }}" class="btn green waves-effect  waves-light">
+                                                Dashboard
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="{{ url('shop/customers') }}" class="btn green waves-effect  waves-light">
                                                 Customers
                                             </a>
