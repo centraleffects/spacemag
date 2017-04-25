@@ -21,7 +21,7 @@
 			</div>
 			<div class="col s6">
 
-					<div class="card hoverable">
+					<div class="card hoverable shopinfo">
 						<div class="row" id="info-nav">
 							<input type="text" name="shop_name" placeholder="Shop name"  ng-model="selectedShop.name">
 						</div>
@@ -63,6 +63,22 @@
 							</button>
 						</div>
 					</div>
+
+					<div class="card hoverable">
+						<div class="row card-content">
+							<span class="card-title">Login as Owner</span>
+							<button class="btn waves-effect waves-light blue" ng-click="events.viewTab('salespot')">
+									Click Here
+								</button>
+						</div>
+						<!-- <div class="card-action row">
+							<div class="col">
+								<button class="btn waves-effect waves-light blue" ng-click="events.viewTab('salespot')">
+									Click Here
+								</button>
+							</div>
+						</div> -->
+					</div>	
 
 					<div class="card hoverable">
 						<div class="row card-content">
