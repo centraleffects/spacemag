@@ -51,7 +51,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
               vm.materializeInit();
             },500);
         },
-        addShopSpot : function(){
+        addShop : function(){
               
                 var key = Object.keys($scope.shops.data).length;
                     id = parseInt($scope.shops.data[key-1].id) + 1;
@@ -226,16 +226,22 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
           shopService.ownerList().then(function(ownerList){
              $scope.owners =  [];
               Object.keys(ownerList).forEach(function(k) {
-                $scope.owners.push({ id : ownerList[k].id, name : ownerList[k].first_name + ' ' + ownerList[k].last_name });
+                $scope.owners.push({ id : ownerList[k].id, name : ownerList[k].first_name + ' ' + ownerList[k].last_name + ' (' +  ownerList[k].email+ ')' });
               });
               vm.materializeInit();
             });
 
           shopService.shopList().then(function(shopList) {
               $scope.shops = shopList;
-              $scope.selectedShop = $scope.shops.data[0];
-              $scope.selectedShopKey = 0;
-              vm.materializeInit();
+              if($scope.shops){
+                $scope.selectedShop = $scope.shops.data[0];
+                $scope.selectedShopKey = 0;
+              }else{
+                $scope.events.addShop();
+              }
+              $timeout(function () {
+                vm.materializeInit();
+              },1000);
           });
     }
 
