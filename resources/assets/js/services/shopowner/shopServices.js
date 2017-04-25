@@ -1,5 +1,5 @@
 
- rebuyApp.factory('shopService', function($http, $timeout){
+ app.factory('shopService', function($http, $timeout){
     var promiseShopList, promiseOwnerList, promiseCategoryList;
     var shopService = {
       shopList: function() {
@@ -14,16 +14,6 @@
         // Return the promise to the controller
         return promiseShopList;
       },
-      ownerList : function(){
-        if ( !promiseOwnerList ) {
-          promiseOwnerList = $http.get('/api/shops/owners?api_token='+window.adminJS.me.api_token)
-             .then(function(response) {
-               return response.data;
-              });
-        }
-        return promiseOwnerList;
-      },
-
       categoryList : function(){
         if ( !promiseCategoryList ) {
           promiseCategoryList = $http.get('/api/shops/categories?api_token='+window.adminJS.me.api_token)

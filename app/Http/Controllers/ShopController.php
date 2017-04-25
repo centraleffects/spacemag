@@ -160,4 +160,7 @@ class ShopController extends Controller
         return $users;
     }
 
+    public function loggedProfile(){
+        return \Auth::user();
+    }
 }
