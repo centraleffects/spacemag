@@ -32,6 +32,7 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('owners', 'ShopController@listOwners');
 	Route::get('{shop}', 'ShopController@show');
 	Route::get('{shop}/users', 'ShopController@users');
+	Route::get('{shop}/workers', 'ShopController@workers');
 
 	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
 	
@@ -39,7 +40,10 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::post('delete', 'ShopController@destroy');
 	Route::post('update', 'ShopController@update');
 	Route::post('{shop}/users/{user}/passwordreset', 'ShopOwnerController@generatePassword');
+	
 	Route::post('{shop}/invite', 'ShopOwnerController@invite');
+	Route::post('{shop}/workers/invite', 'ShopOwnerController@inviteWorker');
+
 	Route::post('{shop}/newsletter-subscription/{user}', 'ShopOwnerController@toggleNewsletterSubscription');
 });
 

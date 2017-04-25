@@ -56,8 +56,9 @@
 				</div>
 				<div class="card-action row">
 					<div class="col">
-						<button class="btn waves-effect waves-light green" title="Generate Password" ng-click="generatePassword()" ng-disabled="isGeneratingPassword">
-							<i class="fa fa-random"></i> Generate Password
+						<button class="btn waves-effect waves-light orange darken-3" title="Generate Password" ng-click="generatePassword()" ng-disabled="isGeneratingPassword">
+							<i class="fa fa-random"></i>
+							<span class="hide-on-small-only"> Generate Password</span>
 						</button>
 					</div>
 				</div>

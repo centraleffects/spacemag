@@ -8,9 +8,9 @@
 				@slot('search_name') workers @endslot
 			@endcomponent
 			<ul class="collection">
-				<li class="collection-item" ng-repeat="x in workers | filter:search">
+				<li class="collection-item" ng-repeat="x in workers | filter:search" ng-click="viewWorker($index)">
 					@include('layouts._partials.dragicon')
-					<span ng-click="viewWorker($index)">
+					<span>
 						@{{ x.first_name+' '+x.last_name }}
 					</span>
 					<a class="right" title="Delete" ng-click="removeWorker($index)">
@@ -34,23 +34,23 @@
 	@endslot
 	@slot('center')
 		<div id="" class="row">
-			<div class="card hoverable" ng-show="hasSelectedWorker"><!-- Client's Details -->
+			<div class="card hoverable" ng-show="hasSelectedUser"><!-- Client's Details -->
 				<div class="card-content">
 					<span class="card-title">
 						Shop Worker's Details 
 						@component('layouts._partials.close_card')
-							hasSelectedWorker=false;
+							hasSelectedUser=false;
 						@endcomponent
 					</span>
 					<p></p>
 					<div class="worker-details">
 						<div class="input-field">
-							<input type="text" name="name" value="@{{ selectedWorker.first_name+' '+selectedWorker.last_name }}" />
+							<input type="text" name="name" value="@{{ selectedUser.first_name+' '+selectedUser.last_name }}" />
 							<label>Name</label>
 						</div>
 
 						<div class="input-field">
-							<input type="email" name="email" class="validate" value="@{{ selectedWorker.email }}">
+							<input type="email" name="email" class="validate" value="@{{ selectedUser.email }}">
 							<label>Email</label>
 						</div>
 
@@ -58,7 +58,7 @@
 				</div>
 				<div class="card-action row">
 					<div class="col s12 m6 l6">
-						<button class="btn waves-effect waves-light orange darken-3" title="Generate Password">
+						<button class="btn waves-effect waves-light orange darken-3" title="Generate Password" ng-click="generatePassword()" ng-disabled="isGeneratingPassword">
 							<i class="fa fa-random"></i>
 							<span class="hide-on-small-only"> Generate Password</span>
 						</button>
@@ -89,18 +89,18 @@
 						Invite @include('layouts._partials.close_card')
 					</div>
 					<div class="input-field">
-						<input type="text" name="name" />
+						<input type="text" name="name" class="validate" ng-model="newUser.first_name" required  />
 						<label for="name">Name of Shop Worker</label>
 					</div>
 					<div class="input-field">
-						<input type="email" name="email" />
+						<input type="email" name="email" class="validate" ng-model="newUser.email" required />
 						<label>Email Address</label>
 					</div>
 				</div>
 				<div class="card-action">
-					<button class="btn waves-effect waves-light green">
-						<i class="fa fa-send"></i>
-						Send invitation link/Password
+					<button class="btn waves-effect waves-light green" ng-click="invite()" ng-disabled="isDisabled">
+						<i class="glyphicon glyphicon-refresh spinning" ng-show="loading"></i>
+						<i class="fa fa-send" ng-show="!loading"></i> Send invitation link/password
 					</button>
 				</div>
 			</div>

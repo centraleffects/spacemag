@@ -3,6 +3,7 @@ window.app = angular.module('rebuy', []);
 
 require('./services/shopowner/customerServices');
 require('./services/shopowner/articleServices');
+require('./services/shopowner/workerServices');
 
 require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customersController');

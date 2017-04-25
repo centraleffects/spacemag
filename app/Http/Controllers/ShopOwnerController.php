@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use JavaScript;
 use Mail;
 
@@ -12,6 +13,7 @@ use App\User;
 use App\Mail\PasswordReset;
 use App\Http\Requests\ShopInvitationRequest;
 use App\Mail\ShopInvitation;
+use App\Mail\ShopWorkerInvitation;
 
 class ShopOwnerController extends Controller
 {
@@ -93,10 +95,6 @@ class ShopOwnerController extends Controller
         return ['success' => 0];
     }
 
-    public function addWorker(){
-        
-    }
-
     public function generatePassword(Shop $shop, User $user){
         // verify if requested user is attached to the current shop
         if( $shop->users()->find($user->id) != null ){
@@ -117,12 +115,15 @@ class ShopOwnerController extends Controller
         return ['success' => 0, 'msg' => 'The specified user is not a customer of this shop.'];
     }
 
-    public function invite(Shop $shop, ShopInvitationRequest $request){
+    public function invite(Shop $shop, ShopInvitationRequest $request, $role = "customer"){
         try {
+            $user_classification = $role == 'customer' ? 'subscriber' : 'worker';
+
             $input = Input::all();
 
             $user = User::where('email', '=', $input['email'])->first();
-            // dd($user);
+            $current_user = User::where('api_token', '=', $input['api_token'])->first();
+            
             $password = str_random(8);
 
             if( $user == null ){
@@ -132,33 +133,43 @@ class ShopOwnerController extends Controller
                 $user->password = bcrypt($password);
                 $user->email = $input['email'];
                 $user->api_token = str_random(60);
-                $user->role = 'customer';
+                $user->role = $role;
                 $user->save();
                 $user->plain_password = $password;
             }else{
                 // prevents duplicate of subscribers
                 if( $shop->users()->find($user->id) != null  )
-                    return ['success' => 0, 'msg' => 'This user is already a subscriber of '.$shop->name];
+                    return ['success' => 0, 'msg' => 'This user is already a '.$user_classification.' of '.$shop->name];
 
                 // prevents owner to invite himself
                 if( auth()->user()->email == $input['email'] )
                     return [
                         'success' => 0, 
-                        'msg' => "Sorry, you can't invite yourself to be a subscriber of your own Shop."
+                        'msg' => "Sorry, you can't invite yourself to be a $user_classification of your own Shop."
                     ];
 
             }
 
-            $mail = new ShopInvitation($shop, $user);
+            if( $role == 'customer' ){
+                $mail = new ShopInvitation($shop, $user);
+                $msg = $user->email." has been invited to subscribe to ".$shop->name;
+            }else{
+                $mail = new ShopWorkerInvitation($shop, $user, $current_user);
+                $msg = $user->email." has been invited to be a part of ".$shop->name.' family.';
+            }
 
             Mail::to($input['email'])->send($mail);
 
-            return ['success' => 1];
+            return ['success' => 1, 'msg' => $msg];
 
         } catch (\Exception $e) {
-            dd($e);
-            return ['success' => 0];
+            Log::error($e);
+            return ['success' => 0, 'msg' => "An error occured while processing your request.", 'errors' => $e];
         }
+    }
+
+    public function inviteWorker(Shop $shop, ShopInvitationRequest $request){
+        return $this->invite($shop, $request, "worker");
     }
 
     public function loginAsSomeone(User $user, Request $request){

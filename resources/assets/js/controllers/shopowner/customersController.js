@@ -89,7 +89,7 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 			console.log(response);
 			if( response.data.success == 1 ){
 				$scope.resetUser();
-				window.reBuy.toast(data.email+" has been invited to subscribe to "+selectedShop.name, 8000);
+				window.reBuy.toast(response.data.msg, 8000);
 			}else{
 				if( response.data.msg ){
 					window.reBuy.alert(response.data.msg);
@@ -105,25 +105,6 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 			$scope.isDisabled = false;
 		});
 	}
-
-	// updateList = function(){
- 
-	// 	customerServices.customerList().then(function(response){
-	// 		$scope.customers = response.data;
-	// 	});
-	// 	// $timeout(function () {
-	// 	// 	customerServices.shopList().then(function(response) {
-	// 	// 		$scope.shops = response.data;
-	// 	// 		$scope.selectedShop = $scope.shops.data[0];
-	// 	// 		$scope.selectedShopKey = 0;
-	// 	// 		});
-	// 	// 	}, 500);
-
-	// 	$timeout(function () {
-	// 		materializeInit();
-	// 	},1000);
-            
- //    } 
 
 
 	// init
