@@ -25,5 +25,12 @@
 #salespot .collapsible-body{
 	border-bottom: 0 !important;
 }
+<<<<<<< HEAD
 
 
+=======
+.shopinfo .collection .collection-item.active {
+    background-color: #fff;
+    color:rgba(0, 0, 0, 0.87);
+}
+>>>>>>> 3d5fdbcd004648561a043752b0925baf07d50f9d
