@@ -43,7 +43,6 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	
 	Route::post('{shop}/invite', 'ShopOwnerController@invite');
 	Route::post('{shop}/workers/invite', 'ShopOwnerController@inviteWorker');
-
 	Route::post('{shop}/newsletter-subscription/{user}', 'ShopOwnerController@toggleNewsletterSubscription');
 });
 

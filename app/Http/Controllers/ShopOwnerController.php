@@ -218,7 +218,7 @@ class ShopOwnerController extends Controller
         $timestamp = $user->shops()->find($shop->id)->pivot->created_at; // gets id of pivot table for shops and users
         $res = $user->shops()->newPivotStatementForId($shop->id)->where('created_at', '=', $timestamp)
             ->update([ 'newsletter_subscribed' => $val ]);
-
+            
         $action = $val ? "subscribed" : "unsubscribed";
 
         if( $res ){

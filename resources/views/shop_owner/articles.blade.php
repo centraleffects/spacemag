@@ -10,6 +10,7 @@
 						@slot('style') fill-white @endslot
 					@endcomponent
 					<span>@{{ x.name }}</span>
+
 					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 			</ul>

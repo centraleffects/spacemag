@@ -24,7 +24,7 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
 		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
-		Materialize.updateTextFields();
+		materializeInit();
 	};
 
 	$scope.removeClient = function (index){

@@ -8,7 +8,7 @@
             <i class="material-icons">face</i>
         </a>
     </li>
-    <li ng-controller="adminShopController">
+    <li>
         <a class="btn-floating yellow darken-1 tooltipped waves-effect waves-light" data-position="left" data-delay="50" data-tooltip="New Shop">
             <i class="material-icons">store</i>
         </a>

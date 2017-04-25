@@ -106,6 +106,21 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		});
 	}
 
+	updateList = function(){
+ 
+		customerServices.customerList().then(function(response){
+			$scope.customers = response.data;
+		});
+
+		$timeout(function () {
+			materializeInit();
+		},1000);
+            
+    } 
+
+    materializeInit = function(){
+        Materialize.updateTextFields();
+    } 
 
 	// init
 	$scope.init();

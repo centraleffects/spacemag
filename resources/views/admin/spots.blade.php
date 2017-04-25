@@ -1,53 +1,41 @@
-@component('admin.layouts.app')
-<div ng-controller="adminSpotController" id="spots">
+<div class="row">
+	<div class="col s12 card">
+		<h2><small><a class="waves-effect waves-teal btn-flat green-text" ng-click="events.viewTab()"><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a></small> @{{selectedShop.name}} </h2>
+		
+	</div>
+</div>
+<div class="row">
 	<div class="col s3">
-		<div  class="white" id="dashleft-sidebar" ng-model="shops">
-			<ul class="collapsible" data-collapsible="accordion">
-				<li>
-			      <div class="collapsible-header"><h5><i class="material-icons">arrow_drop_down_circle</i>  Shops - @{{selectedShop.name}}</h5></div>
-			      <div class="collapsible-body">
-			      		<ul class="collection" ng-repeat="(key, shop) in shops.data">
-							<li id="@{{'sh'+ shop.id}}" class="collection-item" ng-click="events.viewShop(key,shop)">
-								<span><a href="">@{{shop.name}}</a></span> 
-								<a href="#">
-									<i class="tiny material-icons">call_made</i>
-								</a>
-							</li>					
-						</ul>
-			      </div>
-			    </li>
-			    <li id="salespot" class="active">
-			      <div class="collapsible-header">
-			      		<h5><i class="material-icons">arrow_drop_down_circle</i>  Spots 
-			      			<span ng-show="selectedSpot.name">-</span> @{{selectedSpot.name}}
-			      		</h5>
-			      </div>
-			      <div class="collapsible-body">
-			      		<ul class="collection" ng-repeat="(key, spot) in spots.data">
-							<li id="@{{'sp'+ spot.id}}" class="collection-item" ng-click="events.viewSpot(key,spot)">
-								<span><a href="">@{{spot.name}}</a></span> 
-								<a href="#">
-									<i class="tiny material-icons">call_made</i>
-								</a>
-							</li>					
-						</ul>
-						<small ng-show="!spots.data[0].name">Nothing here. Add a salespot now for @{{selectedShop.name}}</small>
-			      </div>
-			    </li>
-			</ul>		
-		</div>
+		<div class="card hoverable" ng-model="spots">
+			<div class="row card-content">
+				<span class="card-title">Salespots</span>
+				<div class="collection">
+					<a href="#!" 
+							class="list-spots collection-item" 
+							id="@{{'sh'+ spot.id}}" 
+							ng-repeat="(key, spot) in spots.data" 
+							ng-click="events.viewSpot(this)"
+							ng-bind="spot.name">
+					</a>
+				</div>
+				<small ng-show="!spots.data[0].name">Nothing here. Add a salespot now for @{{selectedShop.name}}</small>
+				<span class="badge right"><a href="#!" class="left waves-effect waves-light btn" ng-click="events.addShopSpot()">New Spot</a></span>
+			</div>
+		</div>		
 	</div>
 	<div class="col s6 map-area-container" id="mapsection">
-		<div class="scrollspy panzoom-parent map-area" id="floorplan-container">
-			<div class="panzoom" id="spot-panzoom" style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" width="2426" height="1121" data-width="2426" data-height="1121"/>
-				<div ng-repeat="(key, spot) in spots.data">
-					<div class="shopspot tooltipped" 
+		<div class="scrollspy panzoom-parent map-area white" id="floorplan-container">
+			<div class="panzoom" id="spot-panzoom" 
+					style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" 
+					width="2426" height="1121" data-width="2426" data-height="1121"/>
+				<div ng-repeat="(key, spot) in spots.data" 
+							class="shopspot tooltipped draggable" 
 							id="@{{'spt'+ spot.id}}" 
 							data-position="bottom" data-delay="50" 
-							ng-show="spot.x_coordinate"
+							ng-show="spots.data"
 							ng-click="events.viewSpot(key,spot);"
-							data-tooltip="@{{spot.name}}" 
-							style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}"></div>
+							data-tooltip="@{{spot.name}}"
+							style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
 				</div>
 			</div>
 		</div>
@@ -96,4 +84,3 @@
 		</div>
 	</div>
 </div>
-@endcomponent

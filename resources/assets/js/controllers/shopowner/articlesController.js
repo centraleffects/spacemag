@@ -11,8 +11,6 @@ function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 		$timeout(function () {
            $rootScope.updateList($scope, articleServices.articleList, "articles");
         },1500);
-
-		// $scope.articles = articleServices.articleList();
 	}
 
 	$scope.$watch('articles', function() {	    
@@ -36,7 +34,7 @@ function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 	$scope.viewArticle = function (index){
 		$scope.hasSelectedArticle = true;
 		$scope.currentlySelectedArticle = $scope.articles[index];
-		Materialize.updateTextFields();
+		materializeInit();
 	};
 
 	$scope.removeArticle = function (index){
