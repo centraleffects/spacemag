@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9274,8 +9274,8 @@ return jQuery;
 
 window.app = angular.module('rebuy', []);
 
+__webpack_require__(23);
 __webpack_require__(22);
-__webpack_require__(35);
 
 __webpack_require__(15);
 __webpack_require__(14);
@@ -9739,37 +9739,6 @@ app.controller('WorkerController', WorkerCtrl);
 /* 22 */
 /***/ (function(module, exports) {
 
-app.service('customerServices', function ($http, $timeout) {
-    this.customerList = function () {
-        var url = '/api/shops/' + window.selectedShop.id + '/users?api_token=' + window.user.api_token;
-        return $http.get(url).then(function (data) {
-            return data;
-        });
-    };
-});
-
-/***/ }),
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(6);
-
-
-/***/ }),
-/* 34 */,
-/* 35 */
-/***/ (function(module, exports) {
-
 app.service('articleServices', function ($http, $timeout) {
     this.articleList = function () {
         var url = '/api/articles?api_token=' + window.user.api_token;
@@ -9792,6 +9761,36 @@ app.service('articleServices', function ($http, $timeout) {
         });
     };
 });
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+app.service('customerServices', function ($http, $timeout) {
+    this.customerList = function () {
+        var url = '/api/shops/' + window.selectedShop.id + '/users?api_token=' + window.user.api_token;
+        return $http.get(url).then(function (data) {
+            return data;
+        });
+    };
+});
+
+/***/ }),
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(6);
+
 
 /***/ })
 /******/ ]);

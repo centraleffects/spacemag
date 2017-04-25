@@ -169,7 +169,7 @@ class ShopOwnerController extends Controller
 
             // validate if user actually own this shop
             // and make sure the loggedin user is not also the specified user
-            if( $shop->owner()->first()->id == $auth_user_id && $auth_user_id != $user->id ){
+            if( ($shop->owner()->first()->id == $auth_user_id && $auth_user_id != $user->id) || auth()->user()->isAdmin() ){
                 $request->session()->flush();
                 $request->session()->regenerate();
 
