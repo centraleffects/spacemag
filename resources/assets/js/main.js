@@ -11,6 +11,8 @@ require('./controllers/shopowner/clientsController');
 require('./controllers/shopowner/workersController');
 require('./controllers/shopowner/articlesController');
 
+require('./controllers/shared/todoController');
+
 /* below is shared between all controllers*/
 app.run(function($rootScope, $http, $timeout) {
 	$rootScope.selectedUser = null;
