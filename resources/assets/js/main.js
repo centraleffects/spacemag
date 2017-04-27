@@ -1,9 +1,13 @@
 window.app = angular.module('rebuy', []);
 
+require('./lib/jquery.panzoom');
+require('./lib/jquery.mousewheel');
+require('./lib/jquery-ui');
 
 require('./services/shopowner/customerServices');
 require('./services/shopowner/articleServices');
 require('./services/shopowner/workerServices');
+require('./services/shopowner/shopServices.js');
 
 require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customersController');
@@ -12,6 +16,7 @@ require('./controllers/shopowner/workersController');
 require('./controllers/shopowner/articlesController');
 
 require('./controllers/shared/todoController');
+
 
 /* below is shared between all controllers*/
 app.run(function($rootScope, $http, $timeout) {

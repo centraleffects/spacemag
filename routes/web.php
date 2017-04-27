@@ -50,6 +50,8 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 	Route::get('todo', 'ShopOwnerController@todo');
 	Route::get('workers', 'ShopOwnerController@workers');
 	Route::get('workers/todo', 'ShopOwnerController@workersTodo');
+
+	Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 });
 
 Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
