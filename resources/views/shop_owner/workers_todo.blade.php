@@ -1,12 +1,13 @@
 @component('shop_owner.layouts.app')
 
+	
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>
 			<ul class="collection">
-				<li class="collection-item" ng-repeat="shop in shops">
+				<li class="collection-item">
 					@include('layouts._partials.dragicon')
-					<span>@{{ shop.name }}</span>
+					<input type="text" value="Rebuy Shop">
 					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
 			    </li>
 
@@ -19,51 +20,55 @@
 		</div>
 	@endslot
 	@slot('center')
-		<div id="" class="row">
+		<div id="todoapp" class="row" ng-controller="TodoController">
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
 					<span class="card-title">Tasks</span>
 					<div>
-						<button class="btn waves-effect waves-light green">
+						<!-- <button class="btn waves-effect waves-light green">
 							<i class="fa fa-plus"></i> Add Task
-						</button>
+						</button> -->
+						<input id="new-todo" type="text" ng-model="todoText"  size="30" placeholder="What needs to be done?" ng-keyup="addTodo()"/>
 					</div>
-					<ul class="collection tasks-list">
-						<li class="collection-item row task-item" ng-repeat="task in tasks">
-							@component('layouts._partials.dragicon')
-								@slot('style') fill-grey @endslot
-							@endcomponent
-							<span class="mark-as-complete circular-button-view">
-								@include('layouts._partials.checkbox')
-							</span>
-							<span class="description">
-								Please open shop at 9:00 am.
-							</span>
-							<span class="assignee pull-right">
-								<span class="item">
-								    <img class="circle" src="http://localhost:8000/images/office.jpg">
+					<div id="main" style="display: block;">
+						<div ng-show="isTodo()" class="row">
+				        	<input id="toggle-all" type="checkbox" ng-model="markAll" ng-click="toggleMarkAll()"/>
+				        	<label for="toggle-all">Mark all as complete</label>
+				        </div>
+						<ul class="collection todo-list">
+							<li class="collection-item row todo-item" ng-repeat="todo in todos" ng-dblclick="toggleEditMode()">
+								<span class="col" ng-keyup="editTodo()">
+									@component('layouts._partials.dragicon')
+										@slot('style') fill-grey @endslot
+									@endcomponent
+									<label for="_done_@{{$index}}" class="mark-as-complete circular-button-view" ng-click="toggleDone($index)">
+										<!-- <i class="fa fa-check grey-text"></i> -->
+										@include('layouts._partials.checkbox')
+									</label>
+									<input type="checkbox" ng-model="todo.done" id="_done_@{{$index}}" style="display: none;">
+									
 								</span>
-								<span class="item">
-								    <img class="circle" src="http://localhost:8000/images/office.jpg">
+								<span class="col s10 m10 l10">
+									<span class="done-@{{todo.done}}" >@{{ todo.text }}</span>
+									<input class="edit" type="text" ng-model="todo.text" ng-keyup="editOnEnter(todo)"/>
 								</span>
-							</span>
-						</li>
-						<!-- <li class="collection-item row task-item">
-							<span class="col s2 m2 l2">
-								@component('layouts._partials.dragicon')
-									@slot('style') fill-grey @endslot
-								@endcomponent
-								<span class="mark-as-complete circular-button-view">
-									@include('layouts._partials.checkbox')
-								</span>
-							</span>
-							<span class="col s10 m10 l10">
-								<input type="text" name="description" value="Please open shop at 9:00 am." />
-							</span>
-						</li> -->
-				    </ul>
+							</li>
+					    </ul>
+					</div>
 				</div>
-			</div><!-- end Client's Details -->
+				<div class="card-action">
+					<div class="row">
+						<div class="col">
+							<div class="todo-count">@{{remaining()}} of @{{todos.length}} remaining</div>
+						</div>
+						<div class="col m9 l9">
+							<a id="clear-completed" class="btn waves-effect waves-light red small right" ng-click="clear()" ng-show="hasDone()">
+								Clear <span >@{{ (todos.length - remaining()) }} @{{itemText()}}</span>.
+							</a>
+						</div>
+					</div>
+				</div>
+			</div><!-- end Todo -->
 		</div>
 	@endslot
 	@slot('right')

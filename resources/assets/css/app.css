@@ -362,13 +362,76 @@ nav .brand-logo img{
 }
 
 /* todo tasks */
-.task-item .assignee .item img {
+.todo-item .assignee .item img {
     width: 25px;
     height: 25px;
 }
 
-.task-item .description {
+.todo-item .description {
     margin-left: 6px;
+}
+
+
+#todoapp #main {
+    display: none;
+}
+
+.todo-list {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.todo-list li {
+    padding: 18px 20px 18px 0;
+    position: relative;
+    border-bottom: 1px solid #cccccc;
+}
+
+.todo-list li:last-child {
+    border-bottom: none;
+}
+
+.todo-list li .edit {
+    display: none;
+}
+
+li.editing span.done-false, li.editing span.done-true {
+    display: none;
+}
+
+.todo-list li.editing .edit {
+    display: block;
+    width: 444px;
+    padding: 13px 15px 14px 20px;
+    margin: 0;
+}
+
+.todo-list li.done label {
+    color: #777777;
+    text-decoration: line-through;
+}
+
+.todo-list li .done-true  {
+    color: #777777;
+    text-decoration: line-through;
+}
+
+.todo-list .destroy {
+    position: absolute;
+    right: 5px;
+    top: 20px;
+    display: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+#clear-completed {
+    max-height: 26px;
+    font-size: 12px;
+    text-align: center;
+    line-height: 26px;
 }
 
 /* main content */
@@ -562,8 +625,13 @@ svg.itemRow-dragIcon{
 	margin:0;
 }
 
-li.collection-item.active a {
+li.collection-item.active:not(.todo-item) a {
     color: white;
+}
+
+.collection .collection-item.todo-item.active {
+    background: none;
+    color: inherit;
 }
 
 #info-nav #lsinfo-option{

@@ -15,21 +15,8 @@ require('./controllers/shopowner/clientsController');
 require('./controllers/shopowner/workersController');
 require('./controllers/shopowner/articlesController');
 
-(function($){
-	$.adminJS = {
-		init : function(){
-				if($.adminJS.me.id){
-	        		return false;
-	        	}
-	           $.get('/shop/me', function(response){
-	           		$.adminJS.me = response;
-	           });
-		},
-        me : []
-	}
-	 $.adminJS.init();
-	 window.adminJS = $.adminJS;
-})(jQuery);
+require('./controllers/shared/todoController');
+
 
 /* below is shared between all controllers*/
 app.run(function($rootScope, $http, $timeout) {
