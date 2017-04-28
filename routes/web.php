@@ -71,9 +71,4 @@ Route::get('test-mail', function (){
 });
 
 
-Route::get('try', function (){
-	// dd($request);
-	// Route for testing purposes
-	// do your quick algorithm test here
-
-});
+Route::get('try/{user}', 'UserController@shops');
