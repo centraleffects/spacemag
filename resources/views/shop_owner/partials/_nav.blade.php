@@ -1,5 +1,8 @@
 @if( auth()->check() && auth()->user()->isOwner() )
 	<li>
+	    <a href="{{ url('shop/customers') }}">Home</a>
+	</li>
+	<li>
 	    <a href="{{ url('shop/customers') }}">Customers</a>
 	</li>
 	<li>
@@ -9,7 +12,7 @@
 	    <a href="#">Shop Status</a>
 	</li>
 	<li>
-	    <a href="{{ url('shop/workers') }}">Add Shop Workers</a>
+	    <a href="{{ url('shop/workers') }}">Shop Workers</a>
 	</li>
 	<li>
 	    <a href="{{ url('shop/todo') }}">Todo List</a>

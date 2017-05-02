@@ -123,7 +123,31 @@ class ShopController extends Controller
 
     public function get(User $user){
         if( Auth::guard('api')->user()->id == $user->id )
-            return $user->shops()->paginate(10);
+            // return $user->ownedShops()->with('todoTasks', 'todoTasks.owner')->paginate(10);
+            $shops = $user->ownedShops()->with('todoTasks', 'todoTasks.owner', 'tasks', 'tasks.owner')->paginate(10);
+
+
+            $shops->each(function ($shop, $index){
+                $t1 = collect($shop->tasks)->toArray();
+                $t2 = collect( $shop->todoTasks )->toArray();
+                $all_tasks = array_collapse([$t1, $t2]);
+
+                $shop->all_tasks = $all_tasks;
+            });
+
+            return $shops;
+
+           /* $shops = $user->ownedShops()->get();
+
+            $tasks1 = collect($user->ownedShops()->with('todoTasks')->get())->map(function ($shop){
+                return $shop->todoTasks()->get();
+            });
+            
+            $tasks2 =  collect($user->ownedShops()->with('tasks')->get())->map(function ($shop){
+                return $shop->tasks()->get();
+            });
+            
+            $t1 = $tasks1[0]->merge($tasks2[0]);*/
 
         return [
             "error" => "Unauthorize access.", 

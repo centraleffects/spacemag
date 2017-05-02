@@ -35,6 +35,8 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('{shop}/users', 'ShopController@users');
 	Route::get('{shop}/workers', 'ShopController@workers');
 
+	Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
+
 	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
 	
 	Route::post('create', 'ShopController@create');
@@ -64,10 +66,19 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::post('/delete/{user}', 'UserController@destroy');
 	Route::post('/store', 'UserController@store');
 
-	//Shops
-	Route::post('{user}/shops', 'ShopController@get');
+	//Shops (for shopowner)
+	Route::get('{user}/shops', 'ShopController@get');
+
+	Route::get('{user}/tasks', 'TodoTaskController@getByUser');
 });
 
 Route::group(['prefix' => 'workers', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'UserController@workers');
+});
+
+Route::group(['prefix' => 'tasks', 'middleware' => 'auth:api'], function (){
+	Route::post('store', 'TodoTaskController@store');
+	Route::get('{task}', 'TodoTaskController@show');
+	Route::post('update/{task}', 'TodoTaskController@update');
+	Route::delete('delete/{task}', 'TodoTaskController@destroy');
 });

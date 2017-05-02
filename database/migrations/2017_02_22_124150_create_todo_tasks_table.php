@@ -17,20 +17,31 @@ class CreateTodoTasksTable extends Migration
             
             $table->increments('id')->unique();
 
-            $table->integer('service_type_id')->unsigned()->index();
+            $table->integer('service_type_id')->unsigned()->index()->nullable();
             $table->foreign('service_type_id')->references('id')->on('service_types'); 
 
-            $table->integer('salespot_id')->unsigned()->index();
+            $table->integer('salespot_id')->unsigned()->index()->nullable();
             $table->foreign('salespot_id')->references('id')->on('salespots');
 
-            $table->integer('worker_user_id')->unsigned()->index();
+            // task assignee
+            $table->integer('worker_user_id')->unsigned()->index()->nullable();
             $table->foreign('worker_user_id')->references('id')->on('users');
 
-            $table->integer('service_booking_id')->unsigned()->index();
+            // task author
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users');
+
+            // this field will be used if Salespot is not or not yet specified. 
+            // If a Salespot is specified, this field will become null.
+            $table->integer('shop_id')->unsigned()->index()->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops');
+
+            $table->integer('service_booking_id')->unsigned()->index()->nullable();
             $table->foreign('service_booking_id')->references('id')->on('shop_services_bookings');  
 
             $table->longText('description')->nullable();
-            $table->smallInteger('status')->default(1);
+            $table->enum('status', ['pristine', 'in-progress', 'finished'])->default('pristine');
+            $table->boolean('done')->default(false); // 1 if done, 0 if not done
             $table->dateTime('date_started')->nullable();
             $table->dateTime('date_finished')->nullable();
 

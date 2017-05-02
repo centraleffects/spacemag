@@ -1,33 +1,26 @@
 @component('shop_owner.layouts.app')
-
+	@slot('controller') ng-controller="WorkersTodoController" @endslot
 	
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>
 			<ul class="collection">
-				<li class="collection-item">
+				<li class="collection-item" ng-repeat="shop in shops" ng-click="getTodos($index)">
 					@include('layouts._partials.dragicon')
-					<input type="text" value="Rebuy Shop">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-
-			    <li class="collection-item">
-					@include('layouts._partials.dragicon')
-					<input type="text" value="Nike">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
+					<span>@{{ shop.name }}</span>
+					<a href="#!" class="right" title="Delete" ng-click="removeShop($index)">
+						<i class="fa fa-trash"></i>
+					</a>
 			    </li>
 			</ul>
 		</div>
 	@endslot
 	@slot('center')
-		<div id="todoapp" class="row" ng-controller="TodoController">
+		<div id="todoapp" class="row">
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
 					<span class="card-title">Tasks</span>
 					<div>
-						<!-- <button class="btn waves-effect waves-light green">
-							<i class="fa fa-plus"></i> Add Task
-						</button> -->
 						<input id="new-todo" type="text" ng-model="todoText"  size="30" placeholder="What needs to be done?" ng-keyup="addTodo()"/>
 					</div>
 					<div id="main" style="display: block;">
@@ -41,16 +34,15 @@
 									@component('layouts._partials.dragicon')
 										@slot('style') fill-grey @endslot
 									@endcomponent
-									<label for="_done_@{{$index}}" class="mark-as-complete circular-button-view" ng-click="toggleDone($index)">
-										<!-- <i class="fa fa-check grey-text"></i> -->
+									<label for="_done_@{{$index}}" class="mark-as-complete circular-button-view @{{ todo.done ? 'done' : '' }}" ng-click="toggleDone($index)">
 										@include('layouts._partials.checkbox')
 									</label>
-									<input type="checkbox" ng-model="todo.done" id="_done_@{{$index}}" style="display: none;">
+									<input type="checkbox" ng-model="todo.done" id="_done_@{{$index}}" style="display: none;" />
 									
 								</span>
 								<span class="col s10 m10 l10">
-									<span class="done-@{{todo.done}}" >@{{ todo.text }}</span>
-									<input class="edit" type="text" ng-model="todo.text" ng-keyup="editOnEnter(todo)"/>
+									<span class="done-@{{todo.done}}" >@{{ todo.description }}</span>
+									<input class="edit" type="text" ng-model="todo.description" ng-keyup="editOnEnter(todo)" esc-key="toggleEditMode()"/>
 								</span>
 							</li>
 					    </ul>

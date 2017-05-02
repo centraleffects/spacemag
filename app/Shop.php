@@ -69,6 +69,10 @@ class Shop extends Model
         return $this->hasManyThrough('App\TodoTask', 'App\Salespot');
     }
 
+    public function tasks(){
+        return $this->hasMany('App\TodoTask');
+    }
+
     // public function newsletterSubscriptions(){
     //     return $this->hasMany('App\ShopNewsletterSubscription', 'shop_id');
     // }

@@ -72,8 +72,34 @@ Route::get('test-mail', function (){
 
 
 Route::get('try', function (){
-	// dd($request);
-	// Route for testing purposes
-	// do your quick algorithm test here
+	// return session()->flush('selected_shop');
+	$user = auth()->user();
 
+
+	$res = $user->ownedShops()->with('todoTasks', 'todoTasks.owner', 'tasks', 'tasks.owner')->paginate(10);
+
+
+	$res->each(function ($shop, $index){
+		$t1 = collect($shop->tasks)->toArray();
+		$t2 = collect( $shop->todoTasks )->toArray();
+		$all_tasks = array_collapse([$t1, $t2]);
+
+		$shop->all_tasks = $all_tasks;
+	});
+
+	dd($res);
+	$new_res->toArray();
+
+	$res->all_tasks = $new_res[0];
+	dd($res);
+	$tasks1 = collect($user->ownedShops()->with('todoTasks')->get())->map(function ($shop){
+		return $shop->todoTasks()->get();
+	});
+	
+	$tasks2 =  collect($user->ownedShops()->with('tasks')->get())->map(function ($shop){
+		return $shop->tasks()->get();
+	});
+	
+	$t1 = $tasks1[0]->merge($tasks2[0]);
+	return $t1;
 });
