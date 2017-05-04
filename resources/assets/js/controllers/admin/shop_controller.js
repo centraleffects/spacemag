@@ -1,4 +1,4 @@
-rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http, $location) {
+rebuyApp.controller('adminShopController', function($scope, shopService, $timeout, $templateCache, $http, $location, $rootScope) {
 	  
     $scope.currentTab = 'shop';
 
@@ -17,7 +17,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     $scope.selectedSpot = {};
     $scope.selectedSpotKey = null;
 
-    var vm = this;
+    var vm = this, EMAIL_FORMAT = /^[_a-z0-9]+(\+\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 
     $scope.init = function() {
         $timeout(function () {
@@ -79,24 +79,38 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
           }
         },
         updateSelected : function(){
+           if(EMAIL_FORMAT.test($scope.selectedShop.owner.email) === false && !$scope.selectedShop.owner.email){
+             window.reBuy.alert('Please correct the selected shop owner');
+             return false;
+           }
 
             var url = '/api/shops/update';
             $http({
               method: 'POST',
               url: url + '?api_token=' + window.adminJS.me.api_token,
               data: $.param($scope.selectedShop),
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-              cache: $templateCache
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function(response) {
+              console.log(response.data.shops);
+              $timeout(function () {
+                $scope.shops = response.data.shops;
+                $scope.selectedShop = response.data.shop;
+                ownerList = response.data.owners.data;
+                $scope.owners = [];
+                Object.keys(ownerList).forEach(function(k) {
+                  $scope.owners.push({ id : ownerList[k].id, name : ownerList[k].first_name + ' ' + ownerList[k].last_name + ' (' +  ownerList[k].email+ ')', data : ownerList[k] });
+                });
+                vm.materializeInit();
+              },1000);
               if($scope.selectedShop.isNew){
                  window.reBuy.toast('Shop details have been created! Thank you.');
               }else{
                  window.reBuy.toast('Shop details have been updated! Thank you.');
               }
-              vm.updateList();
             }, function(response) {
                 window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
             });
+            //$timeout(function () { $rootScope.vm.updateList(); }, 500);
         },
         deleteSelected : function(){
 
@@ -173,13 +187,13 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
             angular.element('.panzoom').panzoom({ disableZoom : true });
         },
         changeOwner : function(owner){
-          if($scope.selectedShop.owner.id == owner.id || $scope.selectedShop.user_id == owner.id){
-              $scope.selectedShop.owner = owner;
-            return false;
+          $scope.selectedShop.owner = owner;
+
+        },
+        loginAsOwner : function(){
+          if($scope.selectedShop.owner.id){
+            window.location = '/shop/login-as/'+$scope.selectedShop.owner.id+'/'+$scope.selectedShop.id;
           }
-          window.reBuy.confirm("Are you sure to select this owner?", function(){
-              $scope.selectedShop.owner = owner;
-          });
         }
     }
 
@@ -220,6 +234,9 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                     .on('click', '.panzoom', function(e){
 
                       })
+                    .on('change', '#owner_email', function(e){
+                         angular.element('#listofowners-autocomplete').find('a').removeClass('active');
+                      })
 
               //@TODO: should use $watch to handle model changes
               angular.element('input[name="name"]').keyup(function(){
@@ -230,6 +247,7 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     }
 
     vm.updateList = function(){
+
           $scope.owners = [];
           shopService.ownerList().then(function(ownerList){
               ownerList = ownerList.data;
@@ -238,7 +256,9 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
               });
               vm.materializeInit();      
             });
+
           shopService.shopList().then(function(shopList) {
+              console.log('updating list...');
               $scope.shops = shopList;
               if($scope.shops){
                 $scope.selectedShop = $scope.shops.data[0];

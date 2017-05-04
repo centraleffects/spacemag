@@ -17,11 +17,11 @@
                             {{ session()->get('flash_message')['type'] }}
                         @endslot
 
-                        @if( isset( session()->get('flash_message')['is_important'] ) )
+                        @if(  session()->get('flash_message')['is_important'] != null )
                             @slot('is_important') alert-important @endslot
                         @endif
 
-                        @if( isset( session()->get('flash_message')['custom_class'] ) )
+                        @if( session()->get('flash_message')['custom_class'] !== null )
                             @slot('custom_class') session->get('flash_message')['custom_class'] @endslot
                         @endif
                         

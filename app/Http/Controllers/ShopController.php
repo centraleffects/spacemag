@@ -73,6 +73,8 @@ class ShopController extends Controller
     public function update(StoreShop $request)
     {
         $response = ['success' => 0];
+        $createNewOwner = false;
+        $assignNewOwner = false;
         $input = Input::all();
         if(isset($input['isNew'])){
             unset($input['id']);
@@ -82,31 +84,96 @@ class ShopController extends Controller
            $shop = Shop::find($input['id']);  
         }
 
-         if(!isset($input['user_id'])){
-                $input['user_id'] = 0;
+        if(!isset($input['user_id'])){
+                $input['user_id'] = 1;
             }
-         if(!isset($input['owner'])){
-                $input['user_id'] = $input['owner']['id'];
-         }  
 
-         $newOwner = $input['owner'];
-         unset($input['owner']);
+        $oldShopOwner = $input['user_id'];
 
-        foreach($input as $k=>$v){
+        if(isset($input['owner'])){
 
-            if($v<>'' and $k <> '$$hashKey' and $k <> 'api_token'){
-                $shop->{$k} = $v;
-            }
+               $user = User::find($input['owner']['id']);
+               if($user){
+                 if($user->email <> $input['owner']['email']){
+                    if(trim($input['owner']['email']) == ""){
+                        $createNewOwner = true;
+                    }else{
+                        $user = User::where('email', $input['owner']['email'])->first();
+                        if(!$user){
+                            $createNewOwner = true;
+                        }else{
+                            $shop->user_id = $user->id;
+                        }
+                    }
+                    
+                 }
+               }else{
+                    //try with email
+                    if(trim($input['owner']['email']) == ""){
+                        $createNewOwner = true;
+                    }else{
+                        $user = User::where('email', $input['owner']['email'])->first();
+                        if(!$user){
+                            $createNewOwner = true;
+                        }else{
+                            $shop->user_id = $user->id;
+                        }
+                    }
+
+               }
+               
+         } 
+
+        if($createNewOwner){
+            $user = new User();
+            $user->email = $input['owner']['email'];
+            $firstname = explode("@", $input['owner']['email']);
+            $firstname = preg_replace("/[^A-Za-z0-9 ]/", '', $firstname[0]);
+            $user->first_name = $firstname;
+            $user->last_name = "";
+            $user->password  = "";
+            $user->gender  ="";
+            $user->telephone  = "";
+            $user->mobile  = "";
+            $user->social_security_id  = "";
+            $user->address_1  ="";
+            $user->address_2  = "";
+            $user->city  = "";
+            $user->zip_code  = "";
+            $user->country  = "";
+            $user->lang  = 'se';
+            $user->role = "owner";
+            $user->api_token = str_random(60);
+            $user->save();
+
+            $user = User::where('email', $input['owner']['email'])->first();
+            
+
         }
-       
-        if( $shop->save() ){
-            $user = User::find($newOwner['id']);
-            $email_response = $this->sendInviteEmail($shop, $user);
-            $msg = 'Update successful.';
-            if(!$email_response){
-                $msg = "Email not sent.";
-            }
 
+         $shop->user_id = $user->id ?: 1;
+         $shop->name = $input['name'];
+         $shop->description = $input['description'];
+         $shop->url = $input['url'];
+         $shop->currency = $input['currency'];
+         $shop->slug = $input['slug'];
+         $shop->commission_article_sale = $input['commission_article_sale'];
+         $shop->commission_salespot = $input['commission_salespot'];
+
+
+        if( $shop->update() ){
+            if($oldShopOwner <> $user->id){
+                $email_response = $this->sendInviteEmail($shop, $user);
+                if(!$email_response){
+                    $msg = "Email not sent.";
+                }
+            }
+            
+            $msg = 'Update successful.';
+            $response['owners'] = $this->listOwners();
+            $response['shops']  =  $this->getlist();
+            $response['shop'] = $shop;
+            $response['shop']['owner'] = $user;
             $response['success'] = 1;
             $response['msg'] = $msg;
         }
@@ -151,28 +218,23 @@ class ShopController extends Controller
     //Send email invitation
     private function sendInviteEmail(Shop $shop, User $newOwner){
 
-        // if(is_integer($shop)){
-            $shop = Shop::find($shop);
-            //print_r($newOwner['email']);
-            try {
-                $mail = new ShopOwnerInvitation($shop, $newOwner, Auth::guard('api')->user());
+        $shop = Shop::find($shop);
+        try {
+            $mail = new ShopOwnerInvitation($shop, $newOwner, Auth::guard('api')->user());
 
-                Mail::to($newOwner->email)->send($mail);
+            Mail::to($newOwner->email)->send($mail);
 
-                return true;
+            return true;
 
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
 
-                // return false;
-                return $e;  
-            }
-
-            dd($shop);
-        // }
+            // return false;
+            return $e;  
+        }
 
     }
 
-    // Shop customers  $shop->users()->where('role', '=', 'worker')->get()
+ 
     public function users(Shop $shop){
         return $shop->users()->where('role', '=', 'customer')->get();
     }

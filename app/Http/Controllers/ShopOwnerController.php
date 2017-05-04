@@ -172,7 +172,16 @@ class ShopOwnerController extends Controller
         return $this->invite($shop, $request, "worker");
     }
 
-    public function loginAsSomeone(User $user, Request $request){
+    public function loginAsSomeone(User $user, $shopId = false, Request $request){
+        // dd($user->id); 
+        // dd(auth()->user()->id);   
+        // dd(session()->has('selected_shop'));  
+
+        if( $shopId != false ){
+            $shop = Shop::findOrFail($shopId);
+            session()->put('selected_shop', $shop);
+        }
+
         if( session()->has('selected_shop') ){
             $shop = session()->get('selected_shop');
 
