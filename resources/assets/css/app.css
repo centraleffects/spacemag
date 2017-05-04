@@ -298,6 +298,20 @@ nav .brand-logo img{
 }
 
 /* svg icons */
+.done.circular-button-view {
+    opacity: 0.2;
+    border-color: transparent;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px #00BCD4;
+    -moz-box-shadow: 0 0 0 3px #3BF7D1;
+    -webkit-box-shadow: 0 0 0 3px #00BCD4;
+    color: #00BCD4;
+    fill: #00BCD4;
+    background-color: #fff;
+    color: #00BCD4;
+    fill: #00BCD4;
+}
+
 .circular-button-view {
 	webkit-box-align: center;
     -moz-box-align: center;

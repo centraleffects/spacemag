@@ -42,6 +42,16 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    // returns the tasks that this user is assigned to 
+    public function todoTasks(){
+        return $this->hasMany('App\TodoTask', 'worker_user_id');
+    }
+
+    // returns the tasks that this user has created
+    public function authoredTasks(){
+        return $this->hasMany('App\TodoTask', 'user_id');
+    }
+
     /**
      * returns the articles that this user has created.
      */
@@ -90,10 +100,6 @@ class User extends Authenticatable
      */
     public function articleLabels(){
         return $this->hasMany('App\ArticleLabel');
-    }
-
-    public function todoTasks(){
-        return $this->hasMany('App\TodoTask', 'worker_user_id');
     }
 
 

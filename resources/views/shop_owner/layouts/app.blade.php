@@ -44,7 +44,7 @@
                                     @if( auth()->user()->isOwner() )
                                         <li>
                                             <a href="{{ url('shop') }}" class="btn green waves-effect  waves-light">
-                                                Dashboard
+                                                Home
                                             </a>
                                         </li>
                                         <li>
@@ -64,7 +64,7 @@
                                         </li>
                                         <li>
                                             <a href="{{ url('shop/workers') }}" class="btn green waves-effect waves-light">
-                                                Add Shop Workers
+                                                Shop Workers
                                             </a>
                                         </li>
                                         <li>

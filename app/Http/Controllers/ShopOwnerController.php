@@ -21,7 +21,9 @@ class ShopOwnerController extends Controller
     public function includeUserOnJS()
     {
         if( !session()->has("selected_shop") && auth()->check() ){
-            session()->put("selected_shop", auth()->user()->ownedShops()->first());
+            $shop = auth()->user()->ownedShops()->with('todoTasks')
+                        ->with('todoTasks.owner')->first();
+            session()->put("selected_shop", $shop);
         }
 
         $shop = session()->get('selected_shop');

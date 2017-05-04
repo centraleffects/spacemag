@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\TodoTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Auth;
+
+use App\TodoTask;
+use App\Shop;
+use App\User;
 
 class TodoTaskController extends Controller
 {
@@ -12,20 +17,15 @@ class TodoTaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getByShop(Shop $shop)
     {
-        //
+        return $shop->todoTasks()->paginate(50);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function getByUser(User $user){
+        return $user->todoTasks()->paginate(50);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -34,8 +34,25 @@ class TodoTaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $input = Input::all();
+        // dd($input);
+        $task = new TodoTask;
+        $task->description = $input['description'];
+        $task->user_id = Auth::guard('api')->user()->id;
+
+        if( isset($input['shop_id']) ){
+            $task->shop_id = $input['shop_id'];
+        }
+
+        $task->save();
+
+
+        if( $task->id )
+            return ['success' => 1, 'msg' => 'New task has been saved.'];
+
+        return ['success' => 0, 'msg' => "Sorry, we can't process your request right now."];
+
     }
 
     /**
@@ -46,19 +63,9 @@ class TodoTaskController extends Controller
      */
     public function show(TodoTask $todoTask)
     {
-        //
+        return $todoTask;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\TodoTask  $todoTask
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(TodoTask $todoTask)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +76,7 @@ class TodoTaskController extends Controller
      */
     public function update(Request $request, TodoTask $todoTask)
     {
-        //
+        dd($request);
     }
 
     /**
@@ -80,6 +87,9 @@ class TodoTaskController extends Controller
      */
     public function destroy(TodoTask $todoTask)
     {
-        //
+        if( $todoTask->delete() )
+            return ['success' => 1, 'msg' => "Successfully deleted."];
+
+        return ['success' => 0, 'msg' => "Sorry, we can't process your request right now."];
     }
 }
