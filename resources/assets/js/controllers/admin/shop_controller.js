@@ -171,6 +171,15 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
         doDrag : function($this){
             console.log($this);
             angular.element('.panzoom').panzoom({ disableZoom : true });
+        },
+        changeOwner : function(owner){
+          if($scope.selectedShop.owner.id == owner.id || $scope.selectedShop.user_id == owner.id){
+              $scope.selectedShop.owner = owner;
+            return false;
+          }
+          window.reBuy.confirm("Are you sure to select this owner?", function(){
+              $scope.selectedShop.owner = owner;
+          });
         }
     }
 
@@ -221,13 +230,13 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     }
 
     vm.updateList = function(){
- 
+          $scope.owners = [];
           shopService.ownerList().then(function(ownerList){
-             $scope.owners =  [];
+              ownerList = ownerList.data;
               Object.keys(ownerList).forEach(function(k) {
-                $scope.owners.push({ id : ownerList[k].id, name : ownerList[k].first_name + ' ' + ownerList[k].last_name + ' (' +  ownerList[k].email+ ')' });
+                $scope.owners.push({ id : ownerList[k].id, name : ownerList[k].first_name + ' ' + ownerList[k].last_name + ' (' +  ownerList[k].email+ ')', data : ownerList[k] });
               });
-              vm.materializeInit();
+              vm.materializeInit();      
             });
           shopService.shopList().then(function(shopList) {
               $scope.shops = shopList;

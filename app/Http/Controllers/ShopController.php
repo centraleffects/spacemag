@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 use Auth;
+use Mail;
 
 use App\Http\Requests\StoreShop;
 use App\Shop;
 use App\User;
 
+use App\Mail\ShopOwnerInvitation;
 
 class ShopController extends Controller
 {
@@ -83,6 +85,12 @@ class ShopController extends Controller
          if(!isset($input['user_id'])){
                 $input['user_id'] = 0;
             }
+         if(!isset($input['owner'])){
+                $input['user_id'] = $input['owner']['id'];
+         }  
+
+         $newOwner = $input['owner'];
+         unset($input['owner']);
 
         foreach($input as $k=>$v){
 
@@ -92,7 +100,15 @@ class ShopController extends Controller
         }
        
         if( $shop->save() ){
+            $user = User::find($newOwner['id']);
+            $email_response = $this->sendInviteEmail($shop, $user);
+            $msg = 'Update successful.';
+            if(!$email_response){
+                $msg = "Email not sent.";
+            }
+
             $response['success'] = 1;
+            $response['msg'] = $msg;
         }
         
 
@@ -132,6 +148,30 @@ class ShopController extends Controller
         ];
     }
 
+    //Send email invitation
+    private function sendInviteEmail(Shop $shop, User $newOwner){
+
+        // if(is_integer($shop)){
+            $shop = Shop::find($shop);
+            //print_r($newOwner['email']);
+            try {
+                $mail = new ShopOwnerInvitation($shop, $newOwner, Auth::guard('api')->user());
+
+                Mail::to($newOwner->email)->send($mail);
+
+                return true;
+
+            } catch (\Exception $e) {
+
+                // return false;
+                return $e;  
+            }
+
+            dd($shop);
+        // }
+
+    }
+
     // Shop customers  $shop->users()->where('role', '=', 'worker')->get()
     public function users(Shop $shop){
         return $shop->users()->where('role', '=', 'customer')->get();
@@ -150,13 +190,13 @@ class ShopController extends Controller
 
     public function getlist(){
 
-        $shops = Shop::paginate(50);
+        $shops = Shop::with('owner')->paginate(50);
 
         return $shops;
     }
 
     public function listOwners(){
-        $users =  User::where( ['role' => 'owner'] )->get();
+        $users =  User::where( ['role' => 'owner'] )->paginate(50);
         return $users;
     }
 

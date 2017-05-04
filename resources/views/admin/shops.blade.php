@@ -35,12 +35,12 @@
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="shop_url" ng-model="selectedShop.url">
+								<input type="text" name="url" ng-model="selectedShop.url">
 								<label>Homepage</label>
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="shop_postel">
+								<input type="text" name="postel"  ng-model="selectedShop.postel">
 								<label>Postel</label>
 							</div>
 
@@ -52,12 +52,12 @@
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="shop_postel">
+								<input type="text" name="commission_article_sale" ng-model="selectedShop.commission_article_sale">
 								<label>Commission on Article Sale</label>
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="shop_postel">
+								<input type="text" name="commission_salespot"  ng-model="selectedShop.commission_salespot">
 								<label>Salespot Rebuy Commission</label>
 							</div>
 
@@ -66,12 +66,21 @@
 
 					<div class="card hoverable">
 						<div class="row card-content">
-							<span class="card-title">Shop Owner</span>
+							<span class="card-title">Shop Owner - <span ng-bind="selectedShop.owner.email"></span></span>
 							<div class="input-field">
-								<select name="user_id"   id="user_id" ng-model="selectedShop.user_id"
-										ng-options="owner.id as owner.name for owner in owners">
-										<option value="">Select Owner</option>
-								</select>
+								<p><input type="hidden" ng-model="selectedShop.owner.email" class="hide"></p>
+								<input type="text" name="shop_postel" ng-model="selectedShop.owner.email">
+								<div id="listofowners-autocomplete" g-show="owners.length">
+									<div class="collection">
+										<a href="javascript:;" 
+												class="list-shops collection-item" 
+												ng-repeat="owner in owners | filter : selectedShop.owner.email" 
+												ng-click="events.changeOwner(owner.data)">
+												@{{ owner.name }}
+										</a>
+									</div>
+								</div>
+								<p ng-show="(owners | filter : selectedShop.owner.email).length == 0" class="red-text">User doesn't exist. <span class="green-text">Add <b>@{{selectedShop.owner.email}}</b> now to continue.</span></p>
 							</div>	
 						</div>
 					</div>
