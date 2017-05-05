@@ -57,7 +57,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
 Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
 Route::get('shop/login-back', 'ShopOwnerController@loginBack')->middleware('auth.basic');
-
+Route::get('shop/set/{shop}', 'ShopOwnerController@setShopSession')->middleware('auth.basic');
 
 Route::get('test-event', function (){
 	// $user = auth()->user();

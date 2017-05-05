@@ -20,6 +20,9 @@ class ShopOwnerController extends Controller
 
     public function includeUserOnJS()
     {
+        $shops = auth()->user()->ownedShops()->get();
+        $shop = session()->put('shops', $shops);
+
         if( !session()->has("selected_shop") && auth()->check() ){
             $shop = auth()->user()->ownedShops()->with('todoTasks')
                         ->with('todoTasks.owner')->first();
@@ -27,6 +30,7 @@ class ShopOwnerController extends Controller
         }
 
         $shop = session()->get('selected_shop');
+        
 
         JavaScript::put([
             'user' => auth()->user(),
@@ -36,6 +40,7 @@ class ShopOwnerController extends Controller
 
     public function index(){
         $this->includeUserOnJS();
+        
     	return view('shop_owner.dashboard');
     }
 
@@ -69,6 +74,12 @@ class ShopOwnerController extends Controller
         return view('shop_owner.workers_todo');
     }
 
+    public function setShopSession(Shop $shop){
+      session()->put("selected_shop", $shop);
+      $input = Input::all();
+      return redirect(base64_decode($input['redirect']));
+        
+    }
     /**
      * This function is called when a target user confirms his subscribption to the Shop
      *
