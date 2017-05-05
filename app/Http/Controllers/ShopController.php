@@ -275,9 +275,12 @@ class ShopController extends Controller
     }
 
     public function getlist(){
-
-        $shops = Shop::with('owner')->paginate(50);
-
+        $input = Input::all();
+        if(!empty($input['id'])){
+            $shops = Shop::where('user_id', '=', $input['id'])->with('owner')->paginate(50);
+        }else{
+            $shops = Shop::with('owner')->paginate(50);
+        }
         return $shops;
     }
 
