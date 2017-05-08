@@ -8,6 +8,9 @@ main {
      flex: 1 0 auto;
 }
 
+.nav-wrapper #dropdown1 { 
+    width: 300px !important; 
+}
 /* clouds */
 .bg-clouds{
 	background: #5dbde9 url(/img/bg_top_front.gif) no-repeat center bottom -34px;

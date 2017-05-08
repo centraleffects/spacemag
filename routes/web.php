@@ -55,9 +55,9 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 });
 
 Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
-Route::get('shop/login-as/{user}', 'ShopOwnerController@loginAsSomeone')->middleware('owner');
+Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
 Route::get('shop/login-back', 'ShopOwnerController@loginBack')->middleware('auth.basic');
-
+Route::get('shop/set/{shop}', 'ShopOwnerController@setShopSession')->middleware('auth.basic');
 
 Route::get('test-event', function (){
 	// $user = auth()->user();
@@ -69,7 +69,6 @@ Route::get('test-mail', function (){
 	$user = App\User::first();
 	Mail::to($user->email)->send(new Welcome);
 });
-
 
 Route::get('try', function (){
 	// return session()->flush('selected_shop');
@@ -103,3 +102,4 @@ Route::get('try', function (){
 	$t1 = $tasks1[0]->merge($tasks2[0]);
 	return $t1;
 });
+

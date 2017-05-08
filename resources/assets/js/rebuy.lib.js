@@ -64,11 +64,12 @@
                 });
 
         },
-        confirm : function (message, doCallback,  btnYesLabel,  btnNoLabel, modalWidth){
+        confirm : function (message, doCallback,  btnYesLabel,  btnNoLabel, modalWidth, cancelCallBack){
             var btnYesLabel = btnYesLabel || 'OK',
                 btnNoLabel  = btnNoLabel  || 'Cancel',
                 modalWidth  = modalWidth  || '300',
                 doCallback  = doCallback  || 'function(){ return false; }',
+                doCallback  = cancelCallBack  || 'function(){ return false; }',
                 modalId     = 'confirmDialog',
                 alertDialogModal = $('#' + modalId),
                 $body       = $('body'),
@@ -100,6 +101,9 @@
                 $('#' + modalId).find('.btn-no-label').on('click', function(){
                     $('#' + modalId).modal('close');
                     $('#' + modalId).remove();
+                    try {
+                      cancelCallBack();
+                    }catch(e){}
                 });
         },
         

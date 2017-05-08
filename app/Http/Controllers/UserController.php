@@ -163,4 +163,8 @@ class UserController extends Controller
 
         dd($shops);
     }
+
+    public function shops(User $user){
+        return $user->ownedShops()->get();
+    }
 }
