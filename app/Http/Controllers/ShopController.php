@@ -133,7 +133,9 @@ class ShopController extends Controller
                 $all_tasks = array_collapse([$t1, $t2]);
 
                 $shop->all_tasks = $all_tasks;
+                $shop->workers = $this->workers($shop);
             });
+
 
             return $shops;
 
