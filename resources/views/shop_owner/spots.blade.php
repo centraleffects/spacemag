@@ -1,14 +1,9 @@
-<div class="row">
-	<div class="col s12 card">
-		<h2><small><a class="waves-effect waves-teal btn-flat green-text" ng-click="events.viewTab()"><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a></small> @{{selectedShop.name}} </h2>
-		
-	</div>
-</div>
-<div class="row">
+@component('shop_owner.layouts.app')
+<div class="row"  ng-controller="spotsController">
 	<div class="col s3">
 		<div class="card hoverable" ng-model="spots">
 			<div class="row card-content">
-				<span class="card-title">Salespots</span>
+				<span class="card-title">Salespots - {{session()->get("selected_shop")->name}}</span>
 				<div class="collection">
 					<a href="#!" 
 							class="list-spots collection-item" 
@@ -18,26 +13,35 @@
 							ng-bind="spot.name">
 					</a>
 				</div>
-				<small ng-show="!spots.data[0].name">Nothing here. Add a salespot now for @{{selectedShop.name}}</small>
+				<small ng-show="!spots.data[0].name">Nothing here. Add a salespot now for {{session()->get("selected_shop")->name}}</small>
 			</div>
 		</div>		
 	</div>
-	<div class="col s6 map-area-container" id="mapsection">
-		<div class="scrollspy panzoom-parent map-area white" id="floorplan-container">
-			<div class="panzoom" id="spot-panzoom" 
-					style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" 
-					width="2426" height="1121" data-width="2426" data-height="1121"/>
-				<div ng-repeat="(key, spot) in spots.data" 
-							class="shopspot tooltipped draggable" 
-							id="@{{'spt'+ spot.id}}" 
-							data-position="bottom" data-delay="50" 
-							ng-show="spots.data"
-							ng-click="events.viewSpot(key,spot);"
-							data-tooltip="@{{spot.name}}"
-							style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
+	<div class="col s6">
+		<div class="map-area-container" id="mapsection">
+			<div class="scrollspy panzoom-parent map-area white" id="floorplan-container">
+				<div class="panzoom" id="spot-panzoom" 
+						style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" 
+						width="2426" height="1121" data-width="2426" data-height="1121"/>
+					<div ng-repeat="(key, spot) in spots.data" 
+								class="shopspot tooltipped draggable" 
+								id="@{{'spt'+ spot.id}}" 
+								data-position="bottom" data-delay="50" 
+								ng-show="spots.data"
+								ng-click="events.viewSpot(key,spot);"
+								data-tooltip="@{{spot.name}}"
+								style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
+					</div>
 				</div>
 			</div>
 		</div>
+		<div class="card hoverable" ng-model="shops">
+			<div class="row card-content">
+				
+				<span class="card-title">Apply Categories for this Spot</span>
+				<div class="chips categories-autocomplete"></div>
+			</div>
+		</div>	
 	</div>
 	<div class="col s3">
 		<div class="card hoverable shopinfo">
@@ -139,3 +143,4 @@
 		</div> -->
 	</div>
 </div>
+@endcomponent
