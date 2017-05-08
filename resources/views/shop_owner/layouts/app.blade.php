@@ -17,7 +17,7 @@
                             {{ session()->get('flash_message')['type'] }}
                         @endslot
 
-                        @if(  session()->get('flash_message')['is_important'] != null )
+                        @if(  session()->get('flash_message')['is_important'] !== null )
                             @slot('is_important') alert-important @endslot
                         @endif
 
