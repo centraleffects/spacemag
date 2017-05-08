@@ -1,4 +1,5 @@
-window.app = angular.module('rebuy', [], function ($httpProvider){
+
+window.app = angular.module('rebuy', ["angucomplete-alt"], function ($httpProvider){
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
@@ -88,6 +89,7 @@ app.run(function($rootScope, $http, $timeout) {
 	$rootScope.isGeneratingPassword = false;
 	$rootScope.selectedShop = window.selectedShop;
 	$rootScope.newsletter_subscription = false;
+	$rootScope.focusTodo = null;
 
 	// @HeadsUp! selectedShop variable was declared in the ShopOwnerController using JavaScript Facade
 	$rootScope.generatePassword = function (){
@@ -114,6 +116,10 @@ app.run(function($rootScope, $http, $timeout) {
 			return false;
 		}
 	};
+
+	$rootScope.setFocusTodo = function (todo){
+        $rootScope.focusTodo = todo;
+    };
 
 	$rootScope.loginAs = function (){
 		console.log($rootScope.selectedUser);

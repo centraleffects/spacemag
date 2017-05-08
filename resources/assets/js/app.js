@@ -36,8 +36,16 @@ require('./bootstrap');
 
 		$('.chips-tags').material_chip({
 			data: [
-				{ tag: 'Jogging' },
-				{ tag: 'Running' },
+				{
+				    tag: 'Jogging',
+				    image: 'http://localhost:8000/images/bg.jpg', //optional
+				    id: 1, //optional
+				},
+				{
+				    tag: 'Running',
+				    image: 'http://localhost:8000/images/office.jpg', //optional
+				    id: 2, //optional
+				}
 			],
 			autocompleteData: {
 				'Cycling': null,

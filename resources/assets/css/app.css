@@ -1,4 +1,3 @@
-
 body {
     display: flex;
     min-height: 100vh;
@@ -664,4 +663,28 @@ li.collection-item.active:not(.todo-item) a {
 }
 .cursor-pointer{
     cursor: pointer;
+}
+
+.angucomplete-searching {
+    color: green !important;
+}
+
+.angucomplete-dropdown {
+    width: 185px !important;
+    border-color: #629d1c !important;
+    background-color: rgba(98, 157, 28, 0.5) !important;
+    position: relative;
+}
+
+.angucomplete-selected-row {
+    background-color: #629d1c !important;
+    color: #ffffff !important;
+}
+
+.angucomplete-row {
+    color: #ffffff !important;
+}
+
+.angucomplete-description {
+    font-size: 10px !important;
 }

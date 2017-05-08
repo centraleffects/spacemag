@@ -79,6 +79,9 @@ Route::group(['prefix' => 'workers', 'middleware' => 'auth:api'], function (){
 Route::group(['prefix' => 'tasks', 'middleware' => 'auth:api'], function (){
 	Route::post('store', 'TodoTaskController@store');
 	Route::get('{task}', 'TodoTaskController@show');
-	Route::post('update/{task}', 'TodoTaskController@update');
-	Route::delete('delete/{task}', 'TodoTaskController@destroy');
+	Route::delete('{task}/unassign', 'TodoTaskController@unAssign');
+	Route::post('{task}/assign/{user}', 'TodoTaskController@assignTask');
+	Route::post('{task}/update', 'TodoTaskController@update');
+	Route::post('{task}/finish', 'TodoTaskController@toggleDone');
+	Route::delete('{task}/delete', 'TodoTaskController@destroy');
 });
