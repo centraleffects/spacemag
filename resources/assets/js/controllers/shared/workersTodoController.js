@@ -84,9 +84,9 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     $scope.getTodos = function(index) {
         $scope.selectedShop = $scope.shops[index];
         $scope.todos = $scope.selectedShop.all_tasks;
-        for (var i = $scope.todos.length - 1; i >= 0; i--) {
-            $scope.todos[i].done = $scope.todos[i] == 1 ? true : false;
-        }
+        // for (var i = $scope.todos.length - 1; i >= 0; i--) {
+        //     $scope.todos[i].done = $scope.todos[i] == 1 ? true : false;
+        // }
     }
 
     $scope.isTodo = function(){
@@ -129,6 +129,7 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         workerTodoService.markAsDone($scope.todos[index].id).then(function (response){
             if( response.data.success ){
                 window.reBuy.toast(response.data.msg);
+                $scope.updateShopList();
             }else{
                 window.reBuy.alert(response.data.msg);
             }

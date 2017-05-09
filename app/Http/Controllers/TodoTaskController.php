@@ -10,7 +10,7 @@ use Mail;
 use App\TodoTask;
 use App\Shop;
 use App\User;
-use App\Mail\TodoTaskAssignment; 
+use App\Mail\TaskAssignment; 
 
 class TodoTaskController extends Controller
 {
@@ -48,14 +48,17 @@ class TodoTaskController extends Controller
         if( $user->todoTasks()->save($task) ){
 
             $username = ucfirst($user->first_name).' '.ucfirst($user->last_name);
+            $current_user = Auth::guard('api')->user();
+            $current_user_name = $current_user->first_name.' '.$current_user->last_name;
 
-            $mail = new TodoTaskAssignment($username, $task, Auth::guard('api')->user());
+            $mail = new TaskAssignment($username, $task, $current_user_name);
             
             try {
                 Mail::to($user->email)->send($mail);
 
                 return ['success' => 1, 'msg' => 'Task successfully assigned.'];
             } catch (\Exception $e) {
+                dd($e);
                 return ['success' => 0, 'msg' => 'Something went wrong while sending a notification email.'];
             }
 

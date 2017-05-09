@@ -186,9 +186,6 @@ class ShopOwnerController extends Controller
     }
 
     public function loginAsSomeone(User $user, $shopId = false, Request $request){
-        // dd($user->id); 
-        // dd(auth()->user()->id);   
-        // dd(session()->has('selected_shop'));  
 
         if( $shopId != false ){
             $shop = Shop::findOrFail($shopId);
