@@ -100,47 +100,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- <div id="list-info" class="card hoverable">
-			<div class="row" id="info-nav">
-				<input type="text" name="name" placeholder="Spot name"  ng-model="selectedSpot.name">
-			</div>
-			<div class="row card-content" id="info-content">
-				<ul class="collection">
-					<li class="collection-item"><textarea name="description" ng-model="selectedSpot.description" rows="50" placeholder="Description"></textarea></li>
-					<li class="collection-item"><input type="text" name="shop_url" ng-model="selectedSpot.url" placeholder="Homepage"></li>
-					<li class="collection-item"><input type="text" name="shop_postel" placeholder="Postel"></li>
-				</ul>
-			</div>
-			<div class="row card-content">
-				<div class="input-field">
-					<select name="currency"   id="currency" ng-model="selectedSpot.currency" 
-							ng-options="currency.value as currency.text for currency in currencyOptions">
-					</select>
-					<label>Currency</label>
-				</div>
-				<div class="input-field">
-					<select name="user_id"   id="user_id" ng-model="selectedSpot.user_id"
-							ng-options="owner.id as owner.name for owner in owners">
-							<option value="">Select Owner</option>
-					</select>
-					<label>Shop Owner</label>
-				</div>	
-			</div>
-			<div class="card-action row">
-				<div class="col">
-					<br>
-					<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew" ng-click="events.cancelSelectedIfNew()">
-					 Cancel
-					</button>
-					<button class="btn waves-effect waves-light blue" ng-show="!selectedSpot.isNew" ng-click="events.deleteSelected()">
-					 Delete
-					</button>
-					<button class="btn waves-effect waves-light green right"  type="submit" ng-click="events.updateSelected()">
-						@{{ selectedSpot.isNew ? 'Save' : 'Update' }}
-					</button><br><br>
-				</div>
-			</div>
-		</div> -->
 	</div>
 </div>
 @endcomponent

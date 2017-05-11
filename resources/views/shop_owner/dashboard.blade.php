@@ -111,9 +111,6 @@
 					</div>	
 				</div>
 	</div>
-	<div id="salespot-tab" ng-show="currentTab == 'salespot'">
-		
-	</div>
 </div>
 
 @endcomponent
