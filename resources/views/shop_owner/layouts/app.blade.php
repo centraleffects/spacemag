@@ -17,7 +17,7 @@
                             {{ session()->get('flash_message')['type'] }}
                         @endslot
 
-                        @if(  session()->get('flash_message')['is_important'] != null )
+                        @if(  session()->get('flash_message')['is_important'] !== null )
                             @slot('is_important') alert-important @endslot
                         @endif
 
@@ -44,7 +44,7 @@
                                     @if( auth()->user()->isOwner() )
                                         <li>
                                             <a href="{{ url('shop') }}" class="btn green waves-effect  waves-light">
-                                                Home
+                                                Shop Status
                                             </a>
                                         </li>
                                         <li>
@@ -58,8 +58,13 @@
                                             </a>
                                         </li>
                                         <li>
+                                            <a href="{{ url('shop/spots') }}" class="btn green waves-effect  waves-light">
+                                               Salespot
+                                            </a>
+                                        </li>
+                                        <li>
                                             <a href="#" class="btn green waves-effect  waves-light">
-                                                Shop Status
+                                               Articles
                                             </a>
                                         </li>
                                         <li>

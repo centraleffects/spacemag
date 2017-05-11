@@ -10,6 +10,7 @@ use Mail;
 
 use App\Shop;
 use App\User;
+use App\Salespot;
 use App\Mail\PasswordReset;
 use App\Http\Requests\ShopInvitationRequest;
 use App\Mail\ShopInvitation;
@@ -247,5 +248,11 @@ class ShopOwnerController extends Controller
         }
 
         return ['success' => $res ? 1 : 0, 'msg' => $msg];
+    }
+
+    public function spots(Salespot $id){
+
+        $this->includeUserOnJS();
+        return view('shop_owner.spots');
     }
 }

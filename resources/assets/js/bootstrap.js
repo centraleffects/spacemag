@@ -19,7 +19,7 @@ require('../password_strength/password_strength_lightweight.js');
 
 require('./rebuy.lib.js');
 
-import 'angucomplete-alt/angucomplete-alt.css';
+// import 'angucomplete-alt/angucomplete-alt.css';
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
