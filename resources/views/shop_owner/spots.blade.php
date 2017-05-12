@@ -95,7 +95,7 @@
 					 Delete
 					</button>
 					<button class="btn waves-effect waves-light green right"  type="submit" ng-click="events.updateSelectedSpot()">
-						@{{ selectedSpot.id && selectedSpot.isNew  ? 'Save' : 'Update' }} SPOT
+						@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }} SPOT
 					</button><br><br>
 				</div>
 			</div>

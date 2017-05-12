@@ -168,11 +168,7 @@ app.run(function($rootScope, $http, $timeout) {
 });
 
 
-materializeInit = function (){
-	Materialize.updateTextFields();
-}
-
-bindEvents = function($){
+var bindEvents = function($){
 
 	 $('.dropdown-button').dropdown({
       inDuration: 300,
