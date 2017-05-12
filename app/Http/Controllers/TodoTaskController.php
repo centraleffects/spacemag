@@ -92,10 +92,12 @@ class TodoTaskController extends Controller
     public function toggleDone(TodoTask $task){
         if( $task->done ){
             $task->done = false;
+            $task->status = 'in-progress';
             $msg = "Task successfully re-opened..";
             $action = 're-open';
         }else{
             $task->done = true;
+            $task->status = 'finished';
             $msg = "Task successfully marked as completed.";
             $action = 'mark as completed';
         }
@@ -121,5 +123,21 @@ class TodoTaskController extends Controller
             return ['success' => 1];
 
         return ['success' => 0];
+    }
+
+    public function clearTasksByShop(){
+        $shop_id = Input::get('shop_id');
+
+        $res = TodoTask::where([
+                ['done', '=', 1],
+                ['shop_id', '=', $shop_id]
+            ])->delete();
+
+        if( $res > 0 ){
+            $response = $res > 1 ? "tasks." : "task";
+            return ['success' => 1, 'msg' => "Successfully cleared {$res} {$response}"];
+        }
+
+        return ['success' => 0, 'msg' => 'No task has been affected.'];
     }
 }

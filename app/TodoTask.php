@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TodoTask extends Model
 {
+    use SoftDeletes;
+    
     protected $guarded = [ 'id' ];
 
     // assignee of this task

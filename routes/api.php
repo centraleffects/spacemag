@@ -84,4 +84,5 @@ Route::group(['prefix' => 'tasks', 'middleware' => 'auth:api'], function (){
 	Route::post('{task}/update', 'TodoTaskController@update');
 	Route::post('{task}/finish', 'TodoTaskController@toggleDone');
 	Route::delete('{task}/delete', 'TodoTaskController@destroy');
+	Route::post('clear', 'TodoTaskController@clearTasksByShop');
 });
