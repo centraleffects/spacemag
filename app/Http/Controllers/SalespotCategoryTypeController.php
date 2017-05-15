@@ -82,4 +82,9 @@ class SalespotCategoryTypeController extends Controller
     {
         //
     }
+
+
+    public function getlist(){
+        return SalespotCategoryType::paginate(50);
+    }
 }

@@ -140,6 +140,10 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
         doDrag : function($this){
             console.log($this);
             angular.element('.panzoom').panzoom({ disableZoom : true });
+        },
+        cancelSelectedSpotIfNew : function(){
+            scope.selectedSpot = {};
+            $scope.selectedSpotKey = 0;
         }
     }
 
@@ -181,27 +185,21 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
 
             })
 
-        //@TODO: should use $watch to handle model changes
-        angular.element('input[name="name"]').keyup(function(){
-            angular.element('.tooltipped').tooltip({delay: 50, html : true});
-        });
+            //@TODO: should use $watch to handle model changes
+            angular.element('input[name="name"]').keyup(function(){
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+            });
 
-           /* jQuery('.categories-autocomplete').material_chip({
-                autocompleteOptions: {
-                  data: {
-                    'Apple': null,
-                    'Microsoft': null,
-                    'Google': null
-                  },
-                  limit: Infinity,
-                  minLength: 1
-                }
-              });*/
 
         })(jQuery);
     }
 
     vm.updateList = function(){
+
+        shopService.categoryList().then(function(categoryList){
+             $scope.categories = categoryList;
+             console.log($scope.categories);
+        });
 
         shopService.shopList().then(function(shopList) {
             $scope.shops = shopList;

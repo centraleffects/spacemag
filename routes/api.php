@@ -37,6 +37,8 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 
 	Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
 
+	Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
+
 	Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
 	
 	Route::post('create', 'ShopController@create');
@@ -47,6 +49,11 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::post('{shop}/invite', 'ShopOwnerController@invite');
 	Route::post('{shop}/workers/invite', 'ShopOwnerController@inviteWorker');
 	Route::post('{shop}/newsletter-subscription/{user}', 'ShopOwnerController@toggleNewsletterSubscription');
+
+});
+
+Route::group(['prefix' => 'categories', 'middleware' => 'auth:api'], function(){
+	Route::get('list', 'SalespotCategoryTypeController@getlist');
 });
 
 Route::group(['prefix' => 'articles', 'middleware' => 'auth:api'], function (){

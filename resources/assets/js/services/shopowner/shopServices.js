@@ -17,7 +17,7 @@ app.factory('shopService', function($http, $timeout){
         
         categoryList : function(){
             if ( !promiseCategoryList ) {
-                promiseCategoryList = $http.get('/api/shops/categories?id='+window.user.id +'&api_token='+window.user.api_token)
+                promiseCategoryList = $http.get('/api/categories/list?id='+window.user.id +'&api_token='+window.user.api_token)
                 .then(function(response) {
                  return response.data;
              });
