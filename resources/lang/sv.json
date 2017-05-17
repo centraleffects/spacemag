@@ -1,0 +1,19 @@
+{
+    "Customers": "Customers",
+    "Clients": "Clients",
+    "Salespot": "Salespot",
+    "Shop Workers": "Handlare",
+    "Todo List": "Att göra lista",
+    "Workers Todo": "Arbetare Todo",
+    "Shops": "Butiker",
+    "An error occured while processing your request.": "Ett fel uppstod när din begäran skulle bearbetas.",
+    "The specified user is not a customer of this shop.": "Den angivna användaren är inte kund hos denna butik.",
+    "I love programming.": "Me encanta la programación.",
+    "You are now subscribed to :shop_name": "Du abonnerar nu på :shop_name",
+    "You have already subscribed to :shop_name": "Du har redan prenumererat på: :shop_name",
+    "This user is already a :user_classification of :shop_name": "Den här användaren är redan en :user_classification av :shop_name",
+    ":email has been invited to subscribe to :shop_name": ":email har blivit inbjuden att prenumerera på :shop_name",
+    "Sorry, you can't invite yourself to be a :user_classification of your own Shop.": "Tyvärr, du kan inte bjuda in dig själv för att vara en :user_classification av din egen butik.",
+    ":email has been invited to be a part of :shop_name family.": ":email har blivit inbjuden att vara en del av :shop_name -familjen.",
+    "You are loggedin as :role - ": "Du är inloggad som :role -"
+}

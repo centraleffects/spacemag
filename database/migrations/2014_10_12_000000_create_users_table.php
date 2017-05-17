@@ -43,7 +43,7 @@ class CreateUsersTable extends Migration
             $table->smallInteger('signed_agreement')->default(0);
             $table->smallInteger('is_email_confirmed')->default(0);
 
-            $table->string('lang')->default('se'); // defaults to Swedish
+            $table->string('lang')->default('sv'); // defaults to Swedish
             $table->string('api_token', 60)->unique();
 
             $table->rememberToken();

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use App\User;
+use Config;
 
 class LoginController extends Controller
 {
@@ -41,6 +42,7 @@ class LoginController extends Controller
 
     protected function authenticated($user)
     {
+        $this->setUserLocalization($user);
 
         if( session()->has('url.intended') ){
             return redirect()->intended( session()->get('url.intended') );
@@ -52,6 +54,12 @@ class LoginController extends Controller
         return \Redirect::to('shop');
     }
 
+    protected function setUserLocalization($user){
+        if( isset($user->lang) && array_key_exists($user->lang, Config::get('languages')) ){
+            session()->put('applocale', $user->lang);
+        }
+    }
+
     /**
      * Redirect the user to the Facebook authentication page.
      *
@@ -60,7 +68,6 @@ class LoginController extends Controller
     public function redirectToProvider()
     {
         $socialite = Socialite::driver('facebook');
-        // dd($socialite);
         return $socialite->redirect();
     }
 
@@ -89,6 +96,8 @@ class LoginController extends Controller
         if( $user ){
             \Auth::loginUsingId($user->id);
 
+            $this->setUserLocalization($user);
+
             if( !auth()->user()->isAdmin() )
                 return \Redirect::to('shop');
 
@@ -109,6 +118,7 @@ class LoginController extends Controller
             $user->role = 'customer';
 
             if( $user->save() ){
+                $this->setUserLocalization($user);
                 \Auth::loginUsingId($user->id);
             }
         }

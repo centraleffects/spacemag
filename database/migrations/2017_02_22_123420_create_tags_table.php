@@ -20,6 +20,7 @@ class CreateTagsTable extends Migration
 
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->longText('image')->nullable();
 
             $table->timestamps();
             $table->softDeletes();

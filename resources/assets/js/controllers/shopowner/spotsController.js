@@ -186,7 +186,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
             angular.element('.tooltipped').tooltip({delay: 50, html : true});
         });
 
-            jQuery('.categories-autocomplete').material_chip({
+           /* jQuery('.categories-autocomplete').material_chip({
                 autocompleteOptions: {
                   data: {
                     'Apple': null,
@@ -196,7 +196,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
                   limit: Infinity,
                   minLength: 1
                 }
-              });
+              });*/
 
         })(jQuery);
     }

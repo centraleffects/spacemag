@@ -1,7 +1,5 @@
 <?php
-use App\Mail\Welcome;
-use App\Shop;
-use App\TodoTask;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
+
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 
 // Routes for Facebook Auth
 Route::get('login/fb', 'Auth\LoginController@redirectToProvider');
@@ -73,12 +73,12 @@ Route::get('test-mail', function (){
 	Mail::to($user->email)->send(new Welcome);
 });
 
-Route::get('try/{shop_id}', function ($shop_id){
-	$res = TodoTask::where([
-			['done', '=', 1],
-			['shop_id', '=', $shop_id]
-		])->delete();
+Route::get('try/{lang}', function ($lang){
+	\App::setLocale($lang);
 
-    dd($res);
+	echo \App::getLocale()."<br>";
+	echo "user lang: ".auth()->user()->lang;
+	echo( __('I love programming.') );
+	dd( __("You are loggedin as :role - ", ['role' => auth()->user()->role]) );
 });
 

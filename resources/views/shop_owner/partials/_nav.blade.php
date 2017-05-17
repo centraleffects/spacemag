@@ -1,24 +1,38 @@
 @if( auth()->check() && auth()->user()->isOwner() )
 	<li>
-	    <a href="{{ url('shop/customers') }}">Home</a>
+	    <a href="{{ url('shop') }}">
+	        {!! __("Shops Status") !!}
+	    </a>
 	</li>
 	<li>
-	    <a href="{{ url('shop/customers') }}">Customers</a>
+	    <a href="{{ url('shop/customers') }}">
+	        {!! __("Customers") !!}
+	    </a>
 	</li>
 	<li>
-	    <a href="{{ url('shop/clients') }}">Clients</a>
+	    <a href="{{ url('shop/clients') }}">
+	        {!! __("Clients") !!}
+	    </a>
 	</li>
 	<li>
-	    <a href="#">Shop Status</a>
+	    <a href="{{ url('shop/spots') }}">
+	       {!! __("Salespot") !!}
+	    </a>
 	</li>
 	<li>
-	    <a href="{{ url('shop/workers') }}">Shop Workers</a>
+	    <a href="{{ url('shop/workers') }}">
+	        {!! __("Shop Workers") !!}
+	    </a>
 	</li>
 	<li>
-	    <a href="{{ url('shop/todo') }}">Todo List</a>
+	    <a href="{{ url('shop/todo') }}">
+	        {!! __("Todo List") !!}
+	    </a>
 	</li>
 	<li>
-	    <a href="{{ url('shop/workers/todo') }}">Todo for workers</a>
+	    <a href="{{ url('shop/workers/todo') }}">
+	        {!! __("Workers Todo") !!}
+	    </a>
 	</li>
 
 @else
