@@ -3,10 +3,10 @@
 	<div class="col s3">
 		<div class="card hoverable" ng-model="spots">
 			<div class="row card-content">
-				<span class="card-title">Salespots - {{session()->get("selected_shop")->name}}</span>
-				<div class="collection">
+				<span class="card-title">Salespots - {{!empty(session()) ? session()->get("selected_shop")->name : ''}}</span>
+				<div class="collection list-spots">
 					<a href="#!" 
-							class="list-spots collection-item" 
+							class="collection-item" 
 							id="@{{'sh'+ spot.id}}" 
 							ng-repeat="(key, spot) in spots.data" 
 							ng-click="events.viewSpot(this)"
@@ -89,12 +89,11 @@
 				<div class="row">
 					<div class="col s9">
 						<div class="input-field">
-							<input type="text" name="spot_location" ng-model="selectedSpot.spot_location" disabled="disabled">
-							<label>Location</label>
+							<input type="text" name="spot_location" ng-model="selectedSpot.spot_location" disabled="disabled" title="Spot Location">
 						</div>
 					</div>
 					<div class="col s3">
-						<a href="javascript:;">Change</a>
+						<a href="javascript:;" style="position: absolute;margin-top: 40px;" ng-click="events.changeSpotLocation()" >Change</a>
 					</div>
 				</div>
 

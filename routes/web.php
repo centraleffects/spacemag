@@ -39,6 +39,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
     Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
+    Route::get('/categories/delete/{category}', ['uses' =>'AdminController@categories']); 
+    Route::get('/categories/{id}', ['uses' =>'AdminController@categories']); 
+
+    Route::post('/categories/new', ['uses' =>'AdminController@categories']); 
     
 });
 
@@ -58,7 +62,7 @@ Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
 Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
 Route::get('shop/login-back', 'ShopOwnerController@loginBack')->middleware('auth.basic');
 Route::get('shop/set/{shop}', 'ShopOwnerController@setShopSession')->middleware('auth.basic');
-Route::get('shop/spots', 'ShopOwnerController@spots')->middleware('auth.basic');
+Route::get('shop/spots', 'ShopOwnerController@spots')->middleware('owner');
 Route::get('shop/spots/{id}', 'ShopOwnerController@spots')->middleware('auth.basic');
 
 Route::get('test-event', function (){
