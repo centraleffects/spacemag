@@ -34,7 +34,7 @@
 									@component('layouts._partials.dragicon')
 										@slot('style') fill-grey @endslot
 									@endcomponent
-									<label for="_done_@{{$index}}" class="mark-as-complete circular-button-view @{{ todo.done ? 'done' : '' }}" ng-click="toggleDone($index)">
+									<label for="_done_@{{$index}}" class="mark-as-complete circular-button-view" ng-class="todo.done ? 'done' : ''" ng-click="toggleDone($index)">
 										@include('layouts._partials.checkbox')
 									</label>
 									<input type="checkbox" ng-model="todo.done" id="_done_@{{$index}}" style="display: none;" />

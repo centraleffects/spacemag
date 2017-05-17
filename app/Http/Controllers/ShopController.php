@@ -151,14 +151,14 @@ class ShopController extends Controller
 
         }
 
-         $shop->user_id = $user->id ?: 1;
-         $shop->name = $input['name'];
-         $shop->description = $input['description'];
-         $shop->url = $input['url'];
-         $shop->currency = $input['currency'];
-         $shop->slug = $input['slug'];
-         $shop->commission_article_sale = $input['commission_article_sale'];
-         $shop->commission_salespot = $input['commission_salespot'];
+        $shop->user_id = $user->id ?: 1;
+        $shop->name = $input['name'];
+        $shop->description = $input['description'];
+        $shop->url = $input['url'];
+        $shop->currency = $input['currency'];
+        $shop->slug = $input['slug'];
+        $shop->commission_article_sale = $input['commission_article_sale'];
+        $shop->commission_salespot = $input['commission_salespot'];
 
 
         if( $shop->update() ){
@@ -213,10 +213,24 @@ class ShopController extends Controller
             $shops->each(function ($shop, $index){
                 $t1 = collect($shop->tasks)->toArray();
                 $t2 = collect( $shop->todoTasks )->toArray();
-                $all_tasks = array_collapse([$t1, $t2]);
 
+                foreach ($t1 as $key => $task) {
+                    // dd($task);
+                    $t1[$key]["done"] = $task["done"] == 1 ? true : false;
+                }
+
+                foreach ($t2 as $key => $task) {
+                    // dd($task);
+                    $t2[$key]["done"] = $task["done"] == 1 ? true : false;
+                }
+
+                $all_tasks = array_collapse([$t1, $t2]);
+                
                 $shop->all_tasks = $all_tasks;
+
                 $shop->workers = $this->workers($shop);
+
+
             });
 
 

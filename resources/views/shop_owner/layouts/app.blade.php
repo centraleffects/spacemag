@@ -17,11 +17,11 @@
                             {{ session()->get('flash_message')['type'] }}
                         @endslot
 
-                        @if(  session()->get('flash_message')['is_important'] !== null )
+                        @if( isset(session()->get('flash_message')['is_important']) )
                             @slot('is_important') alert-important @endslot
                         @endif
 
-                        @if( session()->get('flash_message')['custom_class'] !== null )
+                        @if( isset(session()->get('flash_message')['custom_class']) )
                             @slot('custom_class') session->get('flash_message')['custom_class'] @endslot
                         @endif
                         
@@ -31,61 +31,56 @@
 
                 @if( session()->has('loggedin_as_someone') )
                 <div class="alert alert-success alert-important alert-imphasis" role="alert">
-                    You are loggedin as customer: {{ auth()->user()->first_name.' '.auth()->user()->last_name }} ({{ auth()->user()->email }}).
+                    {!! __("You are loggedin as :role :", ['role' => auth()->user()->role]) !!} {{ Helper::getUserFullName(auth()->user()) }} ({{ auth()->user()->email }}).
                     <a class="btn orange btn-small" href="{{ url('shop/login-back') }}">End</a>    
                 </div>
                 @endif
                 <div class="toolbar row">
                     <div class="col s12">
                         <nav>
-                            <div class="nav-wrapper">
-                                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <div class="nav-wrapper nav-content">
+                                <ul id="nav-mobile tabs tabs-transparent" class="right hide-on-med-and-down">
 
                                     @if( auth()->user()->isOwner() )
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop') }}" class="btn green waves-effect  waves-light">
-                                                Shop Status
+                                                {!! __("Shops Status") !!}
                                             </a>
                                         </li>
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/customers') }}" class="btn green waves-effect  waves-light">
-                                                Customers
+                                                {!! __("Customers") !!}
                                             </a>
                                         </li>
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/clients') }}" class="btn green waves-effect  waves-light">
-                                                Clients
+                                                {!! __("Clients") !!}
                                             </a>
                                         </li>
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/spots') }}" class="btn green waves-effect  waves-light">
-                                               Salespot
+                                               {!! __("Salespot") !!}
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="#" class="btn green waves-effect  waves-light">
-                                               Articles
-                                            </a>
-                                        </li>
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/workers') }}" class="btn green waves-effect waves-light">
-                                                Shop Workers
+                                                {!! __("Shop Workers") !!}
                                             </a>
                                         </li>
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/todo') }}" class="btn green waves-effect waves-light">
-                                                Todo List
+                                                {!! __("Todo List") !!}
                                             </a>
                                         </li>
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/workers/todo') }}" class="btn green waves-effect waves-light">
-                                                Todo for workers
+                                                {!! __("Workers Todo") !!}
                                             </a>
                                         </li>
                                     @else
-                                        <li>
+                                        <li class="tab">
                                             <a href="{{ url('shop') }}" class="btn green waves-effect waves-light">
-                                                Shops
+                                                {!! __("Shops") !!}
                                             </a>
                                         </li>                                        
                                     @endif

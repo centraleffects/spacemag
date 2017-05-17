@@ -1,21 +1,23 @@
 @component('shop_owner.layouts.app')
-	@slot('controller') ng-controller="ArticleController" @endslot
-
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Articles</h5>
 			<ul class="collection">
-				<li class="collection-item lighten-2 white-text-important" ng-repeat="x in articles" ng-click="viewArticle($index)">
+				@foreach($articles as $article)
+				<li class="collection-item lighten-2 white-text-important">
 					@component('layouts._partials.dragicon')
 						@slot('style') fill-white @endslot
 					@endcomponent
-					<span>@{{ x.name }}</span>
+					<span>{{ $article->name }}</span>
 
-					<a href="#!" class="right white-text" title="Delete"><i class="fa fa-trash"></i></a>
+					<a href="#!" class="right white-text" title="Delete" data-id="{{ $article->id }}">
+						<i class="fa fa-trash"></i>
+					</a>
 			    </li>
+			    @endforeach
 			</ul>
 			<div class="card-action">
-				<button class="btn blue waves-effect waves-light" ng-click="addNewArticle()">
+				<button class="btn blue waves-effect waves-light" onclick="addNewArticle()">
 					<i class="fa fa-plus"></i> Add New Article
 				</button>
 			</div>

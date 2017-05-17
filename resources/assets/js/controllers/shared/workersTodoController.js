@@ -84,9 +84,6 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     $scope.getTodos = function(index) {
         $scope.selectedShop = $scope.shops[index];
         $scope.todos = $scope.selectedShop.all_tasks;
-        for (var i = $scope.todos.length - 1; i >= 0; i--) {
-            $scope.todos[i].done = $scope.todos[i] == 1 ? true : false;
-        }
     }
 
     $scope.isTodo = function(){
@@ -129,6 +126,7 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         workerTodoService.markAsDone($scope.todos[index].id).then(function (response){
             if( response.data.success ){
                 window.reBuy.toast(response.data.msg);
+                $scope.updateShopList();
             }else{
                 window.reBuy.alert(response.data.msg);
             }
@@ -144,6 +142,17 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         angular.forEach(oldTodos, function(todo) {
             if (!todo.done) $scope.todos.push(todo);
         });
+
+        workerTodoService.clear($scope.selectedShop.id).then(function (response){
+            if( response.data.success == 1 ){
+                reBuy.toast(response.data.msg);
+            }else{
+                reBuy.alert(response.data.msg);
+            }
+        }, function (response){
+            reBuy.alert("Something went wrong. Please try again later.");
+        });
+
     };
 
     $scope.unAssignTask = function(todo) {

@@ -1,5 +1,4 @@
 <?php
-use App\Mail\Welcome;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
+
+Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 
 // Routes for Facebook Auth
 Route::get('login/fb', 'Auth\LoginController@redirectToProvider');
@@ -76,36 +77,12 @@ Route::get('test-mail', function (){
 	Mail::to($user->email)->send(new Welcome);
 });
 
-Route::get('try', function (){
-	// return session()->flush('selected_shop');
-	$user = auth()->user();
+Route::get('try/{lang}', function ($lang){
+	\App::setLocale($lang);
 
-
-	$res = $user->ownedShops()->with('todoTasks', 'todoTasks.owner', 'tasks', 'tasks.owner')->paginate(10);
-
-
-	$res->each(function ($shop, $index){
-		$t1 = collect($shop->tasks)->toArray();
-		$t2 = collect( $shop->todoTasks )->toArray();
-		$all_tasks = array_collapse([$t1, $t2]);
-
-		$shop->all_tasks = $all_tasks;
-	});
-
-	dd($res);
-	$new_res->toArray();
-
-	$res->all_tasks = $new_res[0];
-	dd($res);
-	$tasks1 = collect($user->ownedShops()->with('todoTasks')->get())->map(function ($shop){
-		return $shop->todoTasks()->get();
-	});
-	
-	$tasks2 =  collect($user->ownedShops()->with('tasks')->get())->map(function ($shop){
-		return $shop->tasks()->get();
-	});
-	
-	$t1 = $tasks1[0]->merge($tasks2[0]);
-	return $t1;
+	echo \App::getLocale()."<br>";
+	echo "user lang: ".auth()->user()->lang;
+	echo( __('I love programming.') );
+	dd( __("You are loggedin as :role - ", ['role' => auth()->user()->role]) );
 });
 

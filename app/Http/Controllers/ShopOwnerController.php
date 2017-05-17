@@ -52,7 +52,16 @@ class ShopOwnerController extends Controller
 
     public function articles(){
         $this->includeUserOnJS();
-    	return view('shop_owner.articles');
+
+        $articles = auth()->user()->articles()->get();
+        // $tags = 
+
+        JavaScript::put([
+            'articles' => $articles
+        ]);
+
+        
+    	return view('shop_owner.articles')->withArticles($articles);
     }
 
     public function customers(){
@@ -96,14 +105,15 @@ class ShopOwnerController extends Controller
         // prevents duplicate by clicking the Subscribe button from email multiple times
         if( $shop->users()->find($user->id) != null )
             return redirect('shop')->withFlash_message([
-                    'msg' => 'You have already subscribed to '.$shop->name,
+                    'msg' => __("You have already subscribed to :shop_name", ["shop_name" => $shop->name]),
                     'type' => 'danger',
                     'is_important' => true
                 ]);
         if( $shop->users()->save($user) )
             return redirect('shop')->withFlash_message([
-                    'msg' => 'You are now subscribed to '.$shop->name,
-                    'type' => 'success'
+                    'msg' => __('You are now subscribed to :shop_name', ["shop_name" => $shop->name]),
+                    'type' => 'success',
+                    'is_important' => false
                 ]);
 
         return ['success' => 0];
@@ -126,7 +136,7 @@ class ShopOwnerController extends Controller
             }
         }
 
-        return ['success' => 0, 'msg' => 'The specified user is not a customer of this shop.'];
+        return ['success' => 0, 'msg' => __('The specified user is not a customer of this shop.')];
     }
 
     public function invite(Shop $shop, ShopInvitationRequest $request, $role = "customer"){
@@ -153,23 +163,32 @@ class ShopOwnerController extends Controller
             }else{
                 // prevents duplicate of subscribers
                 if( $shop->users()->find($user->id) != null  )
-                    return ['success' => 0, 'msg' => 'This user is already a '.$user_classification.' of '.$shop->name];
+                    return [
+                        'success' => 0, 
+                        'msg' => __(
+                                "This user is already a :user_classification of :shop_name", 
+                                ["user_classification" => $user_classification, "shop_name" => $shop->name]
+                            )
+                        ];
 
                 // prevents owner to invite himself
                 if( auth()->user()->email == $input['email'] )
                     return [
                         'success' => 0, 
-                        'msg' => "Sorry, you can't invite yourself to be a $user_classification of your own Shop."
+                        'msg' => __("Sorry, you can't invite yourself to be a :user_classification of your own Shop.", 
+                                    ["user_classification" => $user_classification])
                     ];
 
             }
 
             if( $role == 'customer' ){
                 $mail = new ShopInvitation($shop, $user);
-                $msg = $user->email." has been invited to subscribe to ".$shop->name;
+                $msg = __(":email has been invited to subscribe to :shop_name", 
+                            ["email" => $user->email, "shop_name" => $shop->name]);
             }else{
                 $mail = new ShopWorkerInvitation($shop, $user, $current_user);
-                $msg = $user->email." has been invited to be a part of ".$shop->name.' family.';
+                $msg = __(":email has been invited to be a part of :shop_name family.", 
+                            ["email" => $user->email, "shop_name" => $shop->name]);
             }
 
             Mail::to($input['email'])->send($mail);
@@ -178,7 +197,7 @@ class ShopOwnerController extends Controller
 
         } catch (\Exception $e) {
             Log::error($e);
-            return ['success' => 0, 'msg' => "An error occured while processing your request.", 'errors' => $e];
+            return ['success' => 0, 'msg' => __("An error occured while processing your request."), 'errors' => $e];
         }
     }
 
@@ -187,9 +206,6 @@ class ShopOwnerController extends Controller
     }
 
     public function loginAsSomeone(User $user, $shopId = false, Request $request){
-        // dd($user->id); 
-        // dd(auth()->user()->id);   
-        // dd(session()->has('selected_shop'));  
 
         if( $shopId != false ){
             $shop = Shop::findOrFail($shopId);
@@ -200,6 +216,8 @@ class ShopOwnerController extends Controller
             $shop = session()->get('selected_shop');
 
             $auth_user_id = auth()->user()->id;
+            // preserve the current localization
+            $currentLocale = \App::getLocale();
 
             // validate if user actually own this shop
             // and make sure the loggedin user is not also the specified user
@@ -208,6 +226,8 @@ class ShopOwnerController extends Controller
                 $request->session()->regenerate();
 
                 auth()->loginUsingId($user->id);
+
+                session()->put('applocale', $currentLocale); 
 
                 // the shopowner who logged in as customer/client
                 session()->put('loggedin_as_someone', ['id' => $auth_user_id, 'url' => url()->previous()]);
@@ -222,10 +242,15 @@ class ShopOwnerController extends Controller
         if( $request->session()->has('loggedin_as_someone') ){
             $real_auth = session()->get('loggedin_as_someone');
 
+             // preserve the current localization
+            $currentLocale = \App::getLocale();
+
             $request->session()->flush();
             $request->session()->regenerate();
 
             auth()->loginUsingId($real_auth['id']);
+            
+            session()->put('applocale', $currentLocale); 
 
             return redirect($real_auth['url'])->withFlash_message([
                     'type' => 'info',

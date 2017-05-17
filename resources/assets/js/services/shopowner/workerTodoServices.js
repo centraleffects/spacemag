@@ -53,6 +53,16 @@ app.service('workerTodoService', function($http, $timeout) {
 				}
 			});
 		},
+
+		clear: function (shopId){
+			return $http({
+				url: '/api/tasks/clear?api_token='+window.user.api_token,
+				method: 'post',
+				data: {
+					shop_id: shopId
+				}
+			});
+		}
 	};
 
 });

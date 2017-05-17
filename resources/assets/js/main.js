@@ -1,4 +1,3 @@
-import 'angucomplete-alt' ;
 window.app = angular.module('rebuy', ["angucomplete-alt"], function ($httpProvider){
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -167,10 +166,12 @@ app.run(function($rootScope, $http, $timeout) {
 	}
 });
 
+function materializeInit(){
+	Materialize.updateTextFields();
+}
 
-var bindEvents = function($){
-
-	 $('.dropdown-button').dropdown({
+bindEvents = function($){
+	$('.dropdown-button').dropdown({
       inDuration: 300,
       outDuration: 225,
       constrainWidth: true, // Does not change width of dropdown to that of the activator
@@ -182,4 +183,4 @@ var bindEvents = function($){
     }
   );
 
-}
+};
