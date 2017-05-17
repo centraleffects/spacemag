@@ -27,7 +27,7 @@
 								class="shopspot tooltipped draggable" 
 								id="@{{'spt'+ spot.id}}" 
 								data-position="bottom" data-delay="50" 
-								ng-show="spots.data"
+								ng-show="spot.x_coordinate && spot.y_coordinate"
 								ng-click="events.viewSpot(key,spot);"
 								data-tooltip="@{{spot.name}}"
 								style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
@@ -35,16 +35,40 @@
 				</div>
 			</div>
 		</div>
-		<div class="card hoverable" ng-model="shops">
+		<div class="card hoverable" ng-model="shops"  ng-show="!empty(selectedSpot)">
 			<div class="row card-content">
-				
-				<span class="card-title">Apply Categories for this Spot</span>
-				<div class="chips categories-autocomplete"></div>
+				<div class="input-field col s12">
+					<span class="card-title">Apply Categories for this Spot</span>
+					<select multiple>
+					  <option ng-repeat="(key, category) in categories.data" 
+									id="@{{'cat'+ category.id}}" 
+									ng-bind="category.name">
+						</option>
+					</select>
+				</div>
 			</div>
 		</div>	
 	</div>
 	<div class="col s3">
-		<div class="card hoverable shopinfo">
+		<div class="card hoverable">
+			<div class="card-action row">
+					<div class="col">
+						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew" ng-click="events.cancelSelectedSpotIfNew()">
+						 Cancel
+						</button>
+						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.id && !selectedSpot.isNew" ng-click="events.deleteSelectedSpot()">
+						 Delete
+						</button> 
+						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelectedSpot()"   ng-show="selectedSpot.name">
+							@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }} SPOT
+						</button> 	
+						<button class="btn waves-effect waves-light blue" ng-show="!selectedSpot.name" ng-click="events.addSaleSpot(null,null)">
+						 New SaleSpot
+						</button>
+					</div>
+			</div>
+		</div>
+		<div class="card hoverable shopinfo"  ng-show="selectedSpot.name">
 			<div class="row card-content">
 				<span class="card-title">Spot Information</span>
 				<div class="input-field">
@@ -62,9 +86,16 @@
 					<label>Spot Code</label>
 				</div>
 
-				<div class="input-field">
-					<input type="text" name="spot_location" ng-model="selectedSpot.spot_location">
-					<label>Location</label>
+				<div class="row">
+					<div class="col s9">
+						<div class="input-field">
+							<input type="text" name="spot_location" ng-model="selectedSpot.spot_location" disabled="disabled">
+							<label>Location</label>
+						</div>
+					</div>
+					<div class="col s3">
+						<a href="javascript:;">Change</a>
+					</div>
 				</div>
 
 				<div class="input-field">
@@ -84,20 +115,6 @@
 					<label>Status</label>
 				</div>
 
-			</div>
-			<div class="card-action row">
-				<div class="col">
-					<br>
-					<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew" ng-click="events.cancelSelectedSpotIfNew()">
-					 Cancel
-					</button>
-					<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.id && !selectedSpot.isNew" ng-click="events.deleteSelectedSpot()">
-					 Delete
-					</button>
-					<button class="btn waves-effect waves-light green right"  type="submit" ng-click="events.updateSelectedSpot()">
-						@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }} SPOT
-					</button><br><br>
-				</div>
 			</div>
 		</div>
 	</div>
