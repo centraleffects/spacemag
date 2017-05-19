@@ -19,7 +19,12 @@ use Illuminate\Http\Request;
 // });
 
 
+Route::get('test', function (){
+	App::setLocale('sv');
+	dd(session()->has('applocale'));
+	dd(App::getLocale());
 
+});
 
 Route::group(['prefix' => 'test', 'middleware' => 'auth:api'], function(){
 	Route::get('users', 'UserController@test');

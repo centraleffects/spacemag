@@ -38,9 +38,9 @@ class TodoTaskController extends Controller
 
 
         if( $task->id )
-            return ['success' => 1, 'msg' => 'New task has been saved.'];
+            return ['success' => 1, 'msg' => __("messages.new_task_created")];
 
-        return ['success' => 0, 'msg' => "Sorry, we can't process your request right now."];
+        return ['success' => 0, 'msg' =>  __("errors.error_while_processing") ];
 
     }
 
@@ -56,16 +56,16 @@ class TodoTaskController extends Controller
             try {
                 Mail::to($user->email)->send($mail);
 
-                return ['success' => 1, 'msg' => 'Task successfully assigned.'];
+                return ['success' => 1, 'msg' => __('messages.task_assigned')];
             } catch (\Exception $e) {
                 dd($e);
-                return ['success' => 0, 'msg' => 'Something went wrong while sending a notification email.'];
+                return ['success' => 0, 'msg' => __('errors.mail_noti_failed')];
             }
 
         }
 
             
-        return ['success' => 0, 'msg' => 'Unable to assign a task right now. Please try again later.'];
+        return ['success' => 0, 'msg' => __('errors.assign_task_failed')];
     }
 
     public function show(TodoTask $task)
@@ -84,21 +84,21 @@ class TodoTaskController extends Controller
         }
 
         if( $task->update() )
-            return ['success' => 1, 'msg' => 'Your changes have been saved.'];
+            return ['success' => 1, 'msg' => __('messages.changes_saved')];
 
-        return ['success' => 0, 'msg' => 'Something went wrong while trying to update this task.'];
+        return ['success' => 0, 'msg' => __('errors.task_update_failed')];
     }
 
     public function toggleDone(TodoTask $task){
         if( $task->done ){
             $task->done = false;
             $task->status = 'in-progress';
-            $msg = "Task successfully re-opened..";
+            $msg = __('messages.reopen_task');
             $action = 're-open';
         }else{
             $task->done = true;
             $task->status = 'finished';
-            $msg = "Task successfully marked as completed.";
+            $msg = __('messages.complete_task');
             $action = 'mark as completed';
         }
 
@@ -112,9 +112,9 @@ class TodoTaskController extends Controller
     public function destroy(TodoTask $task)
     {
         if( $task->delete() )
-            return ['success' => 1, 'msg' => "Successfully deleted."];
+            return ['success' => 1, 'msg' => __('messages.deleted')];
 
-        return ['success' => 0, 'msg' => "Sorry, we can't process your request right now."];
+        return ['success' => 0, 'msg' => __("errors.process_failed")];
     }
 
     public function unAssign(TodoTask $task){
@@ -138,6 +138,6 @@ class TodoTaskController extends Controller
             return ['success' => 1, 'msg' => "Successfully cleared {$res} {$response}"];
         }
 
-        return ['success' => 0, 'msg' => 'No task has been affected.'];
+        return ['success' => 0, 'msg' => __('errors.no_task_affected')];
     }
 }

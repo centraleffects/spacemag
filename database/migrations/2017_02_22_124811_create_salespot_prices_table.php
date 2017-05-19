@@ -13,7 +13,7 @@ class CreateSalespotPricesTable extends Migration
      */
     public function up()
     {
-         Schema::create('salespot_prices', function (Blueprint $table) {
+        Schema::create('salespot_prices', function (Blueprint $table) {
             
             $table->increments('id')->unique();
 
@@ -37,6 +37,6 @@ class CreateSalespotPricesTable extends Migration
      */
     public function down()
     {
-         Schema::dropIfExists('salespot_prices');
+        Schema::dropIfExists('salespot_prices');
     }
 }
