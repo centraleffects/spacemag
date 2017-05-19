@@ -64,6 +64,11 @@
                                             </a>
                                         </li>
                                         <li class="tab">
+                                            <a href="{{ url('shop/articles') }}" class="btn green waves-effect  waves-light">
+                                               {!! __("Articles") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
                                             <a href="{{ url('shop/workers') }}" class="btn green waves-effect waves-light">
                                                 {!! __("Shop Workers") !!}
                                             </a>

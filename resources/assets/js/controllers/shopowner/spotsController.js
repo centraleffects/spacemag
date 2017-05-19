@@ -13,6 +13,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
     $scope.spots.data = {};
     $scope.selectedSpot = {};
     $scope.selectedSpotKey = null;
+    $scope.changeSpotLocation = false;
 
     var vm = this;
 
@@ -32,6 +33,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
                 return false;
             }
             shop = $this.shop;
+            console.log(shop);
             angular.element('.list-shops').removeClass('active');
             angular.element('#sh'+shop.id).addClass('active');
             $scope.selectedShopKey = $this.key;
@@ -96,35 +98,48 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
         },
 
         addSaleSpot : function(x,y){
-            console.log(x,y);
-            if(Object.keys($scope.spots.data).length){
+
+            if(Object.keys($scope.spots.data).length && !$scope.changeSpotLocation){
                 var key = Object.keys($scope.spots.data).length;
                 id = parseInt($scope.spots.data[key-1].id) + 1;
             }else{
                 var key = 0, id = 1;
             }
 
-            $scope.spots.data[key] = { name : 'New Spot', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
-            if(key==0){
-                $scope.selectedSpot = $scope.spots.data[key];
-                $scope.selectedSpotKey = 0;
+            if($scope.changeSpotLocation){
+                 $scope.selectedSpot.spot_location = x + ',' + y;
+                 $scope.selectedSpot.x_coordinate = x;
+                 $scope.selectedSpot.y_coordinate = y;
+                 $scope.spots.data[$scope.selectedSpotKey].x_coordinate = x;
+                 $scope.spots.data[$scope.selectedSpotKey].y_coordinate = y;
+                 $scope.changeSpotLocation = false;
+                 $scope.events.locationUpdated();
+                 vm.materializeInit();
+                 $timeout(function () {
+                    vm.materializeInit();
+                 },300);
+                 return false;
             }
 
-            angular.element('#dashleft-sidebar #salespot ul li:first-child').click();
+            $scope.spots.data[key] = { name : 'New Spot', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true, };
+            if(x && y){
+                $scope.spots.data[key].spot_location =  x + ',' + y;
+            }
+            $scope.selectedSpot = $scope.spots.data[key];
+            $scope.selectedSpotKey = key;
+
             angular.element('.tooltipped').tooltip({delay: 50, html : true});
-
-
             $timeout(function () {
-                angular.element('#dashleft-sidebar #salespot  ul li#sp' + id).click();
+                angular.element('.list-spots a#sh' + $scope.selectedSpot.id).click();
+                vm.materializeInit();
             },200);
         },
 
         viewSpot : function(key,value){
 
             $scope.selectedSpotKey = key;
-            $scope.selectedSpot = value;
-            if(value.id){
-                location.hash = '#!/' + value.id;
+            if($scope.selectedSpot.id){
+                location.hash = '#!/' + $scope.selectedSpot.id;
             }else{
                 location.hash = '#!/';
             }
@@ -133,7 +148,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
             $timeout(function () {
                 vm.materializeInit();
                 angular.element('.shopspot').removeClass('green');
-                angular.element('#spt'+value.id).addClass('green');
+                angular.element('#spt'+$scope.selectedSpot.id).addClass('green');
             },500);
         },
 
@@ -141,9 +156,35 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
             console.log($this);
             angular.element('.panzoom').panzoom({ disableZoom : true });
         },
+
         cancelSelectedSpotIfNew : function(){
-            scope.selectedSpot = {};
-            $scope.selectedSpotKey = 0;
+            if($scope.selectedSpot.isNew){
+                var data = [];
+                 for (var k in $scope.spots.data){
+                     if (typeof $scope.spots.data[k] !== 'function') {
+                      if($scope.spots.data[k].id !== $scope.selectedSpot.id){
+                        data.push($scope.spots.data[k]);
+                      }
+                    }
+                  }
+                  $scope.spots.data = data;
+                  $timeout(function () {
+                      angular.element('.list-spots a:first-child').click();
+                     // $scope.selectedSpot = $scope.spots.data[0];
+                     // $scope.selectedSpotKey = 0;
+                      vm.materializeInit();
+                    },500);
+                  
+            }
+        },
+
+        changeSpotLocation : function(){
+            $scope.changeSpotLocation = true;
+            window.reBuy.alert('Double click on the map to select new location.');
+        },
+
+        locationUpdated : function(){
+            vm.materializeInit();
         }
     }
 
@@ -159,7 +200,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
                 var parentOffset = $(this).offset(); 
                 var relX = (e.pageX - parentOffset.left) - 12;
                 var relY = (e.pageY - parentOffset.top) - 12;
-
+                
                 $scope.events.addSaleSpot(relX,relY);
 
             });
@@ -198,7 +239,6 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
 
         shopService.categoryList().then(function(categoryList){
              $scope.categories = categoryList;
-             console.log($scope.categories);
         });
 
         shopService.shopList().then(function(shopList) {

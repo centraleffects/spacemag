@@ -1,35 +1,49 @@
 @component('shop_owner.layouts.app')
 	@slot('left')
-		<div class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Articles</h5>
-			<ul class="collection">
-				@foreach($articles as $article)
-				<li class="collection-item lighten-2 white-text-important">
-					@component('layouts._partials.dragicon')
-						@slot('style') fill-white @endslot
-					@endcomponent
-					<span>{{ $article->name }}</span>
+		<div class="card hoverable">
+			<div class="row card-content">
+				
+				<span class="card-title">Article List</span>
 
-					<a href="#!" class="right white-text" title="Delete" data-id="{{ $article->id }}">
-						<i class="fa fa-trash"></i>
-					</a>
-			    </li>
-			    @endforeach
-			</ul>
-			<div class="card-action">
-				<button class="btn blue waves-effect waves-light" onclick="addNewArticle()">
-					<i class="fa fa-plus"></i> Add New Article
-				</button>
+				<div class="nav-wrapper">
+			      <form>
+			        <div class="input-field">
+			          <input id="search" type="search" required>
+			          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+			          <i class="material-icons">close</i>
+			        </div>
+			      </form>
+			    </div>
+			    <div><a href="javascript:;;">Filter Result</div>
+    			<div>
+					<ul class="collection">
+								
+							@forelse ($articles as $article)
+								<li 	
+									class="collection-item" 
+									id="{{ $article->id }}"  
+									>
+									<a  href="/shop/articles/{{ $article->id }}">{{$article->name}}</a>
+									<a  href="/shop/articles/delete/{{ $article->id }}" class="secondary-content">
+										<i class="fa fa-trash-o right" aria-hidden="true"></i>
+									</a>
+								</li>
+							@empty
+								<li class="collection-item">No result to display</li>
+							@endforelse
+
+					</ul>
+				</div>
 			</div>
 		</div>
 	@endslot
 	@slot('center')
-		<div id="" class="row">
+		<div  class="row">
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
-					<div class="card-title">Article Details</div>
+					<div class="card-title">Details</div>
 					<div class="input-field">
-						<input type="text" name="name" />
+						<input type="text" name="name"  value="{{ $selectedArticle->name }}"/>
 						<label>Name</label>
 					</div>
 					<div class="input-field">
@@ -101,7 +115,76 @@
 	@endslot
 	@slot('right')
 		<div class="row">
-			@include('shop_owner.partials._shopinfo')
+			<div class="card hoverable"><!-- Shop Information -->
+				<div class="card-content">
+					<div class="card-title">Shop Information</div>
+					<div class="input-field">
+						<input type="text" name="name" value="{{$shop->name}}" />
+						<label>Name</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="url" value="{{$shop->url}}" />
+						<label>Home page</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="{{$shop->postel}}" />
+						<label>Postel</label>
+					</div>
+					<div class="input-field">
+						<select class="icons" multiple>
+							<option value="all">Select all</option>
+							<option value="1">January</option>
+							<option value="2" selected>February</option>
+							<option value="3">March</option>
+							<option value="4" selected>April</option>
+							<option value="5" selected>May</option>
+							<option value="6">June</option>
+							<option value="7" selected>July</option>
+							<option value="8">August</option>
+							<option value="9">September</option>
+							<option value="10">October</option>
+							<option value="11">November</option>
+							<option value="12">December</option>
+					    </select>
+						<label>Shop Owner</label>
+					</div>
+					<div class="input-field">
+						<input type="number" name="article_commission" class="validate" />
+						<label>Commission on Article Sale (Kr)</label>
+					</div>
+					<div class="input-field">
+						<input type="number" name="salesspot_commission" class="validate">
+						<label>Sales spot Rebuy Commission (Kr)</label>
+					</div>
+					<div class="input-field">
+						Spots:
+						<ul class="collapsible" data-collapsible="accordion">
+							<li>
+								<div class="collapsible-header">
+									<span><i class="fa fa-caret-down"></i> A1 (Feb 15th - Mar 15th)</span>
+								</div>
+								<div class="collapsible-body">
+									<button class="btn green waves-effect waves-light">End booking</button>
+								</div>
+							</li>
+							<li>
+								<div class="collapsible-header">
+									<span><i class="fa fa-caret-down"></i> C4 (Jan 20th - Mar 10th)</span>
+								</div>
+								<div class="collapsible-body">
+									<button class="btn green waves-effect waves-light">End booking</button>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-action">
+					<p>
+						<input type="checkbox" id="cb_newsletter_subscription" name="newsletter_subscription" />
+						<label for="cb_newsletter_subscription">Enable Newsletter</label>
+					</p>
+				</div>
+			</div><!-- End Shop Information -->
 		</div>
 	@endslot
 @endcomponent

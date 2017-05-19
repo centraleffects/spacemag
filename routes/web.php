@@ -26,7 +26,7 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('/', 'AdminController@index'); // Matches The "admin/" URL
+    Route::get('/', 'AdminController@index');
     Route::get('/dashboard', 'AdminController@index');
     Route::get('/users', 'AdminController@users'); 
     Route::get('/shops', 'AdminController@shops'); 
@@ -39,6 +39,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
     Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
+    Route::get('/categories/delete/{category}', ['uses' =>'AdminController@categories']); 
+    Route::get('/categories/{id}', ['uses' =>'AdminController@categories']); 
+
+    Route::post('/categories/new', ['uses' =>'AdminController@categories']); 
     
 });
 
@@ -52,6 +56,10 @@ Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
 	Route::get('workers/todo', 'ShopOwnerController@workersTodo');
 
 	Route::get('/me',['uses' =>'AdminController@loggedProfile']);
+
+	Route::get('/articles',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
+	Route::get('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
+
 });
 
 Route::group(['middleware' => ['web']], function (){
@@ -65,7 +73,6 @@ Route::group(['middleware' => ['web']], function (){
 	Route::get('account', 'UserController@edit');
 	Route::get('email/change', 'UserController@changeEmail');
 });
-
 
 Route::get('email/confirm/{token}', 'UserController@confirmEmail');
 

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
 use App\Helper\Form;
+
 use App\User;
+use App\SalespotCategoryType;
 
 class AdminController extends Controller
 {
@@ -36,12 +40,28 @@ class AdminController extends Controller
         return view('admin.spots');
     }
 
-    public function categories(Request $request){
-        return view('admin.categories');
+    public function categories($category = null){
+    
+        $categories = SalespotCategoryType::all();
+
+        if(!empty($category)){
+            SalespotCategoryType::destroy($category);
+            return redirect('admin/categories');
+        }
+
+        $input = Input::all();
+        if(!empty($input['name']) && !empty($input['description'])){
+            $category = new SalespotCategoryType();
+            $category->name = $input['name'];
+            $category->description = $input['description'];
+            if($category->save()){
+                return redirect('admin/categories');
+            }
+        }
+        return view('admin.categories')->withCategories($categories);
     }
 
     public function transactions(Request $request){
         return view('admin.transactions');
     }
-
 }
