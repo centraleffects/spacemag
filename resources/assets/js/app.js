@@ -34,27 +34,6 @@ require('./bootstrap');
 		    }
 		});
 
-		$('.chips-tags').material_chip({
-			data: [
-				{
-				    tag: 'Jogging',
-				    image: 'http://localhost:8000/images/bg.jpg', //optional
-				    id: 1, //optional
-				},
-				{
-				    tag: 'Running',
-				    image: 'http://localhost:8000/images/office.jpg', //optional
-				    id: 2, //optional
-				}
-			],
-			autocompleteData: {
-				'Cycling': null,
-				'Jogging': null,
-				'Running': null,
-				'Swimming': null,
-			}
-		});
-
 		/* for session flash messages */
 		$("div.alert").not(".alert-important").delay(5000).slideUp(function(){
 	        $(this).remove();

@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
+
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Article;
+use App\Sale;
+
+use JavaScript;
 
 class ArticleController extends Controller
 {
@@ -67,5 +72,23 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+    }
+
+    public function indexOwner($id = null){
+
+        $articles = Article::all();
+        if($id){
+            $selectedArticle = Article::find($id);
+
+        }else{
+            if($articles){
+                $selectedArticle = $articles[0];
+            }
+        }
+        
+        $shop = session()->get('selected_shop');
+
+        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop'));
+
     }
 }
