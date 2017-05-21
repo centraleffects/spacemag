@@ -15,11 +15,12 @@ mix.combine([
 	  'resources/assets/password_strength/password_strength.css',
 	  'resources/assets/materialize/css/materialize.css',
 	  'resources/assets/css/font-awesome.css',
-    'resources/assets/css/lib/jquery-ui.css'
+    'resources/assets/css/lib/jquery-ui.css',
+    'resources/assets/css/lib/select2.css'
     ], 'public/css/vendor.css')
     .combine([
 	  'resources/assets/css/app.css',
-     'resources/assets/css/admin.css'
+    'resources/assets/css/admin.css'
     ], 'public/css/app.css');
 
 

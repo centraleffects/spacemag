@@ -1,3 +1,5 @@
+require('./bootstrap');	
+
 window.app = angular.module('rebuy', ["angucomplete-alt"], function ($httpProvider){
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -47,6 +49,7 @@ window.app = angular.module('rebuy', ["angucomplete-alt"], function ($httpProvid
 require('./lib/jquery.panzoom');
 require('./lib/jquery.mousewheel');
 require('./lib/jquery-ui');
+require('./lib/select2.min');
 
 require('./directives/all')
 

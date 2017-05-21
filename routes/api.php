@@ -77,6 +77,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::get('{user}/shops', 'ShopController@get');
 
 	Route::get('{user}/tasks', 'TodoTaskController@getByUser');
+
+	
 });
 
 Route::group(['prefix' => 'workers', 'middleware' => 'auth:api'], function (){

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Article;
 use App\Sale;
+use App\SalespotCategoryType;
 
 use JavaScript;
 
@@ -25,6 +26,26 @@ class ArticleController extends Controller
     {
         $articles = Article::paginate(25);
         return $articles;
+    }
+
+    public function includeUserOnJS()
+    {
+        $shops = auth()->user()->ownedShops()->get();
+        $shop = session()->put('shops', $shops);
+
+        if( !session()->has("selected_shop") && auth()->check() ){
+            $shop = auth()->user()->ownedShops()->with('todoTasks')
+                        ->with('todoTasks.owner')->first();
+            session()->put("selected_shop", $shop);
+        }
+
+        $shop = session()->get('selected_shop');
+        
+
+        JavaScript::put([
+            'user' => auth()->user(),
+            'selectedShop' => $shop
+        ]);
     }
 
 
@@ -76,6 +97,8 @@ class ArticleController extends Controller
 
     public function indexOwner($id = null){
 
+        $this->includeUserOnJS();
+        
         $articles = Article::all();
         if($id){
             $selectedArticle = Article::find($id);
@@ -87,8 +110,9 @@ class ArticleController extends Controller
         }
         
         $shop = session()->get('selected_shop');
+        $categories = SalespotCategoryType::all();
 
-        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop'));
+        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories'));
 
     }
 }

@@ -1,9 +1,9 @@
 require('./bootstrap');
 
 // init
-(function (rebuy){
+/*(function (rebuy){
 	rebuy(window.jQuery, window, document);
-}(function rebuy($, window, document){
+}(function rebuy($, window, document){*/
 	$(function (){
 
 		// initialization goes here
@@ -34,6 +34,34 @@ require('./bootstrap');
 		    }
 		});
 
+		$('.article-tags').material_chip({
+			data: function(){
+				return [
+						{
+						    tag: 'Jogging',
+						    image: null, //optional
+						    id: 1, //optional
+						},
+						{
+						    tag: 'Running',
+						    image: null, //optional
+						    id: 2, //optional
+						}
+					];
+			},
+			autocompleteData: function(){
+				return {
+					'Cycling': {
+					    image: null, //optional
+					    id: 2, //optional
+					},
+					'Jogging': null,
+					'Running': null,
+					'Swimming': null,
+				};
+			}
+		});
+
 		/* for session flash messages */
 		$("div.alert").not(".alert-important").delay(5000).slideUp(function(){
 	        $(this).remove();
@@ -60,6 +88,6 @@ require('./bootstrap');
 		});
 	});
 
-}));
+//}));
 
 

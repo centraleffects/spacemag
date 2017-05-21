@@ -81,4 +81,14 @@ class TagController extends Controller
     {
         //
     }
+
+    public function query($query = null){
+        return array(
+                    array( 'id' => 1, 'text' => 'enhancement' ), 
+                    array( 'id' => 2, 'text' => 'bug' ), 
+                    array( 'id' => 3, 'text' => 'duplicate' ), 
+                    array( 'id' => 3, 'text' => 'invalid' ), 
+                    array( 'id' => 5, 'text' => 'wontfix' )
+                );
+    }
 }

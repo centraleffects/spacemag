@@ -688,3 +688,16 @@ li.collection-item.active:not(.todo-item) a {
 .angucomplete-description {
     font-size: 10px !important;
 }
+
+.select2-container--default.select2-container--focus .select2-selection--multiple{
+   border: none;
+   border-bottom: 1px solid #26a69a;
+   box-shadow: 0 1px 0 0 #26a69a;
+}
+.select2-container--default .select2-selection--multiple{
+    border: none;
+    border-bottom: 1px solid #aaa;
+}
+.tags .select2-container{
+    margin-top: 40px;
+}
