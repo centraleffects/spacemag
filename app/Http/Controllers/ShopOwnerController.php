@@ -18,40 +18,42 @@ use App\Mail\ShopWorkerInvitation;
 use Auth;
 class ShopOwnerController extends Controller
 {
-    public function includeUserOnJS()
+    function __construct()
     {
-        $shops = auth()->user()->ownedShops()->get();
-        $shop = session()->put('shops', $shops);
+        $this->middleware(function ($request, $next) {
+            
+            $shops = auth()->user()->ownedShops()->get();
+            $shop = session()->put('shops', $shops);
 
-        if( !session()->has("selected_shop") && auth()->check() ){
-            $shop = auth()->user()->ownedShops()->with('todoTasks')
-                        ->with('todoTasks.owner')->first();
-            session()->put("selected_shop", $shop);
-        }
+            if( !session()->has("selected_shop") && auth()->check() ){
+                $shop = auth()->user()->ownedShops()->with('todoTasks')
+                            ->with('todoTasks.owner')->first();
+                session()->put("selected_shop", $shop);
+            }
 
-        $shop = session()->get('selected_shop');
-        
+            $shop = session()->get('selected_shop');
+            
 
-        JavaScript::put([
-            'user' => auth()->user(),
-            'selectedShop' => $shop
-        ]);
+            JavaScript::put([
+                'user' => auth()->user(),
+                'selectedShop' => $shop
+            ]);
+
+            return $next($request);
+        });
     }
 
     public function index(){
-        $this->includeUserOnJS();
-        
+
     	return view('shop_owner.dashboard');
     }
 
     public function clients(){
-        $this->includeUserOnJS();
+        
     	return view('shop_owner.clients');
     }
 
     public function articles(){
-        $this->includeUserOnJS();
-
         $articles = auth()->user()->articles()->get();
         // $tags = 
 
@@ -64,22 +66,22 @@ class ShopOwnerController extends Controller
     }
 
     public function customers(){
-        $this->includeUserOnJS();
+        
     	return view('shop_owner.customers');
     }
 
     public function todo(){
-        $this->includeUserOnJS();
+        
         return view('shop_owner.todo');
     }
 
     public function workers(){
-        $this->includeUserOnJS();
+        
         return view('shop_owner.workers');
     }
 
     public function workersTodo(){
-        $this->includeUserOnJS();
+        
         return view('shop_owner.workers_todo');
     }
 
@@ -281,7 +283,7 @@ class ShopOwnerController extends Controller
 
     public function spots(Salespot $id){
 
-        $this->includeUserOnJS();
+        
         return view('shop_owner.spots');
     }
 }
