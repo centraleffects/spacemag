@@ -1,9 +1,10 @@
 @component('shop_owner.layouts.app')
+<div ng-controller="ArticleController">
 	@slot('left')
 		<div class="card hoverable">
 			<div class="row card-content">
 				
-				<span class="card-title">Article List</span>
+				<span class="card-title" ng-bind="testx">Article List @{{ test }}</span>
 
 				<div class="nav-wrapper">
 			      <form>
@@ -47,15 +48,23 @@
 						<label>Name</label>
 					</div>
 					<div class="input-field">
-						<select name="category" class="icons">
-							<option value="" data-icon="{{ url('images/bg.jpg') }}" class="circle" selected>Sports</option>
-						    <option value="" data-icon="{{ url('images/office.jpg') }}" class="circle">Books</option>
+						<select name="category" multiple="multiple">
+							@if($categories)
+							 <option value=""> All </option>
+							@endif
+						    @forelse ($categories as $category)
+							   <option value="{{ $category->id }}"> {{ $category->name }} </option>
+							@empty
+							    <option value=""> None </option>
+							@endforelse
+
 						</select>
 						<label>Category</label>
 					</div>
-					<div class="input-field">
-						<div class="chips chips-tags"></div>
-						<label>Tags</label>
+
+					<div class="input-field tags">
+						<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true"  data-allow-clear="true"></select>
+						<label>Tags</label>			
 					</div>
 					<div class="input-field">
 						<input type="number" name="original_price" />
@@ -187,4 +196,5 @@
 			</div><!-- End Shop Information -->
 		</div>
 	@endslot
+</div>
 @endcomponent
