@@ -7,13 +7,13 @@
 						
 						<span class="card-title">Shops</span>
 						<div class="collection">
-									<a href="javascript:;" 
-											class="list-shops collection-item" 
-											id="@{{'sh'+ shop.id}}" 
-											ng-repeat="(key, shop) in shops.data" 
-											ng-click="events.viewShop(this)">
-											@{{shop.name}}
-									</a>
+							<a href="javascript:;" 
+								class="list-shops collection-item" 
+								id="@{{'sh'+ shop.id}}" 
+								ng-repeat="(key, shop) in shops.data" 
+								ng-click="events.viewShop(this)">
+								@{{shop.name}}
+							</a>
 						</div>
 						<span class="badge right"><a href="#!" class="left waves-effect waves-light btn" ng-click="events.addShop()">New Shop</a></span>
 					</div>

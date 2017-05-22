@@ -16,6 +16,8 @@ use App\Http\Requests\ShopInvitationRequest;
 use App\Mail\ShopInvitation;
 use App\Mail\ShopWorkerInvitation;
 use Auth;
+use DB;
+
 class ShopOwnerController extends Controller
 {
     function __construct()
@@ -265,17 +267,21 @@ class ShopOwnerController extends Controller
     }
 
     public function toggleNewsletterSubscription(Shop $shop, User $user){
-        $val = Input::get('newsletter_subscription');
-        $timestamp = $user->shops()->find($shop->id)->pivot->created_at; // gets id of pivot table for shops and users
-        $res = $user->shops()->newPivotStatementForId($shop->id)->where('created_at', '=', $timestamp)
-            ->update([ 'newsletter_subscribed' => $val ]);
+        $newsletter_subscription = Input::get('newsletter_subscription');
+        $val = $newsletter_subscription == 'true' ? 1 : 0;
+
+        $shop = $user->shops()->find($shop->id);
+        $shop->pivot->newsletter_subscribed = $val;
+        $res = $shop->pivot->update();
             
-        $action = $val ? "subscribed" : "unsubscribed";
+        $action = $val == 1 ? "subscribed" : "unsubscribed";
 
         if( $res ){
-            $msg = ucfirst($user->first_name)." is now {$action} to {$shop->name} newsletter.";
+            $msg = __('messages.newsletter_toggle_status', 
+                        ['user' => ucfirst($user->first_name), 'action' => $action, 'shop' => $shop->name]
+                    );
         }else{
-            $msg = "No changes have been made.";
+            $msg = __('messages.no_changes_saved');
         }
 
         return ['success' => $res ? 1 : 0, 'msg' => $msg];

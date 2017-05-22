@@ -130,7 +130,7 @@ app.run(function($rootScope, $http, $timeout) {
 
 	$rootScope.newsletterSubscription = function ($event){
 		var checkbox = $event.target,
-			value = checkbox.checked, // let's do the reverse (if checkbox is checked, that means the user wants to uncheck it)
+			value = checkbox.checked,
 			url = '/api/shops/'+selectedShop.id+'/newsletter-subscription/'+$rootScope.selectedUser.id+
 					'?api_token='+window.user.api_token,
 			data = { newsletter_subscription: value },
@@ -141,7 +141,8 @@ app.run(function($rootScope, $http, $timeout) {
 
 		$http.post(url, data).then(function (response){
 			if( response.data.success == 1 ){
-				$rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked;
+				// $rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked;
+				$rootScope.selectedUser.pivot.newsletter_subscribed = value;
 				window.reBuy.toast(response.data.msg);
 			}else{
 				// reset checkbox toggle
@@ -150,6 +151,7 @@ app.run(function($rootScope, $http, $timeout) {
 			}
 		}, function (response){
 			console.warn(response);
+			$rootScope.newsletter_subscribed = checkbox.checked ? false : true;
 			window.reBuy.alert("Something went wrong. Please try again later. If problem continue to exist, contact admin suppport.");
 		});
 	};
