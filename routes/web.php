@@ -18,7 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
-
 Route::get('lang/{lang}', ['as'=>'lang.switch', 'uses'=>'LanguageController@switchLang']);
 
 // Routes for Facebook Auth
@@ -27,7 +26,7 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('/', 'AdminController@index'); // Matches The "admin/" URL
+    Route::get('/', 'AdminController@index');
     Route::get('/dashboard', 'AdminController@index');
     Route::get('/users', 'AdminController@users'); 
     Route::get('/shops', 'AdminController@shops'); 
@@ -47,7 +46,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
 });
 
-Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
+Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
@@ -64,12 +63,19 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 	Route::get('/tags/query', 'TagController@query');
 });
 
-Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
-Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
-Route::get('shop/login-back', 'ShopOwnerController@loginBack')->middleware('auth.basic');
-Route::get('shop/set/{shop}', 'ShopOwnerController@setShopSession')->middleware('auth.basic');
-Route::get('shop/spots', 'ShopOwnerController@spots')->middleware('owner');
-Route::get('shop/spots/{id}', 'ShopOwnerController@spots')->middleware('auth.basic');
+Route::group(['middleware' => ['web']], function (){
+	Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
+	Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
+	Route::get('shop/login-back', 'ShopOwnerController@loginBack');
+	Route::get('shop/set/{shop}', 'ShopOwnerController@setShopSession');
+	Route::get('shop/spots', 'ShopOwnerController@spots');
+	Route::get('shop/spots/{id}', 'ShopOwnerController@spots');
+
+	Route::get('account', 'UserController@edit');
+	Route::get('email/change', 'UserController@changeEmail');
+});
+
+Route::get('email/confirm/{token}', 'UserController@confirmEmail');
 
 Route::get('test-event', function (){
 	// $user = auth()->user();
@@ -77,17 +83,11 @@ Route::get('test-event', function (){
 	event(new CustomerBecameAClient($user));
 });
 
-Route::get('test-mail', function (){
-	$user = App\User::first();
-	Mail::to($user->email)->send(new Welcome);
-});
 
 Route::get('try/{lang}', function ($lang){
 	\App::setLocale($lang);
-
+	
 	echo \App::getLocale()."<br>";
-	echo "user lang: ".auth()->user()->lang;
-	echo( __('I love programming.') );
-	dd( __("You are loggedin as :role - ", ['role' => auth()->user()->role]) );
+	dd(__('messages.email_changed_confirmed'));
 });
 

@@ -28,10 +28,11 @@
                         {{ session()->get('flash_message')['msg'] }}
                     @endcomponent
                 @endif
-
+                
                 @if( session()->has('loggedin_as_someone') )
                 <div class="alert alert-success alert-important alert-imphasis" role="alert">
-                    {!! __("You are loggedin as :role :", ['role' => auth()->user()->role]) !!} {{ Helper::getUserFullName(auth()->user()) }} ({{ auth()->user()->email }}).
+
+                    {!! __("messages.loggedin_as_someone", ['role' => auth()->user()->role]) !!} {{ Helper::getUserFullName(auth()->user()) }} ({{ auth()->user()->email }}).
                     <a class="btn orange btn-small" href="{{ url('shop/login-back') }}">End</a>    
                 </div>
                 @endif

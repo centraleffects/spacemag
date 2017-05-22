@@ -15,9 +15,17 @@ use App\Mail\PasswordReset;
 use App\Http\Requests\ShopInvitationRequest;
 use App\Mail\ShopInvitation;
 use App\Mail\ShopWorkerInvitation;
-
+use Auth;
 class ShopOwnerController extends Controller
 {
+    // function __construct()
+    // {
+    //     $user = Auth::guard('api')->user();
+
+    //     if( $user && $user->lang != "" ){
+    //         \App::setLocale($user->lang);
+    //     }
+    // }
 
     public function includeUserOnJS()
     {
@@ -105,13 +113,13 @@ class ShopOwnerController extends Controller
         // prevents duplicate by clicking the Subscribe button from email multiple times
         if( $shop->users()->find($user->id) != null )
             return redirect('shop')->withFlash_message([
-                    'msg' => __("You have already subscribed to :shop_name", ["shop_name" => $shop->name]),
+                    'msg' => __("messages.already_subscribed_to_shop", ["shop_name" => $shop->name]),
                     'type' => 'danger',
                     'is_important' => true
                 ]);
         if( $shop->users()->save($user) )
             return redirect('shop')->withFlash_message([
-                    'msg' => __('You are now subscribed to :shop_name', ["shop_name" => $shop->name]),
+                    'msg' => __('messages.shop_subscription_success', ["shop_name" => $shop->name]),
                     'type' => 'success',
                     'is_important' => false
                 ]);
@@ -136,7 +144,7 @@ class ShopOwnerController extends Controller
             }
         }
 
-        return ['success' => 0, 'msg' => __('The specified user is not a customer of this shop.')];
+        return ['success' => 0, 'msg' => __('errors.not_a_customer_of_shop')];
     }
 
     public function invite(Shop $shop, ShopInvitationRequest $request, $role = "customer"){
@@ -166,16 +174,17 @@ class ShopOwnerController extends Controller
                     return [
                         'success' => 0, 
                         'msg' => __(
-                                "This user is already a :user_classification of :shop_name", 
+                                "errors.user_associated_with_shop_already", 
                                 ["user_classification" => $user_classification, "shop_name" => $shop->name]
                             )
                         ];
+
 
                 // prevents owner to invite himself
                 if( auth()->user()->email == $input['email'] )
                     return [
                         'success' => 0, 
-                        'msg' => __("Sorry, you can't invite yourself to be a :user_classification of your own Shop.", 
+                        'msg' => __("errors.self_invitation_denied", 
                                     ["user_classification" => $user_classification])
                     ];
 
@@ -183,11 +192,11 @@ class ShopOwnerController extends Controller
 
             if( $role == 'customer' ){
                 $mail = new ShopInvitation($shop, $user);
-                $msg = __(":email has been invited to subscribe to :shop_name", 
+                $msg = __("messages.shop_invitation_success", 
                             ["email" => $user->email, "shop_name" => $shop->name]);
             }else{
                 $mail = new ShopWorkerInvitation($shop, $user, $current_user);
-                $msg = __(":email has been invited to be a part of :shop_name family.", 
+                $msg = __("messages.shopworker_invitation_success", 
                             ["email" => $user->email, "shop_name" => $shop->name]);
             }
 
@@ -197,7 +206,7 @@ class ShopOwnerController extends Controller
 
         } catch (\Exception $e) {
             Log::error($e);
-            return ['success' => 0, 'msg' => __("An error occured while processing your request."), 'errors' => $e];
+            return ['success' => 0, 'msg' => __("errors.error_while_processing"), 'errors' => $e];
         }
     }
 
@@ -254,7 +263,7 @@ class ShopOwnerController extends Controller
 
             return redirect($real_auth['url'])->withFlash_message([
                     'type' => 'info',
-                    'msg' => "Welcome back ".ucfirst(auth()->user()->first_name)."!"
+                    'msg' => __('messages.welcome_back', ['name' => ucfirst(auth()->user()->first_name)])
                 ]);
         }
 

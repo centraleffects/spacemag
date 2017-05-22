@@ -11,4 +11,16 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+	        $user = auth()->guard('api')->user();
+
+	        if($user && $user->lang != "" ){
+	            app()->setLocale($user->lang);
+	        }
+
+	        return $next($request);
+	    });
+    }
 }

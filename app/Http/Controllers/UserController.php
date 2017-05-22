@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\Input;
 
 
 use Auth;
+use Mail;
 
 use App\Http\Requests\StoreUser;
+use App\Mail\EmailChangeRequest;
 
 use App\User;
 use App\Shop;
+use App\EmailVerification;
 
 
 class UserController extends Controller
@@ -87,6 +90,14 @@ class UserController extends Controller
         return $user;
     }
 
+    public function edit(){
+        if( auth()->check() ){
+            $user = auth()->user();
+        }
+
+        return view('profile')->withUser($user);
+    }
+
 
 
     /**
@@ -96,7 +107,6 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-
     public function update(StoreUser $request){
         $input = Input::all();
 
@@ -125,6 +135,49 @@ class UserController extends Controller
         }
 
         return $response;
+    }
+
+    // Requests to change email
+    public function changeEmail(User $user){
+        $new_email = Input::get($email);
+
+        $verify = new EmailVerification();
+        $verify->token = str_random(64);
+
+        $mail = new EmailChangeRequest();
+        try {
+            Mail::to($user->email)->send($mail);
+
+            return redirect()->back()->withFlash_message([
+                'type' => 'success',
+                'msg' => __('messages.email_changed_confirmed', ['new_meail' => $verify->email]),
+                'important' => true
+            ]);
+        } catch (\Exception $e) {
+            
+        }
+        
+    }
+
+    public function confirmEmail($token){
+        $verify = EmailVerification::where(['token', '=', $token])->first();
+        if( isset($verify->id) ){
+            $user = User::find($verify->user_id);
+            $old_email = $user->email;
+            $user->email = $verify->email;
+
+            if( $user->update() ){
+                $verify->delete();
+                // send notification email
+                try {
+                    $mail = new EmailConfirmationSuccessful($user, $old_email);
+                    Mail::to($old_email)->send($mail);
+
+                } catch (\Exception $e) {
+                    
+                }
+            }
+        }
     }
 
 

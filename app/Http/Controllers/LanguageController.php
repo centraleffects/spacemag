@@ -23,6 +23,7 @@ class LanguageController extends Controller
                 $user->save();
             }
         }
+        
         return Redirect::back();
     }
 }
