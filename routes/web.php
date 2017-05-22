@@ -61,8 +61,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'auth.basic' ], function (){
 	Route::get('/articles',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
 	Route::get('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
 
-	Route::get('/tags/query', 'TagController@query')->middleware('owner');
-	Route::get('/tags/query/{query}', 'TagController@query')->middleware('owner');
+	Route::get('/tags/query', 'TagController@query');
 });
 
 Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');

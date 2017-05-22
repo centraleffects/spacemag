@@ -79,18 +79,6 @@ function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 
 			$("#article-tags").select2({
 			  templateResult: formatState,
-			  //data : $scope.tags
-			  /*ajax : {
-				    url: '/shop/tags/query?api_token='+window.user.api_token,
-				    cache: true,
-				    delay: 250,
-				    data: function (params) {
-				      return {
-				        q: params.term, // search term
-				        page: params.page
-				      };
-				    }
-				  }*/
 				ajax: {
 				    url: '/shop/tags/query?api_token='+window.user.api_token,
 				    dataType: 'json',
@@ -110,9 +98,7 @@ function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 				  },
 				  escapeMarkup: function (markup) { return markup; }
 			});
-/*			$('.select2-search').on('keypress', 'input', function(e){
-				console.log('change');
-			});*/
+
     }
 
    

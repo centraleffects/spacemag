@@ -701,3 +701,6 @@ li.collection-item.active:not(.todo-item) a {
 .tags .select2-container{
     margin-top: 40px;
 }
+.select2-container .select2-search--inline .select2-search__field{
+    margin-top: -6px;
+}

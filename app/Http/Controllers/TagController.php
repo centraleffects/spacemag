@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
+use App\Tag;
 
 class TagController extends Controller
 {
@@ -82,13 +85,16 @@ class TagController extends Controller
         //
     }
 
-    public function query($query = null){
-        return array(
-                    array( 'id' => 1, 'text' => 'enhancement' ), 
-                    array( 'id' => 2, 'text' => 'bug' ), 
-                    array( 'id' => 3, 'text' => 'duplicate' ), 
-                    array( 'id' => 3, 'text' => 'invalid' ), 
-                    array( 'id' => 5, 'text' => 'wontfix' )
-                );
+    public function query(){
+        $input = Input::all();
+        if(empty($input['q'])){
+            $input['q'] = "";
+        }
+
+        $tags = Tag::where("name", "like", "%".$input['q']."%")
+                    ->get(['tags.name AS text', 'tags.*'])
+                    ->toArray();
+
+        return $tags;
     }
 }
