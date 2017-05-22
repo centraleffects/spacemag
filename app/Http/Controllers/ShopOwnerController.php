@@ -18,15 +18,6 @@ use App\Mail\ShopWorkerInvitation;
 use Auth;
 class ShopOwnerController extends Controller
 {
-    // function __construct()
-    // {
-    //     $user = Auth::guard('api')->user();
-
-    //     if( $user && $user->lang != "" ){
-    //         \App::setLocale($user->lang);
-    //     }
-    // }
-
     public function includeUserOnJS()
     {
         $shops = auth()->user()->ownedShops()->get();
@@ -153,7 +144,7 @@ class ShopOwnerController extends Controller
 
             $input = Input::all();
 
-            $user = User::where('email', '=', $input['email'])->first();
+            $user = User::where('email', '=', strtolower($input['email']))->first();
             $current_user = User::where('api_token', '=', $input['api_token'])->first();
             
             $password = str_random(8);
@@ -263,7 +254,8 @@ class ShopOwnerController extends Controller
 
             return redirect($real_auth['url'])->withFlash_message([
                     'type' => 'info',
-                    'msg' => __('messages.welcome_back', ['name' => ucfirst(auth()->user()->first_name)])
+                    'msg' => __('messages.welcome_back', ['name' => ucfirst(auth()->user()->first_name)]),
+                    'important' => false
                 ]);
         }
 

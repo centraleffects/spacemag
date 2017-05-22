@@ -16,7 +16,7 @@ window.rebuyApp.config(['$httpProvider', function($httpProvider) {
 				if($.adminJS.me.id){
 	        		return false;
 	        	}
-	           $.get('/admin/me', function(response){
+	           $.get('/me', function(response){
 	           		$.adminJS.me = response;
 	           });
 		},

@@ -49,7 +49,7 @@ class LoginController extends Controller
         }
 
         if( auth()->user()->isAdmin() )
-            return \Redirect::to('admin');
+            return \Redirect::to('/dashboard');
 
         return \Redirect::to('shop');
     }
