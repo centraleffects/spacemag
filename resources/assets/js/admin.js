@@ -13,12 +13,7 @@ window.rebuyApp.config(['$httpProvider', function($httpProvider) {
 (function($){
 	$.adminJS = {
 		init : function(){
-				if($.adminJS.me.id){
-	        		return false;
-	        	}
-	           $.get('/me', function(response){
-	           		$.adminJS.me = response;
-	           });
+	   		$.adminJS.me = window.user;
 		},
         me : []
 	}

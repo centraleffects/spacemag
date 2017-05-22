@@ -3,11 +3,13 @@
 		<a id="logo-container" href="#" class="brand-logo"><img src="/images/rebuy_logo.png" class="img-responsive"></a>
 	  	<ul class="right hide-on-small-and-down">
 		    @if (auth()->user()->role == "owner")
-			    <li>
-			    	<a class="dropdown-button" href="#!" data-activates="dropdown1">
-			    		{{session()->get("selected_shop")->name}}<i class="material-icons right">arrow_drop_down</i>
-			    	</a>
-			    </li>
+			    @if( session()->has('selected_shop') )
+			    	<li>
+				    	<a class="dropdown-button" href="#!" data-activates="dropdown1">
+				    		{{session()->get("selected_shop")->name}}<i class="material-icons right">arrow_drop_down</i>
+				    	</a>
+				    </li>
+			    @endif
 			@elseif (auth()->user()->role == "admin")    
 				 <li class="hide-on-med-and-down">
 					<a href="">

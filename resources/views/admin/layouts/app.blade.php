@@ -41,14 +41,6 @@
         </div>
 
     </section>
-
-    @if(Session::has("flash_message"))
-        <script type="text/javascript">
-            $("div.alert").not(".alert-important").delay(5000).slideUp(function(){
-                $(this).remove();
-            });
-        </script>
-    @endif
 </main>
 
 @include('admin.partials._footer')
