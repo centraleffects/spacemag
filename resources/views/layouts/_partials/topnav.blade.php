@@ -47,7 +47,4 @@
 	        @endif
 	    @endforeach
 	</ul>
-	
 </nav>
-
-

@@ -24,24 +24,29 @@ class ShopOwnerController extends Controller
     {
         $this->middleware(function ($request, $next) {
             
-            $shops = auth()->user()->ownedShops()->get();
-            $shop = session()->put('shops', $shops);
+            if( auth()->check() && auth()->user()->isOwner() ){
+                $user = auth()->user();
+                $shops = $user->ownedShops()->get();
 
-            if( !session()->has("selected_shop") && auth()->check() ){
-                $shop = auth()->user()->ownedShops()->with('todoTasks')
-                            ->with('todoTasks.owner')->first();
-                session()->put("selected_shop", $shop);
+                $shop = session()->put('shops', $shops);
+
+                if( !session()->has("selected_shop") && auth()->check() ){
+                    $shop = auth()->user()->ownedShops()->with('todoTasks')
+                                ->with('todoTasks.owner')->first();
+                    session()->put("selected_shop", $shop);
+                }
+
+                $shop = session()->get('selected_shop');
+                
+
+                JavaScript::put([
+                    'user' => $user,
+                    'selectedShop' => $shop
+                ]);
             }
 
-            $shop = session()->get('selected_shop');
-            
-
-            JavaScript::put([
-                'user' => auth()->user(),
-                'selectedShop' => $shop
-            ]);
-
             return $next($request);
+            
         });
     }
 

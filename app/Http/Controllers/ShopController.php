@@ -122,7 +122,7 @@ class ShopController extends Controller
 
                }
                
-         } 
+        } 
 
         if($createNewOwner){
             $user = new User();

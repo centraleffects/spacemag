@@ -22,6 +22,8 @@ class CreateShopsTable extends Migration
             $table->string('url')->nullable();
             $table->string('currency')->nullable();
             $table->string('slug')->nullable();
+            $table->string('commission_article_sale')->nullable();
+            $table->string('commission_salespot')->nullable();
             $table->string('x_coordinate')->nullable();
             $table->string('y_coordinate')->nullable();
             

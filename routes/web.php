@@ -47,7 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
 });
 
-Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
+Route::group(['prefix' => 'shop', 'middleware' => 'owner' ], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
@@ -64,7 +64,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
 	Route::get('/tags/query', 'TagController@query');
 });
 
-Route::group(['middleware' => ['web']], function (){
+Route::group(['middleware' => 'web'], function (){
 	Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
 	Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
 	Route::get('shop/login-back', 'ShopOwnerController@loginBack');

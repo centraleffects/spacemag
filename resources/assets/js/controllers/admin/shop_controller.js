@@ -5,6 +5,8 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
     $scope.shops = {};
     $scope.selectedShop = {};
     $scope.selectedShopKey = null;
+    $scope.isUpdatingOwner = false;
+    $scope.isUpdatingShop = false;
 
     $scope.countryOptions = [{
         'value': 'swe',
@@ -107,6 +109,8 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                 return false;
             }
 
+            $scope.isUpdatingOwner = true;
+
             var url = '/api/shops/update';
             $http({
                 method: 'POST',
@@ -138,8 +142,14 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                 }
             }, function(response) {
                 console.warn(response);
-                window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
+                // window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
+                if( response.data ){
+                    window.reBuy.showErrors(response.data, $("#shop-tab"), 8000);
+                }
+            }).then(function (){
+                $scope.isUpdatingOwner = false;
             });
+
             //$timeout(function () { $rootScope.vm.updateList(); }, 500);
         },
         deleteSelected: function() {
@@ -230,9 +240,10 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
                 disableZoom: true
             });
         },
-        changeOwner: function(owner) {
-            console.log(owner);
-            $scope.selectedShop.owner = owner;
+        // changeOwner: function(owner) {
+        changeOwner: function(index) {
+            console.log($scope.owners[index].data);
+            $scope.selectedShop.owner = $scope.owners[index].data;
 
         },
         loginAsOwner: function() {
