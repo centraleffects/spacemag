@@ -14,11 +14,17 @@ class Controller extends BaseController
     function __construct()
     {
         $this->middleware(function ($request, $next) {
-	        $user = auth()->guard('api')->user();
+        	if( auth()->check() ){
+        		$user = auth()->user();
+        	
+        		if( auth()->guard('api')->user() ){
+			        $user = auth()->guard('api')->user();
+        		}
 
-	        if($user && $user->lang != "" ){
-	            app()->setLocale($user->lang);
-	        }
+		        if($user && $user->lang != "" ){
+		            app()->setLocale($user->lang);
+		        }
+		    }
 
 	        return $next($request);
 	    });

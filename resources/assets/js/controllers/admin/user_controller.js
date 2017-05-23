@@ -113,6 +113,7 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               cache: $templateCache
         }).then(function(response) {
+            console.log(response);
           if(!$scope.selectedUser.id){
              updateUserList();
              window.reBuy.toast('User details have been created! Thank you.');
@@ -121,6 +122,7 @@ rebuyApp.controller('UserController', function($scope, userService, $timeout, $t
           }
           
         }, function(response) {
+            console.warn(response);
             displayError(response);
         });
     }

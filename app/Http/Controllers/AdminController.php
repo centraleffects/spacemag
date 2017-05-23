@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use JavaScript;
 
 use App\Helper\Form;
 
@@ -12,6 +13,19 @@ use App\SalespotCategoryType;
 
 class AdminController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+
+            JavaScript::put([
+                'user' => auth()->user()
+            ]);
+
+            return $next($request);
+        });
+    }
+
     /**
      * Display a listing of the resource.
      *

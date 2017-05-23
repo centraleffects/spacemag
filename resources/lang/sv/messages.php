@@ -7,5 +7,6 @@ return [
 	'shop_invitation_success' => ":email har blivit inbjuden att prenumerera på :shop_name",
 	'shopworker_invitation_success' => ":email har blivit inbjuden att vara en del av :shop_name -familjen.",
 	'loggedin_as_someone' => "Du är inloggad som :role :",
-	'welcome_back' => "Välkommen tillbaka :name!"
+	'welcome_back' => "Välkommen tillbaka :name!",
+	'no_changes_saved' => 'Dina ändringar har inte sparats.'
 ];

@@ -25,7 +25,8 @@ class StoreShop extends FormRequest
     public function rules()
     {
         return [
-            //
+            'owner.email' => 'required|email',
+            'name' => 'required'
         ];
     }
 }

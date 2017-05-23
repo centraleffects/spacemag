@@ -17,7 +17,7 @@
                                 <li><a href="{{ url('/home') }}">Home</a></li>
                                 @if( Auth::user()->isAdmin() )
                                 <li>
-                                    <a href="{{ url('/admin') }}">Dashboard</a>
+                                    <a href="{{ url('admin/dashboard') }}">Dashboard</a>
                                 </li>
                                 @else
                                 <li>

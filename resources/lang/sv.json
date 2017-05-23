@@ -1,9 +1,17 @@
 {
     "Customers": "Customers",
-    "Clients": "Clients",
+    "Clients": "Klienter",
+    "Bookings": "Bokningar",
     "Salespot": "Salespot",
+    "Reports": "Redovisning",
+    "Service": "Service",
+    "Calendar": "Kalendar",
     "Shop Workers": "Handlare",
-    "Todo List": "Att göra lista",
+    "Todo List": "Åtgärder",
     "Workers Todo": "Arbetare Todo",
-    "Shops": "Butiker"
+    "Shops": "Butiker",
+    "Articles": "Artiklar",
+    "Navigation": "Navigering",
+
+
 }

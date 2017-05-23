@@ -85,8 +85,8 @@ class ShopController extends Controller
         }
 
         if(!isset($input['user_id'])){
-                $input['user_id'] = 1;
-            }
+            $input['user_id'] = 1;
+        }
 
         $oldShopOwner = $input['user_id'];
 
@@ -122,7 +122,7 @@ class ShopController extends Controller
 
                }
                
-         } 
+        } 
 
         if($createNewOwner){
             $user = new User();

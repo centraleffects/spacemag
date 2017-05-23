@@ -1,5 +1,3 @@
-require('./bootstrap');	
-
 window.app = angular.module('rebuy', ["angucomplete-alt"], function ($httpProvider){
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -10,39 +8,39 @@ window.app = angular.module('rebuy', ["angucomplete-alt"], function ($httpProvid
 	* @return {String}
 	*/ 
 	var param = function(obj) {
-	var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
+		var query = '', name, value, fullSubName, subName, subValue, innerObj, i;
 
-	for(name in obj) {
-	  value = obj[name];
+		for(name in obj) {
+		  value = obj[name];
 
-	  if(value instanceof Array) {
-	    for(i=0; i<value.length; ++i) {
-	      subValue = value[i];
-	      fullSubName = name + '[' + i + ']';
-	      innerObj = {};
-	      innerObj[fullSubName] = subValue;
-	      query += param(innerObj) + '&';
-	    }
-	  }
-	  else if(value instanceof Object) {
-	    for(subName in value) {
-	      subValue = value[subName];
-	      fullSubName = name + '[' + subName + ']';
-	      innerObj = {};
-	      innerObj[fullSubName] = subValue;
-	      query += param(innerObj) + '&';
-	    }
-	  }
-	  else if(value !== undefined && value !== null)
-	    query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
-	}
+		  if(value instanceof Array) {
+		    for(i=0; i<value.length; ++i) {
+		      subValue = value[i];
+		      fullSubName = name + '[' + i + ']';
+		      innerObj = {};
+		      innerObj[fullSubName] = subValue;
+		      query += param(innerObj) + '&';
+		    }
+		  }
+		  else if(value instanceof Object) {
+		    for(subName in value) {
+		      subValue = value[subName];
+		      fullSubName = name + '[' + subName + ']';
+		      innerObj = {};
+		      innerObj[fullSubName] = subValue;
+		      query += param(innerObj) + '&';
+		    }
+		  }
+		  else if(value !== undefined && value !== null)
+		    query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
+		}
 
-	return query.length ? query.substr(0, query.length - 1) : query;
+		return query.length ? query.substr(0, query.length - 1) : query;
 	};
 
 	// Override $http service's default transformRequest
 	$httpProvider.defaults.transformRequest = [function(data) {
-	return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
+		return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
 	}];
 });
 
@@ -132,7 +130,7 @@ app.run(function($rootScope, $http, $timeout) {
 
 	$rootScope.newsletterSubscription = function ($event){
 		var checkbox = $event.target,
-			value = checkbox.checked, // let's do the reverse (if checkbox is checked, that means the user wants to uncheck it)
+			value = checkbox.checked,
 			url = '/api/shops/'+selectedShop.id+'/newsletter-subscription/'+$rootScope.selectedUser.id+
 					'?api_token='+window.user.api_token,
 			data = { newsletter_subscription: value },
@@ -143,7 +141,8 @@ app.run(function($rootScope, $http, $timeout) {
 
 		$http.post(url, data).then(function (response){
 			if( response.data.success == 1 ){
-				$rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked;
+				// $rootScope.selectedUser.pivot.newsletter_subscribed = checkbox.checked;
+				$rootScope.selectedUser.pivot.newsletter_subscribed = value;
 				window.reBuy.toast(response.data.msg);
 			}else{
 				// reset checkbox toggle
@@ -152,6 +151,7 @@ app.run(function($rootScope, $http, $timeout) {
 			}
 		}, function (response){
 			console.warn(response);
+			$rootScope.newsletter_subscribed = checkbox.checked ? false : true;
 			window.reBuy.alert("Something went wrong. Please try again later. If problem continue to exist, contact admin suppport.");
 		});
 	};

@@ -1,7 +1,7 @@
 @component('admin.layouts.app')
 <div class="col s4">
 	<div class="card hoverable" ng-model="shops">
-		<form method="post" action="/admin/categories/new">
+		<form method="post" action="{{ url('admin/categories/new') }}">
 			{{ csrf_field() }}
 			<div class="row card-content">
 				<span class="card-title">Categories</span>

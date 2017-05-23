@@ -16,51 +16,51 @@ use App\Http\Requests\ShopInvitationRequest;
 use App\Mail\ShopInvitation;
 use App\Mail\ShopWorkerInvitation;
 use Auth;
+use DB;
+
 class ShopOwnerController extends Controller
 {
-    // function __construct()
-    // {
-    //     $user = Auth::guard('api')->user();
-
-    //     if( $user && $user->lang != "" ){
-    //         \App::setLocale($user->lang);
-    //     }
-    // }
-
-    public function includeUserOnJS()
+    function __construct()
     {
-        $shops = auth()->user()->ownedShops()->get();
-        $shop = session()->put('shops', $shops);
+        $this->middleware(function ($request, $next) {
+            
+            if( auth()->check() && auth()->user()->isOwner() ){
+                $user = auth()->user();
+                $shops = $user->ownedShops()->get();
 
-        if( !session()->has("selected_shop") && auth()->check() ){
-            $shop = auth()->user()->ownedShops()->with('todoTasks')
-                        ->with('todoTasks.owner')->first();
-            session()->put("selected_shop", $shop);
-        }
+                $shop = session()->put('shops', $shops);
 
-        $shop = session()->get('selected_shop');
-        
+                if( !session()->has("selected_shop") && auth()->check() ){
+                    $shop = auth()->user()->ownedShops()->with('todoTasks')
+                                ->with('todoTasks.owner')->first();
+                    session()->put("selected_shop", $shop);
+                }
 
-        JavaScript::put([
-            'user' => auth()->user(),
-            'selectedShop' => $shop
-        ]);
+                $shop = session()->get('selected_shop');
+                
+
+                JavaScript::put([
+                    'user' => $user,
+                    'selectedShop' => $shop
+                ]);
+            }
+
+            return $next($request);
+            
+        });
     }
 
     public function index(){
-        $this->includeUserOnJS();
-        
+
     	return view('shop_owner.dashboard');
     }
 
     public function clients(){
-        $this->includeUserOnJS();
+        
     	return view('shop_owner.clients');
     }
 
     public function articles(){
-        $this->includeUserOnJS();
-
         $articles = auth()->user()->articles()->get();
         // $tags = 
 
@@ -73,22 +73,22 @@ class ShopOwnerController extends Controller
     }
 
     public function customers(){
-        $this->includeUserOnJS();
+        
     	return view('shop_owner.customers');
     }
 
     public function todo(){
-        $this->includeUserOnJS();
+        
         return view('shop_owner.todo');
     }
 
     public function workers(){
-        $this->includeUserOnJS();
+        
         return view('shop_owner.workers');
     }
 
     public function workersTodo(){
-        $this->includeUserOnJS();
+        
         return view('shop_owner.workers_todo');
     }
 
@@ -153,7 +153,7 @@ class ShopOwnerController extends Controller
 
             $input = Input::all();
 
-            $user = User::where('email', '=', $input['email'])->first();
+            $user = User::where('email', '=', strtolower($input['email']))->first();
             $current_user = User::where('api_token', '=', $input['api_token'])->first();
             
             $password = str_random(8);
@@ -263,7 +263,8 @@ class ShopOwnerController extends Controller
 
             return redirect($real_auth['url'])->withFlash_message([
                     'type' => 'info',
-                    'msg' => __('messages.welcome_back', ['name' => ucfirst(auth()->user()->first_name)])
+                    'msg' => __('messages.welcome_back', ['name' => ucfirst(auth()->user()->first_name)]),
+                    'important' => false
                 ]);
         }
 
@@ -271,17 +272,21 @@ class ShopOwnerController extends Controller
     }
 
     public function toggleNewsletterSubscription(Shop $shop, User $user){
-        $val = Input::get('newsletter_subscription');
-        $timestamp = $user->shops()->find($shop->id)->pivot->created_at; // gets id of pivot table for shops and users
-        $res = $user->shops()->newPivotStatementForId($shop->id)->where('created_at', '=', $timestamp)
-            ->update([ 'newsletter_subscribed' => $val ]);
+        $newsletter_subscription = Input::get('newsletter_subscription');
+        $val = $newsletter_subscription == 'true' ? 1 : 0;
+
+        $shop = $user->shops()->find($shop->id);
+        $shop->pivot->newsletter_subscribed = $val;
+        $res = $shop->pivot->update();
             
-        $action = $val ? "subscribed" : "unsubscribed";
+        $action = $val == 1 ? "subscribed" : "unsubscribed";
 
         if( $res ){
-            $msg = ucfirst($user->first_name)." is now {$action} to {$shop->name} newsletter.";
+            $msg = __('messages.newsletter_toggle_status', 
+                        ['user' => ucfirst($user->first_name), 'action' => $action, 'shop' => $shop->name]
+                    );
         }else{
-            $msg = "No changes have been made.";
+            $msg = __('messages.no_changes_saved');
         }
 
         return ['success' => $res ? 1 : 0, 'msg' => $msg];
@@ -289,7 +294,7 @@ class ShopOwnerController extends Controller
 
     public function spots(Salespot $id){
 
-        $this->includeUserOnJS();
+        
         return view('shop_owner.spots');
     }
 }

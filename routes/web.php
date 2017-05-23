@@ -26,6 +26,7 @@ Route::get('login/fb/callback', 'Auth\LoginController@handleProviderCallback');
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+// Route::group(['domain' => 'admin.'.env('APP_DOMAIN'), 'middleware' => 'admin'], function () {
     Route::get('/', 'AdminController@index');
     Route::get('/dashboard', 'AdminController@index');
     Route::get('/users', 'AdminController@users'); 
@@ -46,7 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
 });
 
-Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
+Route::group(['prefix' => 'shop', 'middleware' => 'owner' ], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
@@ -63,7 +64,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
 	Route::get('/tags/query', 'TagController@query');
 });
 
-Route::group(['middleware' => ['web']], function (){
+Route::group(['middleware' => 'web'], function (){
 	Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
 	Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
 	Route::get('shop/login-back', 'ShopOwnerController@loginBack');
@@ -83,6 +84,12 @@ Route::get('test-event', function (){
 	event(new CustomerBecameAClient($user));
 });
 
+
+Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
+    Route::get('hello', function () {
+        dd(parse_url(Request::root(), PHP_URL_HOST));
+    });
+});
 
 Route::get('try/{lang}', function ($lang){
 	\App::setLocale($lang);

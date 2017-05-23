@@ -2,7 +2,9 @@
   JS 
 */
 
-window.rebuyApp = angular.module('rebuy', []);
+window.rebuyApp = angular.module('rebuy', [], function ($httpProvider){
+	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+});
 
 window.rebuyApp.config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;
@@ -13,12 +15,7 @@ window.rebuyApp.config(['$httpProvider', function($httpProvider) {
 (function($){
 	$.adminJS = {
 		init : function(){
-				if($.adminJS.me.id){
-	        		return false;
-	        	}
-	           $.get('/admin/me', function(response){
-	           		$.adminJS.me = response;
-	           });
+	   		$.adminJS.me = window.user;
 		},
         me : []
 	}
