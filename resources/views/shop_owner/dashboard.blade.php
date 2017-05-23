@@ -18,22 +18,6 @@
 					</div>
 				</div>	
 
-				<div class="card hoverable" ng-model="shops">
-					<div class="row card-content">
-						
-						<span class="card-title">Workers</span>
-						<div class="collection">
-									<a href="javascript:;" 
-											class="list-shops collection-item" 
-											id="@{{'sh'+ shop.id}}" 
-											ng-repeat="(key, shop) in shops.data" 
-											ng-click="events.viewShop(this)">
-											@{{shop.name}}
-									</a>
-						</div>
-					</div>
-				</div>	
-
 			</div>
 			<div class="col s6">
 

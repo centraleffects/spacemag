@@ -128,12 +128,6 @@
 						</div>
 					</div> -->	
 
-					<div class="card hoverable">
-						<div class="row card-content">
-							<span class="card-title">Manage Shop Workers</span>
-							
-						</div>
-					</div>
 				</div>
 	</div>
 	<div id="salespot-tab" ng-show="currentTab == 'salespot'">
