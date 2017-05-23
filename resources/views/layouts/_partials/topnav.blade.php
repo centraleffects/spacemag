@@ -38,7 +38,6 @@
 	</ul>
 	<!-- Dropdown Structure -->
 	<ul id='dropdown_languages' class='dropdown-content'>
-		
 		@foreach (Config::get('languages') as $lang => $language)
 	        @if ($lang != App::getLocale())
 	            <li>
@@ -47,4 +46,4 @@
 	        @endif
 	    @endforeach
 	</ul>
-</nav>
+</nav> 

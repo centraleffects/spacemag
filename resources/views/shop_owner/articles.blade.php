@@ -30,7 +30,7 @@
 									</a>
 								</li>
 							@empty
-								<li class="collection-item">No result to display</li>
+								<li class="collection-item">{!! __("No result to display") !!}</li>
 							@endforelse
 
 					</ul>
@@ -40,7 +40,7 @@
 	@endslot
 	@slot('center')
 		<div  class="row">
-			<form method="POST" action="{{Request::path()}}">
+			<form method="POST" action="/{{Request::path()}}">
 			{{ csrf_field() }}
 				<div class="card hoverable"><!-- Client's Details -->
 					<div class="card-content">

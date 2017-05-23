@@ -3,3 +3,7 @@ ADD `commission_salespot` VARCHAR(5) NULL DEFAULT NULL AFTER `commission_article
 
 ------------------------
 ALTER TABLE `shops` ADD `owner` INT(11) NULL AFTER `user_id`;
+
+------------------------
+
+UPDATE `users` SET `lang` = 'sv'

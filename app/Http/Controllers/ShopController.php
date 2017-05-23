@@ -258,7 +258,8 @@ class ShopController extends Controller
     //Send email invitation
     private function sendInviteEmail(Shop $shop, User $newOwner){
 
-        $shop = Shop::find($shop);
+        $shop = Shop::find($shop)->first();
+     
         try {
             $mail = new ShopOwnerInvitation($shop, $newOwner, Auth::guard('api')->user());
 
