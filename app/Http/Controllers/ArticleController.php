@@ -101,9 +101,26 @@ class ArticleController extends Controller
         $input = Input::all();
 
         if(Input::has('ajax')){
-            dd($input);
+
+            if(Input::has('data')){
+                $data = null;
+               foreach($input['data'] as $d){
+                    if($d['name'] <> "article-tags" and $d['name'] <> "categories"){
+                        $data[$d['name']] = $d['value'];
+                    }else{
+                        if($d['name'] == "article-tags"){
+                            $data['tags'][] = $d['value'];
+                        }
+                        if($d['name'] == "categories"){
+                            $data['categories'][] = $d['value'];
+                        }
+                    }
+                    
+               }
+               dd( $data );
+            }
             return [
-                'success' => 1
+                'success' => 0
             ];
         }
 

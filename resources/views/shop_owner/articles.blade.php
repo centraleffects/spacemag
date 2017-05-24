@@ -46,11 +46,12 @@
 					<div class="card-content">
 						<div class="card-title">Details</div>
 						<div class="input-field">
+							<input type="hidden" name="name"  value="{{ $selectedArticle->id }}"/>
 							<input type="text" name="name"  value="{{ $selectedArticle->name }}"/>
 							<label>Name</label>
 						</div>
 						<div class="input-field">
-							<select name="categories[]" id="categories" multiple="multiple">
+							<select name="categories" id="categories" multiple="multiple">
 								@if($categories)
 								 <option value=""> All </option>
 								@endif
@@ -65,7 +66,7 @@
 						</div>
 
 						<div class="input-field tags">
-							<select name="article-tags[]" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true"></select>
+							<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true"></select>
 							<label>Tags</label>			
 						</div>
 						<div class="input-field">

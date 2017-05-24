@@ -13,31 +13,11 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 	$scope.events = {
 		addUpdate : function(form){
 				data = form.serializeArray();
-				console.log(data);
-				var config = {
-	                headers : {
-	                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-	                }
-	            }
 
-	          /*  $http.post(form.attr('action'), data, config)
-	            .success(function (data, status, headers, config) {
-	                console.log(data);
-	            })
-	            .error(function (data, status, header, config) {
-	                window.reBuy.toast("Data: " + data +
-	                    "<hr />status: " + status +
-	                    "<hr />headers: " + header +
-	                    "<hr />config: " + config)
-	            });*/
-	            $http.post(form.attr('action'), data).then(function(msg){
-			        if(msg.loginSucceeded==="true"){
-			            console.log("opa")
-			        }else{
-			            console.log("den");
-			        }
-			    });    
 	            console.log(data);
+	            articleServices.addOrUpdate(form.attr('action') + '?&ajax=true', data).then(function(addOrUpdate){
+		              console.log(addOrUpdate);
+		        });
 		}
 	}
 
