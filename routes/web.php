@@ -64,6 +64,7 @@ Route::group(['prefix' => 'shop', 'middleware' => 'owner' ], function (){
 	Route::get('/tags/query', 'TagController@query');
 
 	Route::post('/articles',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
+	Route::post('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
 });
 
 Route::group(['middleware' => 'web'], function (){

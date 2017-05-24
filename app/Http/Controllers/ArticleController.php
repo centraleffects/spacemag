@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Input;
 
 use App\Article;
 use App\Sale;
@@ -96,6 +97,15 @@ class ArticleController extends Controller
     }
 
     public function indexOwner($id = null){
+
+        $input = Input::all();
+
+        if(Input::has('ajax')){
+            dd($input);
+            return [
+                'success' => 1
+            ];
+        }
 
         $this->includeUserOnJS();
         

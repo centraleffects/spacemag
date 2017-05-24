@@ -1,10 +1,10 @@
 @component('shop_owner.layouts.app')
-<div ng-controller="ArticleController">	
+<div >
 	@slot('left')
-		<div class="card hoverable">
+		<div class="card hoverable" ng-controller="articlesController">
 			<div class="row card-content">
 				
-				<span class="card-title" ng-bind="testx">Article List @{{ test }}</span>
+				<span class="card-title">Article List <span ng-bind="first_name"></span></span>
 
 				<div class="nav-wrapper">
 			      <form>
@@ -50,7 +50,7 @@
 							<label>Name</label>
 						</div>
 						<div class="input-field">
-							<select name="category" multiple="multiple">
+							<select name="categories[]" id="categories" multiple="multiple">
 								@if($categories)
 								 <option value=""> All </option>
 								@endif
@@ -65,7 +65,7 @@
 						</div>
 
 						<div class="input-field tags">
-							<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true"></select>
+							<select name="article-tags[]" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true"></select>
 							<label>Tags</label>			
 						</div>
 						<div class="input-field">
@@ -119,7 +119,7 @@
 						</div>
 					</div>
 					<div class="row card-action">
-			          <button  type="submit" class="right waves-effect waves-light btn">{{ ($selectedArticle->name) ? "Update" : "Add Article" }}</button>
+			          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->name) ? "Update" : "Add Article" }}</button>
 			        </div>
 				</div><!-- end Client's Details -->
 				</form>

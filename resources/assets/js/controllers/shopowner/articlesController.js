@@ -1,74 +1,49 @@
-function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
+app.controller('articlesController', function($scope, articleServices, $http, $timeout, $rootScope){
+	
+	var vm = this;
+
 	$scope.selectedShop = selectedShop;
 	$scope.articles = [];
 	$scope.hasSelectedArticle = false;
 	$scope.currentlySelectedArticle = null;
-	$scope.addNew = false;
-	$scope.new_firstName = '';
-	$scope.new_Email = '';
-	$scope.test = 'testing';
-	$scope.tags =  [{ id: 0, text: 'enhancement' }, { id: 1, text: 'bug' }, { id: 2, text: 'duplicate' }, { id: 3, text: 'invalid' }, { id: 4, text: 'wontfix' }];
+	$scope.bindEvents = bindEvents;
 
+	$scope.bindEvents();
 
-	$scope.init = function (){
-		$timeout(function () {
-           //$rootScope.updateList($scope, articleServices.articleList, "articles");
-        },1500);
+	$scope.events = {
+		addUpdate : function(form){
+				data = form.serializeArray();
+				console.log(data);
+				var config = {
+	                headers : {
+	                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+	                }
+	            }
+
+	          /*  $http.post(form.attr('action'), data, config)
+	            .success(function (data, status, headers, config) {
+	                console.log(data);
+	            })
+	            .error(function (data, status, header, config) {
+	                window.reBuy.toast("Data: " + data +
+	                    "<hr />status: " + status +
+	                    "<hr />headers: " + header +
+	                    "<hr />config: " + config)
+	            });*/
+	            $http.post(form.attr('action'), data).then(function(msg){
+			        if(msg.loginSucceeded==="true"){
+			            console.log("opa")
+			        }else{
+			            console.log("den");
+			        }
+			    });    
+	            console.log(data);
+		}
 	}
 
-	$scope.$watch('articles', function() {	    
-        if( $scope.articles.length > 0 ){
-			$scope.listIsEmpty = false;
-		}else{
-			$scope.listIsEmpty = true;
-		}
-        console.log('hey, myVar has changed!');
-    });
+	function  bindEvents(){
 
-	$scope.$watch('articles', function() {	    
-        if( $scope.articles.length > 0 ){
-			$scope.listIsEmpty = false;
-		}else{
-			$scope.listIsEmpty = true;
-		}
-        console.log('hey, myVar has changed!');
-    });
-
-	$scope.viewArticle = function (index){
-		$scope.hasSelectedArticle = true;
-		$scope.currentlySelectedArticle = $scope.articles[index];
-		materializeInit();
-	};
-
-	$scope.removeArticle = function (index){
-		var article = $scope.articles[index];
-		var url = '/api/articles/'+article.id+'/remove?api_token='+window.user.api_token;
-		window.$.reBuy.confirm("Are you sure to remove this article?", function (){
-			$http.delete(url).then(function (response){
-				// $scope.articles = response.data;
-				console.log(response);
-				if( response.data.success == 1 ){
-					$scope.articles.splice(index);
-				}
-
-				if( $scope.articles.length < 1 ){
-					$rootScope.listIsEmpty = true;
-				}
-
-			}, function (response){
-				console.warn(response);
-			});
-		});
-	};
-
-	$scope.addNewArticle = function (){
-		$scope.addNew = true;
-		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
-	};
-
-	$scope.bindEvents = function(){
-
-			function formatState (tag) {
+			function formatTag (tag) {
 			  if (!tag.id) { return tag.text; }
 			  var $tags = $(
 			    '<span><img src="/images/bg.jpg" class="img-flag circle" style="width:20px; height:20px;" /> ' + tag.text + '</span>'
@@ -78,7 +53,7 @@ function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 			};
 
 			$("#article-tags").select2({
-			  templateResult: formatState,
+			  templateResult: formatTag,
 				ajax: {
 				    url: '/shop/tags/query?api_token='+window.user.api_token,
 				    dataType: 'json',
@@ -99,13 +74,11 @@ function ArticleCtrl ($scope, articleServices, $http, $timeout, $rootScope){
 				  escapeMarkup: function (markup) { return markup; }
 			});
 
+			$( "form" ).on( "submit", function( event ) {
+			  event.preventDefault();
+			  $scope.events.addUpdate($(this).closest('form'));
+			  return false;
+			});
     }
 
-   
-	// init
-	$scope.init();
-
-	$scope.bindEvents();
-}
-
-app.controller('ArticleController', ArticleCtrl);
+});
