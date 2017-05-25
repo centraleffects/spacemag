@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Input;
 
 use App\Article;
 use App\Sale;
@@ -96,6 +97,32 @@ class ArticleController extends Controller
     }
 
     public function indexOwner($id = null){
+
+        $input = Input::all();
+
+        if(Input::has('ajax')){
+
+            if(Input::has('data')){
+                $data = null;
+               foreach($input['data'] as $d){
+                    if($d['name'] <> "article-tags" and $d['name'] <> "categories"){
+                        $data[$d['name']] = $d['value'];
+                    }else{
+                        if($d['name'] == "article-tags"){
+                            $data['tags'][] = $d['value'];
+                        }
+                        if($d['name'] == "categories"){
+                            $data['categories'][] = $d['value'];
+                        }
+                    }
+                    
+               }
+               dd( $data );
+            }
+            return [
+                'success' => 0
+            ];
+        }
 
         $this->includeUserOnJS();
         

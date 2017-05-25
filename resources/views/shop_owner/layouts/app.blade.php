@@ -40,7 +40,7 @@
                     <div class="col s12">
                         <nav>
                             <div class="nav-wrapper nav-content">
-                                <ul id="nav-mobile tabs tabs-transparent" class="right hide-on-med-and-down">
+                                <!-- <ul id="nav-mobile tabs tabs-transparent" class="right hide-on-med-and-down">
 
                                     @if( auth()->user()->isOwner() )
                                         <li class="tab">
@@ -86,6 +86,57 @@
                                     @else
                                         <li class="tab">
                                             <a href="{{ url('shop') }}" class="btn green waves-effect waves-light">
+                                                {!! __("Shops") !!}
+                                            </a>
+                                        </li>                                        
+                                    @endif
+                                </ul> -->
+                                <ul id="nav-mobile tabs tabs-transparent" class="right">
+
+                                    @if( auth()->user()->isOwner() )
+                                        <li class="tab">
+                                            <a href="{{ url('shop') }}">
+                                                {!! __("Shops Status") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/customers') }}">
+                                                {!! __("Customers") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/clients') }}">
+                                                {!! __("Clients") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/spots') }}">
+                                               {!! __("Salespot") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/articles') }}">
+                                               {!! __("Articles") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/workers') }}">
+                                                {!! __("Shop Workers") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/todo') }}">
+                                                {!! __("Todo List") !!}
+                                            </a>
+                                        </li>
+                                        <li class="tab">
+                                            <a href="{{ url('shop/workers/todo') }}">
+                                                {!! __("Workers Todo") !!}
+                                            </a>
+                                        </li>
+                                    @else
+                                        <li class="tab">
+                                            <a href="{{ url('shop') }}">
                                                 {!! __("Shops") !!}
                                             </a>
                                         </li>                                        
