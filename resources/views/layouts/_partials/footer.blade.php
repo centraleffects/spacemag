@@ -1,4 +1,4 @@
-<footer class="page-footer blue lighten-2">
+<footer class="page-footer green lighten-1">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-copyright blue lighten-1">
+    <div class="footer-copyright green">
       <div class="container">
         &copy; 2017 Rebuy &reg;  
       </div>

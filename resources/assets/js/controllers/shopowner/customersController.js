@@ -33,7 +33,7 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
 		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
-		materializeInit();
+		Materialize.updateTextFields();
 	}
 
 	$scope.removeCustomer = function (index){
@@ -113,7 +113,7 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 		});
 
 		$timeout(function () {
-			materializeInit();
+			Materialize.updateTextFields();
 		},1000);
             
     } 

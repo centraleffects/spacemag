@@ -1,4 +1,4 @@
-<nav class="navbar blue lighten-2" role="navigation">
+<nav class="navbar green" role="navigation">
 	<div class="nav-wrapper"><a id="logo-container" href="#" class="brand-logo"><img src="/images/rebuy_logo.png" class="img-responsive"></a>
 	  <ul class="right hide-on-med-and-down">
 	    <li><a href="#">Settings</a></li>
