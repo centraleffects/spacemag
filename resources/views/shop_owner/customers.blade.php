@@ -23,8 +23,8 @@
 			    </li>
 			</ul>
 			<div class="card-action">
-				<a class="btn waves-effect waves-light blue" href="#!" ng-click="addNewCustomer()">
-					<i class="fa fa-plus"></i> Add New Customer
+				<a class="btn-floating btn-large waves-effect waves-light green right tooltipped" data-position="left" data-delay="50" data-tooltip="Invite new customer" href="#!" ng-click="addNewCustomer()">
+					<i class="material-icons">add</i>
 				</a>
 			</div>
 		</div>

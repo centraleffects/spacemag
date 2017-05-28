@@ -47,24 +47,24 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
 });
 
-Route::group(['prefix' => 'shop', 'middleware' => 'owner' ], function (){
+Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 	Route::get('/', 'ShopOwnerController@index');
 	Route::get('clients', 'ShopOwnerController@clients');
 	Route::get('clients/articles', 'ShopOwnerController@articles');
-	Route::get('customers', 'ShopOwnerController@customers')->middleware('owner');
+	Route::get('customers', 'ShopOwnerController@customers');
 	Route::get('todo', 'ShopOwnerController@todo');
 	Route::get('workers', 'ShopOwnerController@workers');
 	Route::get('workers/todo', 'ShopOwnerController@workersTodo');
 
 	Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
-	Route::get('/articles',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
-	Route::get('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
+	Route::get('/articles',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
+	Route::get('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
 
 	Route::get('/tags/query', 'TagController@query');
 
-	Route::post('/articles',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
-	Route::post('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware('owner');
+	Route::post('/articles',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
+	Route::post('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
 });
 
 Route::group(['middleware' => 'web'], function (){
@@ -95,9 +95,6 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
 });
 
 Route::get('try/{lang}', function ($lang){
-	\App::setLocale($lang);
-	
-	echo \App::getLocale()."<br>";
-	dd(__('messages.email_changed_confirmed'));
+	dd(\Request::path());
 });
 

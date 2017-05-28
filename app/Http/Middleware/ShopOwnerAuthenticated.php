@@ -15,12 +15,11 @@ class ShopOwnerAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if( !auth()->check() or !$request->user()->isOwner() ) 
+        if( !auth()->check() or (!$request->user()->isOwner() and !$request->user()->isWorker()) ) 
         {
             return redirect('home');   
         }
 
-       
         return $next($request);
     }
 }

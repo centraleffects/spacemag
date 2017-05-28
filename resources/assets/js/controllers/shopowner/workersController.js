@@ -24,7 +24,7 @@ function WorkerCtrl ($scope, workerServices, $http, $timeout, $rootScope){
 		$rootScope.selectedUser = $scope.selectedUser;
 		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
 		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
-		materializeInit();
+		Materialize.updateTextFields();
 	};
 
 	$scope.removeWorker = function (index){

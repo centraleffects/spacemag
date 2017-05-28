@@ -1,4 +1,4 @@
-<nav class="navbar blue lighten-2" role="navigation">
+<nav class="navbar blue lighten-1" role="navigation">
 	<div class="nav-wrapper container">
 		<a id="logo-container" href="#" class="brand-logo"><img src="/images/rebuy_logo.png" class="img-responsive"></a>
 	  	<ul class="right hide-on-small-and-down">

@@ -164,14 +164,10 @@ app.run(function($rootScope, $http, $timeout) {
 		});
 
 		$timeout(function () {
-			materializeInit();
+			Materialize.updateTextFields();
 		},1000);
 	}
 });
-
-function materializeInit(){
-	Materialize.updateTextFields();
-}
 
 bindEvents = function($){
 	$('.dropdown-button').dropdown({
