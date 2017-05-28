@@ -17,6 +17,7 @@ use App\ArticleCategories;
 use App\Tag;
 
 use JavaScript;
+use Helpers;
 
 class ArticleController extends Controller
 {

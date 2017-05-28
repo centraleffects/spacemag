@@ -128,7 +128,7 @@
 							<label>Label Print medium</label>
 						</div>
 						<div class="file-field input-field">
-					      <div class="btn">
+					      <div class="btn waves-effect waves-teal btn-flat">
 					        <span>Sample Picture</span>
 					        <input type="file" name="sample_picture">
 					      </div>
@@ -137,9 +137,9 @@
 					      </div>
 					    </div>
 					    <div class="file-field input-field">
-					      <div class="btn">
+					      <div class="btn waves-effect waves-teal btn-flat">
 					        <span>Label Design</span>
-					        <input type="file" name="">
+					        <input type="file" name="label_design">
 					      </div>
 					      <div class="file-path-wrapper">
 					        <input class="file-path validate" type="text">
@@ -225,6 +225,19 @@
 					</p>
 				</div>
 			</div><!-- End Shop Information -->
+
+			<div class="card hoverable">
+	            <div class="card-content">
+	              <span class="card-title">BarCode</span>
+	              <br>
+	              <div><img src="{{ Helper::getBarCode( $selectedArticle->id.' '.$selectedArticle->name ) }}"/></div>
+	              <div>{{$selectedArticle->name}}</div>
+	            </div>
+	            <div class="card-action">
+	              <a href="#">Print</a>
+	            </div>
+	         </div>
+
 		</div>
 	@endslot
 </div>
