@@ -4,17 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class ArticleTag extends Model
 {
     protected $guarded = [ 'id' ];
     protected $table = "article_tags";
 
     public function articles(){
-    	return $this->belongsToMany('App\Article');
+    	return $this->belongsTo('App\Article', 'article_id');
     }
 
-    // returns the user who created this tag
-    public function user(){
-    	return $this->belongsTo('App\User');
+    public function tag(){
+    	return $this->belongsTo('App\Tag');
     }
 }

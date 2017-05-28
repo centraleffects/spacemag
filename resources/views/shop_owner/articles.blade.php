@@ -46,7 +46,7 @@
 					<div class="card-content">
 						<div class="card-title">Details</div>
 						<div class="input-field">
-							<input type="hidden" name="name"  value="{{ $selectedArticle->id }}"/>
+							<input type="hidden" name="id" id="id"  value="{{ $selectedArticle->id }}"/>
 							<input type="text" name="name"  value="{{ $selectedArticle->name }}"/>
 							<label>Name</label>
 						</div>
@@ -55,8 +55,14 @@
 								@if($categories)
 								 <option value=""> All </option>
 								@endif
+
 							    @forelse ($categories as $category)
-								   <option value="{{ $category->id }}"> {{ $category->name }} </option>
+							    	@if( in_array($category->id, $selected_article_categories) )
+							    		<option value="{{ $category->id }}" selected="selected"> {{ $category->name }} </option>
+							    	@else
+							    		<option value="{{ $category->id }}"> {{ $category->name }} </option>
+							    	@endif
+								   
 								@empty
 								    <option value=""> None </option>
 								@endforelse
@@ -66,7 +72,13 @@
 						</div>
 
 						<div class="input-field tags">
-							<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true"></select>
+							<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
+								@if(!empty($selected_article_tags))
+									@foreach( $selected_article_tags as $tag)
+										<option value="{{ $tag['id'] }}" selected="selected"> {{ $tag['name'] }} </option>
+									@endforeach
+								@endif
+							</select>
 							<label>Tags</label>			
 						</div>
 						<div class="input-field">
@@ -77,47 +89,62 @@
 							<input type="number" name="price" />
 							<label>Sold Cost (Kr)</label>
 						</div>
-						<div class="input-field row">
-							<p>Print status of Label</p>
-							<p class="col">
-								<input type="checkbox" id="ps_1" name="print_status" value="printed" checked />
-								<label for="ps_1">Printed</label>
-							</p>
-							<p class="col">
-								<input type="checkbox" id="ps_2" name="print_status" value="locked" />
-								<label for="ps_2">Locked</label>
-							</p>
-							<p class="col">
-								<input type="checkbox" id="ps_3" name="print_status" value="edit" />
-								<label for="ps_3">Edit</label>
-							</p>
+						<div class="input-field">
+							<input type="number" name="quantity" />
+							<label>Quantity</label>
 						</div>
+
 						<div class="input-field row">
-							<p>Label Print medium</p>
+							<p>Status</p>
 							<p class="col">
-								<input type="checkbox" id="pm_1" name="print_medium" value="printed" checked />
-								<label for="pm_1">Paper</label>
-							</p>
-							<p class="col">
-								<input type="checkbox" id="pm_2" name="print_medium" value="carton">
-								<label for="pm_2">Carton</label>
-							</p>
-							<p class="col">
-								<input type="checkbox" id="pm_3" name="print_medium" value="Paper with sticking glue at the back" />
-								<label for="pm_3">Paper with sticking glue at the back</label>
-							</p>
-						</div>
-						<div class="input-field row">
-							<p>Label Print medium</p>
-							<p class="col">
-								<input type="checkbox" id="s1" name="status" value="sold" checked />
+								<input type="radio" id="s1" name="status" value="sold" checked />
 								<label for="s1">Unsold</label>
 							</p>
 							<p class="col">
-								<input type="checkbox" id="s2" name="status" value="unsold" />
+								<input type="radio" id="s2" name="status" value="unsold" />
 								<label for="s2">Sold</label>
 							</p>
 						</div>
+						
+						<br><br>
+
+						<div class="card-title">Labels</div>
+						<div class="input-field row">
+							<select name="label_status" id="label_status">
+								<option value="Draft">Draft</option>
+								<option value="Ready to Print">Ready to Print</option>
+								<option value="Printed">Printed</option>
+								<option value="Deleted">Deleted</option>
+							</select>
+							<label>Print status of Label</label>
+						</div>
+						<div class="input-field row">
+							<select name="label_medium" id="label_medium">
+								<option value="Simple Paper">Simple Paper</option>
+								<option value="Cartonnage">Cartonnage</option>
+								<option value="Textile">Textile</option>
+								<option value="Gold Paper">Gold Paper</option>
+							</select>
+							<label>Label Print medium</label>
+						</div>
+						<div class="file-field input-field">
+					      <div class="btn">
+					        <span>Sample Picture</span>
+					        <input type="file" name="sample_picture">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
+					    <div class="file-field input-field">
+					      <div class="btn">
+					        <span>Label Design</span>
+					        <input type="file" name="">
+					      </div>
+					      <div class="file-path-wrapper">
+					        <input class="file-path validate" type="text">
+					      </div>
+					    </div>
 					</div>
 					<div class="row card-action">
 			          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->name) ? "Update" : "Add Article" }}</button>

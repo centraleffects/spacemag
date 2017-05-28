@@ -14,6 +14,7 @@ class Tag extends Model
 
     protected $guarded = [ 'id' ];
     protected $dates = [ 'created_at', 'updated_at', 'deleted_at' ];
+    protected $table = "tags";
 
     // returns the user who created this tag
     public function user(){
