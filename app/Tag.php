@@ -21,3 +21,4 @@ class Tag extends Model
     	return $this->belongsTo('App\User');
     }
 }
+	

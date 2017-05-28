@@ -15,6 +15,7 @@ use App\SalespotCategoryType;
 use App\ArticleTag;
 use App\ArticleCategories;
 use App\Tag;
+use App\ArticlePrice;
 
 use JavaScript;
 use Helpers;
@@ -125,7 +126,10 @@ class ArticleController extends Controller
                     
                }
                if(!empty($data['id'])){
-                 $article = Article::find($data['id']);
+                 $article = Article::where('id',$data['id'])->first();
+               }else{
+                  $article =  new Article();
+               }
                  if($article){
                     $article->name = !empty($data['name']) ? $data['name'] : '';
                     $article->description = !empty($data['description']) ? $data['description'] : '';
@@ -185,16 +189,45 @@ class ArticleController extends Controller
                        }
                     }
 
+                    //update price
+                    if(!empty($data['price'])){
+                        $price = ArticlePrice::where("article_id", $article->id )->first();
+                        $add_price = false;
+                        if($price){
+                            if($price->price <> $data['price']){
+                                $price->update( ['status' => 0 ]);
+                                $add_price = true;  
+                            }
+                            
+                        }else{
+                            $add_price = true;  
+                        }
+
+                        if($add_price){
+                            $price = new ArticlePrice();
+                             $price->price = $data['price'];
+                             $price->article_id = $article->id;
+                             $price->status = 1;
+                             $price->original_price = !empty($data['original_price']) ? $data['original_price'] : 0;
+                             $price->save();
+                        }
+                    }
+
                  }  
-               }
+               
                   return [
-                    'success' => 1
+                    'success' => 1,
+                    'article_id' => $article->id
                 ];
             }
             return [
                 'success' => 0
             ];
         }
+
+        //---------------------------------------------------------------------
+        //-------------------------------------------------------------------------
+        //----------------------------------------------------------------
 
         $this->includeUserOnJS();
         
@@ -205,39 +238,49 @@ class ArticleController extends Controller
                 $id = $articles[0]->id;
             }
         }
+      
+        $new_article = ( request()->segment(3) == "new" ) ;
 
-        if($id){
-            $selectedArticle = Article::find($id)->with('tags','categories')->first();
+        if($id && !$new_article){
+            $selectedArticle = Article::where('id',$id)->with('tags','categories')->first();
 
         }else{
-            $selectedArticle = [];
+            $selectedArticle =  new Article();
         }
 
         $selected_article_tags = [];
-        if($selectedArticle->tags){
-            foreach($selectedArticle->tags as $key => $tag){
-                    $Tag = Tag::where('id', $tag->tag_id)->first();
-                    if($Tag){
-                        $selectedArticle->tags[$key]['tag'][$key] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];
-                        $selected_article_tags[] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];  
-                    }
-                    $Tag = [];
+        $selected_article_categories = [];
+        $prices = [];
+
+        if(!$new_article ){
+            if($selectedArticle->tags){
+                foreach($selectedArticle->tags as $key => $tag){
+                        $Tag = Tag::where('id', $tag->tag_id)->first();
+                        if($Tag){
+                            $selectedArticle->tags[$key]['tag'][$key] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];
+                            $selected_article_tags[] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];  
+                        }
+                        $Tag = [];
+                }
+            }
+
+            
+            if($selectedArticle->categories){
+                foreach($selectedArticle->categories as $key => $category){
+                        $categoryType = SalespotCategoryType::where( 'id', $category->category_id)->first();
+                        $selectedArticle->categories[$key]['category'][$key] = [ 'id'=> $categoryType->id , 'name' => $categoryType->name ];
+                        array_push($selected_article_categories, $categoryType->id );
+                }
             }
         }
-
-        $selected_article_categories = [];
-        if($selectedArticle->categories){
-            foreach($selectedArticle->categories as $key => $category){
-                    $categoryType = SalespotCategoryType::where( 'id', $category->category_id)->first();
-                    $selectedArticle->categories[$key]['category'][$key] = [ 'id'=> $categoryType->id , 'name' => $categoryType->name ];
-                    array_push($selected_article_categories, $categoryType->id );
-            }
+        if($selectedArticle){
+             $prices = ArticlePrice::where(["article_id" => $selectedArticle->id, 'status' => 1])->first();
         }
 
         $shop = session()->get('selected_shop');
         $categories = SalespotCategoryType::all();
 
-        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags'));
+        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices'));
 
     }
 }

@@ -15,7 +15,7 @@
 			        </div>
 			      </form>
 			    </div>
-			    <div><a href="javascript:;;">Filter Result</div>
+			    <div><a href="javascript:;;">Filter Result <a href="/shop/articles/new"><span class="badge">New Article</span></a></div>
     			<div>
 					<ul class="collection">
 								
@@ -82,11 +82,11 @@
 							<label>Tags</label>			
 						</div>
 						<div class="input-field">
-							<input type="number" name="original_price" />
+							<input type="number" name="original_price" value="{{ (!$prices) ? '00.00' : $prices->original_price }}" />
 							<label>Original Cost (Kr)</label>
 						</div>
 						<div class="input-field">
-							<input type="number" name="price" />
+							<input type="number" name="price"  value="{{ (!$prices) ?  '00.00' : $prices->price }}" />
 							<label>Sold Cost (Kr)</label>
 						</div>
 						<div class="input-field">
@@ -147,7 +147,7 @@
 					    </div>
 					</div>
 					<div class="row card-action">
-			          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->name) ? "Update" : "Add Article" }}</button>
+			          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->id) ? "Update" : "Add Article" }}</button>
 			        </div>
 				</div><!-- end Client's Details -->
 				</form>
@@ -196,27 +196,6 @@
 						<input type="number" name="salesspot_commission" class="validate">
 						<label>Sales spot Rebuy Commission (Kr)</label>
 					</div>
-					<div class="input-field">
-						Spots:
-						<ul class="collapsible" data-collapsible="accordion">
-							<li>
-								<div class="collapsible-header">
-									<span><i class="fa fa-caret-down"></i> A1 (Feb 15th - Mar 15th)</span>
-								</div>
-								<div class="collapsible-body">
-									<button class="btn green waves-effect waves-light">End booking</button>
-								</div>
-							</li>
-							<li>
-								<div class="collapsible-header">
-									<span><i class="fa fa-caret-down"></i> C4 (Jan 20th - Mar 10th)</span>
-								</div>
-								<div class="collapsible-body">
-									<button class="btn green waves-effect waves-light">End booking</button>
-								</div>
-							</li>
-						</ul>
-					</div>
 				</div>
 				<div class="card-action">
 					<p>
@@ -228,13 +207,50 @@
 
 			<div class="card hoverable">
 	            <div class="card-content">
+	              <span class="card-title">Assign Client</span>
+	              <br>
+	              <div></div>
+	            </div>
+	            <div class="card-action">
+	              <a href="javascript:;;">Change</a>
+	            </div>
+	         </div>
+
+			<div class="card hoverable">
+	            <div class="card-content">
+	              <span class="card-title">Spots</span>
+	              	<ul class="collapsible" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header">
+								<span><i class="fa fa-caret-down"></i> A1 (Feb 15th - Mar 15th)</span>
+							</div>
+							<div class="collapsible-body">
+								<button class="btn green waves-effect waves-light">End booking</button>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">
+								<span><i class="fa fa-caret-down"></i> C4 (Jan 20th - Mar 10th)</span>
+							</div>
+							<div class="collapsible-body">
+								<button class="btn green waves-effect waves-light">End booking</button>
+							</div>
+						</li>
+					</ul>
+	              
+	            </div>
+
+	         </div>
+
+			<div class="card hoverable">
+	            <div class="card-content">
 	              <span class="card-title">BarCode</span>
 	              <br>
 	              <div><img src="{{ Helper::getBarCode( $selectedArticle->id.' '.$selectedArticle->name ) }}"/></div>
 	              <div>{{$selectedArticle->name}}</div>
 	            </div>
 	            <div class="card-action">
-	              <a href="#">Print</a>
+	              <a href="javascript:;;" onclick="window.reBuy.alert('Error: Cannot Find Printer Device')">Print</a>
 	            </div>
 	         </div>
 

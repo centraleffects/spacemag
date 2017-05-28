@@ -14,9 +14,15 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 		addUpdate : function(form){
 				data = form.serializeArray();
 
-	            console.log(data);
 	            articleServices.addOrUpdate(form.attr('action') + '?&ajax=true', data).then(function(addOrUpdate){
-		              console.log(addOrUpdate);
+		              if(addOrUpdate.success){
+		              	window.reBuy.toast('Article Information has been updated!');
+		              	$timeout(function(){
+		              		window.location.href= '/shop/articles/' + addOrUpdate.article_id;
+		              	},1000);
+		              }else{
+		              	window.reBuy.toast('Error: Please complete the required information and try again.');
+		              }
 		        });
 		}
 	}
