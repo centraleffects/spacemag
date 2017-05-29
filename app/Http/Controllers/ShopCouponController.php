@@ -82,4 +82,15 @@ class ShopCouponController extends Controller
     {
         //
     }
+
+
+    public function indexOwner($id = null){
+        $coupons  =  ShopCoupon::all();
+        if(empty($coupons)){
+            $coupons = [];
+        }
+        
+
+        return view('shop_owner.coupons', compact('coupons'));
+    }
 }

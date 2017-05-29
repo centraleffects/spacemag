@@ -49,8 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
 Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 	Route::get('/', 'ShopOwnerController@index');
-	Route::get('clients', 'ShopOwnerController@clients');
-	Route::get('clients/articles', 'ShopOwnerController@articles');
+
 	Route::get('customers', 'ShopOwnerController@customers');
 	Route::get('todo', 'ShopOwnerController@todo');
 	Route::get('workers', 'ShopOwnerController@workers');
@@ -67,6 +66,14 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 	Route::post('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
 
 	Route::get('/articles/new',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
+
+	Route::get('/clients',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
+	Route::get('/clients/{id}',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
+	Route::get('/clients/new',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
+
+	Route::post('/clients/{id}',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
+
+	Route::get('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
 });
 
 Route::group(['middleware' => 'web'], function (){
