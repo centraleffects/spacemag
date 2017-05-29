@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Article extends Model
 {
@@ -14,8 +15,13 @@ class Article extends Model
     }
 
     public function tags(){
-    	return $this->hasMany('App\Tag');
+    	return $this->hasmany('App\ArticleTag');
     }
+
+    public function categories(){
+        return $this->hasmany('App\ArticleCategories');
+    }
+
 
     public function prices(){
     	return $this->hasMany('App\Prices');

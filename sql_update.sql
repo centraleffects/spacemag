@@ -7,3 +7,7 @@ ALTER TABLE `shops` ADD `owner` INT(11) NULL AFTER `user_id`;
 ------------------------
 
 UPDATE `users` SET `lang` = 'sv'
+
+------------------------
+
+ALTER TABLE `article_prices` CHANGE `status` `status` INT(1) NOT NULL DEFAULT '0';
