@@ -129,9 +129,11 @@ class ShopController extends Controller
             $user->email = $input['owner']['email'];
             $firstname = explode("@", $input['owner']['email']);
             $firstname = preg_replace("/[^A-Za-z0-9 ]/", '', $firstname[0]);
+            $password = str_random(8);
+
             $user->first_name = $firstname;
             $user->last_name = "";
-            $user->password  = "";
+            $user->password  = bcrypt($password);
             $user->gender  ="";
             $user->telephone  = "";
             $user->mobile  = "";
@@ -146,7 +148,8 @@ class ShopController extends Controller
             $user->api_token = str_random(60);
             $user->save();
 
-            $user = User::where('email', $input['owner']['email'])->first();
+            // $user = User::where('email', $input['owner']['email'])->first();
+            $user->plain_password = $password; // assign random password
             
 
         }
@@ -269,8 +272,8 @@ class ShopController extends Controller
 
         } catch (\Exception $e) {
 
-            // return false;
-            return $e;  
+            return false;
+            // return $e;  
         }
 
     }
