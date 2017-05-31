@@ -39,13 +39,45 @@
 		</div>
 	@endslot
 	@slot('center')
-		<div>
-			
-		</div>
+		<div class="card hoverable">
+			<form method="POST" action="/{{Request::path()}}">
+	        <div class="card-content">
+	          <span class="card-title">New Coupon</span>
+				{{ csrf_field() }}
+				<div class="input-field">
+					<input type="text" name="name"  value=""/>
+					<label>Code</label>
+				</div>
+	          	<div class="input-field">
+					<input type="text" name="name"   class="datepicker" value=""/>
+					<label>Start Date</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="name" class="datepicker" value=""/>
+					<label>End Date</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="name" class="datepicker" value=""/>
+					<label>Type</label>
+				</div>
+				<div class="input-field">
+					<input type="text" name="name" class="datepicker" value=""/>
+					<label>Value</label>
+				</div>
+				<div class="input-field">
+					<input type="checkbox" name="name" class="datepicker" value=""/>
+					<label>Active</label>
+				</div>
+	        </div>
+	        <div class="card-action">
+	           <button  type="submit" class="waves-effect waves-light btn">Add</button>
+	        </div>
+	        </form>
+	    </div>
 	@endslot
 	@slot('right')
 
-	
+
 
 	@endslot
 
