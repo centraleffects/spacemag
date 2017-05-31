@@ -73,7 +73,12 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 
 	Route::post('/clients/{id}',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
 
+	Route::get('/coupons/new',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
 	Route::get('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
+	Route::post('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
+	Route::get('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
+	Route::post('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
+
 });
 
 Route::group(['middleware' => 'web'], function (){

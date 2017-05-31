@@ -56,6 +56,7 @@ require('./services/shopowner/articleServices');
 require('./services/shopowner/workerServices');
 require('./services/shopowner/shopServices');
 require('./services/shopowner/workerTodoServices');
+require('./services/shopowner/couponServices');
 
 require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customersController');
@@ -63,6 +64,7 @@ require('./controllers/shopowner/clientsController');
 require('./controllers/shopowner/workersController');
 require('./controllers/shopowner/articlesController');
 require('./controllers/shopowner/spotsController');
+require('./controllers/shopowner/couponsController');
 
 require('./controllers/shared/workersTodoController');
 

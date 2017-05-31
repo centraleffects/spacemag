@@ -1,7 +1,7 @@
 @component('shop_owner.layouts.app')
-	@slot('controller') ng-controller="ClientController" @endslot
+	@slot('controller') ng-controller="couponsController" @endslot
 	@slot('left')
-		<div class="card hoverable" ng-controller="articlesController">
+		<div class="card hoverable">
 			<div class="row card-content">
 				
 				<span class="card-title">Coupon List</span></span>
@@ -15,17 +15,17 @@
 			        </div>
 			      </form>
 			    </div>
-			    <div><a href="javascript:;;">Filter Result <a href="/shop/coupon/new"><span class="badge">New Coupon</span></a></div>
+			    <div><a href="javascript:;;">Filter Result <a href="/shop/coupons/new"><span class="badge">New Coupon</span></a></div>
     			<div>
 					<ul class="collection">
 								
 							@forelse ($coupons as $coupon)
 								<li 	
 									class="collection-item" 
-									id="{{ $client->id }}"  
+									id="{{ $coupon->id }}"  
 									>
-									<a  href="/shop/coupon/{{ $coupon->id }}">{{$coupon->name}}</a>
-									<a  href="/shop/coupon/delete/{{ $coupon->id }}" class="secondary-content">
+									<a  href="/shop/coupons/{{ $coupon->id }}">{{$coupon->code}}</a>
+									<a  href="/shop/coupons/delete/{{ $coupon->id }}" class="secondary-content">
 										<i class="fa fa-trash-o right" aria-hidden="true"></i>
 									</a>
 								</li>
@@ -40,40 +40,73 @@
 	@endslot
 	@slot('center')
 		<div class="card hoverable">
-			<form method="POST" action="/{{Request::path()}}">
-	        <div class="card-content">
-	          <span class="card-title">New Coupon</span>
-				{{ csrf_field() }}
-				<div class="input-field">
-					<input type="text" name="name"  value=""/>
-					<label>Code</label>
-				</div>
-	          	<div class="input-field">
-					<input type="text" name="name"   class="datepicker" value=""/>
-					<label>Start Date</label>
-				</div>
-				<div class="input-field">
-					<input type="text" name="name" class="datepicker" value=""/>
-					<label>End Date</label>
-				</div>
-				<div class="input-field">
-					<input type="text" name="name" class="datepicker" value=""/>
-					<label>Type</label>
-				</div>
-				<div class="input-field">
-					<input type="text" name="name" class="datepicker" value=""/>
-					<label>Value</label>
-				</div>
-				<div class="input-field">
-					<input type="checkbox" name="name" class="datepicker" value=""/>
-					<label>Active</label>
-				</div>
-	        </div>
-	        <div class="card-action">
-	           <button  type="submit" class="waves-effect waves-light btn">Add</button>
-	        </div>
+			<form method="POST" id="couponform" name="couponform" action="/{{Request::path()}}">
+		        <div class="card-content">
+		          <span class="card-title">{{ (!$selectedCoupon->id) ? 'New' : 'Edit' }} Coupon</span>
+					{{ csrf_field() }}
+					<input type="hidden" name="id"  id="id" value="{{ (!$selectedCoupon->id) ? '' : $selectedCoupon->id }}"/>
+					<div class="input-field">
+						<input type="text" name="code"  id="code" value="{{ (!$selectedCoupon->code) ? '' : $selectedCoupon->code }}"/>
+						<label>Code</label>
+					</div>
+		          	<div class="input-field">
+						<input type="text" name="date_start"  id="date_start"  class="datepicker" value="{{ (!$selectedCoupon->date_start) ? '' : $selectedCoupon->date_start }}"/>
+						<label>Start Date</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="date_end" id="date_end" class="datepicker" value="{{ (!$selectedCoupon->date_end) ? '' : $selectedCoupon->date_end }}"/>
+						<label>End Date</label>
+					</div>
+					<div class="input-field">
+						<select name="type" id="type">
+							<option value="percent">Percent</option>
+							<option value="amount">Amount</option>
+						</select>
+						<label>Type</label>
+					</div>
+					<div class="input-field">
+						<input type="text" name="value" id="value" value="{{ (!$selectedCoupon->value) ? '' : $selectedCoupon->value }}"/>
+						<label>Value</label>
+					</div>
+					<div class="input-field">
+							@if($selectedCoupon->is_active == 1)
+								<p>
+									<input type="radio" name="is_active" class="with-gap" id="activey" value="1" checked="checked" /> 
+									<label for="activey">Active</label>
+								</p>
+								<p>
+									<input type="radio" name="is_active" class="with-gap" id="activen" value="0"/> 
+									<label for="activen">Inactive</label>
+								</p>
+							@else
+								<p>
+									<input type="radio" name="is_active" class="with-gap" id="activey" value="1"  /> 
+									<label for="activey">Active</label>
+								</p>
+								<p>
+									<input type="radio" name="is_active" class="with-gap" id="activen" value="0" checked="checked"/>
+									<label for="activen">Inactive</label>
+								</p>
+							@endif
+					</div>
+		        </div>
+		        <div class="card-action">
+		        	@if(!empty($selectedCoupon->id ))
+		        		<button  type="submit" class="waves-effect waves-light btn">Update Coupon</button>
+		        	@else
+		        		<button  type="submit" class="waves-effect waves-light btn">Add Coupon</button>
+		        	@endif
+		        </div>
 	        </form>
 	    </div>
+
+	    <div class="card hoverable">
+            <div class="card-content">
+              <span class="card-title">Coupon uses</span>
+              <br>
+
+         </div>
+
 	@endslot
 	@slot('right')
 
