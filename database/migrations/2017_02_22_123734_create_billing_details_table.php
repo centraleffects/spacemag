@@ -13,6 +13,8 @@ class CreateBillingDetailsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('billing_details'))  
+
          Schema::create('billing_details', function (Blueprint $table) {
             
             $table->increments('id')->unique();

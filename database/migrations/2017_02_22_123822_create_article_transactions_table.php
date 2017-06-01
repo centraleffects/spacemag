@@ -13,6 +13,8 @@ class CreateArticleTransactionsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('article_transactions') )
+        
          Schema::create('article_transactions', function (Blueprint $table) {
 
             $table->increments('id')->unique();

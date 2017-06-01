@@ -13,6 +13,8 @@ class CreateTagsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('tags'))  
+
          Schema::create('tags', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('user_id')->unsigned()->index();

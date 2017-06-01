@@ -13,6 +13,8 @@ class CreateTodoTasksTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('todo_tasks') )
+        
          Schema::create('todo_tasks', function (Blueprint $table) {
             
             $table->increments('id')->unique();

@@ -13,6 +13,8 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('articles'))  
+
          Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();

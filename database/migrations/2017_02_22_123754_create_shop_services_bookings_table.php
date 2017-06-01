@@ -13,6 +13,8 @@ class CreateShopServicesBookingsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('shop_services_bookings') )
+
          Schema::create('shop_services_bookings', function (Blueprint $table) {
             
             $table->increments('id')->unique();

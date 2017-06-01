@@ -13,6 +13,8 @@ class CreateSalespotCategoryTypesTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('salespot_category_types') )
+        
          Schema::create('salespot_category_types', function (Blueprint $table) {
             
             $table->increments('id')->unique();

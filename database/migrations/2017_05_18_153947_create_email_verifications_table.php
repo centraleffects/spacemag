@@ -13,6 +13,8 @@ class CreateEmailVerificationsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('email_verifications') )
+        
         Schema::create('email_verifications', function (Blueprint $table) {
             
             $table->increments('id')->unique();
