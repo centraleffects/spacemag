@@ -34,6 +34,11 @@
 	        {!! __("Workers Todo") !!}
 	    </a>
 	</li>
+	<li>
+	    <a href="{{ url('shop/workers/todo') }}">
+	        {!! __("Coupons") !!}
+	    </a>
+	</li>
 
 @else
 	<li>

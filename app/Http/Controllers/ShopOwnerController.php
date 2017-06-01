@@ -66,11 +66,6 @@ class ShopOwnerController extends Controller
     	return view('shop_owner.dashboard');
     }
 
-    public function clients(){
-        
-    	return view('shop_owner.clients');
-    }
-
     public function articles(){
         $articles = auth()->user()->articles()->get();
         // $tags = 

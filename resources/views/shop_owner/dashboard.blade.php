@@ -1,7 +1,7 @@
 @component('shop_owner.layouts.app')
-@slot('controller') ng-controller="ClientController" @endslot
+@slot('controller') ng-controller="dashboardController" @endslot
 <!-- <div ng-controller="dashboardController"> -->
-	<div id="shop-tab"  ng-show="currentTab == 'shop'">
+	<div id="shop-tab">
 		<div class="col s3">
 			<div class="card hoverable" ng-model="shops">
 				<div class="row card-content">
@@ -19,7 +19,7 @@
 				</div>
 			</div>	
 
-			<div class="card hoverable" ng-model="shops">
+			<div class="card hoverable" ng-model="workers">
 				<div class="row card-content">
 
 					<span class="card-title">Workers</span>

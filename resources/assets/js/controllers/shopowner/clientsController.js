@@ -1,7 +1,7 @@
 function ClientCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.clients = [];
-	$scope.hasSelectedUser = false;
-	$scope.selectedUser = null;
+	$scope.hasselectedClient = false;
+	$scope.selectedClient = null;
 
 	$scope.init = function (){
 		$scope.getClients();
@@ -19,11 +19,11 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 	};
 
 	$scope.viewClient = function (index){
-		$scope.hasSelectedUser = true;
-		$scope.selectedUser = $scope.clients[index];
-		$rootScope.selectedUser = $scope.selectedUser;
-		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
-		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
+		$scope.hasselectedClient = true;
+		$scope.selectedClient = $scope.clients[index];
+		$rootScope.selectedClient = $scope.selectedClient;
+		$rootScope.hasselectedClient = $scope.hasselectedClient;
+		$rootScope.selectedClient.pivot.newsletter_subscribed = $scope.selectedClient.pivot.newsletter_subscribed == 1 ? true : false;
 		
 		Materialize.updateTextFields();
 	};
@@ -36,7 +36,7 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 				// $scope.clients = response.data;
 				console.log(response);
 				if( response.data.success == 1 ){
-					$rootScope.selectedUser = null;
+					$rootScope.selectedClient = null;
 					$scope.clients.splice(index);
 				}
 			}, function (response){

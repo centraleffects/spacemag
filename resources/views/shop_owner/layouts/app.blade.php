@@ -53,7 +53,8 @@
                                                 'shop/articles' => __("Articles"),
                                                 'shop/todo' => __("Todo List"),
                                                 'shop/workers/todo' => __("My Todo"),
-                                                'shop' => __("Shops")
+                                                'shop/coupons' => __("Coupons"),
+                                                'shop' => __("Shops"),
 
                                             ];
 
