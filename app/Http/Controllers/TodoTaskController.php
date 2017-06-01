@@ -12,8 +12,12 @@ use App\Shop;
 use App\User;
 use App\Mail\TaskAssignment; 
 
+use App\Http\Traits\GeneratesTodo;
+
 class TodoTaskController extends Controller
 {
+    use GeneratesTodo;
+
     public function getByShop(Shop $shop)
     {
         return $shop->todoTasks()->paginate(50);
@@ -93,11 +97,13 @@ class TodoTaskController extends Controller
         if( $task->done ){
             $task->done = false;
             $task->status = 'in-progress';
+            $task->date_finished = null;
             $msg = __('messages.reopen_task');
             $action = 're-open';
         }else{
             $task->done = true;
             $task->status = 'finished';
+            $task->date_finished = date('Y-m-d H:i:s');
             $msg = __('messages.complete_task');
             $action = 'mark as completed';
         }

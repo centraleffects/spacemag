@@ -13,6 +13,8 @@ class CreateLabelMediaTypesTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('label_media_types') )
+        
          Schema::create('label_media_types', function (Blueprint $table) {
             
             $table->increments('id')->unique();

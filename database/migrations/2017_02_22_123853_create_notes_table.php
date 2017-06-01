@@ -13,6 +13,8 @@ class CreateNotesTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('notes') )
+        
          Schema::create('notes', function (Blueprint $table) {
             
             $table->increments('id')->unique();

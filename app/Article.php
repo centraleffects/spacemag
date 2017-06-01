@@ -19,7 +19,7 @@ class Article extends Model
     }
 
     public function categories(){
-        return $this->hasmany('App\ArticleCategories');
+        return $this->hasmany('App\ArticleCategory');
     }
 
 

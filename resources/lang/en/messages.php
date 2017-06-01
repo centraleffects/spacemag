@@ -15,6 +15,12 @@ return [
 	'changes_saved' => 'Your changes have been saved.',
 	'reopen_task' => "Task successfully re-opened.",
 	'complete_task' => "Task successfully marked as completed.",
-	'deleted' => "Successfully deleted."
+	'deleted' => "Successfully deleted.",
+	'todo_booked' => "Put up a sign saying ”Sales Spot Booked”.",
+	"todo_start_discount" => "Put up discount sign.",
+	"todo_end_discount" => "Put away discount sign.",
+	"todo_end_booking" => "Go check if any articles left behind.",
+	"todo_cleaning" => "Cleaning"
+
 
 ];

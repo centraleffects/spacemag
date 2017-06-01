@@ -43,7 +43,7 @@ class User extends Authenticatable
     }
 
     public function coupons(){
-        return $this->belongsToMany('App\ShopCoupon')->withPivot('user_id', 'coupon_id');
+        return $this->belongsToMany('App\ShopCoupon')->withPivot('user_id', 'shop_coupon_id');
     }
 
     // returns the tasks that this user is assigned to 

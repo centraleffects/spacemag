@@ -109,7 +109,12 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
 });
 
 Route::get('try', function (){
-	$user = App\User::first();
-	dd($user->coupons()->get() );
+	$user = App\User::first(); 	
+	
+	$coupon = App\ShopCoupon::find(1);
+	// dd($coupon);
+	$user->coupons()->attach($coupon);
+
+	dd($user->coupons()->get());
 });
 

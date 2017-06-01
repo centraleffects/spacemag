@@ -8,7 +8,7 @@ app.controller('dashboardController', function($scope, shopService, $timeout, $t
 
     $scope.countryOptions = [{'value': 'swe','text' : 'Sweden'}];
     $scope.currencyOptions = [{'value': 'usd','text' : 'US Dollar'}];
-    $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
+    $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'sv','text' : 'Swedish'}];
     $scope.owners = [];
     $scope.categories = [];
     $scope.spotStatusOptions = [{'value': 'rebuilding','text' : 'Rebuilding'},{'value': 'painting','text' : 'Painting'},{'value': 'on repair','text' : 'On Repair'}];;

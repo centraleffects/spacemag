@@ -13,6 +13,8 @@ class CreateArticleLabelsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('article_labels') )
+        
          Schema::create('article_labels', function (Blueprint $table) {
             
             $table->increments('id')->unique();

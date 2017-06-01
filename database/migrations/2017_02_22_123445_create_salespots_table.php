@@ -13,6 +13,8 @@ class CreateSalespotsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('salespots'))  
+
          Schema::create('salespots', function (Blueprint $table) {
             
             $table->increments('id')->unique();

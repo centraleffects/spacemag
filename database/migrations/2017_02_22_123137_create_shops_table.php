@@ -13,6 +13,8 @@ class CreateShopsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('shops'))  
+
         Schema::create('shops', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('user_id')->unsigned();

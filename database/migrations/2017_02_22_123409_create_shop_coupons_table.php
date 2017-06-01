@@ -13,6 +13,8 @@ class CreateShopCouponsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('shop_coupons'))  
+
          Schema::create('shop_coupons', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('shop_id')->unsigned()->index();

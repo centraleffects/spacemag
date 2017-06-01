@@ -13,6 +13,8 @@ class CreateServiceTypesTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('service_types'))  
+
          Schema::create('service_types', function (Blueprint $table) {
             
             $table->increments('id')->unique();
