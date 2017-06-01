@@ -24,7 +24,7 @@ class CreateArticlePricesTable extends Migration
             
             $table->smallInteger('sold_in_pieces')->default(0);
 
-            $table->enum('status', ['draft', 'printed', 'sold', 'deleted'])->default('draft');
+            $table->smallInteger('status')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

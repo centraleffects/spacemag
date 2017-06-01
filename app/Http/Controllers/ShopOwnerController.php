@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\Log;
 use JavaScript;
 use Mail;
 
-use App\Shop;
-use App\User;
-use App\Salespot;
 use App\Mail\PasswordReset;
 use App\Http\Requests\ShopInvitationRequest;
 use App\Mail\ShopInvitation;
 use App\Mail\ShopWorkerInvitation;
-use Auth;
-use DB;
+use App\Helpers\Helper;
+
+use App\Shop;
+use App\User;
+use App\Salespot;
 
 class ShopOwnerController extends Controller
 {
@@ -24,19 +24,30 @@ class ShopOwnerController extends Controller
     {
         $this->middleware(function ($request, $next) {
             
-            if( auth()->check() && auth()->user()->isOwner() ){
+            if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker()) ){
                 $user = auth()->user();
-                $shops = $user->ownedShops()->get();
 
-                $shop = session()->put('shops', $shops);
+                if( auth()->user()->isOwner() ){
+                    $shops = $user->ownedShops()->get();
 
-                if( !session()->has("selected_shop") && auth()->check() ){
-                    $shop = auth()->user()->ownedShops()->with('todoTasks')
-                                ->with('todoTasks.owner')->first();
+                    // $shop = auth()->user()->ownedShops()->with('todoTasks')
+                    //             ->with('todoTasks.owner')->first();
+                   
+                }else{
+                    $shops = $user->shops()->get();
+                    // $shop = $user->shops()->first();
+                }
+
+                $shop = Helper::getShopWithTasks(auth()->user(), true);
+
+                session()->put('shops', $shops);
+
+                if( !session()->has("selected_shop") ){
+                    
                     session()->put("selected_shop", $shop);
                 }
 
-                $shop = session()->get('selected_shop');
+                // $shop = session()->get('selected_shop');
                 
 
                 JavaScript::put([

@@ -10,6 +10,7 @@ use Auth;
 use Mail;
 
 use App\Http\Requests\StoreShop;
+use App\Helpers\Helper;
 use App\Shop;
 use App\User;
 
@@ -143,7 +144,7 @@ class ShopController extends Controller
             $user->city  = "";
             $user->zip_code  = "";
             $user->country  = "";
-            $user->lang  = 'se';
+            $user->lang  = 'sv';
             $user->role = "owner";
             $user->api_token = str_random(60);
             $user->save();
@@ -209,47 +210,10 @@ class ShopController extends Controller
 
     public function get(User $user){
         if( Auth::guard('api')->user()->id == $user->id )
-            // return $user->ownedShops()->with('todoTasks', 'todoTasks.owner')->paginate(10);
-            $shops = $user->ownedShops()->with('todoTasks', 'todoTasks.owner', 'tasks', 'tasks.owner')->paginate(10);
-
-
-            $shops->each(function ($shop, $index){
-                $t1 = collect($shop->tasks)->toArray();
-                $t2 = collect( $shop->todoTasks )->toArray();
-
-                foreach ($t1 as $key => $task) {
-                    // dd($task);
-                    $t1[$key]["done"] = $task["done"] == 1 ? true : false;
-                }
-
-                foreach ($t2 as $key => $task) {
-                    // dd($task);
-                    $t2[$key]["done"] = $task["done"] == 1 ? true : false;
-                }
-
-                $all_tasks = array_collapse([$t1, $t2]);
-                
-                $shop->all_tasks = $all_tasks;
-
-                $shop->workers = $this->workers($shop);
-
-
-            });
-
+            
+            $shops = Helper::getShopWithTasks($user);
 
             return $shops;
-
-           /* $shops = $user->ownedShops()->get();
-
-            $tasks1 = collect($user->ownedShops()->with('todoTasks')->get())->map(function ($shop){
-                return $shop->todoTasks()->get();
-            });
-            
-            $tasks2 =  collect($user->ownedShops()->with('tasks')->get())->map(function ($shop){
-                return $shop->tasks()->get();
-            });
-            
-            $t1 = $tasks1[0]->merge($tasks2[0]);*/
 
         return [
             "error" => "Unauthorize access.", 
@@ -284,7 +248,7 @@ class ShopController extends Controller
     }
 
     public function workers(Shop $shop){
-        return $shop->users()->where('role', '=', 'worker')->get();
+        return Helper::getShopWorkers($shop);
     }
 
     public function removeUser(Shop $shop, User $user){

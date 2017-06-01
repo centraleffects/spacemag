@@ -2,7 +2,7 @@
 	<div class="nav-wrapper container">
 		<a id="logo-container" href="#" class="brand-logo"><img src="/images/rebuy_logo.png" class="img-responsive"></a>
 	  	<ul class="right hide-on-small-and-down">
-		    @if (auth()->user()->role == "owner")
+		    @if (auth()->user()->isOwner() or auth()->user()->isWorker())
 			    @if( session()->has('selected_shop') )
 			    	<li>
 				    	<a class="dropdown-button" href="#!" data-activates="dropdown1">
@@ -32,7 +32,9 @@
 	<ul id="dropdown1" class="dropdown-content">
 		@if (!empty(session()->get('shops')))
 			@foreach (session()->get('shops') as $shop)
+				@if( $shop->id != session()->get('selected_shop')->id )
 				<li><a href="/shop/set/{{$shop->id}}?redirect={{base64_encode(Request::url())}}">{{$shop->name}}</a></li>
+				@endif
 			@endforeach
 		@endif
 	</ul>

@@ -43,7 +43,7 @@
                                 <ul id="nav-mobile tabs tabs-transparent" class="right">
 
 
-                                    @if( auth()->user()->isOwner() )
+                                    @if( auth()->user()->isOwner() || auth()->user()->isWorker() )
                                         <?php 
                                             $nav_menus = [
                                                 'shop' => __("Shops Status"),
@@ -51,13 +51,16 @@
                                                 'shop/clients' => __("Clients"),
                                                 'shop/spots' => __("Salespot"),
                                                 'shop/articles' => __("Articles"),
-                                                'shop/workers' => __("Shop Workers"),
                                                 'shop/todo' => __("Todo List"),
-                                                'shop/workers/todo' => __("Workers Todo"),
-                                                'shop' => __("Shops"),
-                                                'shop' => __("Shops"),
+                                                'shop/workers/todo' => __("My Todo"),
+                                                'shop' => __("Shops")
 
                                             ];
+
+                                            if( auth()->user()->isOwner() ){
+                                                $nav_menus['shop/workers'] = __("Shop Workers");
+                                                $nav_menus['shop/workers/todo'] = __("Workers Todo");
+                                            }
                                         ?>
                                     @else
                                         <?php $nav_menus = ['shop' => __("Shops")]; ?>                                  

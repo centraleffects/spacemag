@@ -30,7 +30,7 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
 
         shopService.userShopList(window.user.id, window.user.api_token).then(function(response) {
             console.log(response);
-            $scope.shops = response.data.data;
+            $scope.shops = response.data;
         });
     }
 
