@@ -93,7 +93,21 @@
 					</div>
 
 					<div id="shop_settings" style="display: none;">
-						
+						<p class="lead">Services</p>
+						<div class="input-field">
+							
+							<!-- <select name="cleaning_schedule" multiple>
+								<option value="all">Everyday</option>
+								<option value="mon">Monday</option>
+								<option value="tue">Tuesday</option>
+								<option value="wed">Wednesday</option>
+								<option value="thu">Thursday</option>
+								<option value="fri">Friday</option>
+								<option value="sat">Saturday</option>
+								<option value="sun">Sunday</option>
+							</select> -->
+							<label>Cleaning</label>
+						</div>
 					</div>
 
 				</div>
