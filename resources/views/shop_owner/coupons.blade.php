@@ -104,7 +104,31 @@
             <div class="card-content">
               <span class="card-title">Coupon uses</span>
               <br>
+             <div class="row">
+             	<table>
+			        <thead>
+			          <tr>
+			              <th>Name</th>
+			              <th>Date Added</th>
+			          </tr>
+			        </thead>
 
+			        <tbody>
+			          <tr>
+			            <td>Alvin</td>
+			            <td>Eclair</td>
+			          </tr>
+			          <tr>
+			            <td>Alan</td>
+			            <td>Jellybean</td>
+			          </tr>
+			          <tr>
+			            <td>Jonathan</td>
+			            <td>Lollipop</td>
+			          </tr>
+			        </tbody>
+			      </table>
+             </div>
          </div>
 
 	@endslot

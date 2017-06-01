@@ -1,4 +1,4 @@
-function ClientCtrl ($scope, $http, $timeout, $rootScope){
+/*function ClientCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.clients = [];
 	$scope.hasselectedClient = false;
 	$scope.selectedClient = null;
@@ -56,4 +56,48 @@ function ClientCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.init();
 }
 
-app.controller('ClientController', ClientCtrl);
+app.controller('ClientController', ClientCtrl);*/
+
+
+function ClientController ($scope, clientServices, $http, $timeout, $rootScope){
+
+	var vm = this;
+
+	vm.applyCoupon = applyCoupon;
+
+
+	$scope.countryOptions = [{'value': 'swe','text' : 'Sweden'}];
+    $scope.currencyOptions = [{'value': 'usd','text' : 'US Dollar'}];
+    $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
+
+	function applyCoupon(){
+
+		alert(fdsf);
+	}
+    
+    function bindEvents(){
+
+    	angular.element('#couponform').submit(function(e){
+    		e.preventDefault();
+    		var form = angular.element('#couponform');
+    		data = form.serializeArray();
+            couponService.addUpdate(form.attr('action') + '?&ajax=true', data).then(function(addUpdate){
+	              if(addUpdate.success){
+	              	window.reBuy.toast('Coupon Information has been updated!');
+	              	$timeout(function(){
+	              		window.location.href= '/shop/coupons/' + addUpdate.coupon_id;
+	              	},1000);
+	              }else{
+	              	window.reBuy.toast('Error: Please complete the required information and try again.');
+	              }
+	        });
+
+
+    	});
+    }
+
+	// init
+	$scope.bindEvents();
+}
+
+app.controller('ClientController', ClientController);

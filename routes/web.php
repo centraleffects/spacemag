@@ -109,14 +109,7 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
 });
 
 Route::get('try', function (){
-	// $shop = App\Shop::find(1);
-	$user = App\User::find(5);
-
-	// $test = $user->shops()->with('tasks')->get();
-
-	dd(App\Helpers\Helper::getShopWithTasks($user, true));
-	dd($shop->users());
-	$workers = $shop->users()->where('role', '=', 'workers')->get();
-	dd($workers);
+	$user = App\User::first();
+	dd($user->coupons()->get() );
 });
 
