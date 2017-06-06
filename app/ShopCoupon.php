@@ -12,7 +12,7 @@ class ShopCoupon extends Model
     	return $this->belongsTo('App\Shop');
     }
 
-    public function user(){
-    	return $this->belongsTo('App\User')->withPivot('user_id', 'shop_coupon_id');
+    public function users(){
+    	return $this->belongsToMany('App\User')->withPivot('user_id', 'shop_coupon_id', 'created_at');
     }
 }

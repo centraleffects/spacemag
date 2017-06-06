@@ -110,9 +110,15 @@ class ShopCouponController extends Controller
      * @param  \App\ShopCoupon  $shopCoupon
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ShopCoupon $shopCoupon)
-    {
-        //
+    public function destroy($id)
+    {  
+        $coupon = ShopCoupon::where('id', $id)->first();
+        if($coupon){
+            $coupon->delete();
+            session()->put('alert', 'A coupon has been deleted.');
+        }
+       
+       return \Redirect::to('/shop/coupons');
     }
 
 
@@ -191,9 +197,10 @@ class ShopCouponController extends Controller
         
         $selectedCoupon = new ShopCoupon();
        if(!empty($id)){
-         $selectedCoupon = ShopCoupon::where('id',$id)->first();
+         $selectedCoupon = ShopCoupon::where('id',$id)->with('users')->first();
        }
 
-        return view('shop_owner.coupons', compact('coupons', 'selectedCoupon'));
+
+       return view('shop_owner.coupons', compact('coupons', 'selectedCoupon'));
     }
 }

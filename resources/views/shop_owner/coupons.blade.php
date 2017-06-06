@@ -25,7 +25,7 @@
 									id="{{ $coupon->id }}"  
 									>
 									<a  href="/shop/coupons/{{ $coupon->id }}">{{$coupon->code}}</a>
-									<a  href="/shop/coupons/delete/{{ $coupon->id }}" class="secondary-content">
+									<a  href="javascript:;;" onclick="window.reBuy.confirm('Are you sure to delete this?',function(){ window.location.href='/shop/coupons/delete/{{ $coupon->id }}';})" class="secondary-content">
 										<i class="fa fa-trash-o right" aria-hidden="true"></i>
 									</a>
 								</li>
@@ -46,26 +46,26 @@
 					{{ csrf_field() }}
 					<input type="hidden" name="id"  id="id" value="{{ (!$selectedCoupon->id) ? '' : $selectedCoupon->id }}"/>
 					<div class="input-field">
-						<input type="text" name="code"  id="code" value="{{ (!$selectedCoupon->code) ? '' : $selectedCoupon->code }}"/>
+						<input type="text" name="code"  required id="code" value="{{ (!$selectedCoupon->code) ? '' : $selectedCoupon->code }}"/>
 						<label>Code</label>
 					</div>
 		          	<div class="input-field">
-						<input type="text" name="date_start"  id="date_start"  class="datepicker" value="{{ (!$selectedCoupon->date_start) ? '' : $selectedCoupon->date_start }}"/>
+						<input type="text" name="date_start"  id="date_start" required  class="datepicker" value="{{ (!$selectedCoupon->date_start) ? '' : $selectedCoupon->date_start }}"/>
 						<label>Start Date</label>
 					</div>
 					<div class="input-field">
-						<input type="text" name="date_end" id="date_end" class="datepicker" value="{{ (!$selectedCoupon->date_end) ? '' : $selectedCoupon->date_end }}"/>
+						<input type="text" name="date_end" id="date_end" class="datepicker" required value="{{ (!$selectedCoupon->date_end) ? '' : $selectedCoupon->date_end }}"/>
 						<label>End Date</label>
 					</div>
 					<div class="input-field">
-						<select name="type" id="type">
+						<select name="type" id="type" required>
 							<option value="percent">Percent</option>
 							<option value="amount">Amount</option>
 						</select>
 						<label>Type</label>
 					</div>
 					<div class="input-field">
-						<input type="text" name="value" id="value" value="{{ (!$selectedCoupon->value) ? '' : $selectedCoupon->value }}"/>
+						<input type="text" name="value" required id="value" value="{{ (!$selectedCoupon->value) ? '' : $selectedCoupon->value }}"/>
 						<label>Value</label>
 					</div>
 					<div class="input-field">
@@ -114,18 +114,12 @@
 			        </thead>
 
 			        <tbody>
+			        @foreach($selectedCoupon->users as $user)
 			          <tr>
-			            <td>Alvin</td>
-			            <td>Eclair</td>
+			            <td>{{$user->first_name.' '.$user->last_name}}</td>
+			            <td title="{{$user->pivot->created_at}}">{{$user->pivot->created_at->diffForHumans() }}</td>
 			          </tr>
-			          <tr>
-			            <td>Alan</td>
-			            <td>Jellybean</td>
-			          </tr>
-			          <tr>
-			            <td>Jonathan</td>
-			            <td>Lollipop</td>
-			          </tr>
+			         @endforeach
 			        </tbody>
 			      </table>
              </div>
