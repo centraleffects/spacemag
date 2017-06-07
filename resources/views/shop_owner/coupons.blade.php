@@ -99,32 +99,33 @@
 		        </div>
 	        </form>
 	    </div>
-
+	    @if(!empty($selectedCoupon->users->toArray())):
 	    <div class="card hoverable">
             <div class="card-content">
               <span class="card-title">Coupon uses</span>
               <br>
-             <div class="row">
-             	<table>
-			        <thead>
-			          <tr>
-			              <th>Name</th>
-			              <th>Date Added</th>
-			          </tr>
-			        </thead>
+	             <div class="row">
+	             	<table>
+				        <thead>
+				          <tr>
+				              <th>Name</th>
+				              <th>Date Added</th>
+				          </tr>
+				        </thead>
 
-			        <tbody>
-			        @foreach($selectedCoupon->users as $user)
-			          <tr>
-			            <td>{{$user->first_name.' '.$user->last_name}}</td>
-			            <td title="{{$user->pivot->created_at}}">{{$user->pivot->created_at->diffForHumans() }}</td>
-			          </tr>
-			         @endforeach
-			        </tbody>
-			      </table>
-             </div>
-         </div>
-
+				        <tbody>
+				        @foreach($selectedCoupon->users as $user)
+				          <tr>
+				            <td>{{$user->first_name.' '.$user->last_name}}</td>
+				            <td title="{{$user->pivot->created_at}}">{{$user->pivot->created_at->diffForHumans() }}</td>
+				          </tr>
+				         @endforeach
+				        </tbody>
+				      </table>
+	             </div>
+	         </div>
+        </div>
+        @endif
 	@endslot
 	@slot('right')
 
