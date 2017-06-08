@@ -1,7 +1,7 @@
-/*function ClientCtrl ($scope, $http, $timeout, $rootScope){
+function ClientCtrl ($scope, $http, $timeout, $rootScope){
 	$scope.clients = [];
-	$scope.hasselectedClient = false;
-	$scope.selectedClient = null;
+	$scope.hasSelectedUser = false;
+	$scope.selectedUser = null;
 
 	$scope.init = function (){
 		$scope.getClients();
@@ -19,11 +19,11 @@
 	};
 
 	$scope.viewClient = function (index){
-		$scope.hasselectedClient = true;
-		$scope.selectedClient = $scope.clients[index];
-		$rootScope.selectedClient = $scope.selectedClient;
-		$rootScope.hasselectedClient = $scope.hasselectedClient;
-		$rootScope.selectedClient.pivot.newsletter_subscribed = $scope.selectedClient.pivot.newsletter_subscribed == 1 ? true : false;
+		$scope.hasSelectedUser = true;
+		$scope.selectedUser = $scope.clients[index];
+		$rootScope.selectedUser = $scope.selectedUser;
+		$rootScope.hasSelectedUser = $scope.hasSelectedUser;
+		$rootScope.selectedUser.pivot.newsletter_subscribed = $scope.selectedUser.pivot.newsletter_subscribed == 1 ? true : false;
 		
 		Materialize.updateTextFields();
 	};
@@ -36,7 +36,7 @@
 				// $scope.clients = response.data;
 				console.log(response);
 				if( response.data.success == 1 ){
-					$rootScope.selectedClient = null;
+					$rootScope.selectedUser = null;
 					$scope.clients.splice(index);
 				}
 			}, function (response){
@@ -56,48 +56,4 @@
 	$scope.init();
 }
 
-app.controller('ClientController', ClientCtrl);*/
-
-
-function ClientController ($scope, clientServices, $http, $timeout, $rootScope){
-
-	var vm = this;
-
-	vm.applyCoupon = applyCoupon;
-
-
-	$scope.countryOptions = [{'value': 'swe','text' : 'Sweden'}];
-    $scope.currencyOptions = [{'value': 'usd','text' : 'US Dollar'}];
-    $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
-
-	function applyCoupon(){
-
-		alert(fdsf);
-	}
-    
-    function bindEvents(){
-
-    	angular.element('#couponform').submit(function(e){
-    		e.preventDefault();
-    		var form = angular.element('#couponform');
-    		data = form.serializeArray();
-            couponService.addUpdate(form.attr('action') + '?&ajax=true', data).then(function(addUpdate){
-	              if(addUpdate.success){
-	              	window.reBuy.toast('Coupon Information has been updated!');
-	              	$timeout(function(){
-	              		window.location.href= '/shop/coupons/' + addUpdate.coupon_id;
-	              	},1000);
-	              }else{
-	              	window.reBuy.toast('Error: Please complete the required information and try again.');
-	              }
-	        });
-
-
-    	});
-    }
-
-	// init
-	$scope.bindEvents();
-}
-
-app.controller('ClientController', ClientController);
+app.controller('ClientController', ClientCtrl);
