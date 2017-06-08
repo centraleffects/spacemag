@@ -14,7 +14,7 @@ class StoreShop extends FormRequest
     public function authorize()
     {
         // return false;
-        return auth()->check() && auth()->user()->isAdmin();
+        return auth()->check() && (auth()->user()->isAdmin() or auth()->user()->isOwner());
     }
 
     /**
@@ -24,9 +24,11 @@ class StoreShop extends FormRequest
      */
     public function rules()
     {
-        return [
-            'owner.email' => 'required|email',
-            'name' => 'required'
-        ];
+        $rules = ['name' => 'required'];
+        if( auth()->user()->isAdmin() ){
+            $rules['owner.email'] = 'required|email';
+        }   
+
+        return $rules;
     }
 }

@@ -1,25 +1,6 @@
 @component('shop_owner.layouts.app')
-@slot('controller') ng-controller="dashboardController" @endslot
-<!-- <div ng-controller="dashboardController"> -->
-	<div id="shop-tab">
-		<!-- <div class="col s3"> -->
+	<div id="shop-tab" ng-controller="dashboardController">
 		@slot('left')
-			<!-- <div class="card hoverable" ng-model="shops">
-				<div class="row card-content">
-
-					<span class="card-title">Shops</span>
-					<div class="collection">
-						<a href="javascript:;" 
-						class="list-shops collection-item" 
-						id="@{{'sh'+ shop.id}}" 
-						ng-repeat="(key, shop) in shops.data" 
-						ng-click="events.viewShop(this)">
-						@{{shop.name}}
-						</a>
-					</div>
-				</div>
-			</div>	 -->
-
 			<div class="card hoverable" ng-model="workers">
 				<div class="row card-content">
 
@@ -35,91 +16,87 @@
 					</div>
 				</div>
 			</div>	
-
-		<!-- </div> -->
 		@endslot
-		<!-- <div class="col s6"> -->
 		@slot('center')
-
+		<form  id="form_shopinfo">
+			{{csrf_field()}}
 			<div class="card hoverable shopinfo">
 				<div class="row card-content">
 					<ul class="tabs">
 						<li class="tab active">
-							<a class="card-title" href="#shop_general_info">Shop Information</a>
+							<a class="card-title" href="#shop_general_info">{{ __("messages.shop_info") }}</a>
 						</li>
 						<li class="tab">
-							<a class="card-title" href="#shop_settings">Shop Settings</a>
+							<a class="card-title" href="#shop_settings">{{__("messages.shop_settings")}}</a>
 						</li>
 					</ul>
 
 					<div id="shop_general_info">
 						<br/>
+						<input type="hidden" name="id" value="{{$shop->id}}">
 						<div class="input-field">
-							<input type="text" name="shop_name" ng-model="selectedShop.name">
-							<label>Name</label>
+							<input type="text" name="name" value="{{$shop->name}}">
+							<label>{{__("messages.name")}}</label>
 						</div>
 
 						<div class="input-field">
-							<textarea name="shop_description" ng-model="selectedShop.description" class="materialize-textarea"></textarea>
-							<label>Description</label>
+							<textarea name="description" class="materialize-textarea">{{$shop->description}}</textarea>
+							<label>{{__("messages.description")}}</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="shop_url" ng-model="selectedShop.url">
-							<label>Homepage</label>
+							<input type="text" name="url" value="{{$shop->url}}">
+							<label>{{__("messages.homepage")}}</label>
 						</div>
 
 						<div class="input-field">
-							<input type="text" name="shop_postel">
-							<label>Postel</label>
+							<input type="text" name="postel" value="{{$shop->shop_postel}}">
+							<label>{{__("messages.postel")}}</label>
 						</div>
 
 						<div class="input-field">
-							<select name="currency"   id="currency" ng-model="selectedShop.currency" 
-							ng-options="currency.value as currency.text for currency in currencyOptions">
+							<select name="currency">
+								@foreach($currencies as $key => $value)
+								<option value="{{$key}}" {!! $key == $shop->currency ? "selected" : "" !!}>{{$value." ($key)"}}</option>
+								@endforeach
 							</select>
-							<label>Currency</label>
-						</div>
-
-						<div class="input-field">
-							<input type="text" name="shop_postel">
-							<label>Commission on Article Sale</label>
-						</div>
-
-						<div class="input-field">
-							<input type="text" name="shop_postel">
-							<label>Salespot Rebuy Commission</label>
+							<label>{{__("messages.currency")}}</label>
 						</div>
 					</div>
 
 					<div id="shop_settings" style="display: none;">
-						<p class="lead">Services</p>
+						<br/>
 						<div class="input-field">
 							
-							<!-- <select name="cleaning_schedule" multiple>
-								<option value="all">Everyday</option>
-								<option value="mon">Monday</option>
-								<option value="tue">Tuesday</option>
-								<option value="wed">Wednesday</option>
-								<option value="thu">Thursday</option>
-								<option value="fri">Friday</option>
-								<option value="sat">Saturday</option>
-								<option value="sun">Sunday</option>
-							</select> -->
-							<label>Cleaning</label>
+							<select name="cleanup_schedule[]" id="cleanup_schedule" multiple>
+								<option value="" disabled>Set which days cleaning will occur.</option>
+								@foreach($days as $day)
+								<option value="{{$day}}" {!! in_array($day, $shop->cleanup_schedule) ? "selected" : "" !!}>{{__('messages.day.'.$day)}}</option>
+								@endforeach
+							</select>
+							<label>{{__('messages.cleanup')}}</label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="commission_article_sale">
+							<label>{{__("messages.commission_article")}}</label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="commission_salespot">
+							<label>{{__("messages.rebuy_commission")}}</label>
 						</div>
 					</div>
 
 				</div>
 			</div>
-
-		<!-- </div> -->
+		</form>
 		@endslot
 		@slot('right')
-		<!-- <div class="col s3"> -->
 			<div class="card hoverable">
-				<div class="card-action row">
-					<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()">
+				<div class="card-action">
+					<button class="btn waves-effect waves-light green"  type="submit" id="update_shop_info">
+						<i class="fa fa-refresh"></i>
 						UPDATE SHOP INFORMATION
 					</button>
 				</div>
@@ -144,9 +121,6 @@
 					</button>
 				</div>
 			</div>	
-		<!-- </div> -->
 		@endslot
 	</div>
-<!-- </div> -->
-
 @endcomponent

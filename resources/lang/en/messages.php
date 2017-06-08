@@ -20,7 +20,25 @@ return [
 	"todo_start_discount" => "Put up discount sign.",
 	"todo_end_discount" => "Put away discount sign.",
 	"todo_end_booking" => "Go check if any articles left behind.",
-	"todo_cleaning" => "Cleaning"
+	"todo_cleaning" => "Cleaning",
+	"day.mon" => "Monday",
+	"day.tue" => "Tuesday",
+	"day.wed" => "Wednesday",
+	"day.thu" => "Thursday",
+	"day.fri" => "Friday",
+	"day.sat" => "Saturday",
+	"day.sun" => "Sunday",
+	"cleanup" => "Cleanup",
+	"name" => "Name",
+	"description" => "Description",
+	"homepage" => "Homepage",
+	"postel" => "Postel",
+	"currency" => "Currency",
+	"commission_article" => "Commission on Article Sale",
+	"rebuy_commission" => "Salespot Rebuy Commission",
+	"shop_settings" => "Shop Settings",
+	"shop_info" => "Shop Information",
+	"shop_updated" => "Your shop has been updated successfully."
 
 
 ];

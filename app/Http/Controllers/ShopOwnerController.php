@@ -17,6 +17,7 @@ use App\Helpers\Helper;
 use App\Shop;
 use App\User;
 use App\Salespot;
+use App\ServiceType;
 
 class ShopOwnerController extends Controller
 {
@@ -29,13 +30,9 @@ class ShopOwnerController extends Controller
 
                 if( auth()->user()->isOwner() ){
                     $shops = $user->ownedShops()->get();
-
-                    // $shop = auth()->user()->ownedShops()->with('todoTasks')
-                    //             ->with('todoTasks.owner')->first();
                    
                 }else{
                     $shops = $user->shops()->get();
-                    // $shop = $user->shops()->first();
                 }
 
                 $shop = Helper::getShopWithTasks(auth()->user(), true);
@@ -45,9 +42,11 @@ class ShopOwnerController extends Controller
                 if( !session()->has("selected_shop") ){
                     
                     session()->put("selected_shop", $shop);
+                }else{
+                    // make sure shop info inside the session is updated
+                    $shop = Shop::find(session()->get('selected_shop')->id);
+                    session()->put('selected_shop', $shop);
                 }
-
-                // $shop = session()->get('selected_shop');
                 
 
                 JavaScript::put([
@@ -61,9 +60,23 @@ class ShopOwnerController extends Controller
         });
     }
 
-    public function index(){
+    public function index(){    
+        $days = Helper::getDays();
+        $currencies = Helper::getCurrencies();
 
-    	return view('shop_owner.dashboard');
+        if( !session()->has('selected_shop') ){
+            $shop = auth()->user()->ownedShops()->first();
+
+            session()->put('selected_shop', $shop);
+        }
+        $shop = session()->get('selected_shop');
+
+        $sched = explode(",", $shop->cleanup_schedule);
+        $shop->cleanup_schedule = $sched;
+
+    	return view('shop_owner.dashboard')->withDays($days)
+            ->withCurrencies($currencies)
+            ->with("shop", $shop);
     }
 
     public function articles(){

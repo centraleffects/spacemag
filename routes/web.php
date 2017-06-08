@@ -108,5 +108,7 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try', 'TodoTaskController@try');
+Route::get('try', function (){
+	dd( App\Shop::find(2) );
+});
 

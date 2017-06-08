@@ -98,4 +98,12 @@ class Helper {
 	public static function getShopWorkers(Shop $shop){
 		return $shop->users()->where('role', '=', 'worker')->get();
 	}
+
+	public static function getDays(){
+		return ["mon","tue","wed","thu","fri","sat","sun"];
+	}
+
+	public static function getCurrencies(){
+		return ['USD' => "US Dollar", "SEK" => "Swedish Krona"];
+	}
 }

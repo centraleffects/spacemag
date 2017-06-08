@@ -185,10 +185,39 @@ app.controller('dashboardController', function($scope, shopService, $timeout, $t
 
             })
 
-        //@TODO: should use $watch to handle model changes
-        angular.element('input[name="name"]').keyup(function(){
-            angular.element('.tooltipped').tooltip({delay: 50, html : true});
-        });
+            //@TODO: should use $watch to handle model changes
+            angular.element('input[name="name"]').keyup(function(){
+                angular.element('.tooltipped').tooltip({delay: 50, html : true});
+            });
+
+            $("#update_shop_info").click(function (){
+                var $this = $(this), 
+                    form = $("#form_shopinfo"),
+                    formData = form.serialize();
+
+                $.ajax({
+                    url: '/api/shops/update?api_token='+user.api_token,
+                    type: 'post',
+                    dataType: 'json',
+                    data: formData,
+                    beforeSend: function (){
+                        $this.attr("disabled", "disabled").find("i").addClass("fa-spin");
+                    },
+                    success: function (data){
+                        console.log(data);
+                        window.reBuy.toast(data.msg);
+                    },
+                    error: function (data){
+                        console.warn(data);
+                        if( data ){
+                            window.reBuy.showErrors(data, form);
+                        }
+                    },
+                    complete: function (){
+                        $this.removeAttr("disabled").find("i").removeClass("fa-spin");
+                    }
+                });
+            });
 
         })(jQuery);
     }

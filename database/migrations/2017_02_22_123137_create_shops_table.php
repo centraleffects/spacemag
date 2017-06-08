@@ -28,6 +28,8 @@ class CreateShopsTable extends Migration
             $table->string('commission_salespot')->nullable();
             $table->string('x_coordinate')->nullable();
             $table->string('y_coordinate')->nullable();
+            $table->string('shop_postel')->nullable();
+            $table->string('cleanup_schedule')->nullable();
             
             $table->timestamps();
             $table->softDeletes();

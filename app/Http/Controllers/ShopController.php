@@ -77,6 +77,10 @@ class ShopController extends Controller
         $createNewOwner = false;
         $assignNewOwner = false;
         $input = Input::all();
+
+
+        $loggedUser = auth()->guard('api')->user();
+
         if(isset($input['isNew'])){
             unset($input['id']);
             unset($input['isNew']);
@@ -89,95 +93,104 @@ class ShopController extends Controller
             $input['user_id'] = 1;
         }
 
-        $oldShopOwner = $input['user_id'];
+        if( $loggedUser->isAdmin() ){
 
-        if(isset($input['owner'])){
 
-               $user = User::find($input['owner']['id']);
-               if($user){
-                 if($user->email <> $input['owner']['email']){
-                    if(trim($input['owner']['email']) == ""){
-                        $createNewOwner = true;
-                    }else{
-                        $user = User::where('email', $input['owner']['email'])->first();
-                        if(!$user){
+
+            $oldShopOwner = $input['user_id'];
+
+            if(isset($input['owner'])){
+
+                   $user = User::find($input['owner']['id']);
+                   if($user){
+                     if($user->email <> $input['owner']['email']){
+                        if(trim($input['owner']['email']) == ""){
                             $createNewOwner = true;
                         }else{
-                            $shop->user_id = $user->id;
+                            $user = User::where('email', $input['owner']['email'])->first();
+                            if(!$user){
+                                $createNewOwner = true;
+                            }else{
+                                $shop->user_id = $user->id;
+                            }
                         }
-                    }
-                    
-                 }
-               }else{
-                    //try with email
-                    if(trim($input['owner']['email']) == ""){
-                        $createNewOwner = true;
-                    }else{
-                        $user = User::where('email', $input['owner']['email'])->first();
-                        if(!$user){
+                        
+                     }
+                   }else{
+                        //try with email
+                        if(trim($input['owner']['email']) == ""){
                             $createNewOwner = true;
                         }else{
-                            $shop->user_id = $user->id;
+                            $user = User::where('email', $input['owner']['email'])->first();
+                            if(!$user){
+                                $createNewOwner = true;
+                            }else{
+                                $shop->user_id = $user->id;
+                            }
                         }
-                    }
 
-               }
-               
-        } 
+                   }
+                   
+            } 
 
-        if($createNewOwner){
-            $user = new User();
-            $user->email = $input['owner']['email'];
-            $firstname = explode("@", $input['owner']['email']);
-            $firstname = preg_replace("/[^A-Za-z0-9 ]/", '', $firstname[0]);
-            $password = str_random(8);
+            if($createNewOwner){
+                $user = new User();
+                $user->email = $input['owner']['email'];
+                $firstname = explode("@", $input['owner']['email']);
+                $firstname = preg_replace("/[^A-Za-z0-9 ]/", '', $firstname[0]);
+                $password = str_random(8);
 
-            $user->first_name = $firstname;
-            $user->last_name = "";
-            $user->password  = bcrypt($password);
-            $user->gender  ="";
-            $user->telephone  = "";
-            $user->mobile  = "";
-            $user->social_security_id  = "";
-            $user->address_1  ="";
-            $user->address_2  = "";
-            $user->city  = "";
-            $user->zip_code  = "";
-            $user->country  = "";
-            $user->lang  = 'sv';
-            $user->role = "owner";
-            $user->api_token = str_random(60);
-            $user->save();
+                $user->first_name = $firstname;
+                $user->last_name = "";
+                $user->password  = bcrypt($password);
+                $user->gender  ="";
+                $user->telephone  = "";
+                $user->mobile  = "";
+                $user->social_security_id  = "";
+                $user->address_1  ="";
+                $user->address_2  = "";
+                $user->city  = "";
+                $user->zip_code  = "";
+                $user->country  = "";
+                $user->lang  = 'sv';
+                $user->role = "owner";
+                $user->api_token = str_random(60);
+                $user->save();
 
-            // $user = User::where('email', $input['owner']['email'])->first();
-            $user->plain_password = $password; // assign random password
-            
+                // $user = User::where('email', $input['owner']['email'])->first();
+                $user->plain_password = $password; // assign random password
+                
 
-        }
+            }
 
-        $shop->user_id = $user->id ?: 1;
+            $shop->user_id = $user->id ?: 1;
+
+        }        
+
         $shop->name = $input['name'];
         $shop->description = $input['description'];
         $shop->url = $input['url'];
         $shop->currency = $input['currency'];
-        $shop->slug = $input['slug'];
+        $shop->slug = isset($input['slug']) ? $input['slug'] : "";
         $shop->commission_article_sale = $input['commission_article_sale'];
         $shop->commission_salespot = $input['commission_salespot'];
-
+        $shop->cleanup_schedule = implode(",",$input['cleanup_schedule']);
 
         if( $shop->update() ){
-            if($oldShopOwner <> $user->id){
+            if( $loggedUser->isAdmin() && ($oldShopOwner <> $user->id) ){ // send email 
                 $email_response = $this->sendInviteEmail($shop, $user);
                 if(!$email_response){
                     $msg = "Email not sent.";
                 }
+
+                $response['shop']['owner'] = $user;
             }
             
-            $msg = 'Update successful.';
+            $msg = __("messages.shop_updated");
             $response['owners'] = $this->listOwners();
             $response['shops']  =  $this->getlist();
             $response['shop'] = $shop;
-            $response['shop']['owner'] = $user;
+            
             $response['success'] = 1;
             $response['msg'] = $msg;
         }
