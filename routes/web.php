@@ -77,7 +77,11 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 	Route::get('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
 	Route::post('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
 	Route::get('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
+
 	Route::post('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
+
+
+	Route::get('/coupons/delete/{id}',['uses' =>'ShopCouponController@destroy'])->middleware(['owner']);
 
 });
 

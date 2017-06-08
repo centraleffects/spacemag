@@ -21,7 +21,7 @@ function couponsController ($scope, couponService, $http, $timeout, $rootScope){
 	              		window.location.href= '/shop/coupons/' + addUpdate.coupon_id;
 	              	},1000);
 	              }else{
-	              	window.reBuy.toast('Error: Please complete the required information and try again.');
+	              	window.reBuy.alert('Error: Please complete the required information and try again.');
 	              }
 	        });
 

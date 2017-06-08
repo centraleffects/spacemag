@@ -1,6 +1,14 @@
 <header>
 @include('layouts._partials.header')
 </header>
+@if(session()->get('alert'))
+    <script type="text/javascript">
+        setTimeout(function(){ 
+             window.reBuy.toast("{{session()->get('alert')}}");
+        },2000);
+    </script>
+    {{session()->put('alert','')}}
+@endif
 <main class="col s12" {{ $controller or '' }}>
 
     @include('layouts._partials.sidebar')

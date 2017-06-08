@@ -69,7 +69,7 @@
                 btnNoLabel  = btnNoLabel  || 'Cancel',
                 modalWidth  = modalWidth  || '300',
                 doCallback  = doCallback  || 'function(){ return false; }',
-                doCallback  = cancelCallBack  || 'function(){ return false; }',
+                cancelCallBack  = cancelCallBack  || 'function(){ return false; }',
                 modalId     = 'confirmDialog',
                 alertDialogModal = $('#' + modalId),
                 $body       = $('body'),
@@ -96,14 +96,14 @@
                     $('#' + modalId).remove();
                     try {
                       doCallback();
-                    }catch(e){}
+                    }catch(e){ }
                 });
                 $('#' + modalId).find('.btn-no-label').on('click', function(){
                     $('#' + modalId).modal('close');
                     $('#' + modalId).remove();
                     try {
                       cancelCallBack();
-                    }catch(e){}
+                    }catch(e){ }
                 });
         },
         

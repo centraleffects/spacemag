@@ -42,6 +42,10 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function coupons(){
+        return $this->belongsToMany('App\ShopCoupon')->withPivot('user_id', 'shop_coupon_id');
+    }
+
     // returns the tasks that this user is assigned to 
     public function todoTasks(){
         return $this->hasMany('App\TodoTask', 'worker_user_id');
