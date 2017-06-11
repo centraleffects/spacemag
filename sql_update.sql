@@ -23,3 +23,9 @@ ALTER TABLE `shop_coupons` CHANGE `date_start` `date_start` DATE NULL DEFAULT NU
 ------------------------
 
 RENAME TABLE `rebuy`.`article_tags` TO `rebuy`.`article_tag`;
+
+--##----------------------
+
+ALTER TABLE `notes` ADD `author_id` INT(11) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `notes` ADD CONSTRAINT `notes_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

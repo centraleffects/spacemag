@@ -34,6 +34,7 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('list', 'ShopController@getlist');
 	Route::get('list/{owner}', 'ShopController@getlist');
 	Route::get('owners', 'ShopController@listOwners');
+	Route::get('{shop}/users/{type}', 'ShopController@users');
 	Route::get('{shop}', 'ShopController@show');
 	Route::get('{shop}/users', 'ShopController@users');
 	Route::get('{shop}/workers', 'ShopController@workers');
@@ -96,4 +97,12 @@ Route::group(['prefix' => 'tasks', 'middleware' => 'auth:api'], function (){
 	Route::post('{task}/finish', 'TodoTaskController@toggleDone');
 	Route::delete('{task}/delete', 'TodoTaskController@destroy');
 	Route::post('clear', 'TodoTaskController@clearTasksByShop');
+});
+
+
+Route::group(['prefix' => 'note', 'middleware' => 'auth:api'], function (){
+	Route::get('/', 'NoteController@index');
+	Route::post('create', 'NoteController@store');
+	Route::post('delete', 'NoteController@destroy');
+	Route::post('update', 'NoteController@update');
 });

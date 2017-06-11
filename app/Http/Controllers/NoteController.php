@@ -25,6 +25,7 @@ class NoteController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -36,6 +37,18 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         //
+        $note = new Note();
+        $note->user_id = $request->data['client_id'];
+        $note->notes = $request->data['note'];
+        $note->author_id = $request->user_id;
+        if($note->save()){
+
+            $notes = Note::where('user_id', $request->data['client_id'])->get();
+
+            return [ 'success' =>  1, 'notes' => json_encode($notes) ];
+        }
+
+         return [ 'success' =>  0 ];
     }
 
     /**

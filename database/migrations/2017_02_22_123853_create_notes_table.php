@@ -21,8 +21,9 @@ class CreateNotesTable extends Migration
 
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users');
 
-            $table->longText('notes')->nullable();
+            $table->longText('notes')->nullable();  
 
             $table->timestamps();
             $table->softDeletes();

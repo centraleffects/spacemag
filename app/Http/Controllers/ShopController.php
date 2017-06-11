@@ -256,8 +256,13 @@ class ShopController extends Controller
     }
 
  
-    public function users(Shop $shop){
-        return $shop->users()->where('role', '=', 'customer')->get();
+    public function users(Shop $shop, $type = null){
+        if(!$type){
+            return $shop->users()->where('role', '=', 'customer')->get();
+        }else{
+            return $shop->users()->where('role', '=', $type)->with('notes')->get();
+        }
+        
     }
 
     public function workers(Shop $shop){

@@ -57,6 +57,7 @@ require('./services/shopowner/workerServices');
 require('./services/shopowner/shopServices');
 require('./services/shopowner/workerTodoServices');
 require('./services/shopowner/couponServices');
+require('./services/shopowner/clientServices');
 
 require('./controllers/shopowner/dashboardController');
 require('./controllers/shopowner/customersController');
