@@ -1,20 +1,10 @@
 @component('shop_owner.layouts.app')
-<div class="row"  ng-controller="spotsController as vm">
+<div class="row"  ng-controller="spotsController">
 	<div class="col s3">
 		<div class="card hoverable" ng-model="spots">
 			<div class="row card-content">
 				<span class="card-title">Salespots - {{!empty(session()) ? session()->get("selected_shop")->name : ''}}</span>
-				<div class="nav-wrapper">
-			      <form>
-			        <div class="input-field">
-			          <input id="search" type="search" required>
-			          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-			          <i class="material-icons">close</i>
-			        </div>
-			      </form>
-			    </div>
-			    <div><a href="javascript:;">Filter Result <a href="javascript:;" ng-click="events.addSaleSpot(null,null)"><span class="badge">New Spot</span></a></div>
-				<div class="collection list-spots" ng-show="selectedSpot.id > 0">
+				<div class="collection list-spots">
 					<a href="#!" 
 							class="collection-item" 
 							id="@{{'sh'+ spot.id}}" 
@@ -23,7 +13,7 @@
 							ng-bind="spot.name">
 					</a>
 				</div>
-				<small ng-show="!spots.data[0].name"><br>Nothing here. Add a salespot now for {{session()->get("selected_shop")->name}}</small>
+				<small ng-show="!spots.data[0].name">Nothing here. Add a salespot now for {{session()->get("selected_shop")->name}}</small>
 			</div>
 		</div>		
 	</div>

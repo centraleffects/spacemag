@@ -98,6 +98,13 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
         },
 
         addSaleSpot : function(x,y){
+            
+            if($scope.selectedSpot.isNew)
+            {
+                window.reBuy.toast('Please complete the information for the selected salespot before adding a new one');
+                vm.materializeInit();
+                return false;
+            }
 
             if(Object.keys($scope.spots.data).length && !$scope.changeSpotLocation){
                 var key = Object.keys($scope.spots.data).length;
