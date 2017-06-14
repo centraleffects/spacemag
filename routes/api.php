@@ -65,6 +65,7 @@ Route::group(['prefix' => 'salespot', 'middleware' => 'auth:api'], function(){
 	Route::post('create', 'SalespotController@store');
 	Route::post('delete', 'SalespotController@destroy');
 	Route::post('update', 'SalespotController@update');
+	Route::get('list', 'SalespotController@getlist');
 });
 
 

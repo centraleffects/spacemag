@@ -110,6 +110,19 @@ class SalespotController extends Controller
      */
     public function destroy(Salespot $salespot)
     {
-        //
+        $input = Input::all();
+        $salespot = Salespot::where('id', $input['id'])->first();
+        if($salespot){
+            if($salespot->delete()){
+                return [ 'success' => 1];
+            }
+        }
+        
+        return [ 'success' => 0];
+    }
+
+    public function getlist(){
+        $list = Salespot::all();
+        return $list;
     }
 }
