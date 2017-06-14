@@ -54,6 +54,8 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::post('{shop}/workers/invite', 'ShopOwnerController@inviteWorker');
 	Route::post('{shop}/newsletter-subscription/{user}', 'ShopOwnerController@toggleNewsletterSubscription');
 
+	Route::post('search', 'ShopController@search');
+
 });
 
 Route::group(['prefix' => 'categories', 'middleware' => 'auth:api'], function(){
@@ -90,6 +92,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::get('{user}/shops', 'ShopController@get');
 
 	Route::get('{user}/tasks', 'TodoTaskController@getByUser');
+
+	Route::post('{user}/shop-add-remove/{shop}', 'ShopController@addRemoveShop');
 
 });
 

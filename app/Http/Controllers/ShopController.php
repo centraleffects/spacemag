@@ -63,6 +63,10 @@ class ShopController extends Controller
     }
 
 
+    public function viewShop(Shop $shop){
+        
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -271,11 +275,45 @@ class ShopController extends Controller
     }
 
     public function removeUser(Shop $shop, User $user){
+        if( !$user->isOwner() and !$user->isAdmin() )
+            return ['success' => 0, 'msg' => __("erros.unauthorize")];
+
         if( $shop->users()->detach($user) )
             return ['success' => 1];
 
         return ['success' => 0];
     }
+
+    /**
+    * @param integer shop_id
+    * @param integer user_id
+    * @param string  action = add, remove
+    */
+    public function addRemoveShop(User $user, Shop $shop){
+        $action = Input::get('action');
+        $msg = "";
+        if( $action == "remove" && $user->shops->contains($shop->id) ){
+            $msg = __('messages.shop_removed', ['shop_name' => $shop->name]);
+        }else{
+            $msg = __('messages.shop_added_to_list', ['shop_name' => $shop->name]);
+
+            if( $user->shops->contains($shop->id) ){
+                return ['success' => 0, 'msg' => __("errors.shop_already_in_listing")];
+            }
+
+        }
+
+        $res = $user->shops()->toggle($shop->id);
+
+        if( $res )
+
+            return  ['success' => 1, 'msg' => $msg];
+
+        return  ['success' => 0, 'msg' => __('erros.process_failed'), 'debug' => 'ShopController@addRemoveShop'];
+        
+        
+    }
+
 
     public function getlist(){
         $input = Input::all();
@@ -294,5 +332,29 @@ class ShopController extends Controller
 
     public function loggedProfile(){
         return \Auth::user();
+    }
+
+    public function search(){
+        $input = Input::all();
+        $searchTerms = $input['keyword'];
+
+        $searchTerms = explode(' ', $searchTerms);
+        $query = Shop::query();
+
+        foreach($searchTerms as $searchTerm){
+            $query->where(function($q) use ($searchTerm){
+                $q->where('name', 'like', '%'.$searchTerm.'%')
+                ->orWhere('description', 'like', '%'.$searchTerm.'%');
+                // and so on
+            });
+        }
+
+        $results = $query->get();
+
+        if( count($results) < 1 ){
+            return ['msg' => __("No result to display")];
+        }
+
+        return $results;
     }
 }

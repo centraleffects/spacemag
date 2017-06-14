@@ -15,7 +15,7 @@ class ClientAuthenticated
      */
     public function handle($request, Closure $next)
     {   
-        if( !auth()->check() or !$request->user()->isClient() ) 
+        if( !auth()->check() or (!$request->user()->isClient() and !$request->user()->isCustomer()) ) 
         {
             return redirect('home');
         }
