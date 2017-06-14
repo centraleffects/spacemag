@@ -9,5 +9,7 @@ return [
 	'mail_noti_failed' => 'Something went wrong while sending a notification email.',
 	'assign_task_failed' => 'Unable to assign a task right now. Please try again later.',
 	'task_update_failed' => 'Something went wrong while trying to update this task.',
-	'no_task_affected' => 'No task has been affected.'
+	'no_task_affected' => 'No task has been affected.',
+	'unauthorize' => "Unauthorize access.",
+	'shop_not_in_listing' => "This shop is currently not in your listing."
 ];

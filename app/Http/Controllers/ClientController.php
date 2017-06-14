@@ -16,16 +16,17 @@ use App\ArticleCategories;
 use App\Tag;
 use App\ArticlePrice;
 use App\User;
+use App\Shop;
 
 use JavaScript;
-use Helpers;
+use App\Helpers\Helper;
 
 
 class ClientController extends Controller
 {
     use SoftDeletes; 
 
-   public function includeUserOnJS()
+    public function includeUserOnJS()
     {
         $shops = auth()->user()->ownedShops()->get();
         $shop = session()->put('shops', $shops);
@@ -136,4 +137,18 @@ class ClientController extends Controller
 
         return view('shop_owner.clients', compact('shop', 'clients', 'selectedClient'));
 	}
+
+    // my-shop
+    public function myShops(){
+        $shops = auth()->user()->shops()->orderBy('name', 'asc')->paginate(15);
+        $all_shops = Helper::getAvailableShops(auth()->user());
+
+        JavaScript::put([
+            'user' => auth()->user(),
+            'shops' => $shops
+        ]);
+
+        return view('customers.shops')->withShops($shops)
+            ->withAll_shops($all_shops);
+    }
 }

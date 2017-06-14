@@ -97,6 +97,12 @@ Route::group(['middleware' => 'web'], function (){
 	Route::get('email/change', 'UserController@changeEmail');
 });
 
+
+Route::group(['middleware' => 'client'], function (){
+	Route::get('my-shops', 'ClientController@myShops');
+	Route::get('shops/view/{shop}', 'ShopController@viewShop');
+});
+
 Route::get('email/confirm/{token}', 'UserController@confirmEmail');
 
 Route::get('test-event', function (){

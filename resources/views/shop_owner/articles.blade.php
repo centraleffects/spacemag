@@ -19,19 +19,19 @@
     			<div>
 					<ul class="collection">
 								
-							@forelse ($articles as $article)
-								<li 	
-									class="collection-item" 
-									id="{{ $article->id }}"  
-									>
-									<a  href="/shop/articles/{{ $article->id }}">{{$article->name}}</a>
-									<a  href="/shop/articles/delete/{{ $article->id }}" class="secondary-content">
-										<i class="fa fa-trash-o right" aria-hidden="true"></i>
-									</a>
-								</li>
-							@empty
-								<li class="collection-item">{!! __("No result to display") !!}</li>
-							@endforelse
+						@forelse ($articles as $article)
+							<li 	
+								class="collection-item" 
+								id="{{ $article->id }}"  
+								>
+								<a  href="/shop/articles/{{ $article->id }}">{{$article->name}}</a>
+								<a  href="/shop/articles/delete/{{ $article->id }}" class="secondary-content">
+									<i class="fa fa-trash-o right" aria-hidden="true"></i>
+								</a>
+							</li>
+						@empty
+							<li class="collection-item">{!! __("No result to display") !!}</li>
+						@endforelse
 
 					</ul>
 				</div>

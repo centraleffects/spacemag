@@ -63,6 +63,10 @@ class ShopController extends Controller
     }
 
 
+    public function viewShop(Shop $shop){
+        
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -265,11 +269,42 @@ class ShopController extends Controller
     }
 
     public function removeUser(Shop $shop, User $user){
+        if( !$user->isOwner() and !$user->isAdmin() )
+            return ['success' => 0, 'msg' => __("erros.unauthorize")];
+
         if( $shop->users()->detach($user) )
             return ['success' => 1];
 
         return ['success' => 0];
     }
+
+    /**
+    * @param integer shop_id
+    * @param integer user_id
+    * @param string  action = add, remove
+    */
+    public function addRemoveShop(User $user, Shop $shop){
+        $action = Input::get('action');
+        $msg = "";
+        if( $action == "remove" && $user->shops->contains($shop->id) ){
+            // $res = $user->shops()->delete($shop);
+            $msg = __('messages.shop_removed', ['shop_name' => $shop->name]);
+        }else{
+            // $res = $user->shops()->save($shop);
+            $msg = __('messages.shop_added_to_list', ['shop_name' => $shop->name]);
+        }
+
+        $res = $user->shops()->toggle($shop->id);
+
+        if( $res )
+
+            return  ['success' => 1, 'msg' => $msg];
+
+        return  ['success' => 0, 'msg' => __('erros.process_failed'), 'debug' => 'ShopController@addRemoveShop'];
+        
+        
+    }
+
 
     public function getlist(){
         $input = Input::all();

@@ -81,6 +81,8 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 
 	Route::get('{user}/tasks', 'TodoTaskController@getByUser');
 
+	Route::post('{user}/shop-add-remove/{shop}', 'ShopController@addRemoveShop');
+
 });
 
 Route::group(['prefix' => 'workers', 'middleware' => 'auth:api'], function (){

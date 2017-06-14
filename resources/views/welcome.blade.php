@@ -17,11 +17,15 @@
                                 <li><a href="{{ url('/home') }}">Home</a></li>
                                 @if( Auth::user()->isAdmin() )
                                 <li>
-                                    <a href="{{ url('admin/dashboard') }}">Dashboard</a>
+                                    <a href="{{ url('admin/dashboard') }}">{{__('Dashboard')}}</a>
                                 </li>
-                                @else
+                                @elseif( auth()->user()->isOwner() or auth()->user()->isWorker() )
                                 <li>
-                                    <a href="{{ url('/shop') }}">Shop</a>
+                                    <a href="{{ url('shop') }}">{{__('Shop')}}</a>
+                                </li>
+                                @elseif( auth()->user()->isCustomer() or auth()->user()->isClient() )
+                                <li>
+                                    <a href="{{ url('my-shops') }}">{{__('My Shops')}}</a>
                                 </li>
                                 @endif
                                 <li>
@@ -82,22 +86,8 @@
                         <p class="grey-text text-lighten-4">With us you can find bargains among hundreds of vendors selling seats on 1000m² of retail space. We have an organic cafe and outlet department - to pay all the same fund. Many sellers under one roof provides many findings chances!.</p>
                     </div>
                     <div class="col l3 s12">
-                       <!--  <h5 class="white-text">Settings</h5>
-                        <ul>
-                            <li><a class="white-text" href="#!">Link 1</a></li>
-                            <li><a class="white-text" href="#!">Link 2</a></li>
-                            <li><a class="white-text" href="#!">Link 3</a></li>
-                            <li><a class="white-text" href="#!">Link 4</a></li>
-                        </ul> -->
                     </div>
                     <div class="col l3 s12">
-                        <!-- <h5 class="white-text">Connect</h5>
-                        <ul>
-                            <li><a class="white-text" href="#!">Link 1</a></li>
-                            <li><a class="white-text" href="#!">Link 2</a></li>
-                            <li><a class="white-text" href="#!">Link 3</a></li>
-                            <li><a class="white-text" href="#!">Link 4</a></li>
-                        </ul> -->
                     </div>
                 </div>
             </div>

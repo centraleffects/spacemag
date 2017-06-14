@@ -106,4 +106,10 @@ class Helper {
 	public static function getCurrencies(){
 		return ['USD' => "US Dollar", "SEK" => "Swedish Krona"];
 	}
+
+	public static function getAvailableShops($user, $pagination = 15)
+	{
+	    $ids = \DB::table('shop_user')->where('user_id', '=', $user->id)->pluck('shop_id');
+	    return Shop::whereNotIn('id', $ids)->orderBy('name', 'asc')->paginate($pagination);
+	}
 }
