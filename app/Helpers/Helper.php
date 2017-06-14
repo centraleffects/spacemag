@@ -112,4 +112,5 @@ class Helper {
 	    $ids = \DB::table('shop_user')->where('user_id', '=', $user->id)->pluck('shop_id');
 	    return Shop::whereNotIn('id', $ids)->orderBy('name', 'asc')->paginate($pagination);
 	}
+
 }

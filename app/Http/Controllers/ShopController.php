@@ -293,11 +293,14 @@ class ShopController extends Controller
         $action = Input::get('action');
         $msg = "";
         if( $action == "remove" && $user->shops->contains($shop->id) ){
-            // $res = $user->shops()->delete($shop);
             $msg = __('messages.shop_removed', ['shop_name' => $shop->name]);
         }else{
-            // $res = $user->shops()->save($shop);
             $msg = __('messages.shop_added_to_list', ['shop_name' => $shop->name]);
+
+            if( $user->shops->contains($shop->id) ){
+                return ['success' => 0, 'msg' => __("errors.shop_already_in_listing")];
+            }
+
         }
 
         $res = $user->shops()->toggle($shop->id);
@@ -329,5 +332,29 @@ class ShopController extends Controller
 
     public function loggedProfile(){
         return \Auth::user();
+    }
+
+    public function search(){
+        $input = Input::all();
+        $searchTerms = $input['keyword'];
+
+        $searchTerms = explode(' ', $searchTerms);
+        $query = Shop::query();
+
+        foreach($searchTerms as $searchTerm){
+            $query->where(function($q) use ($searchTerm){
+                $q->where('name', 'like', '%'.$searchTerm.'%')
+                ->orWhere('description', 'like', '%'.$searchTerm.'%');
+                // and so on
+            });
+        }
+
+        $results = $query->get();
+
+        if( count($results) < 1 ){
+            return ['msg' => __("No result to display")];
+        }
+
+        return $results;
     }
 }

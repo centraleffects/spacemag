@@ -11,5 +11,6 @@ return [
 	'task_update_failed' => 'Something went wrong while trying to update this task.',
 	'no_task_affected' => 'No task has been affected.',
 	'unauthorize' => "Unauthorize access.",
-	'shop_not_in_listing' => "This shop is currently not in your listing."
+	'shop_not_in_listing' => "This shop is currently not in your listing.",
+	'shop_already_in_listing' => "This shop is already in your listing."
 ];

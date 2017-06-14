@@ -22,18 +22,32 @@ $(function (){
 					var source = $search_results,
 						target = $myshops_list,
 						icon = "close",
-						newAction = action == "add" ? "remove" : "add";
+						newAction = action == "add" ? "remove" : "add",
+						itemIcon = $('<i class="material-icons circle">location_city</i>'),
+						newClass = "avatar";
 
 					if( action == "remove" ){
 						source = $myshops_list;
 						target = $search_results;
 						icon = "add";
 						newAction = "add";
+						itemIcon = "";
+
+						target.find('li.empty-result').hide();
 					}
 
 
 					var li = source.find("li[data-id='"+shopId+"']");
 					var newLI = li.clone();
+
+					if( itemIcon != "" ){
+						newLI.prepend(itemIcon);
+						newLI.addClass(newClass);
+					}else{
+						newLI.find('i.material-icons.circle').remove();
+						newLI.removeClass(newClass);
+					}
+
 					newLI.find('a.add-remove-shop').attr("data-action", newAction);
 					newLI.find("a.add-remove-shop i.material-icons").html(icon);
 
@@ -51,4 +65,5 @@ $(function (){
 			}
 		});
 	});
+
 });

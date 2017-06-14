@@ -141,4 +141,87 @@
 
     window.reBuy = $.reBuy;
 
+    var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
+
+    $(document).on("keyup", ".sidebar-search-field", function (e){
+        var $this = $(this), 
+            $target = $( $this.attr("data-target-result") ),
+            source_url = $this.attr("data-source"),
+            keyword = $(this).val();
+
+        delay(function(){
+            $.ajax({
+                url: source_url,
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    keyword: keyword
+                },
+                success: function (data){
+                    console.log(data);
+                    // we'll expect that the data we will be fetching should be paginated
+                    $target.find("li.orig-data").hide();
+
+                    if( !data.msg ){
+                        $target.find('li.empty-result').hide();
+
+                        $.each(data, function (i, shop){
+                            var item = $('<li class="collection-item search-result-item" data-id="'+shop.id+'">'+
+                                    '<a  href="/shops/view/'+shop.id+'" target="_blank" data-field="name">'+shop.name+'</a>'+
+                                    '<a  href="javascript:void(0);" class="add-remove-shop secondary-content" data-id="'+shop.id+'" data-action="add" data-field="do_action">'+
+                                        '<i class="material-icons">add</i>'+
+                                    '</a>'+
+                                '</li>');
+                            if( $target.find('li.search-result-item[data-id="'+shop.id+'"]').length < 1 ){
+                                $target.append(item);
+                            }
+                        });
+                    }else{
+                        // show no results
+                        $target.find('li.search-result-item').remove();
+                        if( $target.find('li.empty-result').length < 1 ){
+                            var item = $('<li class="collection-item empty-result">'+data.msg+'</li>');
+                            $target.append(item);
+                        }else{
+                            $target.find('li.empty-result').show();
+                        }
+                    }
+                   
+                },
+                error: function (data){
+                    console.warn(data);
+                    reBuy.alert("Error 500. Something went wrong while processing your request.")
+                }
+
+            });
+        }, 500 );
+       
+        if( e.which == 27 ){ // esc key
+            $('.clear-search-field').trigger('click');
+        }
+        
+    });
+
+    $(document).on("click", ".clear-search-field", function (){
+        $e1 = $("#search");
+
+        if( $e1.length > 0 ){
+            $e1.val("").trigger("change");
+        }
+
+        $el = $("#search_results");
+
+        if( $el.length > 0 ){
+            $el.find('li:not(.orig-data)').remove();
+            $el.find('li.orig-data').show();
+            $el.find('li.search-result-item').remove();
+        }
+    });
+
 })(jQuery);
