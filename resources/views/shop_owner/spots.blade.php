@@ -45,13 +45,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="card hoverable" ng-model="shops"  ng-show="!empty(selectedSpot)">
+		<div class="card hoverable"  ng-show="!empty(selectedSpot)">
 			<div class="row card-content">
 				<div class="input-field col s12">
 					<span class="card-title">Apply Categories for this Spot</span>
-					<select multiple>
+					<select multiple ng-model="selectedSpot.categories">
 					  <option ng-repeat="(key, category) in categories.data" 
-									id="@{{'cat'+ category.id}}" 
+									id="@{{'cat'+ category.id}}"
+									value="@{{category.id}}" 
 									ng-bind="category.name">
 						</option>
 					</select>
@@ -109,13 +110,13 @@
 			</div>
 			<div class="card-action row">
 					<div class="col">
-						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew" ng-click="events.cancelSelectedSpotIfNew()">
+						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew && !empty(selectedSpot)" ng-click="events.cancelSelectedSpotIfNew()">
 						 Cancel
 						</button>
 						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.id && !selectedSpot.isNew" ng-click="events.deleteSelectedSpot()">
 						 Delete
 						</button> 
-						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelectedSpot()"   ng-show="selectedSpot.name">
+						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()"   ng-show="selectedSpot.name">
 							@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }} SPOT
 						</button> 	
 						<button class="btn waves-effect waves-light blue" ng-show="!selectedSpot.name" ng-click="events.addSaleSpot(null,null)">

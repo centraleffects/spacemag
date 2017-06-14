@@ -174,7 +174,8 @@ class ShopController extends Controller
         $shop->slug = isset($input['slug']) ? $input['slug'] : "";
         $shop->commission_article_sale = $input['commission_article_sale'];
         $shop->commission_salespot = $input['commission_salespot'];
-        $shop->cleanup_schedule = implode(",",$input['cleanup_schedule']);
+
+        $shop->cleanup_schedule = !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
 
         if( $shop->update() ){
             if( $loggedUser->isAdmin() && ($oldShopOwner <> $user->id) ){ // send email 

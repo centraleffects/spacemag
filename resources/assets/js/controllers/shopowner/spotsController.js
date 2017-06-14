@@ -26,20 +26,19 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
     $scope.events = {
         viewShop : function($this){
             if(!$this){
-                var key = Object.keys($scope.shops.data).length;
-                id = parseInt($scope.shops.data[key-1].id) + 1;
-                $scope.shops.data[key] = { name : 'New Shop', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
+                var key = Object.keys($scope.spots.data).length;
+                id = parseInt($scope.spots.data[key-1].id) + 1;
+                $scope.spots.data[key] = { name : 'New Spot', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
                 angular.element('#dashleft-sidebar ul li:first-child').click();
                 return false;
             }
-            shop = $this.shop;
-            console.log(shop);
-            angular.element('.list-shops').removeClass('active');
-            angular.element('#sh'+shop.id).addClass('active');
-            $scope.selectedShopKey = $this.key;
-            $scope.selectedShop = shop;
-            if(shop.id){
-                location.hash = '#!/' + shop.id;
+            spots = $this.spots;
+            angular.element('.list-spots').removeClass('active');
+            angular.element('#sp'+spot.id).addClass('active');
+            $scope.selectedSpotKey = $this.key;
+            $scope.selectedSpot = spot;
+            if(spot.id){
+                location.hash = '#!/' + spot.id;
             }else{
                 location.hash = '#!/';
             }
@@ -51,24 +50,30 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
         },
         updateSelected : function(){
 
-            var url = '/api/shops/update';
+            var url = '/api/salespot/update';
+            if($scope.selectedSpot.isNew){
+                url = '/api/salespot/create';
+            }
+            $scope.selectedSpot.shop = $scope.selectedShop;
+
             $http({
                 method: 'POST',
                 url: url + '?api_token=' + window.adminJS.me.api_token,
-                data: $.param($scope.selectedShop),
+                data: $.param($scope.selectedSpot),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 cache: $templateCache
             }).then(function(response) {
                 if($scope.selectedShop.isNew){
-                    window.reBuy.toast('Shop details have been created! Thank you.');
+                    window.reBuy.toast('Spot details have been created! Thank you.');
                 }else{
-                    window.reBuy.toast('Shop details have been updated! Thank you.');
+                    window.reBuy.toast('Spot details have been updated! Thank you.');
                 }
                 vm.updateList();
             }, function(response) {
                 window.reBuy.toast('ERROR: Please complete all required fields. Thank you.');
             });
         },
+
         deleteSelected : function(){
 
             window.reBuy.confirm('Are you sure to delete this shop?', function(){
@@ -76,7 +81,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
                 $http({
                     method: 'POST',
                     url: url + '?api_token=' + window.adminJS.me.api_token,
-                    data: $.param($scope.selectedShop),
+                    data: $.param($scope.selectedSpot),
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     cache: $templateCache
                 }).then(function(response) {
@@ -165,6 +170,7 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
         },
 
         cancelSelectedSpotIfNew : function(){
+
             if($scope.selectedSpot.isNew){
                 var data = [];
                  for (var k in $scope.spots.data){
@@ -175,13 +181,8 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
                     }
                   }
                   $scope.spots.data = data;
-                  $timeout(function () {
-                      angular.element('.list-spots a:first-child').click();
-                     // $scope.selectedSpot = $scope.spots.data[0];
-                     // $scope.selectedSpotKey = 0;
-                      vm.materializeInit();
-                    },500);
-                  
+               $scope.selectedSpot = [];   
+               vm.materializeInit();
             }
         },
 

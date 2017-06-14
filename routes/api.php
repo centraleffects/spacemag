@@ -60,6 +60,14 @@ Route::group(['prefix' => 'categories', 'middleware' => 'auth:api'], function(){
 	Route::get('list', 'SalespotCategoryTypeController@getlist');
 });
 
+
+Route::group(['prefix' => 'salespot', 'middleware' => 'auth:api'], function(){
+	Route::post('create', 'SalespotController@store');
+	Route::post('delete', 'SalespotController@destroy');
+	Route::post('update', 'SalespotController@update');
+});
+
+
 Route::group(['prefix' => 'articles', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'ArticleController@index');
 	Route::post('create', 'ArticleController@store');
