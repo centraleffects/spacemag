@@ -4,7 +4,7 @@
 		<div class="card hoverable" ng-controller="articlesController">
 			<div class="row card-content">
 				
-				<span class="card-title">Article List <span ng-bind="first_name"></span></span>
+				<span class="card-title">Article List</span>
 
 				<div class="nav-wrapper">
 			      <form>

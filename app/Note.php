@@ -9,6 +9,6 @@ class Note extends Model
     protected $guarded = [ 'id' ];
 
     public function author(){
-    	return $this->belongsTo('App\User');
+    	return $this->belongsTo('App\User')->withPivot('author_id','id','first_name');
     }
 }

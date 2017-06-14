@@ -178,7 +178,8 @@ class ShopController extends Controller
         $shop->slug = isset($input['slug']) ? $input['slug'] : "";
         $shop->commission_article_sale = $input['commission_article_sale'];
         $shop->commission_salespot = $input['commission_salespot'];
-        $shop->cleanup_schedule = implode(",",$input['cleanup_schedule']);
+
+        $shop->cleanup_schedule = !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
 
         if( $shop->update() ){
             if( $loggedUser->isAdmin() && ($oldShopOwner <> $user->id) ){ // send email 
@@ -260,8 +261,13 @@ class ShopController extends Controller
     }
 
  
-    public function users(Shop $shop){
-        return $shop->users()->where('role', '=', 'customer')->get();
+    public function users(Shop $shop, $type = null){
+        if(!$type){
+            return $shop->users()->where('role', '=', 'customer')->get();
+        }else{
+            return $shop->users()->where('role', '=', $type)->with('notes')->get();
+        }
+        
     }
 
     public function workers(Shop $shop){
