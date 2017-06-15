@@ -218,8 +218,13 @@
         $el = $("#search_results");
 
         if( $el.length > 0 ){
-            $el.find('li:not(.orig-data)').remove();
-            $el.find('li.orig-data').show();
+            if( $el.find('li.orig-data').length > 0 ){
+                $el.find('li.orig-data').show();
+                $el.find('li.empty-result').hide();
+            }else{
+                $el.find('li.empty-result').show();
+            }
+            
             $el.find('li.search-result-item').remove();
         }
     });
