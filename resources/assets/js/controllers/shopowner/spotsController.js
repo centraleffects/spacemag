@@ -1,4 +1,4 @@
-app.controller('spotsController', function($scope, shopService, $timeout, $templateCache, $http, $location) {
+app.controller('spotsController', function($scope, spotService, $timeout, $templateCache, $http, $location) {
 
     $scope.selectedShop = window.selectedShop;
 
@@ -74,23 +74,22 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
             });
         },
 
-        deleteSelected : function(){
+        deleteSelectedSpot : function(){
 
-            window.reBuy.confirm('Are you sure to delete this shop?', function(){
-                var url = '/api/shops/delete';
+            window.reBuy.confirm('Are you sure to delete this spot?', function(){
+                var url = '/api/salespot/delete';
                 $http({
                     method: 'POST',
                     url: url + '?api_token=' + window.adminJS.me.api_token,
                     data: $.param($scope.selectedSpot),
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    cache: $templateCache
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).then(function(response) {
-                    window.reBuy.toast('Shop details have been deleted! Thank you.');
-                    vm.updateList();
+                    window.reBuy.toast('Spot details have been deleted! Thank you.');
                 }, function(response) {
-                    window.reBuy.toast('ERROR: Unable to delete the selected shop.');
+                    window.reBuy.toast('ERROR: Unable to delete the selected spot.');
                 });
             });
+            vm.updateList();
         },
 
         viewTab: function(tab){
@@ -147,9 +146,11 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
             },200);
         },
 
-        viewSpot : function(key,value){
+        viewSpot : function(spot){
 
-            $scope.selectedSpotKey = key;
+            $scope.selectedSpotKey = spot.key;
+            $scope.selectedSpot = spot.spot;
+            
             if($scope.selectedSpot.id){
                 location.hash = '#!/' + $scope.selectedSpot.id;
             }else{
@@ -245,20 +246,15 @@ app.controller('spotsController', function($scope, shopService, $timeout, $templ
 
     vm.updateList = function(){
 
-        shopService.categoryList().then(function(categoryList){
+        spotService.categoryList().then(function(categoryList){
              $scope.categories = categoryList;
         });
 
-        shopService.shopList().then(function(shopList) {
-            $scope.shops = shopList;
-            if($scope.shops){
-                $scope.selectedShop = $scope.shops.data[0];
-                $scope.selectedShopKey = 0;
-            }else{
-                $scope.events.addShop();
-            }
+        spotService.spotList().then(function(spotList) {
+            $scope.spots.data = spotList;
             $timeout(function () {
                 vm.materializeInit();
+                console.log($scope.spots);
             },1000);
         });
     }

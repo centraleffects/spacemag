@@ -55,6 +55,7 @@ require('./services/shopowner/customerServices');
 require('./services/shopowner/articleServices');
 require('./services/shopowner/workerServices');
 require('./services/shopowner/shopServices');
+require('./services/shopowner/spotServices');
 require('./services/shopowner/workerTodoServices');
 require('./services/shopowner/couponServices');
 require('./services/shopowner/clientServices');
