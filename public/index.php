@@ -52,7 +52,9 @@ if(!function_exists('pr')){
 		echo'</pre>';
 	}
 }
-
+if(!defined('LABEL_DIR')){
+	define('LABEL_DIR', __DIR__.'/labels/');
+}
 /*
 |--------------------------------------------------------------------------
 | Run The Application
