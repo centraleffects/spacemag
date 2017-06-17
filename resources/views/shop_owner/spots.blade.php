@@ -45,17 +45,18 @@
 				</div>
 			</div>
 		</div>
-		<div class="card hoverable"  ng-show="!empty(selectedSpot)">
+		<div class="card hoverable"  ng-show="selectedSpot.name">
 			<div class="row card-content">
 				<div class="input-field col s12">
 					<span class="card-title">Apply Categories for this Spot</span>
-					<select multiple ng-model="selectedSpot.categories">
-					  <option ng-repeat="(key, category) in categories.data" 
-									id="@{{'cat'+ category.id}}"
-									value="@{{category.id}}" 
-									ng-bind="category.name">
-						</option>
-					</select>
+					<p ng-repeat="(key, category) in categories.data">
+				      <input type="checkbox" 
+				      				id="@{{'cat'+ category.id}}"
+									ng-value="category.id"
+									ng-model="selectedSpot.categories"
+									ng-checked="vm.checkSelectedSpotCategory(category.id)"/>
+				      <label for="@{{'cat'+ category.id}}" ng-bind="category.name"></label>
+				    </p>
 				</div>
 			</div>
 		</div>	
@@ -117,10 +118,10 @@
 						 Delete
 						</button> 
 						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()"   ng-show="selectedSpot.name">
-							@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }} SPOT
+							@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }}
 						</button> 	
 						<button class="btn waves-effect waves-light blue" ng-show="!selectedSpot.name" ng-click="events.addSaleSpot(null,null)">
-						 New SaleSpot
+						 New
 						</button>
 					</div>
 			</div>

@@ -16,6 +16,7 @@ use App\ArticleTag;
 use App\ArticleCategories;
 use App\Tag;
 use App\ArticlePrice;
+use App\ArticleLabel;
 
 use JavaScript;
 use Helpers;
@@ -107,12 +108,13 @@ class ArticleController extends Controller
 
         $input = Input::all();
 
+
+
         if(Input::has('ajax')){
 
             if(Input::has('data')){
-
                 $data = null;
-               foreach($input['data'] as $d){
+               foreach($input['data']['data'] as $d){
                     if($d['name'] <> "article-tags" and $d['name'] <> "categories"){
                         $data[$d['name']] = $d['value'];
                     }else{
@@ -213,6 +215,71 @@ class ArticleController extends Controller
                         }
                     }
 
+                    //add files
+                    $sample_picture_filename = "";
+                    if(!empty($input['data']['files']['sample_picture'])){
+                      list($type, $sample_picturedata) = explode(';',$input['data']['files']['sample_picture']);
+                      list(, $sample_picturedata)      = explode(',', $sample_picturedata);
+                      list(,$type) = explode('/', $type);
+                      if(!is_dir(LABEL_DIR)){
+                        mkdir(LABEL_DIR, 0775);
+                      }
+                      if(in_array($type, ['png', 'jpg', 'jpeg'])){
+                        //save image
+                        $source = fopen($input['data']['files']['sample_picture'], 'r');
+                        $destination = fopen(LABEL_DIR.'sample_picture_'.$article->id.'.'.$type, 'w');
+
+                        stream_copy_to_stream($source, $destination);
+
+                        fclose($source);
+                        fclose($destination);
+
+                        $sample_picture_filename = 'sample_picture_'.$article->id.'.'.$type;
+                      }
+                    }
+
+                    $label_filename = '';
+
+                    if(!empty($input['data']['files']['label_design'])){
+                      list($type, $label_designdata) = explode(';',$input['data']['files']['label_design']);
+                      list(, $label_designdata)      = explode(',', $label_designdata);
+                      list(,$type) = explode('/', $type);
+                      if(!is_dir(LABEL_DIR)){
+                        mkdir(LABEL_DIR, 0775);
+                      }
+                      if(in_array($type, ['png', 'jpg', 'jpeg'])){
+                        //save image
+                        $source = fopen($input['data']['files']['label_design'], 'r');
+                        $destination = fopen(LABEL_DIR.'label_design_'.$article->id.'.'.$type, 'w');
+
+                        stream_copy_to_stream($source, $destination);
+
+                        fclose($source);
+                        fclose($destination);
+
+                        $label_filename  = 'label_design_'.$article->id.'.'.$type;
+                      }
+                    }
+
+                    //save to article_labels table
+                    $label = ArticleLabel::where(['article_id' => $article->id])->first();
+                    if(!$label){
+                       $label = new ArticleLabel();
+                    }
+                    $label->article_id =  $article->id;
+                    if($label_filename){
+                      $label->filename = $label_filename;
+                    }
+                    $label->user_id =  $input['user_id'];
+                    $label->print_medium = !empty($data['label_medium']) ? $data['label_medium'] : '';
+                    $label->salespot_id = !empty($data['salespot_id']) ? $data['salespot_id'] : 1;
+                    $label->status = !empty($data['label_status']) ? $data['label_status'] : '';
+                    if($sample_picture_filename){
+                      $label->sample_picture = $sample_picture_filename;
+                    }
+                    $label->save();
+
+                  //------------------  
                  }  
                
                   return [
@@ -242,12 +309,12 @@ class ArticleController extends Controller
         $new_article = ( request()->segment(3) == "new" ) ;
 
         if($id && !$new_article){
-            $selectedArticle = Article::where('id',$id)->with('tags','categories')->first();
+            $selectedArticle = Article::where('id',$id)->with('tags','categories', 'labels','salespots')->first();
 
         }else{
             $selectedArticle =  new Article();
         }
-
+        dd($selectedArticle);
         $selected_article_tags = [];
         $selected_article_categories = [];
         $prices = [];
@@ -279,6 +346,7 @@ class ArticleController extends Controller
 
         $shop = session()->get('selected_shop');
         $categories = SalespotCategoryType::all();
+
 
         return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices'));
 

@@ -42,5 +42,9 @@ class Article extends Model
         return $this->hasMany('App\ArticleLabel');
     }
 
+    public function salespots(){
+        return $this->hasMany('App\Salespot');
+    }
+
     
 }

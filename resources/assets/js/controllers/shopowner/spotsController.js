@@ -14,40 +14,53 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.selectedSpot = {};
     $scope.selectedSpotKey = null;
     $scope.changeSpotLocation = false;
+    $scope.selectedSpotCategories = [];
 
     var vm = this;
+
+
 
     $scope.init = function() {
         $timeout(function () {
             vm.updateList();
         },1000);
     }
+    
 
-    $scope.events = {
-        viewShop : function($this){
-            if(!$this){
-                var key = Object.keys($scope.spots.data).length;
-                id = parseInt($scope.spots.data[key-1].id) + 1;
-                $scope.spots.data[key] = { name : 'New Spot', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true };
-                angular.element('#dashleft-sidebar ul li:first-child').click();
-                return false;
-            }
-            spots = $this.spots;
-            angular.element('.list-spots').removeClass('active');
-            angular.element('#sp'+spot.id).addClass('active');
-            $scope.selectedSpotKey = $this.key;
-            $scope.selectedSpot = spot;
-            if(spot.id){
-                location.hash = '#!/' + spot.id;
-            }else{
-                location.hash = '#!/';
-            }
+    vm.updateList = function(){
 
-            vm.materializeInit();
+        spotService.categoryList().then(function(categoryList){
+             $scope.categories = categoryList;
+        });
+
+        spotService.spotList().then(function(spotList) {
+            $scope.spots.data = spotList;
             $timeout(function () {
                 vm.materializeInit();
-            },500);
-        },
+                console.log($scope.spots);
+            },1000);
+        });
+    }
+
+    vm.materializeInit = function(){
+        Materialize.updateTextFields();
+        angular.element('select').material_select();
+    }
+
+    vm.checkSelectedSpotCategory = function(cat_id){
+
+        for (var k in $scope.selectedSpot.categories){
+            if (typeof $scope.selectedSpot.categories[k] !== 'function') {
+                if($scope.selectedSpot.categories[k].category_type_id == cat_id){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    $scope.events = {
+
         updateSelected : function(){
 
             var url = '/api/salespot/update';
@@ -90,15 +103,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
                 });
             });
             vm.updateList();
-        },
-
-        viewTab: function(tab){
-            if(!tab){
-                $scope.currentTab = 'shop';
-            }else{
-                $scope.currentTab = tab;
-            }
-
         },
 
         addSaleSpot : function(x,y){
@@ -162,7 +166,11 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
                 vm.materializeInit();
                 angular.element('.shopspot').removeClass('green');
                 angular.element('#spt'+$scope.selectedSpot.id).addClass('green');
-            },500);
+            },600);
+
+            $timeout(function () {
+                vm.materializeInit();
+            }, 1500);
         },
 
         doDrag : function($this){
@@ -234,6 +242,10 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             .on('click', '.panzoom', function(e){
 
             })
+            .on('change', 'select', function(){
+                vm.materializeInit();
+                console.log('select change')
+            })
 
             //@TODO: should use $watch to handle model changes
             angular.element('input[name="name"]').keyup(function(){
@@ -244,25 +256,8 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
         })(jQuery);
     }
 
-    vm.updateList = function(){
+    
 
-        spotService.categoryList().then(function(categoryList){
-             $scope.categories = categoryList;
-        });
-
-        spotService.spotList().then(function(spotList) {
-            $scope.spots.data = spotList;
-            $timeout(function () {
-                vm.materializeInit();
-                console.log($scope.spots);
-            },1000);
-        });
-    }
-
-    vm.materializeInit = function(){
-        Materialize.updateTextFields();
-        angular.element('select').material_select();
-    }
 
 
     $scope.init();

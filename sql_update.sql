@@ -29,3 +29,23 @@ RENAME TABLE `rebuy`.`article_tags` TO `rebuy`.`article_tag`;
 ALTER TABLE `notes` ADD `author_id` INT(11) NOT NULL AFTER `user_id`;
 
 ALTER TABLE `notes` ADD CONSTRAINT `notes_author_id_foreign` FOREIGN KEY (`author_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--------------
+
+ALTER TABLE `article_labels` DROP FOREIGN KEY `article_labels_media_type_id_foreign`;
+
+----
+
+DROP TABLE `label_media_types`
+
+--- 
+
+ALTER TABLE `article_labels` ADD `print_medium` VARCHAR(50) NOT NULL AFTER `filename`;
+
+---- 
+
+ALTER TABLE `article_labels` ADD `sample_picture` VARCHAR(50) NOT NULL AFTER `filename`;
+
+----
+
+ALTER TABLE `salespots` ADD `article_id` INT(10) NOT NULL AFTER `shop_id`;
