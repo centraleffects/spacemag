@@ -53,7 +53,7 @@
 							</a>
 						</li>
 					@empty
-						<p>{{ __("messages.client_no_shop_yet") }}</p>
+						<li class="empty-result">{{ __("messages.client_no_shop_yet") }}</li>
 					@endforelse
 				</ul>
 				{!! $shops->render() !!}

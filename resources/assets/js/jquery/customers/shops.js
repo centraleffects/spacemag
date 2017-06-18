@@ -40,7 +40,7 @@ $(function (){
 					var li = source.find("li[data-id='"+shopId+"']");
 					var newLI = li.clone();
 
-					if( itemIcon != "" ){
+					if( itemIcon != "" ){ // action is 'add'
 						newLI.prepend(itemIcon);
 						newLI.addClass(newClass);
 					}else{
@@ -54,7 +54,7 @@ $(function (){
 					li.fadeOut(function (){ $(this).remove() });
 
 					target.append(newLI);
-
+					target.find('li.empty-result').hide();
 				}else{
 					window.reBuy.alert(data.msg);
 				}

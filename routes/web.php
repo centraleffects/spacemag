@@ -100,7 +100,8 @@ Route::group(['middleware' => 'web'], function (){
 
 Route::group(['middleware' => 'client'], function (){
 	Route::get('my-shops', 'ClientController@myShops');
-	Route::get('shops/view/{shop}', 'ShopController@viewShop');
+	Route::get('shops/view/{shop}', 'ClientController@viewShop');
+	Route::get('bookings', 'ClientController@bookings');
 });
 
 Route::get('email/confirm/{token}', 'UserController@confirmEmail');
@@ -118,7 +119,8 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try', function (){
-	dd( App\Shop::find(2) );
+Route::get('try/{shop}', function (App\Shop $shop){
+	$a = App\Helpers\Helper::getAvailableSaleSpots($shop);
+	dd($a);
 });
 

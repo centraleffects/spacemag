@@ -57,10 +57,7 @@
                                                 'overview' => __("Overview"),
                                                 'my-shops' => __("My Shops"),
                                                 'bookings' => __("My Bookings"),
-                                                'sales-spots' => __("Salespot"),
                                                 'shop/articles' => __("Articles"),
-                                                'shop/todo' => __("Todo List"),
-                                                'shop/workers/todo' => __("My Todo"),
                                                 'shop/coupons' => __("Coupons")
 
                                             ];
@@ -81,16 +78,32 @@
                 </div>
                 <div class="row content-wrap">
                     {{ $slot }}
-                    <div class="col s12 m12 l3">
-                        {{ $left or '' }}
-                    </div>
-                    <div class="col s12 m12 l6">
-                        {{ $center or '' }}
-                    </div>
-                    <div class="col s12 m12 l3">
-                        {{ $right or '' }}
-                    </div>
+
+                    @if( isset($left) )
+                        <div class="col s12 m12 l3">
+                            {{ $left }}
+                        </div>
+                    @endif
+                    
+                    @if( isset($center) )
+                        <div class="col s12 m12 l6">
+                            {{ $center }}
+                        </div>
+                    @endif
+                    
+                    @if( isset($right) )
+                        <div class="col s12 m12 l3">
+                            {{ $right }}
+                        </div>
+                    @endif
+
+                    @if( isset($center_right_collide) )
+                        <div class="col s12 m12 l9">
+                            {{ $center_right_collide }}
+                        </div>
+                    @endif
                 </div>
+
             </div>
         </div>
 

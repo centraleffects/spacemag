@@ -49,7 +49,7 @@ class TodoTaskController extends Controller
     }
 
     public function assignTask(TodoTask $task, User $user){
-        if( $user->todoTasks()->save($task) ){
+        /*if( $user->todoTasks()->save($task) ){
 
             $username = ucfirst($user->first_name).' '.ucfirst($user->last_name);
             $current_user = Auth::guard('api')->user();
@@ -66,8 +66,10 @@ class TodoTaskController extends Controller
                 return ['success' => 0, 'msg' => __('errors.mail_noti_failed')];
             }
 
-        }
+        }*/
 
+        if( $user->todoTasks()->save($task) )
+            return ['success' => 1, 'msg' => __('messages.task_assigned')];
             
         return ['success' => 0, 'msg' => __('errors.assign_task_failed')];
     }

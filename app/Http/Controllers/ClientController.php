@@ -151,4 +151,19 @@ class ClientController extends Controller
         return view('customers.shops')->withShops($shops)
             ->withAll_shops($all_shops);
     }
+
+    public function viewShop(Shop $shop){
+        return view('customers.shop')->withShop($shop);
+    }
+
+    public function bookings(){
+        $shops = auth()->user()->shops()->orderBy('name', 'asc')->paginate(15);
+
+        JavaScript::put([
+            'user' => auth()->user(),
+            'shops' => $shops
+        ]);
+        
+        return view('customers.bookings')->withShops($shops);
+    }
 }
