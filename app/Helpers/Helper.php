@@ -93,7 +93,7 @@ class Helper {
         return $shops;
 	}
 
-	public static function getShopWorkers(Shop $shop){
+	public static function getShopWorkers(\App\Shop $shop){
 		return $shop->users()->where('role', '=', 'worker')->get();
 	}
 
