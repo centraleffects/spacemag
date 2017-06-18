@@ -314,7 +314,6 @@ class ArticleController extends Controller
         }else{
             $selectedArticle =  new Article();
         }
-        dd($selectedArticle);
         $selected_article_tags = [];
         $selected_article_categories = [];
         $prices = [];
