@@ -41,7 +41,8 @@ return [
 	"shop_updated" => "Your shop has been updated successfully.",
 	"client_no_shop_yet" => "Nothing to show here. Add shops to your account to get started.",
 	"shop_added_to_list" => ":shop_name has been added to your lists.",
-	"shop_removed" => ":shop_name has been removed from your lists."
+	"shop_removed" => ":shop_name has been removed from your lists.",
+	"select_shop" => "Select Shop"
 
 
 ];

@@ -3,31 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Salespot;
+use App\Shop;
+use App\Helpers\Helper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 class SalespotController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,28 +35,6 @@ class SalespotController extends Controller
             return [ 'success'=> 1 ];
         }
          return [ 'success'=> 0 ];
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Salespot  $salespot
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Salespot $salespot)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Salespot  $salespot
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Salespot $salespot)
-    {
-        //
     }
 
     /**
@@ -124,5 +85,10 @@ class SalespotController extends Controller
     public function getlist(){
         $list = Salespot::all();
         return $list;
+    }
+
+    public function getAvailableSaleSpot(Shop $shop){
+        $spots = Helper::getAvailableSaleSpots($shop);
+        return $spots;
     }
 }

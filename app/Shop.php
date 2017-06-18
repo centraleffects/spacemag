@@ -62,6 +62,10 @@ class Shop extends Model
     	return $this->hasManyThrough('App\ArticleTransaction', 'App\Salespot');
     }
 
+    public function salespotBookings(){
+        return $this->hasManyThrough('App\SalespotBooking', 'App\Salespot');
+    }
+
     /**
      * TodoTasks for this Shop
      */

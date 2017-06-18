@@ -1,8 +1,6 @@
 <?php 
 namespace App\Helpers;
 
-use App\Shop;
-
 class Helper {
 	
 	/**
@@ -100,7 +98,7 @@ class Helper {
 	}
 
 	public static function getDays(){
-		return ["mon","tue","wed","thu","fri","sat","sun"];
+		return ["mon","tue","wed","thu","fri","sat"];
 	}
 
 	public static function getCurrencies(){
@@ -110,7 +108,14 @@ class Helper {
 	public static function getAvailableShops($user, $pagination = 15)
 	{
 	    $ids = \DB::table('shop_user')->where('user_id', '=', $user->id)->pluck('shop_id');
-	    return Shop::whereNotIn('id', $ids)->orderBy('name', 'asc')->paginate($pagination);
+	    return \App\Shop::whereNotIn('id', $ids)->orderBy('name', 'asc')->paginate($pagination);
+	}
+
+	// returns available sale spots for a specific shop
+	public static function getAvailableSaleSpots($shop){
+		$ids = $shop->salespotBookings()->get()->pluck('salespot_id');
+
+		return \App\Salespot::whereNotIn('id', $ids)->where(['shop_id' => $shop->id])->get();
 	}
 
 }

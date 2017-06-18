@@ -55,6 +55,7 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::post('{shop}/newsletter-subscription/{user}', 'ShopOwnerController@toggleNewsletterSubscription');
 
 	Route::post('search', 'ShopController@search');
+	Route::post('{shop}/salespots/available', 'SalespotController@getAvailableSaleSpot');
 
 });
 
@@ -94,6 +95,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 	Route::get('{user}/tasks', 'TodoTaskController@getByUser');
 
 	Route::post('{user}/shop-add-remove/{shop}', 'ShopController@addRemoveShop');
+	Route::post('bookings/active', 'SalespotBookingController@getActiveBookings');
 
 });
 

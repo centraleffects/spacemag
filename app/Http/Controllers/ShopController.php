@@ -63,11 +63,6 @@ class ShopController extends Controller
     }
 
 
-    public function viewShop(Shop $shop){
-        
-    }
-
-
     /**
      * Update the specified resource in storage.
      *
