@@ -52,7 +52,7 @@
 									</div>
 									<div class="assignto input-field" ng-if="todo.owner == null">
 										<angucomplete-alt
-							              placeholder="Search worker"
+							              placeholder="Assign to"
 							              pause="300"
 							              selected-object="assignTodo"
 							              local-data="selectedShop.workers"

@@ -1,16 +1,21 @@
+<?php
+	$is_readonly = "readonly";
+	if( action('ShopOwnerController@index') == Request::url() ) $is_readonly = "";
+?>
+
 <div class="card hoverable"><!-- Shop Information -->
 	<div class="card-content">
 		<div class="card-title">Shop Information</div>
 		<div class="input-field">
-			<input type="text" name="name" value="@{{selectedShop.name}}" />
+			<input {{ $is_readonly }} type="text" name="name" value="@{{selectedShop.name}}" />
 			<label>Name</label>
 		</div>
 		<div class="input-field">
-			<input type="text" name="url" value="@{{selectedShop.url}}" />
+			<input {{ $is_readonly }} type="text" name="url" value="@{{selectedShop.url}}" />
 			<label>Home page</label>
 		</div>
 		<div class="input-field">
-			<input type="text" name="@{{selectedShop.postel}}" />
+			<input {{ $is_readonly }} type="text" name="@{{selectedShop.postel}}" />
 			<label>Postel</label>
 		</div>
 		<div class="input-field">
@@ -32,11 +37,11 @@
 			<label>Shop Owner</label>
 		</div>
 		<div class="input-field">
-			<input type="number" name="article_commission" class="validate" />
+			<input {{ $is_readonly }} type="number" name="article_commission" class="validate" />
 			<label>Commission on Article Sale (Kr)</label>
 		</div>
 		<div class="input-field">
-			<input type="number" name="salesspot_commission" class="validate">
+			<input {{ $is_readonly }} type="number" name="salesspot_commission" class="validate">
 			<label>Sales spot Rebuy Commission (Kr)</label>
 		</div>
 		<div class="input-field">

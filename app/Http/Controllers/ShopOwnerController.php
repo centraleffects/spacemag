@@ -51,7 +51,8 @@ class ShopOwnerController extends Controller
 
                 JavaScript::put([
                     'user' => $user,
-                    'selectedShop' => $shop
+                    'selectedShop' => $shop,
+                    'shops' => $shops
                 ]);
             }
 

@@ -9,13 +9,20 @@ function WorkerCtrl ($scope, workerServices, $http, $timeout, $rootScope){
 		email: ''
 	};
 
+	$scope.shops = [];
+
 	$scope.isDisabled = false;
 
 	$scope.init = function (){
-		$scope.workers = workerServices.workerList();
-		$timeout(function () {
+		// $scope.workers = workerServices.workerList();
+		$rootScope.updateList($scope, workerServices.workerList, "workers");
+		/*$timeout(function () {
            $rootScope.updateList($scope, workerServices.workerList, "workers");
-        },1500);
+        },1500);*/
+
+        $(function (){
+        	$scope.shops = window.shops;
+        });
 	};
 
 	$scope.viewWorker = function (index){

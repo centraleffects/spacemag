@@ -165,11 +165,12 @@ app.run(function($rootScope, $http, $timeout) {
  
 		customService().then(function(response){
 			$scope[resourceList] = response.data;
+			Materialize.updateTextFields();
 		});
 
-		$timeout(function () {
-			Materialize.updateTextFields();
-		},1000);
+		// $timeout(function () {
+		// 	Materialize.updateTextFields();
+		// },1000);
 	}
 });
 

@@ -25,6 +25,7 @@ class Helper {
 	}
 
 	public static function collapse_tasks($shop, $user){
+		if( $shop == null ) return []; 
 		$t1 = collect($shop->tasks)->toArray();
         $t2 = collect( $shop->todoTasks )->toArray();
 

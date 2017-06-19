@@ -8,7 +8,7 @@
 				@slot('search_name') workers @endslot
 			@endcomponent
 			<ul class="collection">
-				<li class="collection-item" ng-repeat="x in workers | filter:search" ng-click="viewWorker($index)">
+				<li class="collection-item" ng-if="workers.length" ng-repeat="x in workers | filter:search" ng-click="viewWorker($index)">
 					@include('layouts._partials.dragicon')
 					<span>
 						@{{ x.first_name+' '+x.last_name }}
@@ -17,7 +17,7 @@
 						<i class="fa fa-trash"></i>
 					</a>
 			    </li>
-			    <li ng-show="noClientAvailable">
+			    <li ng-if="!workers.length">
 				    <span>
 				    	<i class="fa fa-user-times"></i>
 				    	This shop doesn't have any worker at the moment.
@@ -68,9 +68,10 @@
 			<div class="card hoverable"><!-- Shop -->
 				<div class="card-content">
 					<div class="card-title">Shop Name</div>
-					<div class="row">
+					
+					<div class="row" ng-if="shops.length" ng-repeat="shop in shops">
 						<div class="col">
-							<p>1. Rebuy Shop</p>
+							<p>@{{$index+1}}. @{{ shop.name }}</p>
 						</div>
 						<div class="col">
 							<p>
@@ -78,8 +79,17 @@
 								<label for="status">Enable</label>
 							</p>
 						</div>
+						<div class="col">
+							<a class="more-info" href="javascript:void(0)" ng-click="">
+								<i class="material-icons">info_outline</i>
+							</a>
+						</div>
 					</div>
+					
+					<p ng-if="!shops.length">{{ __("messages.client_no_shop_yet") }}</p>
+					
 				</div>
+				<div class="card-action"></div>
 			</div><!-- End Shop -->
 
 			<div class="card hoverable" ng-show="addNew" id="add_new">
