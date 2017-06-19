@@ -129,22 +129,37 @@
 						</div>
 						<div class="file-field input-field">
 					      <div class="btn waves-effect waves-teal btn-flat">
-					        <span>Sample Picture</span>
-					        <input type="file" name="sample_picture">
+					        <span>BROWSE Sample Picture</span>
+					        <input type="file" name="sample_picture" id="sample_picture" value="{{ (!$selectedArticle->labels[0]->sample_picture) ?  '' : $selectedArticle->labels[0]->sample_picture }}">
 					      </div>
 					      <div class="file-path-wrapper">
 					        <input class="file-path validate" type="text">
+					        @if($selectedArticle->labels[0]->sample_picture)
+					        	<div id="img-wrap">{<img style="width: 100px;height: 100px;" src="/labels/{{ $selectedArticle->labels[0]->sample_picture }}"></div>
+					        @else
+					        	<div id="img-wrap"></div>
+					        @endif
 					      </div>
 					    </div>
 					    <div class="file-field input-field">
-					      <div class="btn waves-effect waves-teal btn-flat">
-					        <span>Label Design</span>
-					        <input type="file" name="label_design">
+					      <div class="btn waves-effect waves-teal btn-flat left">
+					        <span>BROWSE Label Design</span>
+					        <input type="file" name="label_design" id="label_design">
 					      </div>
 					      <div class="file-path-wrapper">
 					        <input class="file-path validate" type="text">
+					        @if($selectedArticle->labels[0]->filename)
+					        	<div id="img-wrap">{<img style="width: 100px;height: 100px;" src="/labels/{{ $selectedArticle->labels[0]->filename }}"></div>
+					        @else
+					        	<div id="img-wrap"></div>
+					        @endif
 					      </div>
+					      <div class="file-field  input-field">
+								<input type="number" name="label_quantity" value="" />
+								<label>Label Quantity</label>
+						   </div>
 					    </div>
+
 					</div>
 					<div class="row card-action">
 			          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->id) ? "Update" : "Add Article" }}</button>

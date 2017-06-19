@@ -35,4 +35,8 @@ class Salespot extends Model
     public function prices(){
         return $this->hasOne('App\SalespotPrice');
     }
+
+    public function article(){
+        return $this->belongsTo('App\Article');
+    }
 }

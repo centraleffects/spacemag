@@ -9,6 +9,12 @@ use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
+use Auth;
+
+use App\Salespot;
+use App\SalespotCategory;
+use App\SalespotCategoryType;
+
 class SalespotController extends Controller
 {
 
@@ -32,6 +38,20 @@ class SalespotController extends Controller
         $salespot->status = !empty($input['status']) ? $input['status']  : 'rebuilding';
 
         if($salespot->save()){
+
+            if(!empty($input['categories'])){
+
+                $categories = SalespotCategory::where('salespot_id', $salespot->id);
+                $categories->delete();
+                foreach($input['categories'] as $cat){
+                    $a = new SalespotCategory();
+                    $a->salespot_id = $salespot->id;
+                    $a->category_type_id = $cat;
+                    $a->user_id = auth()->guard('api')->user()->id;
+                    $a->save();
+                }
+            }
+
             return [ 'success'=> 1 ];
         }
          return [ 'success'=> 0 ];
@@ -58,6 +78,22 @@ class SalespotController extends Controller
         $salespot->status = !empty($input['status']) ? $input['status']  : 'rebuilding';
 
         if($salespot->save()){
+
+            if(!empty($input['categories'])){
+
+                $categories = SalespotCategory::where('salespot_id', $salespot->id);
+                $categories->delete();
+
+                foreach($input['categories'] as $cat){
+                    $a = new SalespotCategory();
+                    $a->salespot_id = $salespot->id;
+                    $a->category_type_id = $cat;
+                    $a->user_id = auth()->guard('api')->user()->id;
+                    $a->save();
+                }
+
+            }
+
             return [ 'success'=> 1 ];
         }
          return [ 'success'=> 0 ];
@@ -83,8 +119,8 @@ class SalespotController extends Controller
     }
 
     public function getlist(){
-        $list = Salespot::all();
-        return $list;
+        $list = Salespot::with('categories')->with('categories.type')->get();
+        return $list->toArray();
     }
 
     public function getAvailableSaleSpot(Shop $shop){
