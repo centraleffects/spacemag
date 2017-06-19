@@ -70,7 +70,10 @@ class ShopOwnerController extends Controller
 
             session()->put('selected_shop', $shop);
         }
+
         $shop = session()->get('selected_shop');
+
+        if( $shop == null or $shop == false ) die(__('errors.owner_doesnt_have_a_shop'));
 
         $sched = explode(",", $shop->cleanup_schedule);
         $shop->cleanup_schedule = $sched;

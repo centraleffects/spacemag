@@ -25,7 +25,7 @@ class Helper {
 	}
 
 	public static function collapse_tasks($shop, $user){
-		if( $shop == null ) return []; 
+		if( $shop == null ) return false; 
 		$t1 = collect($shop->tasks)->toArray();
         $t2 = collect( $shop->todoTasks )->toArray();
 
@@ -59,10 +59,12 @@ class Helper {
 				$shop = $user->shops()->with('todoTasks', 'todoTasks.owner', 'tasks', 'tasks.owner')->first();
 			}
 			
+			if( $shop == null or $shop == false ) return false;
+
 	        $all_tasks = self::collapse_tasks($shop, $user);
 
             // dd($all_tasks);
-            
+			            
             $shop->all_tasks = $all_tasks;
             unset($shop->tasks);
             unset($shop->todoTasks);
