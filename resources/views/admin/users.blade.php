@@ -1,20 +1,16 @@
 @component('admin.layouts.app')
-<div ng-controller="UserController">
+<div ng-controller="UserController as vm">
 	<div class="col s3">
 		<div  class="card hoverable" id="dashleft-sidebar">
 			<h5><i class="material-icons">face</i> List of Users</h5>
-			<ul class="collection" ng-repeat="(key, user) in users.data">
-
-					<li class="collection-item" ng-click="events.viewUser(key,user)">
-						<svg class="svgIcon itemRow-dragIcon" viewBox="0 0 32 32" title="drag handle"><path d="M 14 5.5 a 3 3 0 1 1 -3 -3 A 3 3 0 0 1 14 5.5 Z m 7 3 a 3 3 0 1 0 -3 -3 A 3 3 0 0 0 21 8.5 Z m -10 4 a 3 3 0 1 0 3 3 A 3 3 0 0 0 11 12.5 Z m 10 0 a 3 3 0 1 0 3 3 A 3 3 0 0 0 21 12.5 Z m -10 10 a 3 3 0 1 0 3 3 A 3 3 0 0 0 11 22.5 Z m 10 0 a 3 3 0 1 0 3 3 A 3 3 0 0 0 21 22.5 Z"></path></svg>
-						<span><a href="">@{{user.first_name+' '+user.last_name}}</a></span> 
-						<a href="#">
-							<i class="fa fa-pencil-square-o edit-icon right" aria-hidden="true"></i>
-						</a>
-					</li>
-
-				
-			</ul>
+			<div class="input-field">
+				<input type="text" name="search" placeholder="Search" ng-model="vm.userFilter"/>
+			</div>
+			<div class="collection">
+					<a class="collection-item" ng-repeat="(key, user) in users.data | filter : vm.userFilter" ng-click="events.viewUser(key,user)">
+						@{{user.first_name+' '+user.last_name}} <span class="badge">@{{user.role}}</span>
+					</a>	
+			</div>
 		</div>
 	</div>
 	<div class="col s12 m6 l6">

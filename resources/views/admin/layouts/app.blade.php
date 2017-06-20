@@ -21,7 +21,7 @@
                 @endif
                 <div class="toolbar row">
                     <div class="col s12">
-                            <nav>
+                            <!-- <nav>
                                 <div class="nav-wrapper">
                                   <ul id="nav-mobile" class="right hide-on-med-and-down">
                                      <li><a href="{{ url('admin/dashboard') }}" class="btn btn-flat waves-effect green  waves-light">Dashboard</a></li>
@@ -30,6 +30,31 @@
                                      <li><a href="{{ url('admin/shops') }}" class="btn btn-flat waves-effect  green waves-light">Shops</a></li>
                                      <li><a href="{{ url('admin/transactions') }}" class="btn btn-flat waves-effect  green waves-light">Transactions</a></li>
                                   </ul>
+                                </div>
+                            </nav> -->
+                             <nav>
+                                <div class="nav-wrapper nav-content">
+                                    <ul id="nav-mobile tabs tabs-transparent" class="right">
+                                        <?php 
+                                            $nav_menus = [
+                                                'admin/dashboard' => __("Dashboard"),
+                                                'admin/users' => __("List of All Users"),
+                                                'admin/categories' => __("List of Categories"),
+                                                'admin/shops' => __("List of Shops"),
+                                                'admin/transactions' => __("List of Transactions")
+        
+
+                                            ];
+                                        ?>
+
+                                        @foreach($nav_menus as $key => $value)
+                                        <li class="tab {!! \Request::path() == $key ? 'active' : '' !!}">
+                                            <a href="{{ url($key) }}">
+                                                {{ $value }}
+                                            </a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             </nav>
                     </div>

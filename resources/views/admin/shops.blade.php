@@ -75,10 +75,28 @@
 				</div>
 				<div class="card hoverable">
 					<div class="row card-content">
-						<span class="card-title">Shop Owner - <span ng-bind="selectedShop.owner.email"></span></span>
+						<span class="card-title">List of Shop Owners</span>
+						<table class="bordered highlight">
+							<tr>
+								<td>@{{selectedShop.owner.email}}</td>
+								<td>
+									<a href="javascript:;" ng-click="events.loginAsOwner()">
+									Login as Owner
+									</a>
+								</td>
+							</tr>
+						</table>
+						<!-- <button class="btn waves-effect waves-light blue" ng-click="events.loginAsOwner()">
+								Click Here
+							</button> -->
+					</div>
+				</div>
+				<div class="card hoverable">
+					<div class="row card-content">
+						<span class="card-title">Add New Shop Owner</span>
 						<div class="input-field">
 							<input type="hidden" ng-model="selectedShop.owner.email" class="hide">
-							<input type="email" name="owner.email" id="owner_email" ng-model="selectedShop.owner.email">
+							<input type="email" name="owner.email" id="owner_email" ng-model="selectedShop.owner.email" placeholder="Enter email">
 						</div>
 						<div id="listofowners-autocomplete" ng-show="owners.length">
 							<div class="collection">
@@ -90,7 +108,7 @@
 								</a>
 							</div>
 						</div>
-						<p ng-show="(owners | filter : selectedShop.owner.email).length == 0" class="red-text">User doesn't exist. <span class="green-text"><a href="javascript:;;"><b>@{{selectedShop.owner.email}}</b> will be created and will receive an email invitation.</a></span></p>
+						<p ng-show="(owners | filter : selectedShop.owner.email).length == 0" class="red-text">User doesn't exist. <span class="green-text"><a href="javascript:;;">Account for <b>@{{selectedShop.owner.email}}</b> will be created and will receive an email invitation when you save the changes</a></span></p>
 					</div>
 					<div class="card-action">
 						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()" ng-disabled="isUpdatingOwner">
@@ -100,14 +118,14 @@
 				</div>
 			</div>
 			<div class="col s3">
-					<div class="card hoverable">
+					<!-- <div class="card hoverable">
 						<div class="row card-content">
 							<span class="card-title">Login as Owner</span>
 							<button class="btn waves-effect waves-light blue" ng-click="events.loginAsOwner()">
 									Click Here
 								</button>
 						</div>
-					</div>	
+					</div>	 -->
 
 					<div class="card hoverable">
 						<div class="row card-content">
