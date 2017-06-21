@@ -73,7 +73,7 @@
 
 						<div class="input-field tags">
 							<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
-								@if(isset($selected_article_tags) && !empty($selected_article_tags))
+								@if(!empty($selected_article_tags))
 									@foreach( $selected_article_tags as $tag)
 										<option value="{{ $tag['id'] }}" selected="selected"> {{ $tag['name'] }} </option>
 									@endforeach
