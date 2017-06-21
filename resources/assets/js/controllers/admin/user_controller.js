@@ -1,6 +1,10 @@
 
 rebuyApp.controller('UserController', function($scope, userService, $timeout, $templateCache, $http) {
 
+    var vm = this;
+
+    vm.userFilter = null;
+    
     $scope.users = {};
     $scope.selectedUser = {};
     $scope.selectedUserKey = null;
