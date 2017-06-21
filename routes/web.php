@@ -57,32 +57,34 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 
 	Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
-	Route::get('/articles',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
-	Route::get('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
+	Route::get('/clients',['uses' =>'ClientController@indexOwner']);
+	Route::get('/clients/{id}',['uses' =>'ClientController@indexOwner']);
+	Route::get('/clients/new',['uses' =>'ClientController@indexOwner']);
+
+	Route::post('/clients/{id}',['uses' =>'ClientController@indexOwner']);
+
+	Route::get('/coupons/new',['uses' =>'ShopCouponController@indexOwner']);
+	Route::get('/coupons',['uses' =>'ShopCouponController@indexOwner']);
+	Route::post('/coupons',['uses' =>'ShopCouponController@indexOwner']);
+	Route::get('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner']);
+
+	Route::post('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner']);
+
+
+	Route::get('/coupons/delete/{id}',['uses' =>'ShopCouponController@destroy']);
+
+});
+
+Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
+	Route::group(['prefix' => 'articles'], function (){
+		Route::get('/',['uses' =>'ArticleController@indexOwner']);
+		Route::get('{id}',['uses' =>'ArticleController@indexOwner']);
+		Route::get('new',['uses' =>'ArticleController@indexOwner']);
+	});
 
 	Route::get('/tags/query', 'TagController@query');
 
-	Route::post('/articles',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
-	Route::post('/articles/{id}',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
-
-	Route::get('/articles/new',['uses' =>'ArticleController@indexOwner'])->middleware(['owner']);
-
-	Route::get('/clients',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
-	Route::get('/clients/{id}',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
-	Route::get('/clients/new',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
-
-	Route::post('/clients/{id}',['uses' =>'ClientController@indexOwner'])->middleware(['owner']);
-
-	Route::get('/coupons/new',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
-	Route::get('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
-	Route::post('/coupons',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
-	Route::get('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
-
-	Route::post('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner'])->middleware(['owner']);
-
-
-	Route::get('/coupons/delete/{id}',['uses' =>'ShopCouponController@destroy'])->middleware(['owner']);
-
+	
 });
 
 Route::group(['middleware' => 'web'], function (){

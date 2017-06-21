@@ -86,7 +86,7 @@ class ShopOwnerController extends Controller
     public function articles(){
         $articles = auth()->user()->articles()->get();
         // $tags = 
-
+        dd($articles);
         JavaScript::put([
             'articles' => $articles
         ]);

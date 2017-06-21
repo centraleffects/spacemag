@@ -1,16 +1,15 @@
 @component('mail::message')
-# Your password has been changed.
+# {{ __("emails.password_changed") }}
 
-Hi {{ ucfirst($user->first_name) }},
+{{__("emails.hi")}} {{ ucfirst($user->first_name) }},
 
-This is just to inform you that your password has been changed recently.
-You will now login using this new password:
+{{ __("emails.password_change_body_message") }}
 - {{ $password }}
 
 @component('mail::button', ['url' => url('/login'), 'color' => 'green'])
-Click here to login
+{{ __('emails.click_login') }}
 @endcomponent
 
-Thanks,<br>
+{{ __('messages.thanks') }},<br>
 {{ config('app.name') }}
 @endcomponent
