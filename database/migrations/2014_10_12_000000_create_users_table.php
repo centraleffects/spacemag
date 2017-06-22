@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
                 $table->string('gender')->nullable();
                 $table->string('role')->default('customer');
 
+                $table->boolean('confirmed')->default(0);
                 $table->string('confirmation_code')->nullable();
                 $table->integer('newsletter_subscription')->default(0);
                 $table->string('last_online')->nullable();

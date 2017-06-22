@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use Mail;
+use App\Mail\Welcome;
+
 class RegisterController extends Controller
 {
     /*
@@ -63,13 +66,42 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'api_token' => str_random(60),
-            'role' => 'customer'
-        ]);
+        // $res =  User::create([
+        //     'first_name' => $data['first_name'],
+        //     'last_name' => $data['last_name'],
+        //     'email' => $data['email'],
+        //     'password' => bcrypt($data['password']),
+        //     'api_token' => str_random(60),
+        //     'role' => 'customer'
+        // ]);
+
+        $user = new User;
+        $user->first_name = $data['first_name'];
+        $user->last_name = $data['last_name'];
+        $user->email = $data['email'];
+        $user->password = bcrypt($data['password']);
+        $user->api_token = str_random(60);
+        $user->confirmation_code = str_random(60);
+        $user->role = 'customer';
+
+        if( $user->save() ){
+            // send email
+            $this->sendWelcomeMail($user);
+        }
+
+        return $user;
+    }
+
+
+    protected function sendWelcomeMail($user){
+        $mail = new Welcome($user);
+
+        try {
+            Mail::to($user->email)->send($mail);
+
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }

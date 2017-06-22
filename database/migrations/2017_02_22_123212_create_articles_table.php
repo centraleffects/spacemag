@@ -27,6 +27,7 @@ class CreateArticlesTable extends Migration
             $table->boolean('sold_in_pieces')->default(0);
             $table->string('unit')->nullable();
             $table->string('type')->nullable();
+            $table->string('sample_picture')->nullable();
 
             $table->string('color')->nullable();
             

@@ -130,11 +130,11 @@
 						<div class="file-field input-field">
 					      <div class="btn waves-effect waves-teal btn-flat">
 					        <span>BROWSE Sample Picture</span>
-					        <input type="file" name="sample_picture" id="sample_picture" value="{{ (!$selectedArticle->labels[0]->sample_picture) ?  '' : $selectedArticle->labels[0]->sample_picture }}">
+					        <input type="file" name="sample_picture" id="sample_picture" value="{{ !isset($selectedArticle->labels[0]) ?  '' : $selectedArticle->labels[0]->sample_picture }}">
 					      </div>
 					      <div class="file-path-wrapper">
 					        <input class="file-path validate" type="text">
-					        @if($selectedArticle->labels[0]->sample_picture)
+					        @if(isset($selectedArticle->labels[0]) && $selectedArticle->labels[0]->sample_picture)
 					        	<div id="img-wrap">{<img style="width: 100px;height: 100px;" src="/labels/{{ $selectedArticle->labels[0]->sample_picture }}"></div>
 					        @else
 					        	<div id="img-wrap"></div>
@@ -148,7 +148,7 @@
 					      </div>
 					      <div class="file-path-wrapper">
 					        <input class="file-path validate" type="text">
-					        @if($selectedArticle->labels[0]->filename)
+					        @if(isset($selectedArticle->labels[0]) && $selectedArticle->labels[0]->filename)
 					        	<div id="img-wrap">{<img style="width: 100px;height: 100px;" src="/labels/{{ $selectedArticle->labels[0]->filename }}"></div>
 					        @else
 					        	<div id="img-wrap"></div>
@@ -169,6 +169,7 @@
 		</div>
 	@endslot
 	@slot('right')
+		@if( isset($shop) )
 		<div class="row">
 			<div class="card hoverable"><!-- Shop Information -->
 				<div class="card-content">
@@ -270,6 +271,13 @@
 	         </div>
 
 		</div>
+		@else
+		<div class="card">
+			<div class="card-content">
+				<a class="lead" href="{{url('my-shops')}}">{{ __("messages.client_no_shop_yet") }}</a>
+			</div>
+		</div>
+		@endif
 	@endslot
 </div>
 @endcomponent

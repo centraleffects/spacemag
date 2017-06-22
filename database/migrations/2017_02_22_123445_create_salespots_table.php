@@ -21,6 +21,9 @@ class CreateSalespotsTable extends Migration
             $table->integer('shop_id')->unsigned()->index();
             $table->foreign('shop_id')->references('id')->on('shops');
 
+            $table->integer('article_id')->unsigned()->index();
+            $table->foreign('article_id')->references('id')->on('articles');
+
             $table->string('spot_code')->nullable();
             $table->string('spot_location')->nullable();
 
