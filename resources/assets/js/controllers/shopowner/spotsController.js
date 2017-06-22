@@ -173,11 +173,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             }, 1500);
         },
 
-        doDrag : function($this){
-            console.log($this);
-            angular.element('.panzoom').panzoom({ disableZoom : true });
-        },
-
         cancelSelectedSpotIfNew : function(){
 
             if($scope.selectedSpot.isNew){
@@ -208,10 +203,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.bindEvents = function(){
         (function($) {
 
-            var $section = $('#mapsection').first(),
-            $panzoom = $section.find('.panzoom');
-            $panzoom.panzoom();
-
             angular.element('#spot-panzoom').dblclick(function(e) {
 
                 var parentOffset = $(this).offset(); 
@@ -225,21 +216,11 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             angular.element('body')
             .on('mouseover click', '.shopspot', function(e){
                 var $this = angular.element(this);
-                $panzoom.panzoom("disable");
                 $(this).css('cursor','pointer');
                 $(this).resizable();
                 $(this).draggable();
             })
-            .on('mousedown', '.panzoom', function(e){
-                $timeout(function () {
-                    $panzoom.panzoom("enable");
-                    $('.shopspot').draggable();
-                },500);
-            })
             .on('mouseout', '.shopspot', function(e){
-
-            })
-            .on('click', '.panzoom', function(e){
 
             })
             .on('change', 'select', function(){
@@ -251,7 +232,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             angular.element('input[name="name"]').keyup(function(){
                 angular.element('.tooltipped').tooltip({delay: 50, html : true});
             });
-
 
         })(jQuery);
     }

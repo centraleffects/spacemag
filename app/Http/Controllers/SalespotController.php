@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Salespot;
-use App\Shop;
-use App\Helpers\Helper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 use Auth;
 
+use App\Helpers\Helper;
+
+use App\Shop;
 use App\Salespot;
 use App\SalespotCategory;
 use App\SalespotCategoryType;

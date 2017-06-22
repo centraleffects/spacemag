@@ -31,8 +31,8 @@
 		<div class="map-area-container" id="mapsection">
 			<div class="scrollspy panzoom-parent map-area white" id="floorplan-container">
 				<div class="panzoom" id="spot-panzoom" 
-						style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" 
-						width="2426" height="1121" data-width="2426" data-height="1121"/>
+						style="background: url(/floorplan/spots/test_12345.jpg);width: 400px; height: 400px;" 
+						width="400" height="400" data-width="400" data-height="400"/>
 					<div ng-repeat="(key, spot) in spots.data" 
 								class="shopspot tooltipped draggable" 
 								id="@{{'spt'+ spot.id}}" 
