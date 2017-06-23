@@ -220,4 +220,20 @@ class UserController extends Controller
     public function shops(User $user){
         return $user->ownedShops()->get();
     }
+
+    public function verifyEmail($confirmation_code){
+        $user = User::where('confirmation_code', $confirmation_code)->first();
+        if( isset($user->id) ){
+            $user->is_email_confirmed = 1;
+            $user->save();
+
+            return redirect('/')->withFlash_message([
+                'type' => 'success',
+                'msg' => __('messages.email_verified', ['new_meail' => $verify->email]),
+                'important' => true
+            ]);
+        }
+
+        return redirect('/');
+    }
 }

@@ -66,14 +66,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // $res =  User::create([
-        //     'first_name' => $data['first_name'],
-        //     'last_name' => $data['last_name'],
-        //     'email' => $data['email'],
-        //     'password' => bcrypt($data['password']),
-        //     'api_token' => str_random(60),
-        //     'role' => 'customer'
-        // ]);
 
         $user = new User;
         $user->first_name = $data['first_name'];

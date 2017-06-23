@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
                 $table->string('gender')->nullable();
                 $table->string('role')->default('customer');
 
-                $table->boolean('confirmed')->default(0);
                 $table->string('confirmation_code')->nullable();
                 $table->integer('newsletter_subscription')->default(0);
                 $table->string('last_online')->nullable();
@@ -43,7 +42,7 @@ class CreateUsersTable extends Migration
                 $table->string('country')->nullable();
 
                 $table->smallInteger('signed_agreement')->default(0);
-                $table->smallInteger('is_email_confirmed')->default(0);
+                $table->boolean('is_email_confirmed')->default(0);
 
                 $table->string('lang')->default('sv'); // defaults to Swedish
                 $table->string('api_token', 60)->unique();
