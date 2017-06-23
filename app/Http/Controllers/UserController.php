@@ -150,8 +150,8 @@ class UserController extends Controller
 
             return redirect()->back()->withFlash_message([
                 'type' => 'success',
-                'msg' => __('messages.email_changed_confirmed', ['new_meail' => $verify->email]),
-                'important' => true
+                'msg' => __('messages.email_changed_confirmed', ['new_email' => $verify->email]),
+                'is_important' => true
             ]);
         } catch (\Exception $e) {
             
@@ -229,8 +229,8 @@ class UserController extends Controller
 
             return redirect('/')->withFlash_message([
                 'type' => 'success',
-                'msg' => __('messages.email_verified', ['new_meail' => $verify->email]),
-                'important' => true
+                'msg' => __('messages.email_verified'),
+                'is_important' => true
             ]);
         }
 
