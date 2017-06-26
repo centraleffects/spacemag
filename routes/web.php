@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/users', 'AdminController@users'); 
     Route::get('/shops', 'AdminController@shops'); 
     Route::get('/shops/{id?}', 'AdminController@spots'); 
-    Route::get('/categories', 'AdminController@categories'); 
+   
     Route::get('/transactions', 'AdminController@transactions'); 
 
     Route::get('/users/{id?}',['uses' =>'AdminController@users']);
@@ -40,10 +40,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     
     Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
-    Route::get('/categories/delete/{category}', ['uses' =>'AdminController@categories']); 
-    Route::get('/categories/{id}', ['uses' =>'AdminController@categories']); 
-
-    Route::post('/categories/new', ['uses' =>'AdminController@categories']); 
+    Route::group(['prefix' => 'categories'], function (){
+    	Route::get('/', 'AdminController@categories'); 
+	    Route::get('delete/{category}', ['uses' =>'AdminController@categories']); 
+	    Route::get('{id}', ['uses' =>'AdminController@categories']); 
+	    Route::post('new', ['uses' =>'AdminController@categories']); 
+    });
     
 });
 
@@ -57,46 +59,44 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 
 	Route::get('/me',['uses' =>'AdminController@loggedProfile']);
 
-	Route::get('/clients',['uses' =>'ClientController@indexOwner']);
-	Route::get('/clients/{id}',['uses' =>'ClientController@indexOwner']);
-	Route::get('/clients/new',['uses' =>'ClientController@indexOwner']);
-
-	Route::post('/clients/{id}',['uses' =>'ClientController@indexOwner']);
-
-	Route::get('/coupons/new',['uses' =>'ShopCouponController@indexOwner']);
-	Route::get('/coupons',['uses' =>'ShopCouponController@indexOwner']);
-	Route::post('/coupons',['uses' =>'ShopCouponController@indexOwner']);
-	Route::get('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner']);
-
-	Route::post('/coupons/{id}',['uses' =>'ShopCouponController@indexOwner']);
-
-
-	Route::get('/coupons/delete/{id}',['uses' =>'ShopCouponController@destroy']);
-
-});
-
-Route::group(['prefix' => 'shop', 'middleware' => 'web' ], function (){
-	Route::group(['prefix' => 'articles'], function (){
-		Route::get('/',['uses' =>'ArticleController@indexOwner']);
-		Route::get('{id}',['uses' =>'ArticleController@indexOwner']);
-		Route::get('new',['uses' =>'ArticleController@indexOwner']);
+	Route::group(['prefix' => 'clients'], function (){
+		Route::get('/',['uses' =>'ClientController@indexOwner']);
+		Route::get('{id}',['uses' =>'ClientController@indexOwner']);
+		Route::get('new',['uses' =>'ClientController@indexOwner']);
 	});
 
-	Route::get('/tags/query', 'TagController@query');
+	Route::group(['prefix' => 'coupons'], function (){
+		Route::get('new',['uses' =>'ShopCouponController@indexOwner']);
+		Route::get('/',['uses' =>'ShopCouponController@indexOwner']);
+		Route::get('{id}',['uses' =>'ShopCouponController@indexOwner']);
+		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
+	});
 
-	
 });
+
 
 Route::group(['middleware' => 'web'], function (){
 	Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
-	Route::get('shop/login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
-	Route::get('shop/login-back', 'ShopOwnerController@loginBack');
-	Route::get('shop/set/{shop}', 'ShopOwnerController@setShopSession');
-	Route::get('shop/spots', 'ShopOwnerController@spots');
-	Route::get('shop/spots/{id}', 'ShopOwnerController@spots');
+
+	Route::group(['prefix' => 'shop'], function (){
+		Route::get('login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
+		Route::get('login-back', 'ShopOwnerController@loginBack');
+		Route::get('set/{shop}', 'ShopOwnerController@setShopSession');
+		Route::get('spots', 'ShopOwnerController@spots');
+		Route::get('spots/{id}', 'ShopOwnerController@spots');
+
+		Route::get('/tags/query', 'TagController@query');
+
+		Route::group(['prefix' => 'articles'], function (){
+			Route::get('/',['uses' =>'ArticleController@indexOwner']);
+			Route::get('{id}',['uses' =>'ArticleController@indexOwner']);
+			Route::get('new',['uses' =>'ArticleController@indexOwner']);
+		});
+	});
 
 	Route::get('account', 'UserController@edit');
 	Route::get('email/change', 'UserController@changeEmail');
+	Route::get('users/activation/{confirmation_code}', 'UserController@verifyEmail');
 });
 
 

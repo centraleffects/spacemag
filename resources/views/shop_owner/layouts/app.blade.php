@@ -71,6 +71,15 @@
                                                 $nav_menus['shop/workers/todo'] = __("Workers Todo");
                                             }
                                         ?>
+                                    @elseif( auth()->user()->isCustomer() or auth()->user()->isClient() )
+                                        <?php 
+                                            $nav_menus = ['overview' => __("Overview"),
+                                                'my-shops' => __("My Shops"),
+                                                'bookings' => __("My Bookings"),
+                                                'shop/articles' => __("Articles"),
+                                                'shop/coupons' => __("Coupons")
+                                            ];
+                                        ?>
                                     @else
                                         <?php $nav_menus = ['shop' => __("Shops")]; ?>                                  
                                     @endif
