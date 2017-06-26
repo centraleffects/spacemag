@@ -7,7 +7,7 @@
 				<div class="nav-wrapper">
 			      <form>
 			        <div class="input-field">
-			          <input id="search" type="search" required>
+			          <input id="search" type="search" required ng-model="vm.spotquery">
 			          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
 			          <i class="material-icons">close</i>
 			        </div>
@@ -18,7 +18,7 @@
 					<a href="javascript:;" 
 							class="collection-item" 
 							id="@{{'sh'+ spot.id}}" 
-							ng-repeat="(key, spot) in spots.data" 
+							ng-repeat="(key, spot) in spots.data | toArray | filter : vm.spotquery" 
 							ng-click="events.viewSpot(this)"
 							>@{{spot.name}} 
 					</a>
@@ -33,34 +33,89 @@
 				<div class="panzoom" id="spot-panzoom" 
 						style="background: url(/floorplan/spots/test_12345.jpg);width: 400px; height: 400px;" 
 						width="400" height="400" data-width="400" data-height="400"/>
-					<div ng-repeat="(key, spot) in spots.data" 
-								class="shopspot tooltipped draggable" 
+					<div ng-repeat="(key, spot) in spots.data | toArray | filter : vm.FilterSpotDisplay" 
+								class="shopspot tooltipped draggable @{{vm.spotTypeColors[spot.type]}}" 
 								id="@{{'spt'+ spot.id}}" 
 								data-position="bottom" data-delay="50" 
-								ng-show="spot.x_coordinate && spot.y_coordinate"
-								ng-click="events.viewSpot(key,spot);"
+								ng-show="spot.spot_x && spot.spot_y"
+								ng-click="events.viewSpot(this);"
 								data-tooltip="@{{spot.name}}"
-								style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
+								style="@{{ 'margin-left:' + spot.spot_x + 'px; margin-top:' + spot.spot_y + 'px'}}">
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="card hoverable">
+			<div class="row card-content">
+				<span class="card-title">Select Spot Types</span>
+				<table>
+					<tr>
+						<td><div class="spot-index pink"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='hanger'">Hanger</a></td>
+						<td><div class="spot-index orange"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='shelves'">Shelves</a></td>
+						<td><div class="spot-index yellow"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='standard'">Standard</a></td>
+						<td><div class="spot-index blue"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='wall'">Wall Section</a></td>
+						<td><div class="spot-index"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay =''">All</a></td>
+					</tr>
+
+				</table>
+			</div>
+		</div>
 		<div class="card hoverable"  ng-show="selectedSpot.name">
+			<div class="row card-content">
+					<div class="input-field col s12">
+						<span class="card-title">Prices</span>
+						
+						<div class="input-field">
+							<input type="text" name="daily" ng-model="selectedSpot.prices.daily">
+							<label>Daily</label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="weekly1" ng-model="selectedSpot.prices.week1">
+							<label>1 Week</label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="weekly2" ng-model="selectedSpot.prices.week2">
+							<label>2 Weeks</label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="weekly3" ng-model="selectedSpot.prices.week3">
+							<label>3 Weeks</label>
+						</div>
+
+						<div class="input-field">
+							<input type="text" name="weekly4" ng-model="selectedSpot.prices.week4">
+							<label>4 Weeks</label>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- 	<div class="card hoverable"  ng-show="selectedSpot.name">
 			<div class="row card-content">
 				<div class="input-field col s12">
 					<span class="card-title">Apply Categories for this Spot</span>
-					<p ng-repeat="(key, category) in categories.data">
-				      <input type="checkbox" 
-				      				id="@{{'cat'+ category.id}}"
-									ng-value="category.id"
-									ng-model="selectedSpot.categories"
-									ng-checked="vm.checkSelectedSpotCategory(category.id)"/>
-				      <label for="@{{'cat'+ category.id}}" ng-bind="category.name"></label>
-				    </p>
+					<div id="categoriess" class="fNULLorm-control" ng-model="selectedSpot.selectedCategories" 
+							data-placeholder="Type a category" data-allow-clear="true">
+				      <a
+				      			ng-repeat="(key, category) in categories.data"
+				      			id="@{{'cat'+ category.id}}"
+								value="@{{category.id}}">@{{category.name}}</a>
+				    </div>
+					<select id="categories" class="form-control" ng-model="selectedSpot.selectedCategories" 
+							data-placeholder="Type a category" multiple="true" data-allow-clear="true">
+				      <option
+				      			ng-repeat="(key, category) in categories.data"
+				      			id="@{{'cat'+ category.id}}"
+								value="@{{category.id}}">@{{category.name}}</option>
+				    </select>
 				</div>
 			</div>
-		</div>	
-	</div>
+		</div>	 
+	</div>-->
 	<div class="col s3">
 		<div class="card hoverable shopinfo"  ng-show="selectedSpot.name">
 			<div class="row card-content">
@@ -102,11 +157,19 @@
 				</div>
 
 				<div class="input-field">
+					<select name="status"   id="status" ng-model="selectedSpot.type" 
+							ng-options="status.value as status.text for status in spotTypeOptions">
+					</select>
+					<label>Type</label>
+				</div>
+
+				<div class="input-field">
 					<select name="status"   id="status" ng-model="selectedSpot.status" 
 							ng-options="status.value as status.text for status in spotStatusOptions">
 					</select>
 					<label>Status</label>
 				</div>
+
 
 			</div>
 			<div class="card-action row">
