@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Salespot;
-use App\Shop;
-use App\Helpers\Helper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
 use Auth;
 
+use App\Helpers\Helper;
+
+use App\Shop;
 use App\Salespot;
 use App\SalespotCategory;
 use App\SalespotCategoryType;
+use App\SalespotPrice;
 
 class SalespotController extends Controller
 {
@@ -31,25 +32,45 @@ class SalespotController extends Controller
         $salespot->shop_id = $input['shop']['id'];
         $salespot->spot_code = !empty($input['spot_code']) ? $input['spot_code'] : '';
         $salespot->spot_location = !empty($input['x_coordinate']) ? $input['x_coordinate'].','.$input['y_coordinate']  : '';
+        $salespot->spot_x = !empty($input['y_coordinate']) ? $input['y_coordinate']  : '';
+        $salespot->spot_y = !empty($input['x_coordinate']) ? $input['x_coordinate']  : '';
         $salespot->name = !empty($input['name']) ? $input['name']  : '';
         $salespot->description = !empty($input['description']) ? $input['description']  : '';
         $salespot->aisle = !empty($input['aisle']) ? $input['aisle']  : '';
         $salespot->size = !empty($input['size']) ? $input['size']  : '';
         $salespot->status = !empty($input['status']) ? $input['status']  : 'rebuilding';
+        $salespot->type = !empty($input['type']) ? $input['type']  : null;
 
         if($salespot->save()){
 
-            if(!empty($input['categories'])){
+
+            if(!empty($input['selectedCategories'])){
 
                 $categories = SalespotCategory::where('salespot_id', $salespot->id);
                 $categories->delete();
-                foreach($input['categories'] as $cat){
+                foreach($input['selectedCategories'] as $cat){
                     $a = new SalespotCategory();
                     $a->salespot_id = $salespot->id;
                     $a->category_type_id = $cat;
                     $a->user_id = auth()->guard('api')->user()->id;
                     $a->save();
                 }
+            }
+
+            if(!empty($input['prices'])){
+                $price = SalespotPrice::where('salespot_id', $salespot->id);
+                if($price){
+                    $price->delete();
+                }
+
+                $p = new SalespotPrice();
+                $p->salespot_id = $salespot->id;
+                $p->daily = $input['prices']['daily'];
+                $p->week1 = $input['prices']['week1'];
+                $p->week2 = $input['prices']['week2'];
+                $p->week3 = $input['prices']['week3'];
+                $p->week4 = $input['prices']['week4'];
+                $p->save();
             }
 
             return [ 'success'=> 1 ];
@@ -70,21 +91,26 @@ class SalespotController extends Controller
         $salespot = Salespot::where('id', $input['id'])->first();
         $salespot->shop_id = $input['shop']['id'];
         $salespot->spot_code = !empty($input['spot_code']) ? $input['spot_code'] : '';
-        $salespot->spot_location = !empty($input['x_coordinate']) ? $input['x_coordinate'].','.$input['y_coordinate']  : '';
+        $salespot->spot_location = !empty($input['spot_x']) ? $input['spot_x'].','.$input['spot_y']  : '';
+        $salespot->spot_y = !empty($input['spot_y']) ? $input['spot_y']  : '';
+        $salespot->spot_x = !empty($input['spot_x']) ? $input['spot_x']  : '';
         $salespot->name = !empty($input['name']) ? $input['name']  : '';
         $salespot->description = !empty($input['description']) ? $input['description']  : '';
         $salespot->aisle = !empty($input['aisle']) ? $input['aisle']  : '';
         $salespot->size = !empty($input['size']) ? $input['size']  : '';
+        $salespot->type = !empty($input['type']) ? $input['type']  : null;
         $salespot->status = !empty($input['status']) ? $input['status']  : 'rebuilding';
 
         if($salespot->save()){
 
-            if(!empty($input['categories'])){
+            if(!empty($input['selectedCategories'])){
 
                 $categories = SalespotCategory::where('salespot_id', $salespot->id);
-                $categories->delete();
-
-                foreach($input['categories'] as $cat){
+                if($categories){
+                    $categories->delete();
+                }
+                
+                foreach($input['selectedCategories'] as $cat){
                     $a = new SalespotCategory();
                     $a->salespot_id = $salespot->id;
                     $a->category_type_id = $cat;
@@ -92,6 +118,22 @@ class SalespotController extends Controller
                     $a->save();
                 }
 
+            }
+
+            if(!empty($input['prices'])){
+                $price = SalespotPrice::where('salespot_id', $salespot->id);
+                if($price){
+                    $price->delete();
+                }
+
+                $p = new SalespotPrice();
+                $p->salespot_id = $salespot->id;
+                $p->daily = $input['prices']['daily'];
+                $p->week1 = $input['prices']['week1'];
+                $p->week2 = $input['prices']['week2'];
+                $p->week3 = $input['prices']['week3'];
+                $p->week4 = $input['prices']['week4'];
+                $p->save();
             }
 
             return [ 'success'=> 1 ];
@@ -119,7 +161,7 @@ class SalespotController extends Controller
     }
 
     public function getlist(){
-        $list = Salespot::with('categories')->with('categories.type')->get();
+        $list = Salespot::with('categories','prices')->with('categories.type')->get();
         return $list->toArray();
     }
 

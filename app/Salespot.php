@@ -33,7 +33,7 @@ class Salespot extends Model
     }
 
     public function prices(){
-        return $this->hasOne('App\SalespotPrice');
+        return $this->hasOne('App\SalespotPrice')->where('salespot_prices.deleted_at', '=', null);
     }
 
     public function article(){

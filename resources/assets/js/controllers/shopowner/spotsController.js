@@ -7,8 +7,8 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'se','text' : 'Swedish'}];
     $scope.owners = [];
     $scope.categories = [];
-    $scope.spotStatusOptions = [{'value': 'rebuilding','text' : 'Rebuilding'},{'value': 'painting','text' : 'Painting'},{'value': 'on repair','text' : 'On Repair'}];;
-
+    $scope.spotStatusOptions = [{'value': 'rebuilding','text' : 'Rebuilding'},{'value': 'painting','text' : 'Painting'},{'value': 'on repair','text' : 'On Repair'}];
+    $scope.spotTypeOptions = [{'value': 'hanger','text' : 'Hanger'},{'value': 'shelves','text' : 'Shelves'},{'value': 'standard','text' : 'Standard'}, {'value': 'wall section','text' : 'Wall Section'}];
     $scope.spots = {};
     $scope.spots.data = {};
     $scope.selectedSpot = {};
@@ -18,15 +18,14 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
 
     var vm = this;
 
-
-
-    $scope.init = function() {
-        $timeout(function () {
-            vm.updateList();
-        },1000);
+    vm.spotquery = null;
+    vm.FilterSpotDisplay = null;
+    vm.spotTypeColors = {
+        'hanger' : 'pink',
+        'shelves' : 'orange',
+        'standard' : 'yellow',
+        'wall section' : 'blue'
     }
-    
-
     vm.updateList = function(){
 
         spotService.categoryList().then(function(categoryList){
@@ -37,7 +36,7 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             $scope.spots.data = spotList;
             $timeout(function () {
                 vm.materializeInit();
-                console.log($scope.spots);
+                console.log($scope.spots.data);
             },1000);
         });
     }
@@ -47,16 +46,10 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
         angular.element('select').material_select();
     }
 
-    vm.checkSelectedSpotCategory = function(cat_id){
-
-        for (var k in $scope.selectedSpot.categories){
-            if (typeof $scope.selectedSpot.categories[k] !== 'function') {
-                if($scope.selectedSpot.categories[k].category_type_id == cat_id){
-                    return true;
-                }
-            }
-        }
-        return false;
+    $scope.init = function() {
+        $timeout(function () {
+            vm.updateList();
+        },1000);
     }
 
     $scope.events = {
@@ -123,10 +116,10 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
 
             if($scope.changeSpotLocation){
                  $scope.selectedSpot.spot_location = x + ',' + y;
-                 $scope.selectedSpot.x_coordinate = x;
-                 $scope.selectedSpot.y_coordinate = y;
-                 $scope.spots.data[$scope.selectedSpotKey].x_coordinate = x;
-                 $scope.spots.data[$scope.selectedSpotKey].y_coordinate = y;
+                 $scope.selectedSpot.spot_x = x;
+                 $scope.selectedSpot.spot_y = y;
+                 $scope.spots.data[$scope.selectedSpotKey].spot_x = x;
+                 $scope.spots.data[$scope.selectedSpotKey].spot_y = y;
                  $scope.changeSpotLocation = false;
                  $scope.events.locationUpdated();
                  vm.materializeInit();
@@ -136,9 +129,11 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
                  return false;
             }
 
-            $scope.spots.data[key] = { name : 'New Spot', id : id, 'x_coordinate' : x, 'y_coordinate' : y, isNew : true, };
+            $scope.spots.data[key] = { name : 'New Spot', id : id, 'spot_x' : x, 'spot_y' : y, isNew : true, };
             if(x && y){
                 $scope.spots.data[key].spot_location =  x + ',' + y;
+                $scope.spots.data[key].spot_x = x;
+                $scope.spots.data[key].spot_y = y;
             }
             $scope.selectedSpot = $scope.spots.data[key];
             $scope.selectedSpotKey = key;
@@ -164,18 +159,10 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             vm.materializeInit();
             $timeout(function () {
                 vm.materializeInit();
-                angular.element('.shopspot').removeClass('green');
-                angular.element('#spt'+$scope.selectedSpot.id).addClass('green');
+               /* angular.element('.shopspot').removeClass('green');
+                angular.element('#spt'+$scope.selectedSpot.id).addClass('green');*/
             },600);
 
-            $timeout(function () {
-                vm.materializeInit();
-            }, 1500);
-        },
-
-        doDrag : function($this){
-            console.log($this);
-            angular.element('.panzoom').panzoom({ disableZoom : true });
         },
 
         cancelSelectedSpotIfNew : function(){
@@ -208,10 +195,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.bindEvents = function(){
         (function($) {
 
-            var $section = $('#mapsection').first(),
-            $panzoom = $section.find('.panzoom');
-            $panzoom.panzoom();
-
             angular.element('#spot-panzoom').dblclick(function(e) {
 
                 var parentOffset = $(this).offset(); 
@@ -225,40 +208,30 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             angular.element('body')
             .on('mouseover click', '.shopspot', function(e){
                 var $this = angular.element(this);
-                $panzoom.panzoom("disable");
                 $(this).css('cursor','pointer');
                 $(this).resizable();
                 $(this).draggable();
             })
-            .on('mousedown', '.panzoom', function(e){
-                $timeout(function () {
-                    $panzoom.panzoom("enable");
-                    $('.shopspot').draggable();
-                },500);
-            })
             .on('mouseout', '.shopspot', function(e){
-
-            })
-            .on('click', '.panzoom', function(e){
 
             })
             .on('change', 'select', function(){
                 vm.materializeInit();
                 console.log('select change')
             })
+            .on('click', 'select', function(){
+                console.log('select click')
+            })
 
             //@TODO: should use $watch to handle model changes
             angular.element('input[name="name"]').keyup(function(){
                 angular.element('.tooltipped').tooltip({delay: 50, html : true});
             });
-
+            //$select = $('select#categories').select2({ tags: true, initSelection: true });
+           // $select.on("change", function (e) { console.log("change"); });
 
         })(jQuery);
     }
-
-    
-
-
 
     $scope.init();
     $scope.bindEvents();
