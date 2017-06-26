@@ -14,7 +14,7 @@ class MakenullableArticleidSalespotsTable extends Migration
     public function up()
     {
          Schema::table('salespots', function(Blueprint $table) {
-           $table->integer('article_id')->nullable()->change();
+           $table->dropColumn('article_id');
         });
     }
 
