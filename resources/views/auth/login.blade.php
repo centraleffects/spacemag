@@ -44,10 +44,14 @@
                     </div>
                     <div class="card-action centered">
                         <a href="{{ route('password.request') }}">
-                            <i class="fa fa-question-circle-o"></i> Forgot password</a>
+                            <small><i class="fa fa-question-circle-o"></i> Forgot password</small>
+                        </a>
                         <button type="submit" class="btn green waves-effect waves-light">
                             <i class="fa fa-sign-in"></i> Login
                         </button>
+                        <a href="{{ route('register') }}">
+                            <small><i class="fa fa-question-circle-o"></i> Not a member yet?  </small>
+                        </a>
                     </div>
                 </div>
             </form>
