@@ -49,7 +49,7 @@
                         <button type="submit" class="btn green waves-effect waves-light">
                             <i class="fa fa-sign-in"></i> Login
                         </button>
-                        <a href="{{ route('register') }}">
+                        <a href="{{ route('register') }}" class="tooltipped" data-tooltip="Not a member yet? Register here!">
                             <small><i class="fa fa-question-circle-o"></i> Not a member yet?  </small>
                         </a>
                     </div>
