@@ -18,7 +18,7 @@
 					<a href="javascript:;" 
 							class="collection-item" 
 							id="@{{'sh'+ spot.id}}" 
-							ng-repeat="(key, spot) in spots.data | convertArray | filter : vm.spotquery" 
+							ng-repeat="(key, spot) in spots.data | toArray | filter : vm.spotquery" 
 							ng-click="events.viewSpot(this)"
 							>@{{spot.name}} 
 					</a>
@@ -33,7 +33,7 @@
 				<div class="panzoom" id="spot-panzoom" 
 						style="background: url(/floorplan/spots/test_12345.jpg);width: 400px; height: 400px;" 
 						width="400" height="400" data-width="400" data-height="400"/>
-					<div ng-repeat="(key, spot) in spots.data | convertArray | filter : vm.FilterSpotDisplay" 
+					<div ng-repeat="(key, spot) in spots.data | toArray | filter : vm.FilterSpotDisplay" 
 								class="shopspot tooltipped draggable @{{vm.spotTypeColors[spot.type]}}" 
 								id="@{{'spt'+ spot.id}}" 
 								data-position="bottom" data-delay="50" 
