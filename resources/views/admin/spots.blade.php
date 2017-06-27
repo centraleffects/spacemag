@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col s12 card">
-		<h2><small><a class="waves-effect waves-teal btn-flat green-text" ng-click="events.viewTab()"><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a></small> @{{selectedShop.name}} </h2>
+		<h2 ng-cloak><small><a class="waves-effect waves-teal btn-flat green-text" ng-click="events.viewTab()"><i class="fa fa-arrow-left" aria-hidden="true"></i> BACK</a></small> @{{selectedShop.name}} </h2>
 		
 	</div>
 </div>
@@ -18,7 +18,7 @@
 							ng-bind="spot.name">
 					</a>
 				</div>
-				<small ng-show="!spots.data[0].name">Nothing here. Add a salespot now for @{{selectedShop.name}}</small>
+				<small ng-show="!spots.data[0].name" ng-cloak>Nothing here. Add a salespot now for @{{selectedShop.name}}</small>
 				<span class="badge right"><a href="#!" class="left waves-effect waves-light btn" ng-click="events.addShopSpot()">New Spot</a></span>
 			</div>
 		</div>		

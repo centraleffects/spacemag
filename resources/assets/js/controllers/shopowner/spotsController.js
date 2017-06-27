@@ -44,6 +44,7 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     vm.materializeInit = function(){
         Materialize.updateTextFields();
         angular.element('select').material_select();
+        angular.element('.tooltipped').tooltip({delay: 50, html : true});
     }
 
     $scope.init = function() {
@@ -100,7 +101,7 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
 
         addSaleSpot : function(x,y){
             
-            if($scope.selectedSpot.isNew)
+            if($scope.selectedSpot.isNew && !$scope.changeSpotLocation)
             {
                 window.reBuy.toast('Please complete the information for the selected salespot before adding a new one');
                 vm.materializeInit();
@@ -155,13 +156,12 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             }else{
                 location.hash = '#!/';
             }
-
-            vm.materializeInit();
+            
             $timeout(function () {
                 vm.materializeInit();
-               /* angular.element('.shopspot').removeClass('green');
-                angular.element('#spt'+$scope.selectedSpot.id).addClass('green');*/
-            },600);
+                angular.element('.shopspot').removeClass('dashed-border');
+                angular.element('#spt'+$scope.selectedSpot.id).addClass('dashed-border');
+            });
 
         },
 
