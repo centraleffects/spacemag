@@ -25,13 +25,26 @@ class Shop extends Model
                 ->where('role', 'owner');
     }  
 
+
+    public function owners(){
+        return $this->owner();
+    }
+
     /**
      * returns the list of customers/clients in this Shop
      */
     public function users(){
         return $this->belongsToMany('App\User')
                 ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
-                ->withTimestamps();
+                ->withTimestamps()
+                ->whereIn('role', ['customer', 'client']);
+    }
+
+    public function workers(){
+        return $this->belongsToMany('App\User')
+                ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
+                ->withTimestamps()
+                ->where('role', 'worker');
     }
 
     /**
