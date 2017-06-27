@@ -70,7 +70,7 @@ app.directive("select2", function($timeout, $parse) {
   };
 });
 
-app.filter('toArray', function () {
+app.filter('convertArray', function () {
   return function (obj, addKey) {
     if (!angular.isObject(obj)) return obj;
     if ( addKey === false ) {
