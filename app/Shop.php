@@ -18,7 +18,11 @@ class Shop extends Model
      * returns the Owner of this Shop
      */
     public function owner(){
-    	return $this->belongsTo('App\User', 'user_id');
+    	// return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsToMany('App\User')
+            ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
+                ->withTimestamps()
+                ->where('role', 'owner');
     }  
 
     /**

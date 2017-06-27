@@ -122,7 +122,12 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
 });
 
 Route::get('try/{shop}', function (App\Shop $shop){
-	$a = App\Helpers\Helper::getAvailableSaleSpots($shop);
-	dd($a);
+
+	$users = $shop->owner()->where('user_id', 2)->get(['user_id']);
+	foreach ($users as $key => $user) {
+		$shop->owner()->detach($user->user_id);
+	}
+
+	dd($shop->owner()->get());
 });
 
