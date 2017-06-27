@@ -13,7 +13,7 @@
 			        </div>
 			      </form>
 			    </div>
-			    <div><a href="javascript:;">Filter Result <a href="javascript:;" ng-click="events.addSaleSpot(null,null)"><span class="badge">New Spot</span></a></div>
+			    <div><a href="javascript:;"> &nbsp; <a href="javascript:;" ng-click="events.addSaleSpot(null,null)"><span class="badge">New Spot</span></a></div>
 				<div class="collection list-spots" ng-show="spots.data.length > 0">
 					<a href="javascript:;" 
 							class="collection-item" 
@@ -47,23 +47,34 @@
 		</div>
 		<div class="card hoverable">
 			<div class="row card-content">
-				<span class="card-title">Select Spot Types</span>
+				<span class="card-title">Filter by spot types</span>
 				<table>
 					<tr>
-						<td><div class="spot-index pink"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='hanger'">Hanger</a></td>
-						<td><div class="spot-index orange"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='shelves'">Shelves</a></td>
-						<td><div class="spot-index yellow"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='standard'">Standard</a></td>
-						<td><div class="spot-index blue"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='wall'">Wall Section</a></td>
-						<td><div class="spot-index"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay =''">All</a></td>
+						<td><div class="spot-index pink"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='hanger'" class="@{{ (vm.FilterSpotDisplay =='hanger') ? 'underlined green-text' : ''}}">Hanger</a></td>
+						<td><div class="spot-index orange"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='shelves'" class="@{{ (vm.FilterSpotDisplay =='shelves') ? 'underlined green-text' : ''}}">Shelves</a></td>
+						<td><div class="spot-index yellow"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='standard'" class="@{{ (vm.FilterSpotDisplay =='standard') ? 'underlined green-text' : ''}}">Standard</a></td>
+						<td><div class="spot-index blue"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='wall'" class="@{{ (vm.FilterSpotDisplay =='wall') ? 'underlined green-text' : ''}}">Wall Section</a></td>
+						<td><div class="spot-index"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay =''"  class="@{{ (vm.FilterSpotDisplay =='') ? 'underlined green-text' : ''}}">All</a></td>
 					</tr>
-
 				</table>
+			</div>
+		</div>
+		<div class="card hoverable">
+			<div class="row card-content"  ng-show="!selectedSpot.name">
+				<span class="card-title" ng-cloak>Filter by bookings</span>
+				
+			</div>
+		</div>
+		<div class="card hoverable" ng-show="selectedSpot.name">
+			<div class="row card-content">
+				<span class="card-title" ng-cloak>Bookings for @{{selectedSpot.name}}</span>
+				
 			</div>
 		</div>
 		<div class="card hoverable"  ng-show="selectedSpot.name">
 			<div class="row card-content">
 					<div class="input-field col s12">
-						<span class="card-title">Prices</span>
+						<span class="card-title" ng-cloak>Set Prices for @{{selectedSpot.name}}</span>
 						
 						<div class="input-field">
 							<input type="text" name="daily" ng-model="selectedSpot.prices.daily">
@@ -138,11 +149,14 @@
 				<div class="row">
 					<div class="col s9">
 						<div class="input-field">
+							<label>Location</label><br>
 							<input type="text" name="spot_location" ng-model="selectedSpot.spot_location" disabled="disabled" title="Spot Location">
+							
 						</div>
 					</div>
 					<div class="col s3">
-						<a href="javascript:;" style="position: absolute;margin-top: 40px;" ng-click="events.changeSpotLocation()" >Change</a>
+						<a href="javascript:;" style="position: absolute;margin-top: 40px;" ng-click="events.changeSpotLocation()" ng-show="selectedSpot.spot_location">Change</a>
+						<a href="javascript:;" style="position: absolute;margin-top: 40px;" ng-click="events.changeSpotLocation()" ng-show="!selectedSpot.spot_location">Add</a>
 					</div>
 				</div>
 
