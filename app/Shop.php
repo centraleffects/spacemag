@@ -18,8 +18,17 @@ class Shop extends Model
      * returns the Owner of this Shop
      */
     public function owner(){
-    	return $this->belongsTo('App\User', 'user_id');
+    	// return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsToMany('App\User')
+            ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
+                ->withTimestamps()
+                ->where('role', 'owner');
     }  
+
+
+    public function owners(){
+        return $this->owner();
+    }
 
     /**
      * returns the list of customers/clients in this Shop
@@ -27,7 +36,15 @@ class Shop extends Model
     public function users(){
         return $this->belongsToMany('App\User')
                 ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
-                ->withTimestamps();
+                ->withTimestamps()
+                ->whereIn('role', ['customer', 'client']);
+    }
+
+    public function workers(){
+        return $this->belongsToMany('App\User')
+                ->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
+                ->withTimestamps()
+                ->where('role', 'worker');
     }
 
     /**

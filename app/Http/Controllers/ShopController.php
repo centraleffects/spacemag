@@ -110,7 +110,7 @@ class ShopController extends Controller
                             if(!$user){
                                 $createNewOwner = true;
                             }else{
-                                $shop->user_id = $user->id;
+                                // $shop->user_id = $user->id;
                             }
                         }
                         
@@ -124,7 +124,7 @@ class ShopController extends Controller
                             if(!$user){
                                 $createNewOwner = true;
                             }else{
-                                $shop->user_id = $user->id;
+                                // $shop->user_id = $user->id;
                             }
                         }
 
@@ -162,7 +162,8 @@ class ShopController extends Controller
 
             }
 
-            $shop->user_id = $user->id ?: 1;
+            // $shop->user_id = $user->id ?: 1;
+            $shop->owner()->attach($user);
 
         }        
 
@@ -174,7 +175,15 @@ class ShopController extends Controller
         $shop->commission_article_sale = $input['commission_article_sale'];
         $shop->commission_salespot = $input['commission_salespot'];
 
-        $shop->cleanup_schedule = !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
+        // $shop->cleanup_schedule = isset($input['cleanup_schedule']) && !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
+
+        if( isset($input['cleanup_schedule']) && !empty($input['cleanup_schedule']) ){
+            if( is_array($input['cleanup_schedule']) ){
+                $shop->cleanup_schedule = implode(",",$input['cleanup_schedule']);
+            }else if( is_string($input['cleanup_schedule']) ){
+                $shop->cleanup_schedule = $input['cleanup_schedule'];
+            }
+        }
 
         if( $shop->update() ){
             if( $loggedUser->isAdmin() && ($oldShopOwner <> $user->id) ){ // send email 

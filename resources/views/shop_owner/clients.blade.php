@@ -10,7 +10,7 @@
 				<ul class="collection">
 				    <li class="collection-item customers" ng-repeat="x in clients | filter:search" ng-click="viewClient($index)">
 						@include('layouts._partials.dragicon')
-						<a  ng-cloak>@{{ x.first_name+' '+x.last_name }}</a>
+						<a ng-cloak>@{{ x.first_name+' '+x.last_name }}</a>
 						<a class="right" title="Delete" ng-click="removeClient($index)">
 							<i class="fa fa-trash"></i>
 						</a>
@@ -37,12 +37,12 @@
 					<p></p>
 					<div class="client-details">
 						<div class="input-field">
-							<input type="text" name="name" value="@{{ selectedUser.first_name+' '+selectedUser.last_name }}" readonly />
+							<input type="text" name="name" value="@{{ selectedUser.first_name+' '+selectedUser.last_name }}" readonly ng-cloak />
 							<label>Name</label>
 						</div>
 
 						<div class="input-field">
-							<input type="email" name="email" value="@{{ selectedUser.email }}" readonly />
+							<input type="email" name="email" value="@{{ selectedUser.email }}" readonly ng-cloak />
 							<label>Email</label>
 						</div>
 					</div>
@@ -78,7 +78,7 @@
 						</div>
 						<div class="col">
 							<p>
-								<input type="checkbox" class="newsletter-subscription" ng-model="selectedUser.pivot.newsletter_subscribed" ng-click="newsletterSubscription($event)" id="newsletter_subscription" />
+								<input type="checkbox" class="newsletter-subscription" ng-model="selectedUser.pivot.newsletter_subscribed" ng-click="newsletterSubscription($event)" id="newsletter_subscription" ng-cloak />
 								<label for="newsletter_subscription">Enable Newsletter</label>
 							</p>
 						</div>
