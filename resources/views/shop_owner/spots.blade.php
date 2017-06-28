@@ -7,7 +7,7 @@
 				<div class="nav-wrapper">
 			      <form>
 			        <div class="input-field">
-			          <input id="search" type="search" required ng-model="vm.spotquery">
+			          <input id="search" type="search" required ng-model="vm.spotquery" placeholder="Type a spot name">
 			          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
 			          <i class="material-icons">close</i>
 			        </div>
@@ -16,12 +16,12 @@
 			    <div><a href="javascript:;"> &nbsp; <a href="javascript:;" ng-click="events.addSaleSpot(null,null)"><span class="badge">New Spot</span></a></div>
 				<div class="collection list-spots" ng-show="spots.data.length > 0">
 					<a href="javascript:;" 
-							class="collection-item" 
+							class="collection-item @{{ (selectedSpot.id==spot.id) ? 'active' :''}}" 
 							id="@{{'sh'+ spot.id}}" 
 							ng-repeat="(key, spot) in spots.data | toArray | filter : vm.spotquery" 
 							ng-click="events.viewSpot(this)"
-							>@{{spot.name}} 
-					</a>
+							ng-bind="spot.name"
+							></a>
 				</div>
 				<small ng-show="!spots.data[0].name"><br>Nothing here. Add a salespot now for {{session()->get("selected_shop")->name}}</small>
 			</div>
@@ -34,7 +34,7 @@
 						style="background: url(/floorplan/spots/test_12345.jpg);width: 400px; height: 400px;" 
 						width="400" height="400" data-width="400" data-height="400"/>
 					<div ng-repeat="(key, spot) in spots.data | toArray | filter : vm.FilterSpotDisplay" 
-								class="shopspot tooltipped draggable @{{vm.spotTypeColors[spot.type]}}" 
+								class="shopspot tooltipped draggable @{{vm.spotTypeColors[spot.type]}}  @{{ (selectedSpot.id==spot.id) ? 'dashed-border' :''}}" 
 								id="@{{'spt'+ spot.id}}" 
 								data-position="bottom" data-delay="50" 
 								ng-show="spot.spot_x && spot.spot_y"
@@ -50,28 +50,42 @@
 				<span class="card-title">Filter by spot types</span>
 				<table>
 					<tr>
-						<td><div class="spot-index pink"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='hanger'" class="@{{ (vm.FilterSpotDisplay =='hanger') ? 'underlined green-text' : ''}}">Hanger</a></td>
-						<td><div class="spot-index orange"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='shelves'" class="@{{ (vm.FilterSpotDisplay =='shelves') ? 'underlined green-text' : ''}}">Shelves</a></td>
-						<td><div class="spot-index yellow"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='standard'" class="@{{ (vm.FilterSpotDisplay =='standard') ? 'underlined green-text' : ''}}">Standard</a></td>
-						<td><div class="spot-index blue"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='wall'" class="@{{ (vm.FilterSpotDisplay =='wall') ? 'underlined green-text' : ''}}">Wall Section</a></td>
-						<td><div class="spot-index"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay =''"  class="@{{ (vm.FilterSpotDisplay =='') ? 'underlined green-text' : ''}}">All</a></td>
+						<td>
+							<div class="spot-index  @{{vm.spotTypeColors['hanger']}} @{{ (vm.FilterSpotDisplay =='hanger') ? 'dashed-border' : ''}}"></div> 
+							<a href="javascript:;" ng-click="vm.FilterSpotDisplay ='hanger'" class="@{{ (vm.FilterSpotDisplay =='hanger') ? 'underlined green-text' : ''}}">Hanger</a>
+						</td>
+
+						<td>
+							<div class="spot-index  @{{vm.spotTypeColors['shelves']}} @{{ (vm.FilterSpotDisplay =='shelves') ? 'dashed-border' : ''}}"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='shelves'" class="@{{ (vm.FilterSpotDisplay =='shelves') ? 'underlined green-text' : ''}}">Shelves</a>
+						</td>
+
+						<td>
+							<div class="spot-index   @{{vm.spotTypeColors['standard']}} @{{ (vm.FilterSpotDisplay =='standard') ? 'dashed-border' : ''}}"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='standard'" class="@{{ (vm.FilterSpotDisplay =='standard') ? 'underlined green-text' : ''}}">Standard</a>
+						</td>
+
+						<td>
+							<div class="spot-index @{{vm.spotTypeColors['wall section']}} @{{ (vm.FilterSpotDisplay =='wall section') ? 'dashed-border' : ''}}"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay ='wall section'" class="@{{ (vm.FilterSpotDisplay =='wall section') ? 'underlined green-text' : ''}}">Wall Section</a>
+						</td>
+						<td>
+							<div class="spot-index @{{ (vm.FilterSpotDisplay =='') ? 'dashed-border' : ''}}"></div> <a href="javascript:;" ng-click="vm.FilterSpotDisplay =''"  class="@{{ (vm.FilterSpotDisplay =='') ? 'underlined green-text' : ''}}">All</a>
+						</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div class="card hoverable">
-			<div class="row card-content"  ng-show="!selectedSpot.name">
+			<div class="row card-content"  ng-show="!selectedSpot">
 				<span class="card-title" ng-cloak>Filter by bookings</span>
 				
 			</div>
 		</div>
-		<div class="card hoverable" ng-show="selectedSpot.name">
+		<div class="card hoverable" ng-show="selectedSpot">
 			<div class="row card-content">
 				<span class="card-title" ng-cloak>Bookings for @{{selectedSpot.name}}</span>
 				
 			</div>
 		</div>
-		<div class="card hoverable"  ng-show="selectedSpot.name">
+		<div class="card hoverable"  ng-show="selectedSpot">
 			<div class="row card-content">
 					<div class="input-field col s12">
 						<span class="card-title" ng-cloak>Set Prices for @{{selectedSpot.name}}</span>
@@ -128,7 +142,7 @@
 		</div>	 
 	</div>-->
 	<div class="col s3">
-		<div class="card hoverable shopinfo"  ng-show="selectedSpot.name">
+		<div class="card hoverable shopinfo"  ng-show="selectedSpot">
 			<div class="row card-content">
 				<span class="card-title">Spot Information</span>
 				<div class="input-field">

@@ -10,8 +10,8 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.spotStatusOptions = [{'value': 'rebuilding','text' : 'Rebuilding'},{'value': 'painting','text' : 'Painting'},{'value': 'on repair','text' : 'On Repair'}];
     $scope.spotTypeOptions = [{'value': 'hanger','text' : 'Hanger'},{'value': 'shelves','text' : 'Shelves'},{'value': 'standard','text' : 'Standard'}, {'value': 'wall section','text' : 'Wall Section'}];
     $scope.spots = {};
-    $scope.spots.data = {};
-    $scope.selectedSpot = {};
+    $scope.spots.data = null;
+    $scope.selectedSpot = null;
     $scope.selectedSpotKey = null;
     $scope.changeSpotLocation = false;
     $scope.selectedSpotCategories = [];
@@ -100,8 +100,8 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
         },
 
         addSaleSpot : function(x,y){
-            
-            if($scope.selectedSpot.isNew && !$scope.changeSpotLocation)
+
+            if( $scope.selectedSpot  && !$scope.changeSpotLocation)
             {
                 window.reBuy.toast('Please complete the information for the selected salespot before adding a new one');
                 vm.materializeInit();
@@ -159,8 +159,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             
             $timeout(function () {
                 vm.materializeInit();
-                angular.element('.shopspot').removeClass('dashed-border');
-                angular.element('#spt'+$scope.selectedSpot.id).addClass('dashed-border');
             });
 
         },
@@ -177,7 +175,7 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
                     }
                   }
                   $scope.spots.data = data;
-               $scope.selectedSpot = [];   
+               $scope.selectedSpot = null;   
                vm.materializeInit();
             }
         },
@@ -229,6 +227,10 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             });
             //$select = $('select#categories').select2({ tags: true, initSelection: true });
            // $select.on("change", function (e) { console.log("change"); });
+           $timeout(function(){
+            console.log('selectedSpot',$scope.selectedSpot);
+             console.log('selectedSpot=>',$scope.selectedSpot);
+           },2000);
 
         })(jQuery);
     }
