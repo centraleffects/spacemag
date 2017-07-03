@@ -24,8 +24,8 @@ class CreateShopServicesBookingsTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('service_type_id')->unsigned()->index();
-            $table->foreign('service_type_id')->references('id')->on('service_types');
+            $table->integer('service_id')->unsigned()->index();
+            $table->foreign('service_id')->references('id')->on('services');
            
             $table->longText('notes')->nullable();
             $table->enum('status', ['active', 'completed', 'deleted'])->default('active');
