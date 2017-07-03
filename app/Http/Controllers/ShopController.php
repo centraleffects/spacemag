@@ -169,7 +169,7 @@ class ShopController extends Controller
 
         $shop->name = $input['name'];
         $shop->description = $input['description'];
-        $shop->url = $input['url'];
+        $shop->url = isset($input['url']) ? $input['url'] : '';
         $shop->currency = $input['currency'];
         $shop->slug = isset($input['slug']) ? $input['slug'] : "";
         $shop->commission_article_sale = $input['commission_article_sale'];
