@@ -115,10 +115,4 @@
 			</div>
 		</div>
 	@endslot
-	@slot('right')
-		<div class="row">
-			@include('shop_owner.partials._shopinfo')
-		</div>
-	@endslot
-
 @endcomponent
