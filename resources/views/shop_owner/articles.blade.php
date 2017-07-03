@@ -171,55 +171,57 @@
 	@slot('right')
 		@if( isset($shop) )
 		<div class="row">
-			<div class="card hoverable"><!-- Shop Information -->
-				<div class="card-content">
-					<div class="card-title">Shop Information</div>
-					<div class="input-field">
-						<input type="text" name="name" value="{{$shop->name}}" />
-						<label>Name</label>
+			<?php /*
+				<div class="card hoverable"><!-- Shop Information -->
+					<div class="card-content">
+						<div class="card-title">Shop Information</div>
+						<div class="input-field">
+							<input type="text" name="name" value="{{$shop->name}}" />
+							<label>Name</label>
+						</div>
+						<div class="input-field">
+							<input type="text" name="url" value="{{$shop->url}}" />
+							<label>Home page</label>
+						</div>
+						<div class="input-field">
+							<input type="text" name="{{$shop->postel}}" />
+							<label>Postel</label>
+						</div>
+						<div class="input-field">
+							<select class="icons" multiple>
+								<option value="all">Select all</option>
+								<option value="1">January</option>
+								<option value="2" selected>February</option>
+								<option value="3">March</option>
+								<option value="4" selected>April</option>
+								<option value="5" selected>May</option>
+								<option value="6">June</option>
+								<option value="7" selected>July</option>
+								<option value="8">August</option>
+								<option value="9">September</option>
+								<option value="10">October</option>
+								<option value="11">November</option>
+								<option value="12">December</option>
+						    </select>
+							<label>Shop Owner</label>
+						</div>
+						<div class="input-field">
+							<input type="number" name="article_commission" class="validate" />
+							<label>Commission on Article Sale (Kr)</label>
+						</div>
+						<div class="input-field">
+							<input type="number" name="salesspot_commission" class="validate">
+							<label>Sales spot Rebuy Commission (Kr)</label>
+						</div>
 					</div>
-					<div class="input-field">
-						<input type="text" name="url" value="{{$shop->url}}" />
-						<label>Home page</label>
+					<div class="card-action">
+						<p>
+							<input type="checkbox" id="cb_newsletter_subscription" name="newsletter_subscription" />
+							<label for="cb_newsletter_subscription">Enable Newsletter</label>
+						</p>
 					</div>
-					<div class="input-field">
-						<input type="text" name="{{$shop->postel}}" />
-						<label>Postel</label>
-					</div>
-					<div class="input-field">
-						<select class="icons" multiple>
-							<option value="all">Select all</option>
-							<option value="1">January</option>
-							<option value="2" selected>February</option>
-							<option value="3">March</option>
-							<option value="4" selected>April</option>
-							<option value="5" selected>May</option>
-							<option value="6">June</option>
-							<option value="7" selected>July</option>
-							<option value="8">August</option>
-							<option value="9">September</option>
-							<option value="10">October</option>
-							<option value="11">November</option>
-							<option value="12">December</option>
-					    </select>
-						<label>Shop Owner</label>
-					</div>
-					<div class="input-field">
-						<input type="number" name="article_commission" class="validate" />
-						<label>Commission on Article Sale (Kr)</label>
-					</div>
-					<div class="input-field">
-						<input type="number" name="salesspot_commission" class="validate">
-						<label>Sales spot Rebuy Commission (Kr)</label>
-					</div>
-				</div>
-				<div class="card-action">
-					<p>
-						<input type="checkbox" id="cb_newsletter_subscription" name="newsletter_subscription" />
-						<label for="cb_newsletter_subscription">Enable Newsletter</label>
-					</p>
-				</div>
-			</div><!-- End Shop Information -->
+				</div><!-- End Shop Information -->
+				 */ ?>
 
 			<div class="card hoverable">
 	            <div class="card-content">
