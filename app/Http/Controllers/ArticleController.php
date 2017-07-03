@@ -184,10 +184,10 @@ class ArticleController extends Controller
                     if(!empty($data['categories'])){
                        ArticleCategories::where("article_id", $article->id )->delete();
                        foreach( $data['categories'] as $category){
-                                $newArticleCategory = new ArticleCategories();
-                                $newArticleCategory->article_id = $article->id;
-                                $newArticleCategory->category_id = $category;
-                                $newArticleCategory->save();
+                            $newArticleCategory = new ArticleCategories();
+                            $newArticleCategory->article_id = $article->id;
+                            $newArticleCategory->category_id = $category;
+                            $newArticleCategory->save();
                        }
                     }
 
