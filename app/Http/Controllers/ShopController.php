@@ -163,7 +163,7 @@ class ShopController extends Controller
             }
 
             // $shop->user_id = $user->id ?: 1;
-            $shop->owner()->attach($user);
+            // $shop->owner()->attach($user);
 
         }        
 
@@ -185,7 +185,14 @@ class ShopController extends Controller
             }
         }
 
-        if( $shop->update() ){
+        $res = isset($shop->id) ? $shop->update() : $shop->save();
+
+        // if( $shop->update() ){
+        if( $res ){
+            if( auth()->user()->isAdmin() && isset($user) ){
+                $shop->owner()->attach($user);
+            }
+
             if( $loggedUser->isAdmin() && ($oldShopOwner <> $user->id) ){ // send email 
                 $email_response = $this->sendInviteEmail($shop, $user);
                 if(!$email_response){
