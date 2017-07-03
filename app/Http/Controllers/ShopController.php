@@ -163,17 +163,17 @@ class ShopController extends Controller
             }
 
             // $shop->user_id = $user->id ?: 1;
-            $shop->owner()->attach($user);
+            // $shop->owner()->attach($user);
 
         }        
 
         $shop->name = $input['name'];
         $shop->description = $input['description'];
-        $shop->url = $input['url'];
-        $shop->currency = $input['currency'];
+        $shop->url = isset($input['url']) ? $input['url'] : '';
+        if(isset($input['currency'])) $shop->currency = $input['currency'];
         $shop->slug = isset($input['slug']) ? $input['slug'] : "";
-        $shop->commission_article_sale = $input['commission_article_sale'];
-        $shop->commission_salespot = $input['commission_salespot'];
+        if(isset($input['commission_article_sale'])) $shop->commission_article_sale = $input['commission_article_sale'];
+        if(isset($input['commission_salespot'])) $shop->commission_salespot = $input['commission_salespot'];
 
         // $shop->cleanup_schedule = isset($input['cleanup_schedule']) && !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
 
@@ -185,7 +185,14 @@ class ShopController extends Controller
             }
         }
 
-        if( $shop->update() ){
+        $res = isset($shop->id) ? $shop->update() : $shop->save();
+
+        // if( $shop->update() ){
+        if( $res ){
+            if( auth()->user()->isAdmin() && isset($user) ){
+                $shop->owner()->attach($user);
+            }
+
             if( $loggedUser->isAdmin() && ($oldShopOwner <> $user->id) ){ // send email 
                 $email_response = $this->sendInviteEmail($shop, $user);
                 if(!$email_response){

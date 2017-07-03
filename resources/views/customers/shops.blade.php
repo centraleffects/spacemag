@@ -20,7 +20,9 @@
 								
 						@forelse ($all_shops as $shop)
 							<li class="collection-item orig-data" data-id="{{ $shop->id }}">
-								<a  href="/shops/view/{{ $shop->id }}" target="_blank" data-field="name">{{$shop->name}}</a>
+								<a  href="/shops/view/{{ $shop->id }}" target="_blank" data-field="name">
+									{{$shop->name}}
+								</a>
 								<a  href="javascript:void(0);" class="add-remove-shop secondary-content" data-id="{{$shop->id}}" data-action="add" data-field="do_action">
 									<i class="material-icons">add</i>
 								</a>
@@ -48,9 +50,11 @@
 							<span class="title">
 								<a href="/shops/view/{{ $shop->id }}" target="_blank">{{$shop->name}}</a>
 							</span>
-							<a href="javascript:void(0);" class="secondary-content add-remove-shop" data-id="{{$shop->id}}" data-action="remove">
-								<i class="material-icons">close</i>
-							</a>
+							<div class="secondary-content">
+								<a href="javascript:void(0);" class="add-remove-shop" data-id="{{$shop->id}}" data-action="remove">
+									<i class="material-icons">close</i>
+								</a>
+							</div>
 						</li>
 					@empty
 						<li class="empty-result">{{ __("messages.client_no_shop_yet") }}</li>
