@@ -13,7 +13,7 @@ class Salespot extends Model
     }
 
     public function bookings(){
-    	return $this->hasMany('App\SalespotBooking');
+    	return $this->hasMany('App\SalespotBooking')->where('salespot_bookings.date_start', '>=', date('Y-m-d h:i:s'));
     }
 
     public function articleTransactions(){

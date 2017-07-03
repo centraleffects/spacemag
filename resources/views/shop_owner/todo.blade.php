@@ -1,24 +1,5 @@
 @component('shop_owner.layouts.app')
-
-	@slot('left')
-		<div class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>
-			<ul class="collection">
-				<li class="collection-item" ng-repeat="shop in shops">
-					@include('layouts._partials.dragicon')
-					<span>@{{ shop.name }}</span>
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-
-			    <li class="collection-item">
-					@include('layouts._partials.dragicon')
-					<input type="text" value="Nike">
-					<a href="#!" title="Delete"><i class="fa fa-trash"></i></a>
-			    </li>
-			</ul>
-		</div>
-	@endslot
-	@slot('center')
+	<div class="col s6 m6 6">
 		<div id="" class="row">
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
@@ -65,10 +46,5 @@
 				</div>
 			</div><!-- end Client's Details -->
 		</div>
-	@endslot
-	@slot('right')
-		<div class="row">
-			@include('shop_owner.partials._shopinfo')
-		</div>
-	@endslot
+	</div>
 @endcomponent

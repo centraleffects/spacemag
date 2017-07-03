@@ -43,7 +43,7 @@ class Article extends Model
     }
 
     public function salespots(){
-        return $this->hasMany('App\Salespot');
+        return $this->hasMany('App\ArticleSpot')->withPivot('article_id');
     }
 
     

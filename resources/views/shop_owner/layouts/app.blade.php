@@ -50,19 +50,17 @@
                             <div class="nav-wrapper nav-content">
                                 <ul id="nav-mobile tabs tabs-transparent" class="right">
 
-
                                     @if( auth()->user()->isOwner() || auth()->user()->isWorker() )
                                         <?php 
                                             $nav_menus = [
-                                                'shop' => __("Shops Status"),
+                                                'shop' => __("Shop Info"),
                                                 'shop/customers' => __("Customers"),
                                                 'shop/clients' => __("Clients"),
                                                 'shop/spots' => __("Salespot"),
                                                 'shop/articles' => __("Articles"),
                                                 'shop/todo' => __("Todo List"),
                                                 'shop/workers/todo' => __("My Todo"),
-                                                'shop/coupons' => __("Coupons"),
-                                                'shop' => __("Shops"),
+                                                'shop/coupons' => __("Coupons")
 
                                             ];
 
@@ -70,6 +68,7 @@
                                                 $nav_menus['shop/workers'] = __("Shop Workers");
                                                 $nav_menus['shop/workers/todo'] = __("Workers Todo");
                                             }
+
                                         ?>
                                     @elseif( auth()->user()->isCustomer() or auth()->user()->isClient() )
                                         <?php 

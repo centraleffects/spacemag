@@ -1,20 +1,6 @@
 @component('shop_owner.layouts.app')
 	@slot('controller') ng-controller="WorkersTodoController" @endslot
 	
-	@slot('left')
-		<div class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Shops</h5>
-			<ul class="collection">
-				<li class="collection-item" ng-repeat="shop in shops" ng-click="getTodos($index)">
-					@include('layouts._partials.dragicon')
-					<span>@{{ shop.name }}</span>
-					<a href="#!" class="right" title="Delete" ng-click="removeShop($index)">
-						<i class="fa fa-trash"></i>
-					</a>
-			    </li>
-			</ul>
-		</div>
-	@endslot
 	@slot('center')
 		<div id="todoapp" class="row">
 			<div class="card hoverable"><!-- Client's Details -->
@@ -84,11 +70,6 @@
 					</div>
 				</div>
 			</div><!-- end Todo -->
-		</div>
-	@endslot
-	@slot('right')
-		<div class="row">
-			@include('shop_owner.partials._shopinfo')
 		</div>
 	@endslot
 

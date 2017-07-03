@@ -11,8 +11,8 @@
 								class="list-shops collection-item" 
 								id="@{{'sh'+ shop.id}}" 
 								ng-repeat="(key, shop) in shops.data" 
-								ng-click="events.viewShop(this)">
-								@{{shop.name}}
+								ng-click="events.viewShop(this)"
+								ng-bind="shop.name">
 							</a>
 						</div>
 						<span class="badge right"><a href="#!" class="left waves-effect waves-light btn" ng-click="events.addShop()">New Shop</a></span>

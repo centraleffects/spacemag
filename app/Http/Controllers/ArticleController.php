@@ -151,115 +151,19 @@ class ArticleController extends Controller
                     $article->save();
 
                     //update tags
-                    if(!empty($data['tags'])){
-                        
-                        ArticleTag::where("article_id", $article->id )->delete();
-
-                        foreach( $data['tags'] as $tag){
-                            if(is_numeric(trim($tag))){
-                                $newArticleTag = new ArticleTag();
-                                $newArticleTag->article_id = $article->id;
-                                $newArticleTag->tag_id = $tag;
-                                $newArticleTag->save();
-                            }else{
-
-                                $newTag = Tag::where(['user_id' => $input['user_id'], 'name' => $tag])->first();
-
-                                if(!$newTag){
-                                    $newTag = new Tag();
-                                    $newTag->user_id = $input['user_id'];
-                                    $newTag->name = $tag;
-                                    $newTag->save();
-                                }
-                                $newArticleTag = new ArticleTag();
-                                $newArticleTag->article_id = $article->id;
-                                $newArticleTag->tag_id = $newTag->id;
-                                $newArticleTag->save();
-                            }
-                        }
-
-                    }
+                    $this->updateTags($article, $data, $input);
 
                     //update category
-                    if(!empty($data['categories'])){
-                       ArticleCategories::where("article_id", $article->id )->delete();
-                       foreach( $data['categories'] as $category){
-                            $newArticleCategory = new ArticleCategories();
-                            $newArticleCategory->article_id = $article->id;
-                            $newArticleCategory->category_id = $category;
-                            $newArticleCategory->save();
-                       }
-                    }
+                    $this->updateCategories($article, $data);
 
                     //update price
-                    if(!empty($data['price'])){
-                        $price = ArticlePrice::where("article_id", $article->id )->first();
-                        $add_price = false;
-                        if($price){
-                            if($price->price <> $data['price']){
-                                $price->update( ['status' => 0 ]);
-                                $add_price = true;  
-                            }
-                            
-                        }else{
-                            $add_price = true;  
-                        }
-
-                        if($add_price){
-                            $price = new ArticlePrice();
-                             $price->price = $data['price'];
-                             $price->article_id = $article->id;
-                             $price->status = 1;
-                             $price->original_price = !empty($data['original_price']) ? $data['original_price'] : 0;
-                             $price->save();
-                        }
-                    }
+                    $this->updatePrice($article, $data);
+                    
 
                     //add files
-                    $sample_picture_filename = "";
-                    if(!empty($input['data']['files']['sample_picture'])){
-                      list($type, $sample_picturedata) = explode(';',$input['data']['files']['sample_picture']);
-                      list(, $sample_picturedata)      = explode(',', $sample_picturedata);
-                      list(,$type) = explode('/', $type);
-                      if(!is_dir(LABEL_DIR)){
-                        mkdir(LABEL_DIR, 0775);
-                      }
-                      if(in_array($type, ['png', 'jpg', 'jpeg'])){
-                        //save image
-                        $source = fopen($input['data']['files']['sample_picture'], 'r');
-                        $destination = fopen(LABEL_DIR.'sample_picture_'.$article->id.'.'.$type, 'w');
-
-                        stream_copy_to_stream($source, $destination);
-
-                        fclose($source);
-                        fclose($destination);
-
-                        $sample_picture_filename = 'sample_picture_'.$article->id.'.'.$type;
-                      }
-                    }
-
-                    $label_filename = '';
-
-                    if(!empty($input['data']['files']['label_design'])){
-                      list($type, $label_designdata) = explode(';',$input['data']['files']['label_design']);
-                      list(, $label_designdata)      = explode(',', $label_designdata);
-                      list(,$type) = explode('/', $type);
-                      if(!is_dir(LABEL_DIR)){
-                        mkdir(LABEL_DIR, 0775);
-                      }
-                      if(in_array($type, ['png', 'jpg', 'jpeg'])){
-                        //save image
-                        $source = fopen($input['data']['files']['label_design'], 'r');
-                        $destination = fopen(LABEL_DIR.'label_design_'.$article->id.'.'.$type, 'w');
-
-                        stream_copy_to_stream($source, $destination);
-
-                        fclose($source);
-                        fclose($destination);
-
-                        $label_filename  = 'label_design_'.$article->id.'.'.$type;
-                      }
-                    }
+                    $sample_picture_filename = $this->uploadLabelSamplePicture($article, $input, $data);
+                    
+                    $label_filename = $this->uploadLabelDesign($article, $input, $data);
 
                     //save to article_labels table
                     $label = ArticleLabel::where(['article_id' => $article->id])->first();
@@ -309,7 +213,7 @@ class ArticleController extends Controller
         $new_article = ( request()->segment(3) == "new" ) ;
 
         if($id && !$new_article){
-            $selectedArticle = Article::where('id',$id)->with('tags','categories', 'labels','salespots')->first();
+            $selectedArticle = Article::where('id',$id)->with('tags','categories', 'labels')->first();
 
         }else{
             $selectedArticle =  new Article();
@@ -346,8 +250,127 @@ class ArticleController extends Controller
         $shop = session()->get('selected_shop');
         $categories = SalespotCategoryType::all();
 
-
+       // dd($selectedArticle);
+        
         return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices'));
 
+    }
+
+    private function uploadLabelSamplePicture($article, $input, $data){
+        $sample_picture_filename = "";
+        if(!empty($input['data']['files']['sample_picture'])){
+          list($type, $sample_picturedata) = explode(';',$input['data']['files']['sample_picture']);
+          list(, $sample_picturedata)      = explode(',', $sample_picturedata);
+          list(,$type) = explode('/', $type);
+          if(!is_dir(LABEL_DIR)){
+            mkdir(LABEL_DIR, 0775);
+          }
+          if(in_array($type, ['png', 'jpg', 'jpeg'])){
+            //save image
+            $source = fopen($input['data']['files']['sample_picture'], 'r');
+            $destination = fopen(LABEL_DIR.'sample_picture_'.$article->id.'.'.$type, 'w');
+
+            stream_copy_to_stream($source, $destination);
+
+            fclose($source);
+            fclose($destination);
+
+            $sample_picture_filename = 'sample_picture_'.$article->id.'.'.$type;
+          }
+        }
+        return $sample_picture_filename;
+    }
+
+    private function uploadLabelDesign($article, $input, $data){
+         $label_filename = '';
+          if(!empty($input['data']['files']['label_design'])){
+            list($type, $label_designdata) = explode(';',$input['data']['files']['label_design']);
+            list(, $label_designdata)      = explode(',', $label_designdata);
+            list(,$type) = explode('/', $type);
+            if(!is_dir(LABEL_DIR)){
+              mkdir(LABEL_DIR, 0775);
+            }
+            if(in_array($type, ['png', 'jpg', 'jpeg'])){
+              //save image
+              $source = fopen($input['data']['files']['label_design'], 'r');
+              $destination = fopen(LABEL_DIR.'label_design_'.$article->id.'.'.$type, 'w');
+
+              stream_copy_to_stream($source, $destination);
+
+              fclose($source);
+              fclose($destination);
+
+              $label_filename  = 'label_design_'.$article->id.'.'.$type;
+            }
+          }
+        return $label_filename;
+    }
+
+    private function updateCategories($article, $data){
+      if(!empty($data['categories'])){
+           ArticleCategories::where("article_id", $article->id )->delete();
+           foreach( $data['categories'] as $category){
+                    $newArticleCategory = new ArticleCategories();
+                    $newArticleCategory->article_id = $article->id;
+                    $newArticleCategory->category_id = $category;
+                    $newArticleCategory->save();
+           }
+        }
+    }
+
+    private function updateTags($article, $data, $input){
+          if(!empty($data['tags'])){
+                        
+            ArticleTag::where("article_id", $article->id )->delete();
+
+            foreach( $data['tags'] as $tag){
+                if(is_numeric(trim($tag))){
+                    $newArticleTag = new ArticleTag();
+                    $newArticleTag->article_id = $article->id;
+                    $newArticleTag->tag_id = $tag;
+                    $newArticleTag->save();
+                }else{
+
+                    $newTag = Tag::where(['user_id' => $input['user_id'], 'name' => $tag])->first();
+
+                    if(!$newTag){
+                        $newTag = new Tag();
+                        $newTag->user_id = $input['user_id'];
+                        $newTag->name = $tag;
+                        $newTag->save();
+                    }
+                    $newArticleTag = new ArticleTag();
+                    $newArticleTag->article_id = $article->id;
+                    $newArticleTag->tag_id = $newTag->id;
+                    $newArticleTag->save();
+                }
+            }
+
+        }
+    }
+
+    private function updatePrice($article, $data){
+          if(!empty($data['price'])){
+            $price = ArticlePrice::where("article_id", $article->id )->first();
+            $add_price = false;
+            if($price){
+                if($price->price <> $data['price']){
+                    $price->update( ['status' => 0 ]);
+                    $add_price = true;  
+                }
+                
+            }else{
+                $add_price = true;  
+            }
+
+            if($add_price){
+                $price = new ArticlePrice();
+                 $price->price = $data['price'];
+                 $price->article_id = $article->id;
+                 $price->status = 1;
+                 $price->original_price = !empty($data['original_price']) ? $data['original_price'] : 0;
+                 $price->save();
+            }
+        }
     }
 }
