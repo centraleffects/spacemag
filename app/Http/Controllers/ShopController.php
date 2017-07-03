@@ -170,10 +170,10 @@ class ShopController extends Controller
         $shop->name = $input['name'];
         $shop->description = $input['description'];
         $shop->url = isset($input['url']) ? $input['url'] : '';
-        $shop->currency = $input['currency'];
+        if(isset($input['currency'])) $shop->currency = $input['currency'];
         $shop->slug = isset($input['slug']) ? $input['slug'] : "";
-        $shop->commission_article_sale = $input['commission_article_sale'];
-        $shop->commission_salespot = $input['commission_salespot'];
+        if(isset($input['commission_article_sale'])) $shop->commission_article_sale = $input['commission_article_sale'];
+        if(isset($input['commission_salespot'])) $shop->commission_salespot = $input['commission_salespot'];
 
         // $shop->cleanup_schedule = isset($input['cleanup_schedule']) && !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
 
