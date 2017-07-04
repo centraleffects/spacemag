@@ -1,4 +1,4 @@
-<div class="col s12 m12 l3">
+<!-- <div class="col s12 m12 l3">
 	<div class="card hoverable" id="dashleft-sidebar">
 		<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of {!! str_plural($fnName) !!}</h5>
 		<div class="input-field search-div">
@@ -27,4 +27,4 @@
 		</div>
 		@endif
 	</div>
-</div>
+</div> -->

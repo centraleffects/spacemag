@@ -1,4 +1,4 @@
-<?php
+<?php /*
 	$is_readonly = "readonly";
 	if( action('ShopOwnerController@index') == Request::url() ) $is_readonly = "";
 ?>
@@ -67,3 +67,4 @@
 		</div>
 	</div>
 </div><!-- End Shop Information -->
+*/ ?>
