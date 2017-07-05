@@ -101,33 +101,18 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
 
         addSaleSpot : function(x,y){
 
-            if( $scope.selectedSpot  && !$scope.changeSpotLocation)
+            if( typeof $scope.selectedSpot.isNew !== undefined)
             {
                 window.reBuy.toast('Please complete the information for the selected salespot before adding a new one');
                 vm.materializeInit();
                 return false;
             }
 
-            if(Object.keys($scope.spots.data).length && !$scope.changeSpotLocation){
+            if(Object.keys($scope.spots.data).length){
                 var key = Object.keys($scope.spots.data).length;
                 id = parseInt($scope.spots.data[key-1].id) + 1;
             }else{
                 var key = 0, id = 1;
-            }
-
-            if($scope.changeSpotLocation){
-                 $scope.selectedSpot.spot_location = x + ',' + y;
-                 $scope.selectedSpot.spot_x = x;
-                 $scope.selectedSpot.spot_y = y;
-                 $scope.spots.data[$scope.selectedSpotKey].spot_x = x;
-                 $scope.spots.data[$scope.selectedSpotKey].spot_y = y;
-                 $scope.changeSpotLocation = false;
-                 $scope.events.locationUpdated();
-                 vm.materializeInit();
-                 $timeout(function () {
-                    vm.materializeInit();
-                 },300);
-                 return false;
             }
 
             $scope.spots.data[key] = { name : 'New Spot', id : id, 'spot_x' : x, 'spot_y' : y, isNew : true, };
@@ -144,6 +129,23 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
                 angular.element('.list-spots a#sh' + $scope.selectedSpot.id).click();
                 vm.materializeInit();
             },200);
+        },
+
+        updateSelectedSpotLocation : function(x,y){
+            if($scope.selectedSpot){
+                 $scope.selectedSpot.spot_location = x + ',' + y;
+                 $scope.selectedSpot.spot_x = x;
+                 $scope.selectedSpot.spot_y = y;
+                 $scope.spots.data[$scope.selectedSpotKey].spot_x = x;
+                 $scope.spots.data[$scope.selectedSpotKey].spot_y = y;
+                 $scope.changeSpotLocation = false;
+                 $scope.events.locationUpdated();
+                 vm.materializeInit();
+                 $timeout(function () {
+                    vm.materializeInit();
+                 },300);
+                 return false;
+            }
         },
 
         viewSpot : function(spot){
@@ -193,7 +195,8 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.bindEvents = function(){
         (function($) {
 
-            angular.element('#spot-panzoom').dblclick(function(e) {
+          /*  angular.element('#spot-panzoom')
+            .dblclick(function(e) {
 
                 var parentOffset = $(this).offset(); 
                 var relX = (e.pageX - parentOffset.left) - 12;
@@ -202,6 +205,10 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
                 $scope.events.addSaleSpot(relX,relY);
 
             });
+            angular.element('#spot-panzoom')
+            .keyup(function(e){
+                console.log(e);
+            });*/
 
             angular.element('body')
             .on('mouseover click', '.shopspot', function(e){
@@ -220,6 +227,20 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             .on('click', 'select', function(){
                 console.log('select click')
             })
+            .on('dblclick', '#spot-panzoom', function(e){
+                var parentOffset = $(this).offset(); 
+                var relX = (e.pageX - parentOffset.left) - 12;
+                var relY = (e.pageY - parentOffset.top) - 12;
+                $scope.events.addSaleSpot(relX,relY);
+            })
+            .on('mouseup', '.shopspot', function(e){
+                var parentOffset = $('#spot-panzoom').offset(); 
+                var relX = (e.pageX - parentOffset.left) - 12;
+                var relY = (e.pageY - parentOffset.top) - 12;
+                $scope.events.updateSelectedSpotLocation(relX,relY);
+                console.log(relX,relY);
+                console.log($scope.selectedSpot);
+            });
 
             //@TODO: should use $watch to handle model changes
             angular.element('input[name="name"]').keyup(function(){
