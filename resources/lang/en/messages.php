@@ -44,7 +44,8 @@ return [
 	"shop_added_to_list" => ":shop_name has been added to your lists.",
 	"shop_removed" => ":shop_name has been removed from your lists.",
 	"select_shop" => "Select Shop",
-	"thanks" => "Thanks"
+	"thanks" => "Thanks",
+	"save_changes" => "Save changes"
 
 
 ];

@@ -12,7 +12,7 @@ window.$ = window.jQuery = require('jquery');
 window.angular = require('angular');
 require('./angular/angular-route.js');
 require('../materialize/js/materialize.js');
-
+require('select2');
 require('angucomplete-alt');
 
 require('./rebuy.lib.js');

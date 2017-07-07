@@ -111,14 +111,24 @@ class UserController extends Controller
         $input = Input::all();
 
         $response = ['success' => 0];
+        $response['msg'] = __('messages.no_changes_saved');
 
-        $user = User::find($input['id']);
+        if( auth()->check() ){
+            $user = auth()->user();
+        }else{
+            $user = User::find($input['id']);
+        }
         
         $user->first_name  = $input['first_name'];
         $user->last_name  = $input['last_name'];
        // $user->email  = $input['email'];
         $user->gender  = $input['gender'];
-        $user->role  = $input['role'];
+        
+        if( auth()->guard('api')->check() && auth()->guard('api')->user()->isAdmin() ){
+            $user->role  = $input['role'];
+            $user->email  = $input['email'];
+        }
+
         $user->telephone  = $input['telephone'];
         $user->mobile  = $input['mobile'];
         //$user->social_security_id  = $input['social_security_id'];
@@ -132,6 +142,7 @@ class UserController extends Controller
         if( $user->update() ){
 
             $response['success'] = 1; 
+            $response['msg'] = __('messages.changes_saved');
         }
 
         return $response;

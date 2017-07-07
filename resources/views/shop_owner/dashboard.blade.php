@@ -5,6 +5,9 @@
 			<form  id="form_shopinfo">
 				{{csrf_field()}}
 				<div class="card hoverable shopinfo">
+					<button class="btn btn-floating halfway-fab waves-effect waves-light green tooltipped" data-tooltip="Update Shop" type="submit" id="update_shop_info">
+						<i class="fa fa-refresh"></i>
+					</button>
 					<div class="row card-content">
 						<ul class="tabs">
 							<li class="tab active">
@@ -77,15 +80,6 @@
 			</form>
 		</div>
 		<div class="col s3">
-			<div class="card hoverable">
-				<div class="card-action">
-					<button class="btn waves-effect waves-light green"  type="submit" id="update_shop_info">
-						<i class="fa fa-refresh"></i>
-						UPDATE SHOP INFORMATION
-					</button>
-				</div>
-			</div>
-
 			<div class="card hoverable">
 				<div class="row card-content">
 					<span class="card-title">Upload Store Floor Plan</span>

@@ -127,7 +127,8 @@
                 $('.button-collapse').sideNav('show'); 
             });
             $('.chips').material_chip();
-            $('select').material_select();
+            $('select:not(".select2")').material_select();
+            $('.select2').select2();
             // $('#password').strength_meter();
     
         },
