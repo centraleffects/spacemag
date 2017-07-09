@@ -13,7 +13,7 @@
 			        </div>
 			      </form>
 			    </div>
-			    <div><a href="javascript:;"> &nbsp; <a href="javascript:;" ng-click="events.addSaleSpot(null,null)"><span class="badge">New Spot</span></a></div>
+			    <div><a href="javascript:;"> &nbsp; <a href="javascript:;" ng-click="events.addSaleSpot(null,null); vm.addNew = true;"><span class="badge">New Spot</span></a></div>
 				<div class="collection list-spots" ng-show="spots.data.length > 0">
 					<a href="javascript:;" 
 							class="collection-item @{{ (selectedSpot.id==spot.id) ? 'active' :''}}" 
@@ -73,16 +73,35 @@
 				</table>
 			</div>
 		</div>
-		<div class="card hoverable">
+		<!-- <div class="card hoverable">
 			<div class="row card-content"  ng-show="!selectedSpot">
 				<span class="card-title" ng-cloak>Filter by bookings</span>
 				
 			</div>
-		</div>
+		</div> -->
 		<div class="card hoverable" ng-show="selectedSpot">
 			<div class="row card-content">
 				<span class="card-title" ng-cloak>Bookings for @{{selectedSpot.name}}</span>
-				
+				<table>
+					<thead>
+						<th>Client</th>
+						<th>Date Start</th>
+						<th>Date End</th>
+						<th>Price</th>
+						<th>Paid</th>
+					</thead>
+					<tbody>
+
+						<tr  ng-repeat="(key, booking) in selectedSpot.bookings">
+							<td><span ng-clock> @{{ booking.user.first_name + '  ' + booking.user.last_name}}</span></td>
+							<td><span ng-clock> @{{ booking.date_start | monthday }}</span></td>
+							<td><span ng-clock> @{{ booking.date_end | monthday }}</span></td>
+							<td><span ng-clock> @{{ booking.price }}</span></td>
+							<td><span ng-clock> @{{ ( booking.is_paid ) ? 'Yes' : 'No'}}</span></td>
+						</tr>
+
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="card hoverable"  ng-show="selectedSpot">
@@ -202,19 +221,20 @@
 			</div>
 			<div class="card-action row">
 					<div class="col">
-						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew && !empty(selectedSpot)" ng-click="events.cancelSelectedSpotIfNew()">
+						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.isNew" ng-click="events.cancelSelectedSpotIfNew()">
 						 Cancel
 						</button>
 						<button class="btn waves-effect waves-light blue" ng-show="selectedSpot.id && !selectedSpot.isNew" ng-click="events.deleteSelectedSpot()">
 						 Delete
 						</button> 
-						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()"   ng-show="selectedSpot.name">
+						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()" ng-cloak  ng-show="selectedSpot.name">
 							@{{ (!selectedSpot.isNew) ?  'Update' : 'Save' }}
 						</button> 	
-						<button class="btn waves-effect waves-light blue" ng-show="!selectedSpot.name" ng-click="events.addSaleSpot(null,null)">
+						<button class="btn waves-effect waves-light blue" ng-show="!selectedSpot.isNew" ng-click="events.addSaleSpot(null,null)">
 						 New
 						</button>
 					</div>
+					
 			</div>
 		</div>
 	</div>
