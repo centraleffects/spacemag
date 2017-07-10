@@ -161,7 +161,7 @@ class SalespotController extends Controller
     }
 
     public function getlist(){
-        $list = Salespot::with('categories','prices')->with('categories.type')->get()->toArray();
+        $list = Salespot::with('categories','prices', 'bookings')->with('categories.type')->with('bookings.user')->get()->toArray();
         return $list;
     }
 

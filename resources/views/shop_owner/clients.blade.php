@@ -69,7 +69,7 @@
 				</div>
 			</div><!-- end Client's Details -->
 
-			<div class="card hoverable"><!-- Shop -->
+			<div class="card hoverable" ng-show="hasSelectedUser"><!-- Shop -->
 				<div class="card-content">
 					<div class="card-title">Shop Name</div>
 					<div class="row" ng-show="hasSelectedUser">
