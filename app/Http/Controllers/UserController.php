@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
 
 
 use Auth;
 use Mail;
 
 use App\Http\Requests\StoreUser;
+use App\Http\Requests\UpdateSecuritySettings;
+use App\Http\Requests\UpdateEmail;
 use App\Mail\EmailChangeRequest;
 
 use App\User;
@@ -146,6 +149,66 @@ class UserController extends Controller
         }
 
         return $response;
+    }
+
+    public function updatePassword(UpdateSecuritySettings $request){
+        if( auth()->check() ){
+            $input = Input::all();
+            $old_pass = auth()->user()->password;
+            if( !Hash::check($input['old_password'], $old_pass) ){
+                return ['success' => 0, 'errors' => [
+                    'old_password' =>  [__('errors.confirm_old_password')]
+                ]];
+            }
+
+            auth()->user()->password = bcrypt($input['new_password_confirmation']);
+            if( auth()->user()->save() )
+                return ['success' => 1, 'msg' => __('messages.changes_saved')];
+            return ['success' => 0, 'msg' => __('messages.no_changes_saved')];
+        }
+    }
+
+    public function updateAvatar(Request $request){
+        if( auth()->check() ){
+            $this->validate($request, [
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            $image = $request->file('avatar');
+            $avatar = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $avatar);
+            auth()->user()->avatar = $avatar;
+
+            $flash_msg = [
+                'msg' => __("errors.error_while_processing"),
+                'type' => 'error',
+                'is_important' => false
+            ];
+
+            if( auth()->user()->save() ){
+                $flash_msg['type'] = 'success';
+                $flash_msg['msg'] = __("messages.changes_saved");
+            }
+
+                return redirect()->back()->withFlash_message($flash_msg);
+
+        }
+    }
+
+    public function updateEmail(UpdateEmail $request){
+        if( auth()->check() ){
+            $email = Input::get('email_confirmation');
+            auth()->user()->email = $email;
+            if( auth()->user()->save() )
+                return [
+                    'success' => 1,
+                    'msg' => __('messages.email_updated', ['email' => $email])
+                ];
+            
+        }
+
+        return ['success' => 0, 'msg' => __('messages.no_changes_saved')];
     }
 
     // Requests to change email

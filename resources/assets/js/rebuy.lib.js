@@ -10,12 +10,13 @@
 
         showErrors : function (errors, form, timeout){            
             if( form ){
+                form.find('span.help-block').remove();
                 $.each(errors, function (i, error){
                     var errorContainer = $('<span class="help-block red-text lighten-1">'+
                                     '<strong>'+error[0]+'</strong>'+
                                 '</span>');
-
-                    form.find('[name="'+i+'"]').parent("div").after(errorContainer);
+                    var el = form.find('[name="'+i+'"]');
+                    el.parent("div").after(errorContainer);
                 });
             }else{
                 console.error("showErrors: no $(form) specified.");
@@ -130,13 +131,33 @@
             $('select:not(".select2")').material_select();
             $('.select2').select2();
             // $('#password').strength_meter();
+
+            $(document).on("click", ".alert .close", function (){
+                $(this).parents("div:first").fadeOut(function (){
+                    $(this).remove();
+                });
+            })
     
         },
+
         toast : function(message, timeout){
             if( typeof(timeout) == 'undefined' ){
                 timeout = 4000;
             }
            Materialize.toast(message, timeout);
+        },
+
+        readURL: function(input, $targetImage) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $targetImage.attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
         }
     }
 

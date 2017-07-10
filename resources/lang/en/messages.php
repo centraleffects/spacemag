@@ -45,7 +45,9 @@ return [
 	"shop_removed" => ":shop_name has been removed from your lists.",
 	"select_shop" => "Select Shop",
 	"thanks" => "Thanks",
-	"save_changes" => "Save changes"
+	"save_changes" => "Save changes",
+	'email_updated' => "Your email has been updated. You will need to use this email (:email) when you log in.",
+	'change_avatar' => 'Change avatar'
 
 
 ];

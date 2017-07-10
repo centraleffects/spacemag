@@ -753,3 +753,12 @@ img.circle:hover {
     cursor: text;
     transition: .2s ease-out;
 }
+
+.profile-avatar .circle {
+    width: 100px;
+    height: 100px;
+}
+
+.profile-avatar{
+    cursor: pointer;
+}

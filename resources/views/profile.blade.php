@@ -1,4 +1,4 @@
-@component('customers.layouts.app')
+@component('shop_owner.layouts.app')
 	@slot('left')
 		<div class="card hoverable">
 			<div class="card-content">
@@ -7,7 +7,10 @@
 						<a href="#general_info">General Information</a>
 					</li>
 					<li class="collection-item" data-toggle="tab">
-						<a href="#security">Security</a>
+						<a href="#security_settings">Password</a>
+					</li>
+					<li class="collection-item" data-toggle="tab">
+						<a href="#email_settings">Email Setting</a>
 					</li>
 				</ul>
 			</div>
@@ -21,8 +24,8 @@
 					<a class="btn-floating halfway-fab waves-effect waves-light green tooltipped" data-tooltip="{{__('messages.save_changes')}}" id="save_profile_changes">
 						<i class="material-icons">check</i>
 					</a>
+
 					<form method="post" id="form_profile">
-						{{ csrf_field() }}
 						<div class="input-field">
 							<input type="text" class="validate" name="first_name" value="{{$user->first_name}}" required />
 							<label for="first_name">First Name</label>
@@ -87,33 +90,71 @@
 					</form>
 				</div>
 
-				<div id="security" class="tab-content" style="display: none;">
+				<div id="security_settings" class="tab-content" style="display: none;">
 					<form id="form_security_settings">
 						<a class="btn-floating halfway-fab waves-effect waves-light green tooltipped" data-tooltip="{{__('messages.save_changes')}}" id="save_security_settings">
 							<i class="material-icons">check</i>
 						</a>
-						<div class="input-field">
-							<input type="email" class="validate" data-error="Invalid email address" name="email" value="{{$user->email}}" required readonly/>
-							<label for="email">Email</label>
-						</div>
 						
 						<div class="input-field">
 							<input type="password" name="new_password" class="validate" />
 							<label for="new_password">New Password</label> 
 						</div>
 						<div class="input-field">
-							<input type="password" name="cofirm_password" class="validate" />
-							<label for="confirm_password">Confirm Password</label>
+							<input type="password" name="new_password_confirmation" class="validate" />
+							<label for="new_password_confirmation">Confirm Password</label>
 						</div>
 						<div class="input-field">
 							<input type="password" name="old_password" class="validate" />
-							<label for="confirm_password">Old Password</label>
+							<label for="old_password">Old Password</label>
+						</div>
+					</form>
+				</div>
+
+				<div id="email_settings" class="tab-content" style="display: none;">
+					<form id="form_email_settings">
+						<a class="btn-floating halfway-fab waves-effect waves-light green tooltipped" data-tooltip="{{__('messages.save_changes')}}" id="save_email_settings">
+							<i class="material-icons">check</i>
+						</a>
+
+						<div class="input-field">
+							<input type="email" class="validate" data-error="Invalid email address" name="old_email" value="{{$user->email}}" required readonly/>
+							<label for="email">Email</label>
+						</div>
+
+						<div class="input-field new-email">
+							<input type="email" name="email" id="email" class="validate" data-error="Invalid email address" />
+							<label for="email">New email</label>
+						</div>
+
+						<div class="input-field new-email">
+							<input type="email" name="email_confirmation" id="email_confirmation" class="validate" data-error="Invalid email address" />
+							<label for="email_confirmation">Confirm Email</label>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="card-action"></div>
 		</div>
+	@endslot
+
+	@slot('right')
+	<div class="card hoverable">
+		<div class="card-content">
+			<form method="post" action="{{url('profile/change/avatar')}}" enctype="multipart/form-data">
+				{{csrf_field()}}
+				<div class="row">
+					<div class="profile-avatar">
+						<img class="circle tooltipped" data-tooltip="{{__('messages.change_avatar')}}" src="{{ isset($user->avatar) ? \App\Helpers\Helper::imageAsset($user->avatar) : asset('images/default.svg')}}" id="avatar_holder">
+					</div>
+				</div>
+				<div class="input-field">
+					<input type="file" id="change_avatar" name="avatar" style="display:none" required />
+					<button class="btn" type="submit">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
 	@endslot
 
 	@slot('scripts')

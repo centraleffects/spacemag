@@ -99,6 +99,9 @@ Route::group(['middleware' => 'web'], function (){
 	Route::get('users/activation/{confirmation_code}', 'UserController@verifyEmail');
 
 	Route::post('profile/update', 'UserController@update');
+	Route::post('profile/change/password', 'UserController@updatePassword');
+	Route::post('profile/change/email', 'UserController@updateEmail');
+	Route::post('profile/change/avatar', 'UserController@updateAvatar');
 });
 
 
@@ -124,6 +127,6 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
 });
 
 Route::get('try', function (){
-	dd( App\Helpers\Helper::getCountries() );
+	echo '<img src="'.asset('images/default.svg').'"/>';
 });
 

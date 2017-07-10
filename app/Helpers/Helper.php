@@ -135,4 +135,14 @@ class Helper {
 		return \App\Salespot::whereNotIn('id', $ids)->where(['shop_id' => $shop->id])->get();
 	}
 
+	public static function isURL($str){
+		return filter_var($str, FILTER_VALIDATE_URL);
+	}
+
+	public static function imageAsset($path){
+		if( self::isURL($path) )
+			return $path;
+		return asset('images/'.$path);
+	}
+
 }
