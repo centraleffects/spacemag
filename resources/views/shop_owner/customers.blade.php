@@ -2,26 +2,27 @@
 	@slot('controller') ng-controller="CustomerController" @endslot
 
 	@slot('left')
-		<div class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Customers</h5>
-			@component('layouts._partials.search')
-				@slot('search_name') customers @endslot
-			@endcomponent
-			<ul class="collection">
-				<li class="collection-item" ng-repeat="x in customers | filter:search" ng-click="viewCustomer($index)">
-					@include('layouts._partials.dragicon')
-					<span>@{{ x.first_name+' '+x.last_name }}</span>
-					<a class="right" title="Delete" ng-click="removeCustomer($index)">
-						<i class="fa fa-trash"></i>
-					</a>
-			    </li>
-			    <li ng-show="emptyList()">
-				    <span>
-				    	<i class="fa fa-user-times"></i>
-				    	This shop doesn't have any customer at the moment.
-				    </span>
-			    </li>
-			</ul>
+		<div class="card hoverable">
+			<div class="row card-content">
+				<span class="card-title">List of Customers</span></span>
+				@component('layouts._partials.search')
+					@slot('search_name') customers @endslot
+				@endcomponent
+				<ul class="collection">
+					<li class="collection-item" ng-repeat="x in customers | filter:search" ng-click="viewCustomer($index)">
+						<a href="javascript:;">@{{ x.first_name+' '+x.last_name }}</a>
+						<a class="right" title="Delete" ng-click="removeCustomer($index)">
+							<i class="fa fa-trash"></i>
+						</a>
+				    </li>
+				    <li ng-show="!customers">
+					    <span>
+					    	<i class="fa fa-user-times"></i>
+					    	This shop doesn't have any customer at the moment.
+					    </span>
+				    </li>
+				</ul>
+			</div>
 			<div class="card-action">
 				<a class="btn-floating btn-large waves-effect waves-light green right tooltipped" data-position="left" data-delay="50" data-tooltip="Invite new customer" href="#!" ng-click="addNewCustomer()">
 					<i class="material-icons">add</i>

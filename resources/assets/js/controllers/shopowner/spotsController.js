@@ -210,22 +210,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
 
     $scope.bindEvents = function(){
         (function($) {
-
-          /*  angular.element('#spot-panzoom')
-            .dblclick(function(e) {
-
-                var parentOffset = $(this).offset(); 
-                var relX = (e.pageX - parentOffset.left) - 12;
-                var relY = (e.pageY - parentOffset.top) - 12;
-                
-                $scope.events.addSaleSpot(relX,relY);
-
-            });
-            angular.element('#spot-panzoom')
-            .keyup(function(e){
-                console.log(e);
-            });*/
-
             angular.element('body')
             .on('mouseover', '.shopspot', function(e){
                 var $this = angular.element(this);
@@ -236,13 +220,6 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
             .on('mouseout', '.shopspot', function(e){
 
             })
-/*            .on('change', 'select', function(){
-                vm.materializeInit();
-                console.log('select change')
-            })
-            .on('click', 'select', function(){
-                console.log('select click')
-            })*/
             .on('dblclick', '#spot-panzoom', function(e){
                 var parentOffset = $(this).offset(); 
                 var relX = (e.pageX - parentOffset.left) - 12;
@@ -258,25 +235,11 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
 
                 
             })
-          /*  .on('mouseup', '.shopspot', function(e){
-                var parentOffset = $('#spot-panzoom').offset(); 
-                var relX = (e.pageX - parentOffset.left) - 12;
-                var relY = (e.pageY - parentOffset.top) - 12;
-                $scope.events.updateSelectedSpotLocation(relX,relY);
-                console.log(relX,relY);
-                console.log($scope.selectedSpot);
-            });*/
 
             //@TODO: should use $watch to handle model changes
             angular.element('input[name="name"]').keyup(function(){
                 angular.element('.tooltipped').tooltip({delay: 50, html : true});
             });
-            //$select = $('select#categories').select2({ tags: true, initSelection: true });
-           // $select.on("change", function (e) { console.log("change"); });
-/*           $timeout(function(){
-            console.log('selectedSpot',$scope.selectedSpot);
-             console.log('selectedSpot=>',$scope.selectedSpot);
-           },2000);*/
 
         })(jQuery);
     }
