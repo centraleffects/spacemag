@@ -6,7 +6,7 @@
 				{{csrf_field()}}
 				<div class="card hoverable shopinfo">
 					<button class="btn btn-floating halfway-fab waves-effect waves-light green tooltipped" data-tooltip="Update Shop" type="submit" id="update_shop_info">
-						<i class="fa fa-refresh"></i>
+						<i class="material-icons">check</i>
 					</button>
 					<div class="row card-content">
 						<ul class="tabs">
