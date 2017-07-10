@@ -69,14 +69,3 @@ app.directive("select2", function($timeout, $parse) {
     }
   };
 });
-
-
-app.filter('monthday', function($filter){
-    return function(input){
-      if(input == null){ return ""; }
-
-      var _date = $filter('date')(new Date(input),'MMM dd');         
-      return _date.toUpperCase();
-
-    };
-});

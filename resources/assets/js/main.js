@@ -19,7 +19,17 @@ angular.module('angular-toArrayFilter', [])
   };
 });
 
-window.app = angular.module('rebuy', ['angucomplete-alt', 'angular-toArrayFilter'], function ($httpProvider){
+angular.module('angular-monthdayFilter', []).filter('monthday', function($filter){
+    return function(input){
+      if(input == null){ return ""; }
+
+      var _date = $filter('date')(new Date(input),'MMM dd');         
+      return _date.toUpperCase();
+
+    };
+});
+
+window.app = angular.module('rebuy', ['angucomplete-alt', 'angular-toArrayFilter', 'angular-monthdayFilter'], function ($httpProvider){
 	// Use x-www-form-urlencoded Content-Type
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
