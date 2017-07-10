@@ -30,5 +30,5 @@ mix.js('resources/assets/js/lib/jquery-ui.js', 'public/js/jquery-ui.js')
    .js('resources/assets/js/main.js', 'public/js/main.js')
    .js('resources/assets/js/admin.js', 'public/js/admin.js')
    .js('resources/assets/js/jquery/customers/shops.js', 'public/js/shops.js')
-   .js('resources/assets/js/jquery/customers/bookings.js', 'public/js/bookings.js')
-   .js('resources/assets/js/jquery/profile.js', 'public/js/profile.js');
+   .js('resources/assets/js/jquery/profile.js', 'public/js/profile.js')
+   .js('resources/assets/js/jquery/customers/bookings.js', 'public/js/bookings.js');
