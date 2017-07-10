@@ -97,6 +97,11 @@ Route::group(['middleware' => 'web'], function (){
 	Route::get('account', 'UserController@edit');
 	Route::get('email/change', 'UserController@changeEmail');
 	Route::get('users/activation/{confirmation_code}', 'UserController@verifyEmail');
+
+	Route::post('profile/update', 'UserController@update');
+	Route::post('profile/change/password', 'UserController@updatePassword');
+	Route::post('profile/change/email', 'UserController@updateEmail');
+	Route::post('profile/change/avatar', 'UserController@updateAvatar');
 });
 
 
@@ -121,13 +126,7 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try/{shop}', function (App\Shop $shop){
-	dd($shop->owners()->get());
-	$users = $shop->owner()->where('user_id', 2)->get(['user_id']);
-	foreach ($users as $key => $user) {
-		$shop->owner()->detach($user->user_id);
-	}
-
-	dd($shop->owner()->get());
+Route::get('try', function (){
+	echo '<img src="'.asset('images/default.svg').'"/>';
 });
 

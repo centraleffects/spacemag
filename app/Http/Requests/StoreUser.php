@@ -23,18 +23,23 @@ class StoreUser extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules =  [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users,id',
             'gender' => 'required',
-            'role' => 'required',
             'address_1' => 'required',
             'zip_code' => 'required|numeric',
             'telephone' => 'required|numeric',
             'mobile' => 'required|numeric',
             'country' => 'required',
         ];
+
+        if( auth()->user()->isAdmin() ){
+            $rules['role'] = 'required';
+            $rules['email'] = 'required|email|unique:users,id';
+        }
+
+        return $rules;
     }
 
 }

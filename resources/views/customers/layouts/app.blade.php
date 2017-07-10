@@ -61,16 +61,16 @@
                                                 'shop/coupons' => __("Coupons")
 
                                             ];
-                                        ?>                              
-                                    @endif
+                                        ?>
 
-                                    @foreach($nav_menus as $key => $value)
-                                    <li class="tab {!! \Request::path() == $key ? 'active' : '' !!}">
-                                        <a href="{{ url($key) }}">
-                                            {{ $value }}
-                                        </a>
-                                    </li>
-                                    @endforeach
+                                        @foreach($nav_menus as $key => $value)
+                                        <li class="tab {!! \Request::path() == $key ? 'active' : '' !!}">
+                                            <a href="{{ url($key) }}">
+                                                {{ $value }}
+                                            </a>
+                                        </li>
+                                        @endforeach                              
+                                    @endif
                                 </ul>
                             </div>
                         </nav>

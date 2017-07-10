@@ -13,5 +13,6 @@ return [
 	'unauthorize' => "Unauthorize access.",
 	'shop_not_in_listing' => "This shop is currently not in your listing.",
 	'shop_already_in_listing' => "This shop is already in your listing.",
-	'owner_doesnt_have_a_shop' => "It seems our system thinks that you don't own any Shop at the moment. Please contact the administrator."
+	'owner_doesnt_have_a_shop' => "It seems our system thinks that you don't own any Shop at the moment. Please contact the administrator.",
+	'confirm_old_password' => 'Please confirm your old password to proceed.'
 ];

@@ -9,8 +9,8 @@
                     <div class="background">
                         <img src="{{ url('images/office.jpg') }}">
                     </div>
-                    <a href="#!user">
-                        <img class="circle" src="{{ auth()->user()->avatar ? auth()->user()->avatar : '' }}">
+                    <a href="{{url('account')}}">
+                        <img class="circle" src="{{ isset(auth()->user()->avatar) ? \App\Helpers\Helper::imageAsset(auth()->user()->avatar) : asset('images/default.svg')}}">
                     </a>
                     <a href="#!name">
                         <span class="white-text name">
