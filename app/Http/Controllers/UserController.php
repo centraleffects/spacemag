@@ -176,7 +176,7 @@ class UserController extends Controller
 
             $image = $request->file('avatar');
             $avatar = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('images');
+            $destinationPath = public_path('images/avatar');
             $image->move($destinationPath, $avatar);
             auth()->user()->avatar = $avatar;
 
