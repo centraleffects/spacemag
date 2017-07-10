@@ -178,7 +178,7 @@ class UserController extends Controller
             $avatar = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('images/avatar');
             $image->move($destinationPath, $avatar);
-            auth()->user()->avatar = $avatar;
+            auth()->user()->avatar = 'images/avatar/'.$avatar;
 
             $flash_msg = [
                 'msg' => __("errors.error_while_processing"),

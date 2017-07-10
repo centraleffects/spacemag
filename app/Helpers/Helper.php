@@ -142,7 +142,7 @@ class Helper {
 	public static function imageAsset($path){
 		if( self::isURL($path) )
 			return $path;
-		return asset('images/'.$path);
+		return asset($path);
 	}
 
 }
