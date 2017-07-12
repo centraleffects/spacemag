@@ -11,14 +11,18 @@ class EmailChangeRequest extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $new_email, $user, $token;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($new_email, $user, $token)
     {
-        //
+        $this->new_email = $new_email;
+        $this->user = $user;
+        $this->token = $token;
     }
 
     /**

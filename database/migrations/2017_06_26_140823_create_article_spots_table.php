@@ -13,6 +13,8 @@ class CreateArticleSpotsTable extends Migration
      */
     public function up()
     {
+        if( !Schema::hasTable('article_spots') )
+            
         Schema::create('article_spots', function (Blueprint $table) {
             $table->increments('id');
 

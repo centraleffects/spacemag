@@ -15,7 +15,7 @@ class CreateServiceShopSettingsTable extends Migration
     {
         if( !Schema::hasTable('service_shop_settings') )
 
-        Schema::create('article_spots', function (Blueprint $table) {
+        Schema::create('service_shop_settings', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('service_id')->unsigned()->index();

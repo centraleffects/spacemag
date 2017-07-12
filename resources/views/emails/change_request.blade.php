@@ -1,12 +1,12 @@
 @component('mail::message')
-# Introduction
+# {{__('emails.email_request')}}
 
-The body of your message.
+{{__('emails.email_change_request', ['old_email' => $user->email, 'new_email' => $new_email])}}
 
-@component('mail::button', ['url' => ''])
-Button Text
+@component('mail::button', ['url' => url('profile/confirm/email/'.$token)])
+{{__('emails.confirm')}}
 @endcomponent
 
-Thanks,<br>
+{{__('emails.thanks')}},<br>
 {{ config('app.name') }}
 @endcomponent

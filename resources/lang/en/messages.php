@@ -2,6 +2,7 @@
 
 return [
 	'email_changed_confirmed' => "Your email has been changed successfully. Use your new email (:new_email) when you login to your account next time.",
+	'email_change_request' => "A confirmation has been sent to your email (:old_email). Please check your email's inbox.",
 	'email_verified' => "Your email has been successfully verified.",
 	'already_subscribed_to_shop' => "You have already subscribed to :shop_name",
 	'shop_subscription_success' => "You are now subscribed to :shop_name",

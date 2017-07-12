@@ -150,6 +150,6 @@ class User extends Authenticatable
 
 
     public function emailVerification(){
-        return $this->has('App\EmailVerification');
+        return $this->has('App\EmailVerification', 'user_id');
     }
 }

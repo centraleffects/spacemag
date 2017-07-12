@@ -27,17 +27,18 @@ $(function (){
 	$("#save_email_settings").click(function (){
 		var $this = $(this),
 			$form = $("#form_email_settings"),
-			url = 'profile/change/email',
+			url = 'profile/change/email/request',
 			$old_email = $form.find("input[name='old_email']"),
 			$email = $form.find("input[name='email']"),
 			$email_conf = $form.find("input[name='email_confirmation']");
 
-		processProfileUpdates($this, $form, url, function (){
-			$old_email.val($email.val());
-			$email.val("");
-			$email_conf.val("");
-			Materialize.updateTextFields();
-		});
+		// processProfileUpdates($this, $form, url, function (){
+		// 	$old_email.val($email.val());
+		// 	$email.val("");
+		// 	$email_conf.val("");
+		// 	Materialize.updateTextFields();
+		// });
+		processProfileUpdates($this, $form, url);
 
 	});
 
@@ -63,7 +64,12 @@ $(function (){
 				$button.addClass("disabled");
 			},
 			error: function (data){
-				reBuy.showErrors(data.responseJSON, $form);
+				if( data.status == 422 ){
+					reBuy.showErrors(data.responseJSON, $form);
+				}else{
+					console.warn(data.responseJSON);
+					reBuy.alert("Something went wrong while processing your request. code "+data.status);
+				}
 			},
 			success: function (data){
 				if( data.success ){
