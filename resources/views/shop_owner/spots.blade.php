@@ -93,11 +93,11 @@
 					<tbody>
 
 						<tr  ng-repeat="(key, booking) in selectedSpot.bookings">
-							<td><span ng-clock> @{{ booking.user.first_name + '  ' + booking.user.last_name}}</span></td>
-							<td><span ng-clock> @{{ booking.date_start | monthday }}</span></td>
-							<td><span ng-clock> @{{ booking.date_end | monthday }}</span></td>
-							<td><span ng-clock> @{{ booking.price }}</span></td>
-							<td><span ng-clock> @{{ ( booking.is_paid ) ? 'Yes' : 'No'}}</span></td>
+							<td><span ng-cloak> @{{ booking.user.first_name + '  ' + booking.user.last_name}}</span></td>
+							<td><span ng-cloak> @{{ booking.date_start | monthday }}</span></td>
+							<td><span ng-cloak> @{{ booking.date_end | monthday }}</span></td>
+							<td><span ng-cloak> @{{ booking.price }}</span></td>
+							<td><span ng-cloak> @{{ ( booking.is_paid ) ? 'Yes' : 'No'}}</span></td>
 						</tr>
 
 					</tbody>
