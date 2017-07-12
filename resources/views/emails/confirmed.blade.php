@@ -1,12 +1,9 @@
 @component('mail::message')
-# Introduction
+# {{__('emails.email_changed')}}
 
-The body of your message.
+{{__('emails.email_change_successful', ['new_email' => $user->email])}}
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
 
-Thanks,<br>
+{{__('emails.thanks')}},<br>
 {{ config('app.name') }}
 @endcomponent

@@ -14,10 +14,12 @@ use App\Http\Requests\StoreUser;
 use App\Http\Requests\UpdateSecuritySettings;
 use App\Http\Requests\UpdateEmail;
 use App\Mail\EmailChangeRequest;
+use App\Mail\EmailConfirmationSuccessful;
 
 use App\User;
 use App\Shop;
 use App\EmailVerification;
+
 
 
 class UserController extends Controller
@@ -211,30 +213,45 @@ class UserController extends Controller
         return ['success' => 0, 'msg' => __('messages.no_changes_saved')];
     }
 
+
+
     // Requests to change email
-    public function changeEmail(User $user){
-        $new_email = Input::get($email);
+    public function changeEmail(UpdateEmail $request){
+        // $new_email = Input::get($email);
+        $user = auth()->user();
+        $new_email = Input::get('email_confirmation');
 
         $verify = new EmailVerification();
+        $verify->email = $new_email;
         $verify->token = str_random(64);
+        $verify->user_id = $user->id;
+        $verify->save();
 
-        $mail = new EmailChangeRequest();
+        $response = [
+            'msg' => __('errors.error_while_processing'),
+            'success' => 0
+        ];
+
+        $mail = new EmailChangeRequest($new_email, $user, $verify->token);
         try {
             Mail::to($user->email)->send($mail);
 
-            return redirect()->back()->withFlash_message([
-                'type' => 'success',
-                'msg' => __('messages.email_changed_confirmed', ['new_email' => $verify->email]),
-                'is_important' => true
-            ]);
+            // return redirect()->back()->withFlash_message([
+            //     'type' => 'success',
+            //     'msg' => __('messages.email_changed_confirmed', ['new_email' => $verify->email]),
+            //     'is_important' => true
+            // ]);
+            $response['msg'] = __('messages.email_change_request', ['old_email' => $user->email]);
+            $response['success'] = 1;
         } catch (\Exception $e) {
-            
+            $response['msg'] = __('errors.mail_noti_failed');
         }
-        
+        return $response;
     }
 
+    // confirm email when the user changes his email
     public function confirmEmail($token){
-        $verify = EmailVerification::where(['token', '=', $token])->first();
+        $verify = EmailVerification::where('token', $token)->first();
         if( isset($verify->id) ){
             $user = User::find($verify->user_id);
             $old_email = $user->email;
@@ -244,13 +261,25 @@ class UserController extends Controller
                 $verify->delete();
                 // send notification email
                 try {
-                    $mail = new EmailConfirmationSuccessful($user, $old_email);
+                    $mail = new EmailConfirmationSuccessful($user);
                     Mail::to($old_email)->send($mail);
 
+                    return redirect('/')->withFlash_message([
+                        'msg' => __('emails.email_change_noti', ['new_email' => $user->email]),
+                        'type' => 'info',
+                        'is_important' => true
+                    ]);
                 } catch (\Exception $e) {
                     
                 }
             }
+
+            return redirect('/')->withFlash_message([
+                        'msg' => __('errors.you_are_lost'),
+                        'type' => 'info',
+                        'is_important' => true
+                    ]);
+
         }
     }
 
