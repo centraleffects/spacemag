@@ -243,8 +243,9 @@ class ArticleController extends Controller
           $articles = [];
         }
 
+
         if(!$id){
-            if(!empty($articles)){
+            if(!$articles){
                 $id = $articles[0]->id;
             }
         }
