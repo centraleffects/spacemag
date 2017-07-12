@@ -17,6 +17,7 @@ use App\ArticleCategories;
 use App\Tag;
 use App\ArticlePrice;
 use App\ArticleLabel;
+use App\Shop;
 
 use JavaScript;
 use Helpers;
@@ -39,17 +40,34 @@ class ArticleController extends Controller
 
     public function includeUserOnJS()
     {
-        $shops = auth()->user()->ownedShops()->get();
-        $shop = session()->put('shops', $shops);
+        /*if(auth()->user()->isOwner()){
+          $shops = auth()->user()->ownedShops()->get();
+        }else{
+          $shops = [];
+        }
+        session()->put('shops', $shops);
+      
+        
+        
+        if( !session()->has("selected_shop") && auth()->check() ){
+            if(auth()->user()->isOwner()){
+              $shop = auth()->user()->ownedShops()->with('todoTasks')
+                          ->with('todoTasks.owner')->first();
+              session()->put("selected_shop", $shop);
+            }
+        }*/
+
+        $shops = Shop::all();
+        session()->put('shops', $shops);
 
         if( !session()->has("selected_shop") && auth()->check() ){
-            $shop = auth()->user()->ownedShops()->with('todoTasks')
-                        ->with('todoTasks.owner')->first();
-            session()->put("selected_shop", $shop);
+            if(!empty($shops)){
+              session()->put("selected_shop", $shops->first());
+            }
         }
 
         $shop = session()->get('selected_shop');
-        
+
 
         JavaScript::put([
             'user' => auth()->user(),
@@ -202,10 +220,31 @@ class ArticleController extends Controller
 
         $this->includeUserOnJS();
         
-        $articles = Article::all();
+        $shop = session()->get('selected_shop');
+
+        if( $shop ){
+          if(auth()->user()->isOwner()){
+            $articles = Shop::where('id', $shop->id )->with('articles')->first()->articles;
+          }else{
+            $articles = Shop::where(['shops.id' => $shop->id])
+                              ->whereHas('articles.user', function($query){
+                                 return $query->where('id', auth()->user()->id );
+                              })
+                              ->first();
+
+              if($articles){
+                $articles = $articles->articles;
+              }else{
+                $articles = [];
+              }
+       
+          }
+        }else{
+          $articles = [];
+        }
 
         if(!$id){
-            if($articles){
+            if(!empty($articles)){
                 $id = $articles[0]->id;
             }
         }
@@ -218,6 +257,7 @@ class ArticleController extends Controller
         }else{
             $selectedArticle =  new Article();
         }
+        
         $selected_article_tags = [];
         $selected_article_categories = [];
         $prices = [];
@@ -247,11 +287,9 @@ class ArticleController extends Controller
              $prices = ArticlePrice::where(["article_id" => $selectedArticle->id, 'status' => 1])->first();
         }
 
-        $shop = session()->get('selected_shop');
+        
         $categories = SalespotCategoryType::all();
 
-       // dd($selectedArticle);
-        
         return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices'));
 
     }

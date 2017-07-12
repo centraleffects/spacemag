@@ -31,7 +31,7 @@ class Article extends Model
      * Returns list of shops with this article
      */
     public function shops(){
-    	return $this->belongsToMany('App\Shop');
+    	return $this->belongsToMany('App\Shop')->withPivot('article_id');;
     }
 
     public function transactions(){
