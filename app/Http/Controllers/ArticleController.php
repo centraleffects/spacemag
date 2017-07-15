@@ -40,22 +40,6 @@ class ArticleController extends Controller
 
     public function includeUserOnJS()
     {
-        /*if(auth()->user()->isOwner()){
-          $shops = auth()->user()->ownedShops()->get();
-        }else{
-          $shops = [];
-        }
-        session()->put('shops', $shops);
-      
-        
-        
-        if( !session()->has("selected_shop") && auth()->check() ){
-            if(auth()->user()->isOwner()){
-              $shop = auth()->user()->ownedShops()->with('todoTasks')
-                          ->with('todoTasks.owner')->first();
-              session()->put("selected_shop", $shop);
-            }
-        }*/
 
         $shops = Shop::all();
         session()->put('shops', $shops);
@@ -84,46 +68,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Article $article)
-    {
-        //
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Article $article)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Article $article)
-    {
-        //
-    }
-
-    public function indexOwner($id = null){
-
         $input = Input::all();
 
 
@@ -178,20 +122,14 @@ class ArticleController extends Controller
                     $this->updatePrice($article, $data);
                     
 
-                    //add files
-                    $sample_picture_filename = $this->uploadLabelSamplePicture($article, $input, $data);
                     
-                    $label_filename = $this->uploadLabelDesign($article, $input, $data);
-
                     //save to article_labels table
                     $label = ArticleLabel::where(['article_id' => $article->id])->first();
                     if(!$label){
                        $label = new ArticleLabel();
                     }
                     $label->article_id =  $article->id;
-                    if($label_filename){
-                      $label->filename = $label_filename;
-                    }
+                    $label->filename = "";
                     $label->user_id =  $input['user_id'];
                     $label->print_medium = !empty($data['label_medium']) ? $data['label_medium'] : '';
                     $label->salespot_id = !empty($data['salespot_id']) ? $data['salespot_id'] : 1;
@@ -214,9 +152,44 @@ class ArticleController extends Controller
             ];
         }
 
-        //---------------------------------------------------------------------
-        //-------------------------------------------------------------------------
-        //----------------------------------------------------------------
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Article $article)
+    {
+        //
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Article $article)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Article $article)
+    {
+        //
+    }
+
+    public function indexOwner($id = null){
 
         $this->includeUserOnJS();
         
@@ -291,7 +264,7 @@ class ArticleController extends Controller
         
         $categories = SalespotCategoryType::all();
 
-        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices'));
+        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices', 'new_article'));
 
     }
 

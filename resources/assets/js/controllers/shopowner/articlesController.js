@@ -15,51 +15,25 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 
 	$scope.events = {
 		addUpdate : function(form){
-				data = form.serializeArray();
-				var sample_picture = document.getElementById('sample_picture').files[0],
-					label_design =  document.getElementById('label_design').files[0],
-					sample_picture_data = null,
-					label_design_data = null,
-					reader = new FileReader(),
-					label_design_reader = new FileReader(),
+				var data = form.serializeArray(),
 					addUpdate = $('.addUpdate');
-					reader.onloadend = function(e) {
-						sample_picture_data = e.target.result;
-
-					}
-					if(sample_picture){
-						reader.readAsDataURL(sample_picture);
-					}
-					
-					label_design_reader.onloadend = function(e) {
-						label_design_data = e.target.result;
-					}
-					if(label_design){
-						label_design_reader.readAsDataURL(label_design);
-					}
-					
+										
 					addUpdate.html('WAIT').attr('disable', 'disable');
 
 					$timeout(function(){
-						var formdata = {
-						data : data,
-						files : {
-							sample_picture : sample_picture_data,
-							label_design : label_design_data
-						}
-					};
-					articleServices.addOrUpdate(form.attr('action') + '?&ajax=true', formdata ).then(function(addOrUpdate){
-						addUpdate.html('UPDATE').removeAttr('disable');
-						if(addOrUpdate.success){
-			              	window.reBuy.toast('Article Information has been updated!');
-			              	$timeout(function(){
-			              		window.location.href= '/shop/articles/' + addOrUpdate.article_id;
-			              	},1000);
-			              }else{
-			              	window.reBuy.toast('Error: Please complete the required information and try again.');
-			              }
-					 });	
-					},3500);
+						articleServices.addOrUpdate('/shop/articles/store?&ajax=true', data ).then(function(addOrUpdate){
+							addUpdate.html('UPDATE').removeAttr('disable');
+							console.log(addOrUpdate);
+							if(addOrUpdate.success){
+				              	window.reBuy.toast('Article Information has been updated!');
+				              	$timeout(function(){
+				              		window.location.href= '/shop/articles/' + addOrUpdate.article_id;
+				              	},4500);
+				              }else{
+				              	window.reBuy.toast('Error: Please complete the required information and try again.');
+				              }
+						 });	
+					},0);
 		}
 	}
 
@@ -96,27 +70,6 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 				  escapeMarkup: function (markup) { return markup; }
 			});
 
-			$(document)
-				.on('change', '#sample_picture', function(){
-					var reader = new FileReader(),
-					sample_picture = document.getElementById('sample_picture').files[0];
-					reader.onload = function (e) {
-						vm.img = true;
-				        var img = $('<img>').attr('src',e.target.result).css({'width' : 100, 'height' : 100});
-				        $('#img-wrap').html(img);
-				    };
-				    reader.readAsDataURL(sample_picture);
-				})
-				.on('change', '#label_design', function(){
-					var reader2 = new FileReader(),
-					label_design = document.getElementById('label_design').files[0];
-					reader2.onload = function (e) {
-						vm.img2 = true;
-				        var img = $('<img>').attr('src',e.target.result).css({'width' : 100, 'height' : 100});
-				        $('#img-wrap2').html(img);
-				    };
-				    reader2.readAsDataURL(label_design);
-				});
 
 			$( "form" ).on( "submit", function( event ) {
 			  event.preventDefault();
