@@ -24,8 +24,8 @@
 								class="collection-item" 
 								id="{{ $article->id }}"  
 								>
-								<a  href="/shop/articles/{{ $article->id }}">{{$article->name}}</a>
-								<a  href="/shop/articles/delete/{{ $article->id }}" class="secondary-content">
+								<a  href="/shop/articles/{{ $article->id }}">{{$article->name ? $article->name : 'Unknown Article'}}</a>
+								<a  href="javascript:;" onclick="window.reBuy.confirm('Are you sure to delete this article?',function(){ location.href='/shop/articles/delete/{{ $article->id }}';})" class="secondary-content">
 									<i class="fa fa-trash-o right" aria-hidden="true"></i>
 								</a>
 							</li>
@@ -48,7 +48,7 @@
 							<div class="card-title">Details</div>
 							<div class="input-field">
 								<input type="hidden" name="id" id="id"  value="{{ $selectedArticle->id }}"/>
-								<input type="text" name="name"  value="{{ $selectedArticle->name }}"/>
+								<input type="text" name="name"  value="{{ $selectedArticle->name ? $selectedArticle->name : 'Unknown Article' }}"/>
 								<label>Name</label>
 							</div>
 							<div class="input-field">
@@ -91,45 +91,66 @@
 								<label>Sold Cost (Kr)</label>
 							</div>
 							<div class="input-field">
-								<input type="number" name="quantity" />
+								<input type="number" name="quantity" value="{{$selectedArticle->quantity}}" />
 								<label>Quantity</label>
 							</div>
 
 							<div class="input-field row">
-								<p>Status</p>
+								<p>Sold in bulk</p>
 								<p class="col">
-									<input type="radio" id="s1" name="status" value="sold" checked />
-									<label for="s1">Unsold</label>
+									{{Form::radio('sold_in_bulk', '1', ($selectedArticle->sold_in_bulk == 1) ? true : false,  [ 'id' => 's1' ] )}}
+									<label for="s1">Yes</label>
 								</p>
 								<p class="col">
-									<input type="radio" id="s2" name="status" value="unsold" />
-									<label for="s2">Sold</label>
+									{{Form::radio('sold_in_bulk', '0',  ($selectedArticle->sold_in_bulk == 0) ? true : false,  [ 'id' => 's2' ] ) }}
+									<label for="s2">No</label>
+								</p>
+							</div>
+
+							<div class="input-field row">
+								<p>Sold in pieces</p>
+								<p class="col">
+									{{
+										Form::radio('sold_in_pieces', '1',   
+										($selectedArticle->sold_in_pieces == 1 	) ? true : false,  [ 'id' => 's11' ])
+									}}
+									<label for="s11">Yes</label>
+								</p>
+								<p class="col">
+									{{
+										Form::radio('sold_in_pieces', '0', ($selectedArticle->sold_in_pieces == 0) ? true : false,  [ 'id' => 's22' ])
+									}}
+									<label for="s22">No</label>
 								</p>
 							</div>
 							
 							<br><br>
 
 							<div class="card-title">Labels</div>
-							<div class="input-field row">
-								<select name="label_status" id="label_status">
-									<option value="Draft">Draft</option>
-									<option value="Ready to Print">Ready to Print</option>
-									<option value="Printed">Printed</option>
-									<option value="Deleted">Deleted</option>
-								</select>
+							<div class="input-field row">							
+								{{
+									Form::select('label_status', [
+										'draft' => 'Draft',
+										'ready to print' => 'Ready to Print',
+										'printed' => 'Printed',
+										'deleted' => 'Deleted'
+									], !empty($selectedArticle->labels) ? $selectedArticle->labels->status : '')
+								}}
 								<label>Print status of Label</label>
 							</div>
 							<div class="input-field row">
-								<select name="label_medium" id="label_medium">
-									<option value="Simple Paper">Simple Paper</option>
-									<option value="Cartonnage">Cartonnage</option>
-									<option value="Textile">Textile</option>
-									<option value="Gold Paper">Gold Paper</option>
-								</select>
+								{{
+									Form::select('label_medium', [
+										'Simple Paper' => 'Simple Paper',
+										'Cartonnage' => 'Cartonnage',
+										'Textile' => 'Textile',
+										'Gold Paper' => 'Gold Paper'
+									], !empty($selectedArticle->labels) ? $selectedArticle->labels->print_medium  : '')
+								}}
 								<label>Label Print medium</label>
 							</div>
 							<div class="input-field row">
-								<input type="number" name="label_quantity" value="" />
+								<input type="number" name="label_quantity" value="{{ !empty($selectedArticle->labels) ? $selectedArticle->labels->label_quantity : ''}}" />
 								<label>Label Quantity</label>
 							</div>
 
@@ -259,3 +280,5 @@
 	@endslot
 </div>
 @endcomponent
+
+{{dd($selectedArticle)}}

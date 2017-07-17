@@ -92,6 +92,7 @@ Route::group(['middleware' => 'web'], function (){
 			Route::get('{id}',['uses' =>'ArticleController@indexOwner']);
 			Route::get('new',['uses' =>'ArticleController@indexOwner']);
 			Route::post('store',['uses' =>'ArticleController@store']);
+			Route::get('delete/{article}',['uses' =>'ArticleController@destroy']);
 		});
 	});
 

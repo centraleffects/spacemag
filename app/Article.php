@@ -4,11 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Article extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [ 'id' ];
     protected $table = "articles";
+
 
     public function user(){
     	return $this->belongsTo('App\User');
@@ -31,7 +35,7 @@ class Article extends Model
      * Returns list of shops with this article
      */
     public function shops(){
-    	return $this->belongsToMany('App\Shop')->withPivot('article_id');;
+    	return $this->belongsToMany('App\Shop');
     }
 
     public function transactions(){
@@ -39,7 +43,7 @@ class Article extends Model
     }
 
     public function labels(){
-        return $this->hasMany('App\ArticleLabel');
+        return $this->hasOne('App\ArticleLabel');
     }
 
     public function salespots(){

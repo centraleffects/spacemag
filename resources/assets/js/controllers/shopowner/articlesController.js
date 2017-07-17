@@ -4,6 +4,7 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 
 	vm.img = false,
 	vm.img2 = false;
+	vm.materializeInit = materializeInit;
 
 	$scope.selectedShop = selectedShop;
 	$scope.articles = [];
@@ -23,12 +24,11 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 					$timeout(function(){
 						articleServices.addOrUpdate('/shop/articles/store?&ajax=true', data ).then(function(addOrUpdate){
 							addUpdate.html('UPDATE').removeAttr('disable');
-							console.log(addOrUpdate);
 							if(addOrUpdate.success){
 				              	window.reBuy.toast('Article Information has been updated!');
-				              	$timeout(function(){
+				              	/*$timeout(function(){
 				              		window.location.href= '/shop/articles/' + addOrUpdate.article_id;
-				              	},4500);
+				              	},2000);*/
 				              }else{
 				              	window.reBuy.toast('Error: Please complete the required information and try again.');
 				              }
@@ -71,11 +71,22 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 			});
 
 
-			$( "form" ).on( "submit", function( event ) {
+			$('.addUpdate').closest("form").on( "submit", function( event ) {
 			  event.preventDefault();
 			  $scope.events.addUpdate($(this).closest('form'));
 			  return false;
 			});
+
+			 $timeout(function () {
+		            vm.materializeInit();
+		        },1000);
+
+    }
+
+     function materializeInit(){
+        Materialize.updateTextFields();
+        angular.element('select').material_select();
+        angular.element('.tooltipped').tooltip({delay: 50, html : true});
     }
 
 });

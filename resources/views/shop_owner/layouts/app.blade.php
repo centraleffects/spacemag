@@ -96,6 +96,11 @@
                     </div>
                 </div>
                 <div class="row content-wrap">
+                    @if (session('success'))
+                        <div class="alert alert-success" style="margin:10px;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     {{ $slot }}
                     <div class="col s12 m12 l3">
                         {{ $left or '' }}
