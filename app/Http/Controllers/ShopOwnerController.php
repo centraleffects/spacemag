@@ -111,7 +111,20 @@ class ShopOwnerController extends Controller
     }
 
     public function workersTodo(){
-        
+        if( session()->has('selected_shop') ){
+            $shop = session()->get('selected_shop');
+            $workers = $shop->workers()->get();
+            $tasks = $shop->tasks()->get();
+
+            $shop->tasks = $tasks->toArray();
+            $shop->workers = $workers->toArray();
+            // dd($shop);
+
+            session()->put('selected_shop', $shop);
+            JavaScript::put([
+                'selectedShop' => $shop
+            ]);
+        }
         return view('shop_owner.workers_todo');
     }
 

@@ -83,13 +83,14 @@ class Shop extends Model
         return $this->hasManyThrough('App\SalespotBooking', 'App\Salespot');
     }
 
-    /**
-     * TodoTasks for this Shop
-     */
+    // this are the 5 static todo tasks for each salespot and any shop worker will be
+    // able to mark this as complete
     public function todoTasks(){
         return $this->hasManyThrough('App\TodoTask', 'App\Salespot');
     }
 
+
+    // this is the workers todo tasks (specific tasks for each shop worker)
     public function tasks(){
         return $this->hasMany('App\TodoTask');
     }

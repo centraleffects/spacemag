@@ -58,7 +58,9 @@ function WorkerCtrl ($scope, workerServices, $http, $timeout, $rootScope){
 	$scope.addNewWorker = function (){
 		$scope.addNew = true;
 		$scope.resetUser();
-		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+		setTimeout(function() {
+			$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+		}, 500);
 	};
 
 	$scope.resetUser = function (){
