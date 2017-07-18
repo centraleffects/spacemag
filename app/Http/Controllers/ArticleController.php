@@ -17,6 +17,7 @@ use App\ArticleCategories;
 use App\Tag;
 use App\ArticlePrice;
 use App\ArticleLabel;
+use App\Shop;
 
 use JavaScript;
 use Helpers;
@@ -39,17 +40,18 @@ class ArticleController extends Controller
 
     public function includeUserOnJS()
     {
-        $shops = auth()->user()->ownedShops()->get();
-        $shop = session()->put('shops', $shops);
+
+        $shops = Shop::all();
+        session()->put('shops', $shops);
 
         if( !session()->has("selected_shop") && auth()->check() ){
-            $shop = auth()->user()->ownedShops()->with('todoTasks')
-                        ->with('todoTasks.owner')->first();
-            session()->put("selected_shop", $shop);
+            if(!empty($shops)){
+              session()->put("selected_shop", $shops->first());
+            }
         }
 
         $shop = session()->get('selected_shop');
-        
+
 
         JavaScript::put([
             'user' => auth()->user(),
@@ -66,7 +68,88 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = Input::all();
+
+        if(Input::has('ajax')){
+
+            if(Input::has('data')){
+                $data = null;
+               foreach($input['data'] as $d){
+                    if($d['name'] <> "article-tags" and $d['name'] <> "categories"){
+                        $data[$d['name']] = $d['value'];
+                    }else{
+                        if($d['name'] == "article-tags"){
+                            $data['tags'][] = $d['value'];
+                        }
+                        if($d['name'] == "categories"){
+                            $data['categories'][] = $d['value'];
+                        }
+                    }
+                    
+               }
+               if(!empty($data['id'])){
+                 $article = Article::where('id',$data['id'])->first();
+               }else{
+                  $article =  new Article();
+               }
+
+               $shop = session()->get('selected_shop');
+               if($shop->id)
+               {
+                 if($article){
+                    $article->name = !empty($data['name']) ? $data['name'] : '';
+                    $article->description = !empty($data['description']) ? $data['description'] : '';
+                    $article->quantity = !empty($data['quantity']) ? (int)$data['quantity'] : 0;
+                    $article->sold_in_bulk = !empty($data['sold_in_bulk']) ? $data['sold_in_bulk'] : 0;
+                    $article->sold_in_pieces = !empty($data['sold_in_pieces']) ? $data['sold_in_pieces'] : 0;
+                    $article->type = !empty($data['type']) ? $data['type'] : '';
+                    $article->color = !empty($data['color']) ? $data['color'] : '';
+                    $article->shop_id = $shop->id;
+                    
+
+                    if(!empty($data['client'])){
+                        $article->user_id = $data['client'];
+                    }else{
+                        //set to the current user
+                        $article->user_id = $input['user_id'];
+                    }
+                    
+                    $article->save();
+
+                    //update tags
+                    $this->updateTags($article, $data, $input);
+
+                    //update category
+                    $this->updateCategories($article, $data);
+
+                    //update price
+                    $this->updatePrice($article, $data);
+                    
+                    //update article labels
+                    $this->updateArticleLables($article, $data, $input);
+                    
+                   
+
+                  //------------------  
+                 }  
+               
+                  return [
+                    'success' => 1,
+                    'article_id' => $article->id
+                ];
+
+              }else{
+                return [
+                      'success' => 0,
+                      'message' => 'Error: Shop is required.'
+                  ];
+              }
+            }
+            return [
+                'success' => 0
+            ];
+        }
+
     }
 
     /**
@@ -102,110 +185,43 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+
+      if($article->delete()){
+         return redirect('/shop/articles')->with('success', 'Article deleted!');
+      }
+
     }
 
     public function indexOwner($id = null){
 
-        $input = Input::all();
-
-
-
-        if(Input::has('ajax')){
-
-            if(Input::has('data')){
-                $data = null;
-               foreach($input['data']['data'] as $d){
-                    if($d['name'] <> "article-tags" and $d['name'] <> "categories"){
-                        $data[$d['name']] = $d['value'];
-                    }else{
-                        if($d['name'] == "article-tags"){
-                            $data['tags'][] = $d['value'];
-                        }
-                        if($d['name'] == "categories"){
-                            $data['categories'][] = $d['value'];
-                        }
-                    }
-                    
-               }
-               if(!empty($data['id'])){
-                 $article = Article::where('id',$data['id'])->first();
-               }else{
-                  $article =  new Article();
-               }
-                 if($article){
-                    $article->name = !empty($data['name']) ? $data['name'] : '';
-                    $article->description = !empty($data['description']) ? $data['description'] : '';
-                    $article->quantity = !empty($data['quantity']) ? (int)$data['quantity'] : 0;
-                    $article->sold_in_bulk = !empty($data['sold_in_bulk']) ? $data['sold_in_bulk'] : 0;
-                    $article->sold_in_pieces = !empty($data['sold_in_pieces']) ? $data['sold_in_pieces'] : 0;
-                    $article->type = !empty($data['type']) ? $data['type'] : '';
-                    $article->color = !empty($data['color']) ? $data['color'] : '';
-                    
-                    if(!empty($data['client'])){
-                        $article->user_id = $data['client'];
-                    }else{
-                        //set to the current user
-                        $article->user_id = $input['user_id'];
-                    }
-                    
-                    $article->save();
-
-                    //update tags
-                    $this->updateTags($article, $data, $input);
-
-                    //update category
-                    $this->updateCategories($article, $data);
-
-                    //update price
-                    $this->updatePrice($article, $data);
-                    
-
-                    //add files
-                    $sample_picture_filename = $this->uploadLabelSamplePicture($article, $input, $data);
-                    
-                    $label_filename = $this->uploadLabelDesign($article, $input, $data);
-
-                    //save to article_labels table
-                    $label = ArticleLabel::where(['article_id' => $article->id])->first();
-                    if(!$label){
-                       $label = new ArticleLabel();
-                    }
-                    $label->article_id =  $article->id;
-                    if($label_filename){
-                      $label->filename = $label_filename;
-                    }
-                    $label->user_id =  $input['user_id'];
-                    $label->print_medium = !empty($data['label_medium']) ? $data['label_medium'] : '';
-                    $label->salespot_id = !empty($data['salespot_id']) ? $data['salespot_id'] : 1;
-                    $label->status = !empty($data['label_status']) ? $data['label_status'] : '';
-                    if($sample_picture_filename){
-                      $label->sample_picture = $sample_picture_filename;
-                    }
-                    $label->save();
-
-                  //------------------  
-                 }  
-               
-                  return [
-                    'success' => 1,
-                    'article_id' => $article->id
-                ];
-            }
-            return [
-                'success' => 0
-            ];
-        }
-
-        //---------------------------------------------------------------------
-        //-------------------------------------------------------------------------
-        //----------------------------------------------------------------
-
         $this->includeUserOnJS();
         
-        $articles = Article::all();
+        $shop = session()->get('selected_shop');
+
+        if( $shop ){
+          if(auth()->user()->isOwner()){
+            $articles = Shop::where('id', $shop->id )->with('articles')->first()->articles;
+          }else{
+            $articles = Shop::where(['shops.id' => $shop->id])
+                              ->whereHas('articles.user', function($query){
+                                 return $query->where('id', auth()->user()->id );
+                              })
+                              ->first();
+
+              if($articles){
+                $articles = $articles->articles;
+              }else{
+                $articles = [];
+              }
+       
+          }
+        }else{
+          $articles = [];
+        }
+
 
         if(!$id){
-            if($articles){
+            if(!$articles){
                 $id = $articles[0]->id;
             }
         }
@@ -218,6 +234,8 @@ class ArticleController extends Controller
         }else{
             $selectedArticle =  new Article();
         }
+        
+       
         $selected_article_tags = [];
         $selected_article_categories = [];
         $prices = [];
@@ -247,12 +265,9 @@ class ArticleController extends Controller
              $prices = ArticlePrice::where(["article_id" => $selectedArticle->id, 'status' => 1])->first();
         }
 
-        $shop = session()->get('selected_shop');
         $categories = SalespotCategoryType::all();
 
-       // dd($selectedArticle);
-        
-        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices'));
+        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices', 'new_article'));
 
     }
 
@@ -372,5 +387,22 @@ class ArticleController extends Controller
                  $price->save();
             }
         }
+    }
+
+    private function updateArticleLables($article, $data, $input){
+       //save to article_labels table
+        $label = ArticleLabel::where(['article_id' => $article->id])->first();
+        if(!$label){
+           $label = new ArticleLabel();
+        }
+        $label->article_id =  $article->id;
+        $label->filename = "";
+        $label->user_id =  $input['user_id'];
+        $label->print_medium = !empty($data['label_medium']) ? $data['label_medium'] : '';
+        $label->salespot_id = !empty($data['salespot_id']) ? $data['salespot_id'] : NULL;
+        $label->status = !empty($data['label_status']) ? $data['label_status'] : '';
+        $label->sample_picture = '';
+        $label->label_quantity =  !empty($data['label_quantity']) ? $data['label_quantity'] : NULL;
+        $label->save();
     }
 }

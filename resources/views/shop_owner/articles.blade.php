@@ -24,8 +24,8 @@
 								class="collection-item" 
 								id="{{ $article->id }}"  
 								>
-								<a  href="/shop/articles/{{ $article->id }}">{{$article->name}}</a>
-								<a  href="/shop/articles/delete/{{ $article->id }}" class="secondary-content">
+								<a  href="/shop/articles/{{ $article->id }}">{{$article->name ? $article->name : 'Unknown Article'}}</a>
+								<a  href="javascript:;" onclick="window.reBuy.confirm('Are you sure to delete this article?',function(){ location.href='/shop/articles/delete/{{ $article->id }}';})" class="secondary-content">
 									<i class="fa fa-trash-o right" aria-hidden="true"></i>
 								</a>
 							</li>
@@ -39,134 +39,129 @@
 		</div>
 	@endslot
 	@slot('center')
-		<div  class="row">
-			<form method="POST" action="/{{Request::path()}}">
-			{{ csrf_field() }}
-				<div class="card hoverable"><!-- Client's Details -->
-					<div class="card-content">
-						<div class="card-title">Details</div>
-						<div class="input-field">
-							<input type="hidden" name="id" id="id"  value="{{ $selectedArticle->id }}"/>
-							<input type="text" name="name"  value="{{ $selectedArticle->name }}"/>
-							<label>Name</label>
-						</div>
-						<div class="input-field">
-							<select name="categories" id="categories" multiple="multiple">
-								@if($categories)
-								 <option value=""> All </option>
-								@endif
+		@if($new_article || $selectedArticle->id )
+			<div  class="row">
+				<form method="POST" action="/{{Request::path()}}">
+				{{ csrf_field() }}
+					<div class="card hoverable"><!-- Client's Details -->
+						<div class="card-content">
+							<div class="card-title">Details</div>
+							<div class="input-field">
+								<input type="hidden" name="id" id="id"  value="{{ $selectedArticle->id }}"/>
+								<input type="text" name="name"  value="{{ $selectedArticle->name ? $selectedArticle->name : 'Unknown Article' }}"/>
+								<label>Name</label>
+							</div>
+							<div class="input-field">
+								<select name="categories" id="categories" multiple="multiple">
+									@if($categories)
+									 <option value=""> All </option>
+									@endif
 
-							    @forelse ($categories as $category)
-							    	@if( in_array($category->id, $selected_article_categories) )
-							    		<option value="{{ $category->id }}" selected="selected"> {{ $category->name }} </option>
-							    	@else
-							    		<option value="{{ $category->id }}"> {{ $category->name }} </option>
-							    	@endif
-								   
-								@empty
-								    <option value=""> None </option>
-								@endforelse
+								    @forelse ($categories as $category)
+								    	@if( in_array($category->id, $selected_article_categories) )
+								    		<option value="{{ $category->id }}" selected="selected"> {{ $category->name }} </option>
+								    	@else
+								    		<option value="{{ $category->id }}"> {{ $category->name }} </option>
+								    	@endif
+									   
+									@empty
+									    <option value=""> None </option>
+									@endforelse
 
-							</select>
-							<label>Category</label>
-						</div>
+								</select>
+								<label>Category</label>
+							</div>
 
-						<div class="input-field tags">
-							<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
-								@if(!empty($selected_article_tags))
-									@foreach( $selected_article_tags as $tag)
-										<option value="{{ $tag['id'] }}" selected="selected"> {{ $tag['name'] }} </option>
-									@endforeach
-								@endif
-							</select>
-							<label>Tags</label>			
-						</div>
-						<div class="input-field">
-							<input type="number" name="original_price" value="{{ (!$prices) ? '00.00' : $prices->original_price }}" />
-							<label>Original Cost (Kr)</label>
-						</div>
-						<div class="input-field">
-							<input type="number" name="price"  value="{{ (!$prices) ?  '00.00' : $prices->price }}" />
-							<label>Sold Cost (Kr)</label>
-						</div>
-						<div class="input-field">
-							<input type="number" name="quantity" />
-							<label>Quantity</label>
-						</div>
+							<div class="input-field tags">
+								<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
+									@if(!empty($selected_article_tags))
+										@foreach( $selected_article_tags as $tag)
+											<option value="{{ $tag['id'] }}" selected="selected"> {{ $tag['name'] }} </option>
+										@endforeach
+									@endif
+								</select>
+								<label>Tags</label>			
+							</div>
+							<div class="input-field">
+								<input type="number" name="original_price" value="{{ (!$prices) ? '00.00' : $prices->original_price }}" />
+								<label>Original Cost (Kr)</label>
+							</div>
+							<div class="input-field">
+								<input type="number" name="price"  value="{{ (!$prices) ?  '00.00' : $prices->price }}" />
+								<label>Sold Cost (Kr)</label>
+							</div>
+							<div class="input-field">
+								<input type="number" name="quantity" value="{{$selectedArticle->quantity}}" />
+								<label>Quantity</label>
+							</div>
 
-						<div class="input-field row">
-							<p>Status</p>
-							<p class="col">
-								<input type="radio" id="s1" name="status" value="sold" checked />
-								<label for="s1">Unsold</label>
-							</p>
-							<p class="col">
-								<input type="radio" id="s2" name="status" value="unsold" />
-								<label for="s2">Sold</label>
-							</p>
-						</div>
-						
-						<br><br>
+							<div class="input-field row">
+								<p>Sold in bulk</p>
+								<p class="col">
+									{{Form::radio('sold_in_bulk', '1', ($selectedArticle->sold_in_bulk == 1) ? true : false,  [ 'id' => 's1' ] )}}
+									<label for="s1">Yes</label>
+								</p>
+								<p class="col">
+									{{Form::radio('sold_in_bulk', '0',  ($selectedArticle->sold_in_bulk == 0) ? true : false,  [ 'id' => 's2' ] ) }}
+									<label for="s2">No</label>
+								</p>
+							</div>
 
-						<div class="card-title">Labels</div>
-						<div class="input-field row">
-							<select name="label_status" id="label_status">
-								<option value="Draft">Draft</option>
-								<option value="Ready to Print">Ready to Print</option>
-								<option value="Printed">Printed</option>
-								<option value="Deleted">Deleted</option>
-							</select>
-							<label>Print status of Label</label>
-						</div>
-						<div class="input-field row">
-							<select name="label_medium" id="label_medium">
-								<option value="Simple Paper">Simple Paper</option>
-								<option value="Cartonnage">Cartonnage</option>
-								<option value="Textile">Textile</option>
-								<option value="Gold Paper">Gold Paper</option>
-							</select>
-							<label>Label Print medium</label>
-						</div>
-						<div class="file-field input-field">
-					      <div class="btn waves-effect waves-teal btn-flat">
-					        <span>BROWSE Sample Picture</span>
-					        <input type="file" name="sample_picture" id="sample_picture" value="{{ !isset($selectedArticle->labels[0]) ?  '' : $selectedArticle->labels[0]->sample_picture }}">
-					      </div>
-					      <div class="file-path-wrapper">
-					        <input class="file-path validate" type="text">
-					        @if(isset($selectedArticle->labels[0]) && $selectedArticle->labels[0]->sample_picture)
-					        	<div id="img-wrap">{<img style="width: 100px;height: 100px;" src="/labels/{{ $selectedArticle->labels[0]->sample_picture }}"></div>
-					        @else
-					        	<div id="img-wrap"></div>
-					        @endif
-					      </div>
-					    </div>
-					    <div class="file-field input-field">
-					      <div class="btn waves-effect waves-teal btn-flat left">
-					        <span>BROWSE Label Design</span>
-					        <input type="file" name="label_design" id="label_design">
-					      </div>
-					      <div class="file-path-wrapper">
-					        <input class="file-path validate" type="text">
-					        @if(isset($selectedArticle->labels[0]) && $selectedArticle->labels[0]->filename)
-					        	<div id="img-wrap">{<img style="width: 100px;height: 100px;" src="/labels/{{ $selectedArticle->labels[0]->filename }}"></div>
-					        @else
-					        	<div id="img-wrap"></div>
-					        @endif
-					      </div>
-					      <div class="file-field  input-field">
-								<input type="number" name="label_quantity" value="" />
+							<div class="input-field row">
+								<p>Sold in pieces</p>
+								<p class="col">
+									{{
+										Form::radio('sold_in_pieces', '1',   
+										($selectedArticle->sold_in_pieces == 1 	) ? true : false,  [ 'id' => 's11' ])
+									}}
+									<label for="s11">Yes</label>
+								</p>
+								<p class="col">
+									{{
+										Form::radio('sold_in_pieces', '0', ($selectedArticle->sold_in_pieces == 0) ? true : false,  [ 'id' => 's22' ])
+									}}
+									<label for="s22">No</label>
+								</p>
+							</div>
+							
+							<br><br>
+
+							<div class="card-title">Labels</div>
+							<div class="input-field row">							
+								{{
+									Form::select('label_status', [
+										'draft' => 'Draft',
+										'ready to print' => 'Ready to Print',
+										'printed' => 'Printed',
+										'deleted' => 'Deleted'
+									], !empty($selectedArticle->labels) ? $selectedArticle->labels->status : '')
+								}}
+								<label>Print status of Label</label>
+							</div>
+							<div class="input-field row">
+								{{
+									Form::select('label_medium', [
+										'Simple Paper' => 'Simple Paper',
+										'Cartonnage' => 'Cartonnage',
+										'Textile' => 'Textile',
+										'Gold Paper' => 'Gold Paper'
+									], !empty($selectedArticle->labels) ? $selectedArticle->labels->print_medium  : '')
+								}}
+								<label>Label Print medium</label>
+							</div>
+							<div class="input-field row">
+								<input type="number" name="label_quantity" value="{{ !empty($selectedArticle->labels) ? $selectedArticle->labels->label_quantity : ''}}" />
 								<label>Label Quantity</label>
-						   </div>
-					    </div>
+							</div>
 
-					</div>
-					<div class="row card-action">
-			          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->id) ? "Update" : "Add Article" }}</button>
-			        </div>
-				</div><!-- end Client's Details -->
-				</form>
-		</div>
+						</div>
+						<div class="row card-action">
+				          <button  type="submit" class="addUpdate right waves-effect waves-light btn">{{ ($selectedArticle->id) ? "Update" : "Add Article" }}</button>
+				        </div>
+					</div><!-- end Client's Details -->
+					</form>
+			</div>
+			@endif
 	@endslot
 	@slot('right')
 		@if( isset($shop) )
@@ -223,7 +218,7 @@
 				</div><!-- End Shop Information -->
 				 */ ?>
 
-			<div class="card hoverable">
+			<!-- <div class="card hoverable">
 	            <div class="card-content">
 	              <span class="card-title">Assign Client</span>
 	              <br>
@@ -232,9 +227,9 @@
 	            <div class="card-action">
 	              <a href="javascript:;;">Change</a>
 	            </div>
-	         </div>
+	         </div> -->
 
-			<div class="card hoverable">
+			<!-- <div class="card hoverable">
 	            <div class="card-content">
 	              <span class="card-title">Spots</span>
 	              	<ul class="collapsible" data-collapsible="accordion">
@@ -258,19 +253,21 @@
 	              
 	            </div>
 
-	         </div>
+	         </div> -->
 
-			<div class="card hoverable">
-	            <div class="card-content">
-	              <span class="card-title">BarCode</span>
-	              <br>
-	              <div><img src="{{ Helper::getBarCode( $selectedArticle->id.' '.$selectedArticle->name ) }}"/></div>
-	              <div>{{$selectedArticle->name}}</div>
-	            </div>
-	            <div class="card-action">
-	              <a href="javascript:;;" onclick="window.reBuy.alert('Error: Cannot Find Printer Device')">Print</a>
-	            </div>
-	         </div>
+	        @if($selectedArticle->id )
+				<div class="card hoverable">
+		            <div class="card-content">
+		              <span class="card-title">BarCode</span>
+		              <br>
+		              <div><img src="{{ Helper::getBarCode( $selectedArticle->id.' '.$selectedArticle->name ) }}"/></div>
+		              <div>{{$selectedArticle->name}}</div>
+		            </div>
+		            <div class="card-action">
+		              <a href="javascript:;;" onclick="window.reBuy.alert('Error: Cannot Find Printer Device')">Print</a>
+		            </div>
+		         </div>
+	        @endif
 
 		</div>
 		@else
@@ -283,3 +280,5 @@
 	@endslot
 </div>
 @endcomponent
+
+{{dd($selectedArticle)}}
