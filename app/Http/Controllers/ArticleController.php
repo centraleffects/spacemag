@@ -261,6 +261,7 @@ class ArticleController extends Controller
                 }
             }
         }
+
         if($selectedArticle){
              $prices = ArticlePrice::where(["article_id" => $selectedArticle->id, 'status' => 1])->first();
         }

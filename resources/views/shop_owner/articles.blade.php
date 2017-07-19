@@ -52,11 +52,7 @@
 								<label>Name</label>
 							</div>
 							<div class="input-field">
-								<select name="categories" id="categories" multiple="multiple">
-									@if($categories)
-									 <option value=""> All </option>
-									@endif
-
+								<select name="categories" class="browser-default" id="categories" multiple>
 								    @forelse ($categories as $category)
 								    	@if( in_array($category->id, $selected_article_categories) )
 								    		<option value="{{ $category->id }}" selected="selected"> {{ $category->name }} </option>
@@ -73,10 +69,10 @@
 							</div>
 
 							<div class="input-field tags">
-								<select name="article-tags" id="article-tags"  multiple="multiple" data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
+								<select  name="article-tags" class="browser-default" id="article-tags"  multiple  data-tags="true" data-placeholder="Select a tag" data-allow-clear="true">
 									@if(!empty($selected_article_tags))
 										@foreach( $selected_article_tags as $tag)
-											<option value="{{ $tag['id'] }}" selected="selected"> {{ $tag['name'] }} </option>
+											<option value="{{ $tag['id'] }}" selected> {{ $tag['name'] }} </option>
 										@endforeach
 									@endif
 								</select>
