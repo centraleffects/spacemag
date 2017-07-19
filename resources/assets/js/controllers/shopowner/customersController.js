@@ -66,7 +66,10 @@ function CustomerCtrl ($scope, customerServices, $http, $timeout, $rootScope){
 	$scope.addNewCustomer = function (){
 		$scope.addNew = true;
 		$scope.resetUser();
-		$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+		
+		setTimeout(function() {
+			$("html, body").animate({ scrollTop: $('#add_new').offset().top }, 1000);
+		}, 500);
 	}
 
 	$scope.resetUser = function (){

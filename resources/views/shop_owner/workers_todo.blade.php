@@ -1,6 +1,10 @@
 @component('shop_owner.layouts.app')
 	@slot('controller') ng-controller="WorkersTodoController" @endslot
 	
+	@slot('left')
+
+	@endslot
+
 	@slot('center')
 		<div id="todoapp" class="row">
 			<div class="card hoverable"><!-- Client's Details -->

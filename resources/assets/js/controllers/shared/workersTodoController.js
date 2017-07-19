@@ -1,11 +1,12 @@
 function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http, $rootScope) {
-    $scope.todos = [];
+    // $scope.todos = [];
     $scope.markAll = false;
     $scope.shops = [];
     $scope.selectedShop = window.selectedShop;
-    $scope.shopworkers = [];
+    // $scope.shopworkers = [];
+    $scope.shopworkers = $scope.selectedShop.workers;
+    $scope.todos = $scope.selectedShop.tasks;
     
-
     // Here is a naive implementation for matching first name, last name, or full name
     $scope.localSearch = function(str) {
         var matches = [];
@@ -82,7 +83,7 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     };
 
     $scope.getTodos = function(index) {
-        $scope.selectedShop = $scope.shops[index];
+        // $scope.selectedShop = $scope.shops[index];
         $scope.todos = $scope.selectedShop.all_tasks;
     }
 
