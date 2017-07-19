@@ -22,13 +22,21 @@ app.service('workerTodoService', function($http, $timeout) {
 			});
 		},
 
-		markAsDone: function (taskId){
+		markAsDone: function (task){
+			// return $http({
+			// 	url: '/api/tasks/'+taskId+'/finish?api_token='+window.user.api_token,
+			// 	method: 'post',
+			// 	data: {
+			// 		status: 'finished',
+			// 		done: 1
+			// 	}
+			// });
 			return $http({
-				url: '/api/tasks/'+taskId+'/finish?api_token='+window.user.api_token,
+				url: '/api/tasks/'+task.id+'/finish?api_token='+window.user.api_token,
 				method: 'post',
 				data: {
 					status: 'finished',
-					done: 1
+					done: !task.done
 				}
 			});
 		},

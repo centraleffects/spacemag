@@ -412,7 +412,7 @@ nav .brand-logo img{
     display: none;
 }
 
-li.editing span.done-false, li.editing span.done-true {
+li.editing span.done-false, li.editing span.done-true, li.editing span.done-0, li.editing span.done-1 {
     display: none;
 }
 
@@ -428,7 +428,7 @@ li.editing span.done-false, li.editing span.done-true {
     text-decoration: line-through;
 }
 
-.todo-list li .done-true  {
+.todo-list li .done-true, .todo-list li .done-1  {
     color: #777777;
     text-decoration: line-through;
 }

@@ -114,7 +114,7 @@ class ShopOwnerController extends Controller
         if( session()->has('selected_shop') ){
             $shop = session()->get('selected_shop');
             $workers = $shop->workers()->get();
-            $tasks = $shop->tasks()->get();
+            $tasks = $shop->tasks()->with('owner')->get();
 
             $shop->tasks = $tasks->toArray();
             $shop->workers = $workers->toArray();
