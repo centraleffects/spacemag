@@ -2,7 +2,28 @@
 	@slot('controller') ng-controller="WorkersTodoController" @endslot
 	
 	@slot('left')
-
+		<div class="card hoverable" id="dashleft-sidebar">
+			<div class="card-content">
+				<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Worker</h5>
+				@component('layouts._partials.search')
+					@slot('search_name') workers @endslot
+				@endcomponent
+				<ul class="collection">
+					<li class="collection-item" ng-if="selectedShop.workers.length" ng-repeat="x in selectedShop.workers | filter:search" ng-click="setSelectedWorker(x)">
+						@include('layouts._partials.dragicon')
+						<span>
+							@{{ x.first_name+' '+x.last_name }}
+						</span>
+				    </li>
+				    <li ng-if="!selectedShop.workers.length">
+					    <span>
+					    	<i class="fa fa-user-times"></i>
+					    	This shop doesn't have any worker at the moment.
+					    </span>
+				    </li>
+				</ul>
+			</div>
+		</div>
 	@endslot
 
 	@slot('center')
@@ -14,12 +35,22 @@
 						<input id="new-todo" type="text" ng-model="todoText"  size="30" placeholder="What needs to be done?" ng-keyup="addTodo()"/>
 					</div>
 					<div id="main" style="display: block;">
-						<!-- <div ng-show="isTodo()" class="row">
-				        	<input id="toggle-all" type="checkbox" ng-model="markAll" ng-click="toggleMarkAll()"/>
-				        	<label for="toggle-all">Mark all as complete</label>
-				        </div> -->
+						<div ng-show="isTodo()" class="row">
+				        	<span>
+						    	<input ng-model="tasks_filter" name="filters" type="radio" id="all_tasks" value="all_tasks"/>
+						    	<label for="all_tasks">All Tasks</label>
+						    </span>
+						    <span>
+						    	<input ng-model="tasks_filter" name="filters" type="radio" id="unassigned_tasks" value="unassigned_tasks"/>
+						    	<label for="unassigned_tasks">Unassigned Tasks</label>
+						    </span>
+						    <span>
+						    	<input ng-model="tasks_filter" name="filters" type="radio" id="completed_tasks" value="completed_tasks"/>
+						    	<label for="completed_tasks">Completed Tasks</label>
+						    </span>
+				        </div>
 						<ul class="collection todo-list">
-							<li class="collection-item row todo-item" ng-repeat="todo in todos" ng-dblclick="toggleEditMode()" custom-autofocus="focusTodo == $index" autofocus>
+							<li class="collection-item row todo-item" ng-repeat="todo in todos" ng-dblclick="toggleEditMode()" custom-autofocus="focusTodo == $index" ng-show="(tasks_filter == 'completed_tasks' && todo.done) ? true : (tasks_filter == 'unassigned_tasks' && todo.owner == null) ? true : (tasks_filter == 'all_tasks' && todo.done != true) ? true : false" autofocus>
 								<span class="col" ng-keyup="editTodo()">
 									@component('layouts._partials.dragicon')
 										@slot('style') fill-grey @endslot
@@ -31,8 +62,8 @@
 									
 								</span>
 								<span class="col col s8 m8 l8">
-									<span class="done-@{{todo.done}}" >@{{ todo.description }}</span>
-									<input class="edit" type="text" ng-model="todo.description" ng-keyup="editOnEnter(todo)" esc-key="toggleEditMode()"/>
+									<span class="done-@{{todo.done}}" title="Double click to edit">@{{ todo.description }}</span>
+									<input class="edit" type="text" ng-model="todo.description" ng-keyup="editOnEnter(todo)" esc-key="toggleEditMode()" title="Press 'Enter' to save and 'ESC' to cancel."/>
 								</span>
 								<span class="col right">
 									<div class="chip" title="Assigned to" ng-if="todo.owner != null">
@@ -74,6 +105,14 @@
 					</div>
 				</div>
 			</div><!-- end Todo -->
+		</div>
+	@endslot
+
+	@slot('right')
+		<div class="card hoverable">
+			<div class="card-content">
+				
+			</div>
 		</div>
 	@endslot
 

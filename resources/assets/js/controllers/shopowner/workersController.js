@@ -70,6 +70,8 @@ function WorkerCtrl ($scope, workerServices, $http, $timeout, $rootScope){
 		}
 	};
 
+	
+
 	$scope.invite = function (btn){
 		var button = $(btn);
 		var data = {

@@ -1,12 +1,15 @@
 function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http, $rootScope) {
     // $scope.todos = [];
     $scope.markAll = false;
-    $scope.shops = [];
     $scope.selectedShop = window.selectedShop;
     // $scope.shopworkers = [];
     $scope.shopworkers = $scope.selectedShop.workers;
     $scope.todos = $scope.selectedShop.tasks;
-    
+
+    $scope.tasks_filter = 'all_tasks';
+    $scope.selectedWorker = null;
+    $scope.firstTimeToggle = true;
+
     // Here is a naive implementation for matching first name, last name, or full name
     $scope.localSearch = function(str) {
         var matches = [];
@@ -21,19 +24,24 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         return matches;
     };
 
-    $scope.init = function() {
-        $timeout(function () {
-            $scope.updateShopList();
-        }, 1000);
+    // $scope.init = function() {
+    //     $timeout(function () {
+    //         $scope.updateShopList();
+    //     }, 1000);
+    // }
+
+    $scope.setSelectedWorker = function (worker){
+        $scope.selectedWorker = worker;
+        console.log($scope.selectedWorker);
     }
 
-    $scope.updateShopList = function(){
+    // $scope.updateShopList = function(){
 
-        shopService.userShopList(window.user.id, window.user.api_token).then(function(response) {
-            console.log(response);
-            $scope.shops = response.data;
-        });
-    }
+    //     shopService.userShopList(window.user.id, window.user.api_token).then(function(response) {
+    //         console.log(response);
+    //         $scope.shops = response.data;
+    //     });
+    // }
 
     $scope.assignTodo = function(entry){
         // console.log(entry.originalObject);
@@ -109,6 +117,14 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         return count;
     };
 
+    $scope.unassignedTasks = function (){
+        var unassignedTasks = angular.forEach($scope.todos, function (todo){
+            return !todo.hasOwnProperty('owner') || !todo.owner.length > 0 ? todo : false;
+        });
+
+        $scope.unassignedTasks = unassignedTasks;
+    };
+
     $scope.hasDone = function() {
         return ($scope.todos.length != $scope.remaining());
     }    
@@ -124,10 +140,21 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     };
 
     $scope.toggleDone = function (index){
-        workerTodoService.markAsDone($scope.todos[index].id).then(function (response){
+        // workerTodoService.markAsDone($scope.todos[index].id).then(function (response){
+        var todo = $scope.todos[index];
+        var flag = false; 
+
+        if( (todo.done == true || todo.done == 1) && $scope.firstTimeToggle == true ){
+            flag = true;
+            $scope.firstTimeToggle = false;
+        }
+        workerTodoService.markAsDone(todo).then(function (response){
             if( response.data.success ){
                 window.reBuy.toast(response.data.msg);
-                $scope.updateShopList();
+                
+                // $scope.updateShopList();
+                // if( $scope.firstTimeToggle && )
+                if( flag == true ) $scope.todos[index].done = false;
             }else{
                 window.reBuy.alert(response.data.msg);
             }
@@ -167,9 +194,12 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         });
     }
 
-    $scope.init();
+    // $scope.init();
 
 }
 
 
 app.controller('WorkersTodoController', WorkersTodoCtrl);
+// app.filter('task_filter', function (){
+
+// });
