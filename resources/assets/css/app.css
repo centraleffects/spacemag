@@ -717,6 +717,10 @@ li.collection-item.active:not(.todo-item) a {
     width: 100% !important;
 }
 
+.select2-container--default .select2-selection--multiple .select2-selection__choice{
+    margin-top: 1px !important;
+}
+
 /* Sales Spots*/
 .spot-index{
     width: 30px;

@@ -13,7 +13,7 @@ use App\Article;
 use App\Sale;
 use App\SalespotCategoryType;
 use App\ArticleTag;
-use App\ArticleCategories;
+// use App\ArticleCategory;
 use App\Tag;
 use App\ArticlePrice;
 use App\ArticleLabel;
@@ -243,21 +243,23 @@ class ArticleController extends Controller
         if(!$new_article ){
             if($selectedArticle->tags){
                 foreach($selectedArticle->tags as $key => $tag){
-                        $Tag = Tag::where('id', $tag->tag_id)->first();
-                        if($Tag){
-                            $selectedArticle->tags[$key]['tag'][$key] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];
-                            $selected_article_tags[] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];  
-                        }
-                        $Tag = [];
+                    $Tag = Tag::where('id', $tag->tag_id)->first();
+                    if($Tag){
+                        $selectedArticle->tags[$key]['tag'][$key] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];
+                        $selected_article_tags[] = [ 'id'=> $Tag->id , 'name' => $Tag->name ];  
+                    }
+                    $Tag = [];
                 }
             }
+            // dd($selectedArticle->categories()->get());
+            if($selectedArticle->categories()->get()){
+                foreach($selectedArticle->categories()->get() as $key => $category){
+                    // $categoryType = SalespotCategoryType::where( 'id', $category->category_id)->first();
+                    $categoryType = SalespotCategoryType::find($category->id);
 
-            
-            if($selectedArticle->categories){
-                foreach($selectedArticle->categories as $key => $category){
-                        $categoryType = SalespotCategoryType::where( 'id', $category->category_id)->first();
-                        $selectedArticle->categories[$key]['category'][$key] = [ 'id'=> $categoryType->id , 'name' => $categoryType->name ];
-                        array_push($selected_article_categories, $categoryType->id );
+                    // $selectedArticle->categories[$key]['category'][$key] = [ 'id'=> $categoryType->id , 'name' => $categoryType->name ];
+                    
+                    array_push($selected_article_categories, $categoryType->id );
                 }
             }
         }
@@ -324,12 +326,22 @@ class ArticleController extends Controller
 
     private function updateCategories($article, $data){
       if(!empty($data['categories'])){
-           ArticleCategories::where("article_id", $article->id )->delete();
-           foreach( $data['categories'] as $category){
-                    $newArticleCategory = new ArticleCategories();
+           // ArticleCategory::where("article_id", $article->id )->delete();
+            $article->categories()->detach();
+            foreach( $data['categories'] as $category){
+                   /* $newArticleCategory = new ArticleCategory();
                     $newArticleCategory->article_id = $article->id;
                     $newArticleCategory->category_id = $category;
+                    // dd($newArticleCategory);
+                    // $newArticleCategory->articles()->save($article);
+                    // $newArticleCategory->category()->attach($category);
                     $newArticleCategory->save();
+
+                    // dd($article);*/
+
+                    $article->categories()->attach($category);
+
+
            }
         }
     }

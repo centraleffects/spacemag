@@ -22,8 +22,12 @@ class CreateArticleCategoryTable extends Migration
             $table->integer('article_id')->unsigned()->index();
             $table->foreign('article_id')->references('id')->on('articles');
 
-            $table->integer('category_id')->unsigned()->index();
-            $table->foreign('category_id')->references('id')->on('salespot_categories');
+            // $table->integer('category_id')->unsigned()->index();
+            $table->integer('salespot_category_type_id')->unsigned()->index();
+            // $table->foreign('category_id')->references('id')->on('salespot_categories');
+            // $table->foreign('category_id')->references('id')->on('salespot_categories_types');
+            $table->foreign('salespot_category_type_id')->references('id')->on('salespot_category_types')
+                ->onDelete('cascade');
 
             $table->timestamps();
             

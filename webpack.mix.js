@@ -17,8 +17,7 @@ mix.combine(
         'resources/assets/materialize/css/materialize.css',
         'resources/assets/css/font-awesome.css',
         'resources/assets/css/lib/jquery-ui.css',
-        'resources/assets/css/select2-materialize.css'
-        'resources/assets/css/lib/selectize.css'
+        'resources/assets/css/lib/select2-materialize.css'
     ], 'public/css/vendor.css')
     .combine(
         [

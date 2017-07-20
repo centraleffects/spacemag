@@ -23,7 +23,10 @@ class Article extends Model
     }
 
     public function categories(){
-        return $this->hasmany('App\ArticleCategory');
+        // return $this->hasmany('App\ArticleCategory');
+        return $this->belongsToMany('App\SalespotCategoryType', 'article_category')
+            ->withPivot('article_id', 'salespot_category_type_id')
+            ->withTimestamps();
     }
 
 
