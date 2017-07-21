@@ -258,7 +258,7 @@ class ArticleController extends Controller
                     $categoryType = SalespotCategoryType::find($category->id);
 
                     // $selectedArticle->categories[$key]['category'][$key] = [ 'id'=> $categoryType->id , 'name' => $categoryType->name ];
-                    
+
                     array_push($selected_article_categories, $categoryType->id );
                 }
             }
@@ -325,9 +325,10 @@ class ArticleController extends Controller
     }
 
     private function updateCategories($article, $data){
+      $article->categories()->detach();
       if(!empty($data['categories'])){
            // ArticleCategory::where("article_id", $article->id )->delete();
-            $article->categories()->detach();
+            
             foreach( $data['categories'] as $category){
                    /* $newArticleCategory = new ArticleCategory();
                     $newArticleCategory->article_id = $article->id;

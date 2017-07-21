@@ -53,6 +53,9 @@
 							</div>
 							<div class="input-field">
 								<select name="categories"  id="categories" multiple="multiple">
+									@if(empty($selected_article_categories))
+										<option disabled value="">Please select a category</option>
+									@endif
 								    @forelse ($categories as $category)
 								    	@if( in_array($category->id, $selected_article_categories) )
 								    		<option value="{{ $category->id }}" selected="selected"> {{ $category->name }} </option>
