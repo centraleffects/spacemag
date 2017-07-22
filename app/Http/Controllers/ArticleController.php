@@ -106,7 +106,10 @@ class ArticleController extends Controller
                     $article->color = !empty($data['color']) ? $data['color'] : '';
                     $article->shop_id = $shop->id;
                     
-
+                    if(!$article->barcode_id){
+                       $article->barcode_id = abs( crc32( uniqid() ) ); 
+                    }
+                    
                     if(!empty($data['client'])){
                         $article->user_id = $data['client'];
                     }else{
@@ -274,6 +277,16 @@ class ArticleController extends Controller
 
     }
 
+
+    public function print_label(Article $article){
+   
+        if(!$article){ return "Invalid article"; }
+        
+        $prices = ArticlePrice::where(["article_id" => $article->id, 'status' => 1])->first();
+        
+        return view('shop_owner.print_label',compact('prices', 'article'));
+    }
+
     private function uploadLabelSamplePicture($article, $input, $data){
         $sample_picture_filename = "";
         if(!empty($input['data']['files']['sample_picture'])){
@@ -419,4 +432,7 @@ class ArticleController extends Controller
         $label->label_quantity =  !empty($data['label_quantity']) ? $data['label_quantity'] : NULL;
         $label->save();
     }
+
+
+
 }
