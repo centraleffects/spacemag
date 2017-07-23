@@ -3,27 +3,30 @@
 
 	@slot('left')
 		<div class="card hoverable" id="dashleft-sidebar">
-			<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Worker</h5>
-			@component('layouts._partials.search')
-				@slot('search_name') workers @endslot
-			@endcomponent
-			<ul class="collection">
-				<li class="collection-item" ng-if="workers.length" ng-repeat="x in workers | filter:search" ng-click="viewWorker($index)">
-					@include('layouts._partials.dragicon')
-					<span>
-						@{{ x.first_name+' '+x.last_name }}
-					</span>
-					<a class="right" title="Delete" ng-click="removeWorker($index)">
-						<i class="fa fa-trash"></i>
-					</a>
-			    </li>
-			    <li ng-if="!workers.length">
-				    <span>
-				    	<i class="fa fa-user-times"></i>
-				    	This shop doesn't have any worker at the moment.
-				    </span>
-			    </li>
-			</ul>
+			<div class="card-content">
+				<h5><i class="fa fa-caret-down" aria-hidden="true"></i> List of Worker</h5>
+				@component('layouts._partials.search')
+					@slot('search_name') workers @endslot
+				@endcomponent
+				<ul class="collection">
+					<li class="collection-item" ng-if="workers.length" ng-repeat="x in workers | filter:search" ng-click="viewWorker($index)">
+						@include('layouts._partials.dragicon')
+						<span>
+							@{{ x.first_name+' '+x.last_name }}
+						</span>
+						<a class="right" title="Delete" ng-click="removeWorker($index)">
+							<i class="fa fa-trash"></i>
+						</a>
+				    </li>
+				    <li ng-if="!workers.length">
+					    <span>
+					    	<i class="fa fa-user-times"></i>
+					    	This shop doesn't have any worker at the moment.
+					    </span>
+				    </li>
+				</ul>
+				
+			</div>
 			<div class="card-action">
 				<a class="btn-floating btn-large waves-effect waves-light green right tooltipped" data-position="left" data-delay="50" data-tooltip="Add new shop worker" href="#!" ng-click="addNewWorker()">
 					<i class="material-icons">add</i>

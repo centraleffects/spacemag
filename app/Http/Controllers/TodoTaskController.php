@@ -111,7 +111,8 @@ class TodoTaskController extends Controller
         }
 
         if( $task->update() )
-            return ['success' => 1, 'msg' => $msg];
+            $is_done = $action == 're-open' ? false : true;
+            return ['success' => 1, 'msg' => $msg, 'done' => $is_done];
 
         return ['success' => 0, 'msg' => 'Something went wrong while trying to '.$action.' this task.'];
     }

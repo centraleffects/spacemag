@@ -50,7 +50,7 @@
 						    </span>
 				        </div>
 						<ul class="collection todo-list">
-							<li class="collection-item row todo-item" ng-repeat="todo in todos" ng-dblclick="toggleEditMode()" custom-autofocus="focusTodo == $index" ng-show="(tasks_filter == 'completed_tasks' && todo.done) ? true : (tasks_filter == 'unassigned_tasks' && todo.owner == null) ? true : (tasks_filter == 'all_tasks' && todo.done != true) ? true : false" autofocus>
+							<li class="collection-item row todo-item" ng-repeat="todo in todos" ng-dblclick="toggleEditMode()" custom-autofocus="focusTodo == $index" ng-show="(tasks_filter == 'completed_tasks' && (todo.done == 1 || todo.done == true)) ? true : (tasks_filter == 'unassigned_tasks' && todo.owner == null) ? true : (tasks_filter == 'all_tasks' && (todo.done != true || todo.done != 1) ) ? true : false" autofocus>
 								<span class="col" ng-keyup="editTodo()">
 									@component('layouts._partials.dragicon')
 										@slot('style') fill-grey @endslot

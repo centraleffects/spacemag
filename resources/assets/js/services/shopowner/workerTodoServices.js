@@ -23,14 +23,6 @@ app.service('workerTodoService', function($http, $timeout) {
 		},
 
 		markAsDone: function (task){
-			// return $http({
-			// 	url: '/api/tasks/'+taskId+'/finish?api_token='+window.user.api_token,
-			// 	method: 'post',
-			// 	data: {
-			// 		status: 'finished',
-			// 		done: 1
-			// 	}
-			// });
 			return $http({
 				url: '/api/tasks/'+task.id+'/finish?api_token='+window.user.api_token,
 				method: 'post',
@@ -41,16 +33,28 @@ app.service('workerTodoService', function($http, $timeout) {
 			});
 		},
 
-		update: function (taskId){
-			return $http({
-				url: '/api/tasks/'+taskId+'/update?api_token='+window.user.api_token,
-				method: 'post',
-				data: {
-					status: 'finished',
-					done: 1
-				}
-			});
-		},
+		// update: function (taskId){
+		// 	return $http({
+		// 		url: '/api/tasks/'+taskId+'/update?api_token='+window.user.api_token,
+		// 		method: 'post',
+		// 		data: {
+		// 			status: 'finished',
+		// 			done: 1
+		// 		}
+		// 	});
+		// },
+
+		updateTodo: function (todo){
+	    	var url = '/api/tasks/'+todo.id+'/update?api_token='+window.user.api_token;
+
+	        return $http({
+	        	url: url,
+	        	method: 'post',
+	        	data: {
+	        		description: todo.description
+	        	}
+	        });
+	    },
 
 		delete: function (taskId){
 			return $http({

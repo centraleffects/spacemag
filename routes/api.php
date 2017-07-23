@@ -11,12 +11,6 @@
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-	
-//     return dd($request->user());
-// });
-
-
 Route::get('test', function (){
 	App::setLocale('sv');
 	dd(session()->has('applocale'));
@@ -101,6 +95,7 @@ Route::group(['prefix' => 'users', 'middleware' => 'auth:api'], function (){
 
 Route::group(['prefix' => 'workers', 'middleware' => 'auth:api'], function (){
 	Route::get('/', 'UserController@workers');
+	// Route::get('{worker}/todos', '');
 });
 
 Route::group(['prefix' => 'tasks', 'middleware' => 'auth:api'], function (){
