@@ -5,7 +5,7 @@ app.factory('spotService', function($http, $timeout){
         spotList: function() {
             if ( !promiseSpotList ) {
               // $http returns a promise, which has a then function, which also returns a promise
-              promiseSpotList = $http.get('/api/salespot/list/?id='+window.user.id +'&api_token='+window.user.api_token).then(function (response) {
+              promiseSpotList = $http.get('/api/salespot/list/'+window.selectedShop.id+'?id='+window.user.id +'&api_token='+window.user.api_token).then(function (response) {
                 // The then function here is an opportunity to modify the response
                 // The return value gets picked up by the then in the controller.
                 return response.data;

@@ -55,6 +55,11 @@ if(!function_exists('pr')){
 if(!defined('LABEL_DIR')){
 	define('LABEL_DIR', __DIR__.'/labels/');
 }
+
+if(!defined('FLOOR_MAP')){
+	define('FLOOR_MAP', __DIR__.'/floorplan/');
+}
+
 /*
 |--------------------------------------------------------------------------
 | Run The Application

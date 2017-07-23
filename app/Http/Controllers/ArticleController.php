@@ -106,7 +106,10 @@ class ArticleController extends Controller
                     $article->color = !empty($data['color']) ? $data['color'] : '';
                     $article->shop_id = $shop->id;
                     
-
+                    if(!$article->barcode_id){
+                       $article->barcode_id = abs( crc32( uniqid() ) ); 
+                    }
+                    
                     if(!empty($data['client'])){
                         $article->user_id = $data['client'];
                     }else{
@@ -258,7 +261,7 @@ class ArticleController extends Controller
                     $categoryType = SalespotCategoryType::find($category->id);
 
                     // $selectedArticle->categories[$key]['category'][$key] = [ 'id'=> $categoryType->id , 'name' => $categoryType->name ];
-                    
+
                     array_push($selected_article_categories, $categoryType->id );
                 }
             }
@@ -272,6 +275,17 @@ class ArticleController extends Controller
 
         return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices', 'new_article'));
 
+    }
+
+
+    public function print_label(Article $article){
+   
+        if(!$article){ return "Invalid article"; }
+        
+        $prices = ArticlePrice::where(["article_id" => $article->id, 'status' => 1])->first();
+        $shop = session()->get('selected_shop');
+        
+        return view('shop_owner.print_label',compact('prices', 'article', 'shop'));
     }
 
     private function uploadLabelSamplePicture($article, $input, $data){
@@ -325,9 +339,10 @@ class ArticleController extends Controller
     }
 
     private function updateCategories($article, $data){
+      $article->categories()->detach();
       if(!empty($data['categories'])){
            // ArticleCategory::where("article_id", $article->id )->delete();
-            $article->categories()->detach();
+            
             foreach( $data['categories'] as $category){
                    /* $newArticleCategory = new ArticleCategory();
                     $newArticleCategory->article_id = $article->id;
@@ -418,4 +433,7 @@ class ArticleController extends Controller
         $label->label_quantity =  !empty($data['label_quantity']) ? $data['label_quantity'] : NULL;
         $label->save();
     }
+
+
+
 }

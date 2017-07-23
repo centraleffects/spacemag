@@ -41,7 +41,7 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 			function formatTag (tag) {
 			  if (!tag.id) { return tag.text; }
 			  var $tags = $(
-			    '<span><img src="/images/bg.jpg" class="img-flag circle" style="width:20px; height:20px;" /> ' + tag.text + '</span>'
+			    '<span>' + tag.text + '</span>'
 			  );
 			  
 			  return $tags;

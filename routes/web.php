@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 
 Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
+	
 	Route::get('/', 'ShopOwnerController@index');
 
 	Route::get('customers', 'ShopOwnerController@customers');
@@ -72,6 +73,9 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
 	});
 
+	Route::post('/updatefloorplan', 'ShopController@updateFloorPlan');
+	Route::post('/update', 'ShopController@ownerUpdateStore');
+
 });
 
 
@@ -93,6 +97,7 @@ Route::group(['middleware' => 'web'], function (){
 			Route::get('new',['uses' =>'ArticleController@indexOwner']);
 			Route::post('store',['uses' =>'ArticleController@store']);
 			Route::get('delete/{article}',['uses' =>'ArticleController@destroy']);
+			Route::get('/print/{article}',['uses' =>'ArticleController@print_label']);
 		});
 	});
 

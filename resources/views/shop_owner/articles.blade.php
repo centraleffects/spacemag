@@ -53,6 +53,9 @@
 							</div>
 							<div class="input-field">
 								<select name="categories"  id="categories" multiple="multiple">
+									@if(empty($selected_article_categories))
+										<option disabled value="">Please select a category</option>
+									@endif
 								    @forelse ($categories as $category)
 								    	@if( in_array($category->id, $selected_article_categories) )
 								    		<option value="{{ $category->id }}" selected="selected"> {{ $category->name }} </option>
@@ -255,13 +258,20 @@
 	        @if($selectedArticle->id )
 				<div class="card hoverable">
 		            <div class="card-content">
-		              <span class="card-title">BarCode</span>
-		              <br>
-		              <div><img src="{{ Helper::getBarCode( $selectedArticle->id.' '.$selectedArticle->name ) }}"/></div>
-		              <div>{{$selectedArticle->name}}</div>
+		               <span class="card-title">BarCode</span>
+		               <br>
+		               @if(!empty($selectedArticle->barcode_id))
+			               <div class="barcodebox">
+								<div><img src="{{ Helper::getBarCode( $selectedArticle->barcode_id ) }}"/></div>
+								<div class="barcode">{{$selectedArticle->barcode_id}}</div>
+								<div class="article-name">{{$selectedArticle->name}}</div>
+								<div>Cost: {{$prices->price}} {{$shop->currency}}</div>
+							</div>
+						@endif
+						<div class="clearfix"></div>
 		            </div>
 		            <div class="card-action">
-		              <a href="javascript:;;" onclick="window.reBuy.alert('Error: Cannot Find Printer Device')">Print</a>
+		              <a href="/shop/articles/print/1" target="_blank">Print</a>
 		            </div>
 		         </div>
 	        @endif
@@ -277,5 +287,3 @@
 	@endslot
 </div>
 @endcomponent
-
-{{dd($selectedArticle)}}

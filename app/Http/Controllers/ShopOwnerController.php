@@ -330,7 +330,8 @@ class ShopOwnerController extends Controller
 
     public function spots(Salespot $id){
 
-        
-        return view('shop_owner.spots');
+        $shop = session()->get('selected_shop');
+        $floorimg = file_exists(FLOOR_MAP.'img_'.$shop->id.'.jpg') ? 'img_'.$shop->id.'.jpg' : 'default.jpg';
+        return view('shop_owner.spots')->withShop($shop)->withFloorimg($floorimg);;
     }
 }
