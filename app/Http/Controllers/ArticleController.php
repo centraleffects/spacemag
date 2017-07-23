@@ -283,8 +283,9 @@ class ArticleController extends Controller
         if(!$article){ return "Invalid article"; }
         
         $prices = ArticlePrice::where(["article_id" => $article->id, 'status' => 1])->first();
+        $shop = session()->get('selected_shop');
         
-        return view('shop_owner.print_label',compact('prices', 'article'));
+        return view('shop_owner.print_label',compact('prices', 'article', 'shop'));
     }
 
     private function uploadLabelSamplePicture($article, $input, $data){

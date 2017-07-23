@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 
 Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
+	
 	Route::get('/', 'ShopOwnerController@index');
 
 	Route::get('customers', 'ShopOwnerController@customers');
@@ -71,6 +72,9 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 		Route::get('{id}',['uses' =>'ShopCouponController@indexOwner']);
 		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
 	});
+
+	Route::post('/updatefloorplan', 'ShopController@updateFloorPlan');
+	Route::post('/update', 'ShopController@ownerUpdateStore');
 
 });
 

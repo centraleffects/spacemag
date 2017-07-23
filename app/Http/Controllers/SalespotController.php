@@ -156,13 +156,17 @@ class SalespotController extends Controller
                 return [ 'success' => 1];
             }
         }
-        
         return [ 'success' => 0];
     }
 
-    public function getlist(){
-        $list = Salespot::with('categories','prices', 'bookings')->with('categories.type')->with('bookings.user')->get()->toArray();
-        return $list;
+    public function getlist(Shop $shop){
+
+            return Salespot::where('shop_id', $shop->id)
+                            ->with('categories','prices', 'bookings')
+                            ->with('categories.type')
+                            ->with('bookings.user')
+                            ->get()->toArray();
+
     }
 
     public function getAvailableSaleSpot(Shop $shop){

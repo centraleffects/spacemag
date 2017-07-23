@@ -36,10 +36,10 @@
 								<label>{{__("messages.homepage")}}</label>
 							</div>
 
-							<div class="input-field">
+						<!-- 	<div class="input-field">
 								<input type="text" name="postel" value="{{$shop->shop_postel}}">
 								<label>{{__("messages.postel")}}</label>
-							</div>
+							</div> -->
 
 							<div class="input-field">
 								<select name="currency">
@@ -65,12 +65,12 @@
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="commission_article_sale">
+								<input type="text" name="commission_article_sale" value="{{$shop->commission_article_sale}}">
 								<label>{{__("messages.commission_article")}}</label>
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="commission_salespot">
+								<input type="text" name="commission_salespot" value="{{$shop->commission_salespot}}">
 								<label>{{__("messages.rebuy_commission")}}</label>
 							</div>
 						</div>
@@ -83,11 +83,17 @@
 			<div class="card hoverable">
 				<div class="row card-content">
 					<span class="card-title">Upload Store Floor Plan</span>
-					<button class="btn waves-effect waves-light blue" ng-click="events.viewTab('salespot')">
-						View Salespot
-					</button>
-					<a href="javascript:;;" onclick="document.getElementById(\"browsefile\").click()"> Browse Floor Plan</a>
-					<input type="file" id="uploadFloorplan" name="uploadFloorplan" style="display:none">
+					<a href="javascript:;;" onclick="document.getElementById('uploadFloorplan').click()"> Browse Floor Plan</a>
+					{{ Form::open(array('url' => '/shop/updatefloorplan','files'=>'true', 'id' => 'uploadFloorplanForm')) }}
+						{{csrf_field()}}
+						<input type="file" id="uploadFloorplan" onchange="document.getElementById('uploadFloorplanForm').submit()" name="uploadFloorplan" style="display:none">
+					{{ Form::close() }}
+					<br>
+					<div>
+						@if(file_exists(FLOOR_MAP.'img_'.$shop->id.'.jpg'))
+							<img src="/floorplan/img_{{$shop->id}}.jpg"  class="materialboxed responsive-img"/>
+						@endif
+					</div>
 				</div>
 			</div>	
 

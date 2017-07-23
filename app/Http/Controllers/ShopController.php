@@ -215,6 +215,26 @@ class ShopController extends Controller
         return $response;
     }
 
+    public function ownerUpdateStore(){
+        $response = ['success' => 0];
+        
+        $input = Input::all();
+
+        $shop = Shop::find($input['id']);  
+
+        $shop->name = $input['name'];
+        $shop->description = $input['description'];
+        $shop->url = isset($input['url']) ? $input['url'] : '';
+        $shop->currency = isset($input['currency']) ? $input['currency'] : '';
+        $shop->slug = isset($input['slug']) ? $input['slug'] : "";
+        $shop->commission_article_sale = isset($input['commission_article_sale'])? $input['commission_article_sale'] : '';
+        $shop->commission_salespot = isset($input['commission_salespot']) ? $input['commission_salespot'] : '';
+  
+        if($shop->save()){
+            $response['success'] = 1;
+        }
+        return $response;
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -371,5 +391,31 @@ class ShopController extends Controller
         }
 
         return $results;
+    }
+
+    public function updateFloorPlan(Request $request){
+        $shop = session()->get('selected_shop');
+        $input = Input::all();
+        $file = $request->file('uploadFloorplan');
+
+        if($file->getMimeType() === 'image/jpeg'){
+
+            if(!is_dir(FLOOR_MAP)){
+                mkdir(FLOOR_MAP, 0775);
+              }
+            $source = fopen($file->getPathname(), 'r');
+            $destination = fopen(FLOOR_MAP.'img_'.$shop->id.'.jpg', 'w');
+
+            stream_copy_to_stream($source, $destination);
+
+            fclose($source);
+            fclose($destination);
+
+             return  redirect('/shop')->with('success', 'The floor plan image for '.$shop->name.' had been updated.');
+
+        }else{
+            return  redirect('/shop')->with('error', 'Please upload floor plan image in JPG/JPEG format only.');
+        }
+        dd($file);
     }
 }

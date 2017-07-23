@@ -86,8 +86,7 @@
 		<div><img src="{{ Helper::getBarCode( $article->barcode_id ) }}"/></div>
 		<div class="barcode">{{$article->barcode_id}}</div>
 		<div class="article-name">{{$article->name}}</div>
-		<div>Cost: {{$prices->price}} Kr</div>
+		<div>Cost: {{$prices->price}} {{$shop->currency}}</div>
 	</div>
 	@endfor
 </div>
-

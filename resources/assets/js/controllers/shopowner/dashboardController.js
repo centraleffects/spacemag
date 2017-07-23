@@ -53,7 +53,7 @@ app.controller('dashboardController', function($scope, shopService, $timeout, $t
         },
         updateSelected : function(){
 
-            var url = '/api/shops/update';
+            var url = '/shops/update';
             $http({
                 method: 'POST',
                 url: url + '?api_token=' + window.adminJS.me.api_token,
@@ -196,7 +196,7 @@ app.controller('dashboardController', function($scope, shopService, $timeout, $t
                     formData = form.serialize();
 
                 $.ajax({
-                    url: '/api/shops/update?api_token='+user.api_token,
+                    url: '/shop/update?api_token='+user.api_token,
                     type: 'post',
                     dataType: 'json',
                     data: formData,
