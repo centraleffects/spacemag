@@ -77,12 +77,13 @@
 					<div class="row card-content">
 						<span class="card-title">List of Shop Owners</span>
 						<table class="bordered highlight">
-							<tr>
-								<td>@{{selectedShop.owner.email}}</td>
+							<tr ng-repeat="owner in selectedShop.owner" >
+								<td ng-cloak>@{{owner.email}}</td>
 								<td>
-									<a href="javascript:;" ng-click="events.loginAsOwner()">
+									<a href="javascript:;" ng-click="events.loginAsOwner(owner.id)">
 									Login as Owner
-									</a>
+									</a>  | 
+									<a href="javascript:;"  ng-click="events.removeOwner(owner.id)">Remove</a>
 								</td>
 							</tr>
 						</table>
@@ -96,14 +97,15 @@
 						<span class="card-title">Add New Shop Owner</span>
 						<div class="input-field">
 							<input type="hidden" ng-model="selectedShop.owner.email" class="hide">
-							<input type="email" name="owner.email" id="owner_email" ng-model="selectedShop.owner.email" placeholder="Enter email">
+							<input type="email" name="owner.email" id="owner_email" ng-model="selectedShop.newOwner" placeholder="Enter email">
 						</div>
 						<div id="listofowners-autocomplete" ng-show="owners.length">
 							<div class="collection">
 								<a href="javascript:;" 
 										class="list-shops collection-item" 
-										ng-repeat="owner in owners | filter : selectedShop.owner.email" 
-										ng-click="events.changeOwner($index)">
+										ng-repeat="owner in owners | filter : selectedShop.newOwner" 
+										ng-click="events.changeOwner($index)"
+										ng-cloak>
 										@{{ owner.name }}
 								</a>
 							</div>
@@ -111,7 +113,7 @@
 						<p ng-show="(owners | filter : selectedShop.owner.email).length == 0" class="red-text">User doesn't exist. <span class="green-text"><a href="javascript:;;">Account for <b>@{{selectedShop.owner.email}}</b> will be created and will receive an email invitation when you save the changes</a></span></p>
 					</div>
 					<div class="card-action">
-						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()" ng-disabled="isUpdatingOwner">
+						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()" ng-disabled="isUpdatingOwner" ng-cloak>
 							@{{ selectedShop.isNew ? 'Save' : 'Save Changes' }}
 						</button>
 					</div>
@@ -127,14 +129,14 @@
 						</div>
 					</div>	 -->
 
-					<div class="card hoverable">
+				<!-- 	<div class="card hoverable">
 						<div class="row card-content">
 							<span class="card-title">Upload Store Floor Plan</span>
 							<button class="btn waves-effect waves-light blue" ng-click="events.uploadFloorPlan('salespot')">
 								Browse File
 							</button>
 						</div>
-					</div>	
+					</div>	 -->
 					
 					<!-- <div class="card hoverable">
 						<div class="row card-content">

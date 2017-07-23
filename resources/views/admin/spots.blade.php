@@ -25,7 +25,7 @@
 	</div>
 	<div class="col s6 map-area-container" id="mapsection">
 		<div class="scrollspy panzoom-parent map-area white" id="floorplan-container">
-			<div class="panzoom" id="spot-panzoom" 
+			<!-- <div class="panzoom" id="spot-panzoom" 
 					style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" 
 					width="2426" height="1121" data-width="2426" data-height="1121"/>
 				<div ng-repeat="(key, spot) in spots.data" 
@@ -37,7 +37,7 @@
 							data-tooltip="@{{spot.name}}"
 							style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class="col s3">

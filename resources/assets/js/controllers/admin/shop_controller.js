@@ -242,13 +242,14 @@ rebuyApp.controller('adminShopController', function($scope, shopService, $timeou
         },
         // changeOwner: function(owner) {
         changeOwner: function(index) {
-            console.log($scope.owners[index].data);
+            var newOwner = $scope.owners[index].data;
+            return false;
             $scope.selectedShop.owner = $scope.owners[index].data;
 
         },
-        loginAsOwner: function() {
-            if ($scope.selectedShop.owner.id) {
-                window.location = '/shop/login-as/' + $scope.selectedShop.owner.id + '/' + $scope.selectedShop.id;
+        loginAsOwner: function(owner_id) {
+            if (owner_id) {
+                window.location = '/shop/login-as/' + owner_id + '/' + $scope.selectedShop.id;
             }
         }
     }
