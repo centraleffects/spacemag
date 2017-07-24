@@ -79,6 +79,7 @@ require('./lib/jquery.panzoom');
 require('./lib/jquery.mousewheel');
 require('jquery-ui');
 require('./lib/select2.min');
+// require('select2');
 
 require('./directives/all')
 

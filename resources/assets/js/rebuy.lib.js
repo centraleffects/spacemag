@@ -1,4 +1,5 @@
 (function($){
+
     $.reBuy = {
         disableBtn : function (btn){
             btn.attr("disabled", "disabled").addClass("disabled");
@@ -129,7 +130,6 @@
             });
             $('.chips').material_chip();
             $('select:not(".select2")').material_select();
-            $('.select2').select2();
             // $('#password').strength_meter();
 
             $(document).on("click", ".alert .close", function (){
