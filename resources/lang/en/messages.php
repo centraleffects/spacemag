@@ -48,7 +48,9 @@ return [
 	"thanks" => "Thanks",
 	"save_changes" => "Save changes",
 	'email_updated' => "Your email has been updated. You will need to use this email (:email) when you log in.",
-	'change_avatar' => 'Change avatar'
-
+	'change_avatar' => 'Change avatar',
+	'no_salespot_yet' => "It seems the owner of this shop hasn't added any salespot yet.",
+	'available' => 'Available',
+	'occupied' => 'Occupied'
 
 ];

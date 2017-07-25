@@ -40,14 +40,30 @@
 					</li>
 				</ul>
 
-				<div id="active_bookings">
+				<div id="active_bookings" class="tab-content">
 					
 				</div>
 
-				<div id="services"></div>
+				<div id="services" class="tab-content"></div>
 
-				<div id="salespots">
-					
+				<div id="salespots" class="tab-content">
+					<div class="map-area-container" id="mapsection">
+						<div class="scrollspy panzoom-parent map-area white" id="floorplan-container">
+							<div class="panzoom" id="spot-panzoom" 
+									style="background: url(/floorplan/spots/test_12345.jpg);width: 2426px; height: 1121px;" 
+									width="2426" height="1121" data-width="2426" data-height="1121"/>
+								<div ng-repeat="(key, spot) in spots.data" 
+											class="shopspot tooltipped draggable" 
+											id="@{{'spt'+ spot.id}}" 
+											data-position="bottom" data-delay="50" 
+											ng-show="spots.data"
+											ng-click="events.viewSpot(key,spot);"
+											data-tooltip="@{{spot.name}}"
+											style="@{{ 'margin-left:' + spot.x_coordinate + 'px; margin-top:' + spot.y_coordinate + 'px'}}">
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="card-action">

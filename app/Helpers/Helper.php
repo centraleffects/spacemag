@@ -144,4 +144,25 @@ class Helper {
 		return asset($path);
 	}
 
+	public static function getSalesSpotTypeColor($type){
+		switch ($type) {
+			case 'hanger':
+				$c = "pink";
+				break;
+			
+			case 'shelves':
+				$c = 'orange';
+				break;
+
+			case 'standard':
+				$c = 'yellow';
+				break;
+
+			case 'wall section':
+				$c = 'blue';
+				break;
+		}
+
+		return $c;
+	}
 }

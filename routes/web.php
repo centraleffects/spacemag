@@ -74,7 +74,8 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 	});
 
 	Route::post('/updatefloorplan', 'ShopController@updateFloorPlan');
-	Route::post('/update', 'ShopController@ownerUpdateStore');
+	// Route::post('/update', 'ShopController@ownerUpdateStore');
+	Route::post('update', 'ShopController@update');
 
 });
 
@@ -135,7 +136,9 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try', function (){
-	
-});
+Route::get('try/{shop}', function (\App\Shop $shop){
+	// dd($shop->users()->get());
+	dd($shop->salespots()->skip(1)->take(2)->get());
+	dd($shop->salespots()->skip(1)->first()->prices()->get());
+});	
 

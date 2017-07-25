@@ -30,7 +30,7 @@ return [
     */
 
     // 'lifetime' => 120,
-    'lifetime' => 21600, // 360 days, 15 days
+    'lifetime' => 2880, // 48 hours, 2 days
     // 'lifetime' => 43800, // 730 hours, around 30.4166667 days (average of a month)
 
     'expire_on_close' => false,

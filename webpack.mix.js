@@ -26,9 +26,7 @@ mix.combine(
         ], 'public/css/app.css');
 
 
-mix
-  // .js('resources/assets/js/lib/jquery-ui.js', 'public/js/jquery-ui.js')
-   .js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
+mix.js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
    .js('resources/assets/js/app.js', 'public/js/app.js')
    .js('resources/assets/js/main.js', 'public/js/main.js')
    .js('resources/assets/js/admin.js', 'public/js/admin.js')
