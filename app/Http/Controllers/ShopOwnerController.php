@@ -25,7 +25,8 @@ class ShopOwnerController extends Controller
     {
         $this->middleware(function ($request, $next) {
             
-            if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker()) ){
+            if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker()) 
+                or $request->session()->has('loggedin_as_someone') ){
                 $user = auth()->user();
 
                 if( auth()->user()->isOwner() ){
@@ -54,9 +55,11 @@ class ShopOwnerController extends Controller
                     'selectedShop' => $shop,
                     'shops' => $shops
                 ]);
+
+                return $next($request);
             }
 
-            return $next($request);
+            return redirect('/');
             
         });
     }

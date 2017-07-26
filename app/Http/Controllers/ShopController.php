@@ -216,7 +216,7 @@ class ShopController extends Controller
     }
 
     public function ownerUpdateStore(){
-        $response = ['success' => 0];
+        $response = ['success' => 0, 'msg' => __('messages.no_changes_saved')];
         
         $input = Input::all();
 
@@ -232,6 +232,7 @@ class ShopController extends Controller
   
         if($shop->save()){
             $response['success'] = 1;
+            $response['msg'] = __('messages.changes_saved');
         }
         return $response;
     }

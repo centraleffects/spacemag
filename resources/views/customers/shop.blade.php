@@ -20,16 +20,28 @@
 		<div class="card hoverable">
 			<div class="card-content">
 				<div class="card-title">Sale Spots</div>
-				<ul class="collection" data-collapsible="accordion">
-					@forelse($shop->salespots() as $salespot)
+				<ul class="collapsible popout" data-collapsible="accordion">
+					@forelse($shop->salespots()->get() as $salespot)
 					<li>
-						<div class="collapsible-header">{{$salespot->name}}</div>
+						<?php $is_available = count($salespot->bookings()->get()) > 0 ? false : true; ?>
+						<div class="collapsible-header">
+							<span><i class="material-icons {{\App\Helpers\Helper::getSalesSpotTypeColor($salespot->type)}}-text">filter_drama</i> {{$salespot->name}}</span>
+							<span class="badge new {{$is_available ? 'green' : 'red'}} pull-right" data-badge-caption="">
+							{{ $is_available ? __('messages.available') : __('messages.occupied') }}
+							</span>
+						</div>
 						<div class="collapsible-body">
-							// map of salespot here
+							@if($is_available)
+
+							@else
+
+							@endif
 						</div>
 					</li>
 					@empty
-
+					<p>
+						{{__('messages.no_salespot_yet')}}
+					</p>
 					@endforelse
 				</ul>
 			</div>

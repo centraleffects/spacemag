@@ -10,10 +10,9 @@ window._ = require('lodash');
 window.$ = window.jQuery = require('jquery');
 
 window.angular = require('angular');
-require('jquery-ui');
 require('./angular/angular-route.js');
 require('../materialize/js/materialize.js');
-require('select2');
+// require('select2');
 require('angucomplete-alt');
 
 require('./rebuy.lib.js');
