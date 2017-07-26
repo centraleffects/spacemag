@@ -3,7 +3,7 @@
 
 	@slot('left')
 		<div class="card hoverable">
-			<div class="row card-content">
+			<div class="card-content">
 				<span class="card-title">List of Customers</span></span>
 				@component('layouts._partials.search')
 					@slot('search_name') customers @endslot
@@ -15,7 +15,7 @@
 							<i class="fa fa-trash"></i>
 						</a>
 				    </li>
-				    <li ng-show="!customers">
+				    <li ng-show="!customers.length">
 					    <span>
 					    	<i class="fa fa-user-times"></i>
 					    	This shop doesn't have any customer at the moment.
@@ -113,6 +113,12 @@
 						<i class="glyphicon glyphicon-refresh spinning" ng-show="loading"></i>
 						<i class="fa fa-send" ng-show="!loading"></i> Send invitation link/password
 					</button>
+				</div>
+			</div>
+
+			<div class="card hoverable" ng-show="!hasSelectedUser">
+				<div class="card-content">
+					<h4>Nothing to show here..</h4>
 				</div>
 			</div>
 		</div>

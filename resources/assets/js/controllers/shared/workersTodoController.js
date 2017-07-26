@@ -1,8 +1,6 @@
 function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http, $rootScope) {
-    // $scope.todos = [];
     $scope.markAll = false;
     $scope.selectedShop = window.selectedShop;
-    // $scope.shopworkers = [];
     $scope.shopworkers = $scope.selectedShop.workers;
     $scope.todos = $scope.selectedShop.tasks;
 
@@ -24,24 +22,10 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         return matches;
     };
 
-    // $scope.init = function() {
-    //     $timeout(function () {
-    //         $scope.updateShopList();
-    //     }, 1000);
-    // }
-
     $scope.setSelectedWorker = function (worker){
         $scope.selectedWorker = worker;
         console.log($scope.selectedWorker);
     }
-
-    // $scope.updateShopList = function(){
-
-    //     shopService.userShopList(window.user.id, window.user.api_token).then(function(response) {
-    //         console.log(response);
-    //         $scope.shops = response.data;
-    //     });
-    // }
 
     $scope.assignTodo = function(entry){
         // console.log(entry.originalObject);
@@ -91,7 +75,6 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     };
 
     $scope.getTodos = function(index) {
-        // $scope.selectedShop = $scope.shops[index];
         $scope.todos = $scope.selectedShop.all_tasks;
     }
 
@@ -106,6 +89,14 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     $scope.editOnEnter = function(todo){
         if(event.keyCode == 13 && todo.description){
             $scope.toggleEditMode();
+            console.log(todo);
+            workerTodoService.updateTodo(todo).then(function (response){
+                if( response.data.success ){
+                    window.reBuy.toast(response.data.msg);
+                }else{
+                    window.reBuy.alert(response.data.msg);
+                }
+            });
         }
     };
 
@@ -116,15 +107,7 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         });
         return count;
     };
-
-    $scope.unassignedTasks = function (){
-        var unassignedTasks = angular.forEach($scope.todos, function (todo){
-            return !todo.hasOwnProperty('owner') || !todo.owner.length > 0 ? todo : false;
-        });
-
-        $scope.unassignedTasks = unassignedTasks;
-    };
-
+    
     $scope.hasDone = function() {
         return ($scope.todos.length != $scope.remaining());
     }    
@@ -140,21 +123,12 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
     };
 
     $scope.toggleDone = function (index){
-        // workerTodoService.markAsDone($scope.todos[index].id).then(function (response){
         var todo = $scope.todos[index];
-        var flag = false; 
 
-        if( (todo.done == true || todo.done == 1) && $scope.firstTimeToggle == true ){
-            flag = true;
-            $scope.firstTimeToggle = false;
-        }
         workerTodoService.markAsDone(todo).then(function (response){
             if( response.data.success ){
                 window.reBuy.toast(response.data.msg);
-                
-                // $scope.updateShopList();
-                // if( $scope.firstTimeToggle && )
-                if( flag == true ) $scope.todos[index].done = false;
+                todo.done = response.data.done;
             }else{
                 window.reBuy.alert(response.data.msg);
             }
@@ -194,12 +168,12 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
         });
     }
 
-    // $scope.init();
 
+    $scope.getWorkerTodos = function (worker){
+        workerTodoService.getTodos(worker.id).then(function (response){
+
+        });
+    }
 }
 
-
 app.controller('WorkersTodoController', WorkersTodoCtrl);
-// app.filter('task_filter', function (){
-
-// });
