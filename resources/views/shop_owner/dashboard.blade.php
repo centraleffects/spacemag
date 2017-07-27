@@ -65,13 +65,39 @@
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="commission_article_sale" value="{{$shop->commission_article_sale}}">
-								<label>{{__("messages.commission_article")}}</label>
+								<select name="commission_article_sale">
+									@for($x=1; $x < 101; $x++)
+									<option value="{{$x}}" {{$shop->commission_article_sale == $x ? 'selected' : ''}}>{{$x}}</option>
+									@endfor
+								</select>
+								<label>{{__("messages.commission_article")}} (%)</label>
 							</div>
 
 							<div class="input-field">
-								<input type="text" name="commission_salespot" value="{{$shop->commission_salespot}}">
-								<label>{{__("messages.rebuy_commission")}}</label>
+								<select name="commission_salespot">
+									@for($x=1; $x < 101; $x++)
+									<option value="{{$x}}" {{$shop->commission_salespot == $x ? 'selected' : ''}}>{{$x}}</option>
+									@endfor
+								</select>
+								<label>{{__("messages.rebuy_commission")}} (%)</label>
+							</div>
+
+							<div class="input-field">
+								<select name="spot_free_max_prebook">
+									@for($x=2; $x < 8; $x++)
+									<option value="{{$x}}" {{$shop->spot_free_max_prebook == $x ? 'selected' : ''}}>{{$x}}</option>
+									@endfor
+								</select>
+								<label>{{__("messages.free_max_prebooked")}}</label>
+							</div>
+
+							<div class="input-field">
+								<select name="spot_max_end_prebook">
+									@for($x=1; $x < 6; $x++)
+									<option value="{{$x}}" {{$shop->spot_max_end_prebook == $x ? 'selected' : ''}}>{{$x}}</option>
+									@endfor
+								</select>
+								<label>{{__("messages.spot_max_end_prebook")}}</label>
 							</div>
 						</div>
 

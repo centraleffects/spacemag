@@ -51,6 +51,8 @@ return [
 	'change_avatar' => 'Change avatar',
 	'no_salespot_yet' => "It seems the owner of this shop hasn't added any salespot yet.",
 	'available' => 'Available',
-	'occupied' => 'Occupied'
+	'occupied' => 'Occupied',
+	'free_max_prebooked' => 'Number of days a client can pre-book a sales spot.',
+	'spot_max_end_prebook' => 'Number of days a client should end a sales spot booking'
 
 ];

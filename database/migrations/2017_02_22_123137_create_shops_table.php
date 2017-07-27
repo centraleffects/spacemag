@@ -30,7 +30,15 @@ class CreateShopsTable extends Migration
             $table->string('y_coordinate')->nullable();
             $table->string('shop_postel')->nullable();
             $table->string('cleanup_schedule')->nullable();
-            
+
+            // # of days before a client can book a salespot ahead (just like reservation)
+            // just like when he wanted to book a specific salespot today but 
+            // he wanted his booking to start a specific date because that'll be just the 
+            // time he wants to use that sales spot before his booking starts
+            $table->integer('spot_free_max_prebook')->default(2); 
+            // # of days a client should end his booking 
+            $table->integer('spot_max_end_prebook')->default(1); 
+
             $table->timestamps();
             $table->softDeletes();
         });

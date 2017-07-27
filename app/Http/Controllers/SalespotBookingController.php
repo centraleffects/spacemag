@@ -22,4 +22,6 @@ class SalespotBookingController extends Controller
 
         return $user->salespotBookings()->get();
     }
+
+    
 }

@@ -118,7 +118,7 @@
 
 			<div class="card hoverable" ng-show="!hasSelectedUser">
 				<div class="card-content">
-					<h4>Nothing to show here..</h4>
+					<h5>Select a customer to get started.</h5>
 				</div>
 			</div>
 		</div>
