@@ -24,14 +24,7 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 					$timeout(function(){
 						articleServices.addOrUpdate('/shop/articles/store?&ajax=true', data ).then(function(addOrUpdate){
 							addUpdate.html('UPDATE').removeAttr('disable');
-							if(addOrUpdate.success){
-				              	window.reBuy.toast('Article Information has been updated!');
-				              	/*$timeout(function(){
-				              		window.location.href= '/shop/articles/' + addOrUpdate.article_id;
-				              	},2000);*/
-				              }else{
-				              	window.reBuy.toast('Error: Please complete the required information and try again.');
-				              }
+							window.reBuy.toast(addOrUpdate.message);
 						 });	
 					},0);
 		}

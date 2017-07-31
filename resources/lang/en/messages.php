@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'unknown_error' => 'Unknown error had occured.',
+	'required_incomplete' => 'Error: Please complete the required information and try again.',
+
 	'email_changed_confirmed' => "Your email has been changed successfully. Use your new email (:new_email) when you login to your account next time.",
 	'email_change_request' => "A confirmation has been sent to your email (:old_email). Please check your email's inbox.",
 	'email_verified' => "Your email has been successfully verified.",
@@ -54,6 +57,10 @@ return [
 	'available' => 'Available',
 	'occupied' => 'Occupied',
 	'free_max_prebooked' => 'Number of days a client can pre-book a sales spot.',
-	'spot_max_end_prebook' => 'Number of days a client should end a sales spot booking'
+	'spot_max_end_prebook' => 'Number of days a client should end a sales spot booking',
+
+	'article_added' => "Your new article has been added.",
+	'article_updated' => "Your article has been updated.",
+	'article_deleted' => "Your article has been deleted.",
 
 ];

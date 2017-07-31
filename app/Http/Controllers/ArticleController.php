@@ -69,6 +69,8 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         $input = Input::all();
+        
+       
 
         if(Input::has('ajax')){
 
@@ -87,7 +89,9 @@ class ArticleController extends Controller
                     }
                     
                }
-               if(!empty($data['id'])){
+                $updateArticleAction = !empty($data['id']);
+
+               if($updateArticleAction){
                  $article = Article::where('id',$data['id'])->first();
                }else{
                   $article =  new Article();
@@ -136,20 +140,27 @@ class ArticleController extends Controller
                   //------------------  
                  }  
                
+                 if($updateArticleAction){
+                    $msg = __("messages.article_updated");
+                 }else{
+                   $msg = __("messages.article_added");
+                 }
                   return [
                     'success' => 1,
-                    'article_id' => $article->id
+                    'article_id' => $article->id,
+                    'message' => $msg 
                 ];
 
               }else{
                 return [
                       'success' => 0,
-                      'message' => 'Error: Shop is required.'
+                      'message' => __("messages.required_incomplete")
                   ];
               }
             }
             return [
-                'success' => 0
+                'success' => 0,
+                'message' => __("messages.required_incomplete")
             ];
         }
 
@@ -190,7 +201,7 @@ class ArticleController extends Controller
         //
 
       if($article->delete()){
-         return redirect('/shop/articles')->with('success', 'Article deleted!');
+         return redirect('/shop/articles')->with('success', __("messages.article_deleted"));
       }
 
     }
