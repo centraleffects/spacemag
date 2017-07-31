@@ -41,6 +41,7 @@ return [
 	"shop_settings" => "Shop Settings",
 	"shop_info" => "Shop Information",
 	"shop_updated" => "Your shop has been updated successfully.",
+	"shop_added" => "Your new shop has been created.",
 	"client_no_shop_yet" => "Nothing to show here. Add shops to your account to get started.",
 	"shop_added_to_list" => ":shop_name has been added to your lists.",
 	"shop_removed" => ":shop_name has been removed from your lists.",

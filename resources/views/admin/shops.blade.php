@@ -1,5 +1,5 @@
 @component('admin.layouts.app')
-<div ng-controller="adminShopController">
+<div ng-controller="adminShopController as vm">
 	<div id="shop-tab"  ng-show="currentTab == 'shop'">
 			<div class="col s3">
 				<div class="card hoverable" ng-model="shops">
@@ -76,41 +76,39 @@
 				<div class="card hoverable">
 					<div class="row card-content">
 						<span class="card-title">List of Shop Owners</span>
-						<table class="bordered highlight">
+						<table class="bordered highlight"  ng-show="selectedShop.owner.length > 0">
 							<tr ng-repeat="owner in selectedShop.owner" >
 								<td ng-cloak>@{{owner.email}}</td>
 								<td>
 									<a href="javascript:;" ng-click="events.loginAsOwner(owner.id)">
 									Login as Owner
 									</a>  | 
-									<a href="javascript:;"  ng-click="events.removeOwner(owner.id)">Remove</a>
+									<a href="javascript:;"  ng-click="vm.removeOwner(owner.email, this)">Remove</a>
 								</td>
 							</tr>
 						</table>
-						<!-- <button class="btn waves-effect waves-light blue" ng-click="events.loginAsOwner()">
-								Click Here
-							</button> -->
+						<div  ng-show="selectedShop.owner.length == 0"><p>None listed.</p></div>
 					</div>
 				</div>
 				<div class="card hoverable">
 					<div class="row card-content">
 						<span class="card-title">Add New Shop Owner</span>
 						<div class="input-field">
-							<input type="hidden" ng-model="selectedShop.owner.email" class="hide">
-							<input type="email" name="owner.email" id="owner_email" ng-model="selectedShop.newOwner" placeholder="Enter email">
+							<!-- <input type="hidden" ng-model="selectedShop.newOwner" class="hide"> -->
+							<input type="text" name="owner.email" id="owner_email" ng-model="selectedShop.newOwner" placeholder="Enter email to add as owner">
 						</div>
-						<div id="listofowners-autocomplete" ng-show="owners.length">
+						<div id="listofowners-autocomplete" ng-show="owners.length && selectedShop.newOwner.length > 2">
 							<div class="collection">
 								<a href="javascript:;" 
 										class="list-shops collection-item" 
 										ng-repeat="owner in owners | filter : selectedShop.newOwner" 
-										ng-click="events.changeOwner($index)"
+										ng-click="events.changeOwner(owner.email)"
 										ng-cloak>
 										@{{ owner.name }}
 								</a>
 							</div>
 						</div>
-						<p ng-show="(owners | filter : selectedShop.owner.email).length == 0" class="red-text">User doesn't exist. <span class="green-text"><a href="javascript:;;">Account for <b>@{{selectedShop.owner.email}}</b> will be created and will receive an email invitation when you save the changes</a></span></p>
+						<p ng-show="(owners | filter : selectedShop.newOwner).length == 0 && selectedShop.newOwner" class="red-text">User doesn't exist. <span class="green-text"><a href="javascript:;;">Account for <b>@{{selectedShop.newOwner}}</b> will be created and will receive an email invitation when you save the changes</a></span></p>
 					</div>
 					<div class="card-action">
 						<button class="btn waves-effect waves-light green"  type="submit" ng-click="events.updateSelected()" ng-disabled="isUpdatingOwner" ng-cloak>
@@ -148,9 +146,6 @@
 					</div> -->	
 
 				</div>
-	</div>
-	<div id="salespot-tab" ng-show="currentTab == 'salespot'">
-		@include( 'admin.spots')
 	</div>
 </div>
 @endcomponent

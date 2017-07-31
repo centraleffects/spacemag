@@ -26,7 +26,7 @@ class StoreShop extends FormRequest
     {
         $rules = ['name' => 'required'];
         if( auth()->user()->isAdmin() ){
-            $rules['owner.email'] = 'required|email';
+            $rules['owner.email'] = 'email';
         }   
 
         return $rules;

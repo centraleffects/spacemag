@@ -26,35 +26,38 @@ class ShopOwnerController extends Controller
         $this->middleware(function ($request, $next) {
             
             if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker()) 
-                or $request->session()->has('loggedin_as_someone') ){
+                or $request->session()->has('loggedin_as_someone') or auth()->user()->isAdmin() ){
                 $user = auth()->user();
 
-                if( auth()->user()->isOwner() ){
-                    $shops = $user->ownedShops()->get();
+                if( !auth()->user()->isAdmin() ){
+                    if( auth()->user()->isOwner() ){
                    
-                }else{
-                    $shops = $user->shops()->get();
-                }
+                        $shops = $user->ownedShops()->get();
+                       
+                    }else{
+                        $shops = $user->shops()->get();
+                    }
 
-                $shop = Helper::getShopWithTasks(auth()->user(), true);
+                    $shop = Helper::getShopWithTasks(auth()->user(), true);
 
-                session()->put('shops', $shops);
+                    session()->put('shops', $shops);
 
-                if( !session()->has("selected_shop") ){
+                    if( !session()->has("selected_shop") ){
+                        
+                        session()->put("selected_shop", $shop);
+                    }else{
+                        // make sure shop info inside the session is updated
+                        $shop = Shop::find(session()->get('selected_shop')->id);
+                        session()->put('selected_shop', $shop);
+                    }
                     
-                    session()->put("selected_shop", $shop);
-                }else{
-                    // make sure shop info inside the session is updated
-                    $shop = Shop::find(session()->get('selected_shop')->id);
-                    session()->put('selected_shop', $shop);
-                }
-                
 
-                JavaScript::put([
-                    'user' => $user,
-                    'selectedShop' => $shop,
-                    'shops' => $shops
-                ]);
+                    JavaScript::put([
+                        'user' => $user,
+                        'selectedShop' => $shop,
+                        'shops' => $shops
+                    ]);
+                }
 
                 return $next($request);
             }

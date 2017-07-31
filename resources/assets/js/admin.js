@@ -32,4 +32,4 @@ require('./services/admin/shopServices');
 
 require('./controllers/admin/user_controller');
 require('./controllers/admin/shop_controller');
-require('./controllers/admin/spots_controller');
+
