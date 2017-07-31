@@ -143,7 +143,8 @@ class ShopController extends Controller
         if(isset($input['commission_article_sale'])) $shop->commission_article_sale = $input['commission_article_sale'];
         if(isset($input['commission_salespot'])) $shop->commission_salespot = $input['commission_salespot'];
 
-        // $shop->cleanup_schedule = isset($input['cleanup_schedule']) && !empty($input['cleanup_schedule']) ? implode(",",$input['cleanup_schedule']) : '';
+        if(isset($input['spot_free_max_prebook'])) $shop->spot_free_max_prebook = $input['spot_free_max_prebook'];
+        if(isset($input['spot_max_end_prebook'])) $shop->spot_max_end_prebook = $input['spot_max_end_prebook'];
 
         if( isset($input['cleanup_schedule']) && !empty($input['cleanup_schedule']) ){
             if( is_array($input['cleanup_schedule']) ){

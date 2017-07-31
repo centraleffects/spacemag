@@ -33,7 +33,7 @@ class CreateSalespotsTable extends Migration
             $table->string('aisle')->nullable();
             $table->string('size')->nullable();
 
-            $table->enum('status', ['rebuilding', 'painting', 'on repair'])->nullable();
+            $table->enum('status', ['rebuilding', 'painting', 'on repair', 'available'])->nullable();
 
             $table->timestamps();
             $table->softDeletes();

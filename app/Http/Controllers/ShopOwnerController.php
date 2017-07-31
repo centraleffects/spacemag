@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
+
 use JavaScript;
 use Mail;
 
@@ -282,6 +284,7 @@ class ShopOwnerController extends Controller
 
                 // the shopowner who logged in as customer/client
                 session()->put('loggedin_as_someone', ['id' => $auth_user_id, 'url' => url()->previous()]);
+
                 return redirect('shop');
             }
         }
@@ -304,6 +307,7 @@ class ShopOwnerController extends Controller
             session()->put('applocale', $currentLocale); 
 
             return redirect($real_auth['url'])->withFlash_message([
+            // return redirect(session()->get('previous_url'))->withFlash_message([
                     'type' => 'info',
                     'msg' => __('messages.welcome_back', ['name' => ucfirst(auth()->user()->first_name)]),
                     'important' => false
