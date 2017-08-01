@@ -271,7 +271,7 @@
 						<div class="clearfix"></div>
 		            </div>
 		            <div class="card-action">
-		              <a href="/shop/articles/print/1" target="_blank">Print</a>
+		              <a href="/shop/articles/print/{{$selectedArticle->id}}" target="_blank">Print</a>
 		            </div>
 		         </div>
 	        @endif

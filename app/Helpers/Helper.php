@@ -96,7 +96,7 @@ class Helper {
 	}
 
 	public static function getShopWorkers(\App\Shop $shop){
-		return $shop->users()->where('role', '=', 'worker')->get();
+		return $shop->workers()->get();
 	}
 
 	public static function getDays(){

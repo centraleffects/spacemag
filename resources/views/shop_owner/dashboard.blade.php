@@ -123,14 +123,14 @@
 				</div>
 			</div>	
 
-			<div class="card hoverable">
+		<!-- 	<div class="card hoverable">
 				<div class="row card-content">
 					<span class="card-title">Email Invitation</span>
 					<button class="btn waves-effect waves-light blue" ng-click="events.sendEmailInvitation">
 						Send
 					</button>
 				</div>
-			</div>	
+			</div>	 -->
 		</div>
 	</div>
 @endcomponent

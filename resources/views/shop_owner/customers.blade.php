@@ -111,7 +111,7 @@
 				<div class="card-action">
 					<button class="btn waves-effect waves-light green" ng-click="invite()" ng-disabled="isDisabled">
 						<i class="glyphicon glyphicon-refresh spinning" ng-show="loading"></i>
-						<i class="fa fa-send" ng-show="!loading"></i> Send invitation link/password
+						<i class="fa fa-send" ng-show="!loading"></i> Send invitation to this Customer
 					</button>
 				</div>
 			</div>

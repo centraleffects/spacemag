@@ -22,7 +22,6 @@ Route::group(['prefix' => 'test'], function(){
 	Route::get('users', 'UserController@test');
 });
 
-
 Route::group(['middleware' => 'auth:api'], function (){
 	Route::group(['prefix' => 'shops'], function (){
 		Route::get('/', 'ShopController@index');
@@ -32,7 +31,7 @@ Route::group(['middleware' => 'auth:api'], function (){
 		Route::get('{shop}/users/{type}', 'ShopController@users');
 		Route::get('{shop}', 'ShopController@show');
 		Route::get('{shop}/users', 'ShopController@users');
-		Route::get('{shop}/workers', 'ShopController@workers');
+		Route::get('{shop}/workers', 'Api\ShopController@workers');
 
 		Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
 
