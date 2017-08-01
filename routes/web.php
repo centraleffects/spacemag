@@ -81,7 +81,7 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 
 
 Route::group(['middleware' => 'web'], function (){
-	Route::get('shops/{shop}/subscribe', 'ShopOwnerController@subscribe');
+	Route::get('shops/{shop}/subscribe', 'Web\ShopController@subscribe');
 
 	Route::group(['prefix' => 'shop'], function (){
 		Route::get('login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
@@ -136,9 +136,5 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try/{shop}', function (\App\Shop $shop){
-	// dd($shop->users()->get());
-	dd($shop->salespots()->skip(1)->take(2)->get());
-	dd($shop->salespots()->skip(1)->first()->prices()->get());
-});	
+Route::get('try', 'Api\TestController@index');	
 

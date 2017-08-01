@@ -27,8 +27,8 @@ class ShopOwnerController extends Controller
     {
         $this->middleware(function ($request, $next) {
             
-            if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker()) 
-                or $request->session()->has('loggedin_as_someone') or auth()->user()->isAdmin() ){
+            if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker() 
+                or $request->session()->has('loggedin_as_someone') or auth()->user()->isAdmin()) ){
                 $user = auth()->user();
 
                 if( !auth()->user()->isAdmin() ){

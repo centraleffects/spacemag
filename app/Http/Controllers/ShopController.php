@@ -274,9 +274,6 @@ class ShopController extends Controller
         
     }
 
-    public function workers(Shop $shop){
-        return Helper::getShopWorkers($shop);
-    }
 
     public function removeUser(Shop $shop, User $user){
         if( !$user->isOwner() and !$user->isAdmin() )

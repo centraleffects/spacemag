@@ -31,7 +31,7 @@ Route::group(['prefix' => 'shops', 'middleware' => 'auth:api'], function (){
 	Route::get('{shop}/users/{type}', 'ShopController@users');
 	Route::get('{shop}', 'ShopController@show');
 	Route::get('{shop}/users', 'ShopController@users');
-	Route::get('{shop}/workers', 'ShopController@workers');
+	Route::get('{shop}/workers', 'Api\ShopController@workers');
 
 	Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
 

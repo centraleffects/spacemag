@@ -60,10 +60,18 @@
 				</div>
 				<div class="card-action row">
 					<div class="col s12 m6 l6">
-						<button class="btn waves-effect waves-light orange darken-3" title="Generate Password" ng-click="generatePassword()" ng-disabled="isGeneratingPassword">
-							<i class="fa fa-random"></i>
-							<span class="hide-on-small-only"> Generate Password</span>
-						</button>
+						<div class="col">
+							<button class="btn waves-effect waves-light orange darken-3" title="Generate Password" ng-click="generatePassword()" ng-disabled="isGeneratingPassword">
+								<i class="fa fa-random"></i>
+								<span class="hide-on-small-only"> Generate Password</span>
+							</button>
+						</div>
+
+						<div class="col">
+							<a class="chip waves-effect waves-light green white-text" ng-click="loginAs()">
+								<i class="fa fa-sign-in"></i> Login Worker A/C
+							</a>
+						</div>
 					</div>
 				</div>
 			</div><!-- end Client's Details -->
@@ -112,7 +120,7 @@
 				<div class="card-action">
 					<button class="btn waves-effect waves-light green" ng-click="invite()" ng-disabled="isDisabled">
 						<i class="glyphicon glyphicon-refresh spinning" ng-show="loading"></i>
-						<i class="fa fa-send" ng-show="!loading"></i> Send invitation link/password
+						<i class="fa fa-send" ng-show="!loading"></i> Send Invitation to Worker
 					</button>
 				</div>
 			</div>
