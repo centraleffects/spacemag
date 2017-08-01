@@ -138,7 +138,7 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
 
 Route::get('try/{shop}', function (\App\Shop $shop){
 	// dd($shop->users()->get());
-	dd($shop->salespots()->skip(1)->take(2)->get());
+	dd($shop->salespots()->with('bookings')->get());
 	dd($shop->salespots()->skip(1)->first()->prices()->get());
 });	
 
