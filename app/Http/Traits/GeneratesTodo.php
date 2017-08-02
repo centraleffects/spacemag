@@ -16,7 +16,7 @@ trait GeneratesTodo {
 	}
 
 	/**
-	* Generates a Todo task
+	* Generates a Todo task (only for those 5 static services)
 	* @param array $options [scenario, salespot_id, shop_id, service_booking_id, ]
 	* @return boolean
 	*/

@@ -19,101 +19,101 @@ Route::get('test', function (){
 });
 
 Route::group(['prefix' => 'test'], function(){
-	Route::get('users', 'UserController@test');
+	Route::get('users', 'Api\UserController@test');
 });
 
 Route::group(['middleware' => 'auth:api'], function (){
 	Route::group(['prefix' => 'shops'], function (){
-		Route::get('/', 'ShopController@index');
-		Route::get('list', 'ShopController@getlist');
-		Route::get('list/{owner}', 'ShopController@getlist');
-		Route::get('owners', 'ShopController@listOwners');
-		Route::get('{shop}/users/{type}', 'ShopController@users');
-		Route::get('{shop}', 'ShopController@show');
-		Route::get('{shop}/users', 'ShopController@users');
-		Route::get('{shop}/workers', 'Api\ShopController@workers');
+			Route::get('/', 'Api\ShopController@index');
+			Route::get('list', 'Api\ShopController@getlist');
+			Route::get('list/{owner}', 'Api\ShopController@getlist');
+			Route::get('owners', 'Api\ShopController@listOwners');
+			Route::get('{shop}/users/{type}', 'Api\ShopController@users');
+			Route::get('{shop}', 'Api\ShopController@show');
+			Route::get('{shop}/users', 'Api\ShopController@users');
+			Route::get('{shop}/workers', 'Api\ShopController@workers');
 
-		Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
+			Route::get('{shop}/tasks', 'Api\TodoTaskController@getByShop');
 
-		Route::get('{shop}/tasks', 'TodoTaskController@getByShop');
+			Route::get('{shop}/tasks', 'Api\TodoTaskController@getByShop');
 
-		Route::delete('{shop}/users/{user}/remove', 'ShopController@removeUser');
+			Route::delete('{shop}/users/{user}/remove', 'Api\ShopController@removeUser');
 		
-		Route::post('create', 'ShopController@create');
-		Route::post('delete', 'ShopController@destroy');
-		Route::post('update', 'ShopController@update');
-		Route::post('{shop}/users/{user}/passwordreset', 'ShopOwnerController@generatePassword');
+			Route::post('create', 'Api\ShopController@create');
+			Route::post('delete', 'Api\ShopController@destroy');
+			Route::post('update', 'Api\ShopController@update');
+		Route::post('{shop}/users/{user}/passwordreset', 'Api\ShopOwnerController@generatePassword');
 		
-		Route::post('{shop}/invite', 'ShopOwnerController@invite');
-		Route::post('{shop}/workers/invite', 'ShopOwnerController@inviteWorker');
-		Route::post('{shop}/newsletter-subscription/{user}', 'ShopOwnerController@toggleNewsletterSubscription');
+		Route::post('{shop}/invite', 'Api\ShopOwnerController@invite');
+		Route::post('{shop}/workers/invite', 'Api\ShopOwnerController@inviteWorker');
+		Route::post('{shop}/newsletter-subscription/{user}', 'Api\ShopOwnerController@toggleNewsletterSubscription');
 
-		Route::post('search', 'ShopController@search');
-		Route::post('{shop}/salespots/available', 'SalespotController@getAvailableSaleSpot');
+			Route::post('search', 'Api\ShopController@search');
+		Route::post('{shop}/salespots/available', 'Api\SalespotController@getAvailableSaleSpot');
 
 	});
 
 	Route::group(['prefix' => 'categories'], function(){
-		Route::get('list', 'SalespotCategoryTypeController@getlist');
+		Route::get('list', 'Api\SalespotCategoryTypeController@getlist');
 	});
 
 
 	Route::group(['prefix' => 'salespot'], function(){
-		Route::post('create', 'SalespotController@store');
-		Route::post('delete', 'SalespotController@destroy');
-		Route::post('update', 'SalespotController@update');
-		Route::get('list/{shop}', 'SalespotController@getlist');
+		Route::post('create', 'Api\SalespotController@store');
+		Route::post('delete', 'Api\SalespotController@destroy');
+		Route::post('update', 'Api\SalespotController@update');
+		Route::get('list/{shop}', 'Api\SalespotController@getlist');
 	});
 
 
 	Route::group(['prefix' => 'articles'], function (){
-		Route::get('/', 'ArticleController@index');
+		Route::get('/', 'Api\ArticleController@index');
 		Route::post('create', 'ArticleController@store');
-		Route::post('delete', 'ArticleController@destroy');
-		Route::post('update', 'ArticleController@update');
+		Route::post('delete', 'Api\ArticleController@destroy');
+		Route::post('update', 'Api\ArticleController@update');
 	});
 
 	Route::group(['prefix' => 'users'], function (){
 		//Users
-		Route::get('/', 'UserController@index');
-		Route::get('/list', 'UserController@getlist');
-		Route::get('/{user}', 'UserController@show');
+		Route::get('/', 'Api\UserController@index');
+		Route::get('/list', 'Api\UserController@getlist');
+		Route::get('/{user}', 'Api\UserController@show');
 
-		Route::patch('/update', 'UserController@update');
-		Route::post('/delete/{user}', 'UserController@destroy');
-		Route::post('/store', 'UserController@store');
+		Route::patch('/update', 'Api\UserController@update');
+		Route::post('/delete/{user}', 'Api\UserController@destroy');
+		Route::post('/store', 'Api\UserController@store');
 
 		//Shops (for shopowner)
-		Route::get('{user}/shops', 'ShopController@get');
+			Route::get('{user}/shops', 'Api\ShopController@get');
 
-		Route::get('{user}/tasks', 'TodoTaskController@getByUser');
+		Route::get('{user}/tasks', 'Api\TodoTaskController@getByUser');
 
-		Route::post('{user}/shop-add-remove/{shop}', 'ShopController@addRemoveShop');
+			Route::post('{user}/shop-add-remove/{shop}', 'Api\ShopController@addRemoveShop');
 		Route::post('bookings/active', 'SalespotBookingController@getActiveBookings');
 
 	});
 
 	Route::group(['prefix' => 'workers'], function (){
-		Route::get('/', 'UserController@workers');
+		Route::get('/', 'Api\UserController@workers');
 		// Route::get('{worker}/todos', '');
 	});
 
 	Route::group(['prefix' => 'tasks'], function (){
-		Route::post('store', 'TodoTaskController@store');
-		Route::get('{task}', 'TodoTaskController@show');
-		Route::delete('{task}/unassign', 'TodoTaskController@unAssign');
-		Route::post('{task}/assign/{user}', 'TodoTaskController@assignTask');
-		Route::post('{task}/update', 'TodoTaskController@update');
-		Route::post('{task}/finish', 'TodoTaskController@toggleDone');
-		Route::delete('{task}/delete', 'TodoTaskController@destroy');
-		Route::post('clear', 'TodoTaskController@clearTasksByShop');
+		Route::post('store', 'Api\TodoTaskController@store');
+		Route::get('{task}', 'Api\TodoTaskController@show');
+		Route::delete('{task}/unassign', 'Api\TodoTaskController@unAssign');
+		Route::post('{task}/assign/{user}', 'Api\TodoTaskController@assignTask');
+		Route::post('{task}/update', 'Api\TodoTaskController@update');
+		Route::post('{task}/finish', 'Api\TodoTaskController@toggleDone');
+		Route::delete('{task}/delete', 'Api\TodoTaskController@destroy');
+		Route::post('clear', 'Api\TodoTaskController@clearTasksByShop');
 	});
 
 
 	Route::group(['prefix' => 'note'], function (){
-		Route::get('/', 'NoteController@index');
-		Route::post('create', 'NoteController@store');
-		Route::post('delete', 'NoteController@destroy');
-		Route::post('update', 'NoteController@update');
+		Route::get('/', 'Api\NoteController@index');
+		Route::post('create', 'Api\NoteController@store');
+		Route::post('delete', 'Api\NoteController@destroy');
+		Route::post('update', 'Api\NoteController@update');
 	});
 });

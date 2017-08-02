@@ -108,7 +108,7 @@ Route::group(['middleware' => 'web'], function (){
 
 	Route::post('profile/update', 'UserController@update');
 	Route::post('profile/change/password', 'UserController@updatePassword');
-	// Route::post('profile/change/email', 'UserController@updateEmail');
+	// Route::post('profile/change/email', '@UserController@updateEmail');
 	Route::post('profile/change/email/request', 'UserController@changeEmail');
 	Route::get('profile/confirm/email/{token}', 'UserController@confirmEmail');
 	Route::post('profile/change/avatar', 'UserController@updateAvatar');
