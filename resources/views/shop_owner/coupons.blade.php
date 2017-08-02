@@ -40,7 +40,7 @@
 	@endslot
 	@slot('center')
 		<div class="card hoverable">
-			<form method="POST" id="couponform" name="couponform" action="/{{Request::path()}}">
+			<form method="POST" id="couponform" name="couponform" action="/shop/coupons/store">
 		        <div class="card-content">
 		          <span class="card-title">{{ (!$selectedCoupon->id) ? 'New' : 'Edit' }} Coupon</span>
 					{{ csrf_field() }}

@@ -71,6 +71,8 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 		Route::get('/',['uses' =>'ShopCouponController@indexOwner']);
 		Route::get('{id}',['uses' =>'ShopCouponController@indexOwner']);
 		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
+
+		Route::post('/store',['uses' =>'ShopCouponController@store']);
 	});
 
 	Route::post('/updatefloorplan', 'ShopController@updateFloorPlan');

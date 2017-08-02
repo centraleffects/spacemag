@@ -68,63 +68,6 @@ class ShopCouponController extends Controller
     public function store(Request $request)
     {
         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ShopCoupon  $shopCoupon
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ShopCoupon $shopCoupon)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ShopCoupon  $shopCoupon
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ShopCoupon $shopCoupon)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ShopCoupon  $shopCoupon
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ShopCoupon $shopCoupon)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ShopCoupon  $shopCoupon
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {  
-        $coupon = ShopCoupon::where('id', $id)->first();
-        if($coupon){
-            $coupon->delete();
-            session()->put('alert', 'A coupon has been deleted.');
-        }
-       
-       return \Redirect::to('/shop/coupons');
-    }
-
-
-    public function indexOwner($id = null){
-        $this->includeUserOnJS();
-
         $input = Input::all();
 
         if(Input::has('ajax')){
@@ -189,8 +132,68 @@ class ShopCouponController extends Controller
                 ]; 
 
         }
+    }
 
-        $coupons  =  ShopCoupon::all();
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\ShopCoupon  $shopCoupon
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ShopCoupon $shopCoupon)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\ShopCoupon  $shopCoupon
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(ShopCoupon $shopCoupon)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\ShopCoupon  $shopCoupon
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, ShopCoupon $shopCoupon)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\ShopCoupon  $shopCoupon
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {  
+        $coupon = ShopCoupon::where('id', $id)->first();
+        if($coupon){
+            $coupon->delete();
+            session()->put('alert', 'A coupon has been deleted.');
+        }
+       
+       return \Redirect::to('/shop/coupons');
+    }
+
+
+    public function indexOwner($id = null){
+        $this->includeUserOnJS();
+
+        
+        $shop = session()->get('selected_shop');
+
+        $coupons  =  $shop->coupons();
+
         if(empty($coupons)){
             $coupons = [];
         }
