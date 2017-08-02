@@ -123,7 +123,7 @@ class LoginController extends Controller
             }
         }
         
-        return \Redirect::to('home');
+        return \Redirect::to('my-shops');
         
     }
 }
