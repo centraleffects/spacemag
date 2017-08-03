@@ -11,14 +11,7 @@
         
         <div class="inner-content">
             <div class="main-content">
-                @if(session()->has('flash_message'))
-                    @component('layouts._partials.alert')
-                        @slot('alert_type') 
-                            {{ session()->get('flash_message')['type'] }}
-                        @endslot
-                        {{ session()->get('flash_message')['msg'] }}spots
-                    @endcomponent
-                @endif
+                @include('layouts._partials.flash_message')
                 <div class="toolbar row">
                     <div class="col s12">
                             <!-- <nav>

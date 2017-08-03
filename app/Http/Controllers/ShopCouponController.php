@@ -194,6 +194,7 @@ class ShopCouponController extends Controller
 
         $coupons  =  $shop->coupons();
 
+        dd($coupons);
         if(empty($coupons)){
             $coupons = [];
         }

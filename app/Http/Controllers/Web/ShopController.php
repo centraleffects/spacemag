@@ -20,6 +20,15 @@ class ShopController extends Controller{
 
         $user = auth()->user();
 
+
+        //  prevents duplicate when the user role is an owner
+        if( $user->isOwner() && $user->ownedShops()->find($shop->id) !== null )
+            return redirect('shop')->withFlash_message([
+                    'msg' => __("messages.already_owned_this_shop", ["shop_name" => $shop->name]),
+                    'type' => 'danger',
+                    'is_important' => true
+                ]);
+
         // prevents duplicate by clicking the Subscribe button from email multiple times
         if( $shop->users()->find($user->id) != null )
             return redirect('shop')->withFlash_message([
@@ -27,6 +36,8 @@ class ShopController extends Controller{
                     'type' => 'danger',
                     'is_important' => true
                 ]);
+
+
         if( $shop->users()->save($user) )
             return redirect('shop')->withFlash_message([
                     'msg' => __('messages.shop_subscription_success', ["shop_name" => $shop->name]),

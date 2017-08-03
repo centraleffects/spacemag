@@ -65,23 +65,7 @@
                 <div class="section no-pad-bot">
                     <div class="container">
                         <br><br>
-                        @if(session()->has('flash_message'))
-                            @component('layouts._partials.alert')
-                                @slot('alert_type') 
-                                    {{ session()->get('flash_message')['type'] }}
-                                @endslot
-
-                                @if( isset(session()->get('flash_message')['is_important']) )
-                                    @slot('is_important') alert-important @endslot
-                                @endif
-
-                                @if( isset(session()->get('flash_message')['custom_class']) )
-                                    @slot('custom_class') session->get('flash_message')['custom_class'] @endslot
-                                @endif
-                                
-                                {{ session()->get('flash_message')['msg'] }}
-                            @endcomponent
-                        @endif
+                        @include('layouts._partials.flash_message')
                     </div>
                      <div class="row center"><br><br><img src="images/rebuy_logo.png" alt="Coming Soon"><br><H5>COMMING SOON.</H5></div>
                 </div>

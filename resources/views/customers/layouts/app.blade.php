@@ -19,23 +19,7 @@
         
         <div class="inner-content">
             <div class="main-content">
-                @if(session()->has('flash_message'))
-                    @component('layouts._partials.alert')
-                        @slot('alert_type') 
-                            {{ session()->get('flash_message')['type'] }}
-                        @endslot
-
-                        @if( isset(session()->get('flash_message')['is_important']) )
-                            @slot('is_important') alert-important @endslot
-                        @endif
-
-                        @if( isset(session()->get('flash_message')['custom_class']) )
-                            @slot('custom_class') session->get('flash_message')['custom_class'] @endslot
-                        @endif
-                        
-                        {{ session()->get('flash_message')['msg'] }}
-                    @endcomponent
-                @endif
+                @include('layouts._partials.flash_message')
                 
                 @if( session()->has('loggedin_as_someone') )
                 <div class="alert alert-success alert-important alert-imphasis" role="alert">

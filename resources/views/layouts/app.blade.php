@@ -11,11 +11,11 @@
                             {{ session()->get('flash_message')['type'] }}
                         @endslot
 
-                        @if( isset(session()->get('flash_message')['is_important']) )
+                        @if( is_array(session()->get('flash_message')) && (session()->get('flash_message')['is_important']) )
                             @slot('is_important') alert-important @endslot
                         @endif
 
-                        @if( isset(session()->get('flash_message')['custom_class']) )
+                        @if( is_array(session()->get('flash_message')) && (session()->get('flash_message')['custom_class']) )
                             @slot('custom_class') session->get('flash_message')['custom_class'] @endslot
                         @endif
                         

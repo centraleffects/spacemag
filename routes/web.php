@@ -138,5 +138,5 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try', 'Api\TestController@index');	
+Route::get('try/{shop}', 'Web\ShopController@subscribe');	
 

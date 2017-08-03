@@ -8,6 +8,7 @@ return [
 	'email_change_request' => "A confirmation has been sent to your email (:old_email). Please check your email's inbox.",
 	'email_verified' => "Your email has been successfully verified.",
 	'already_subscribed_to_shop' => "You have already subscribed to :shop_name",
+	'already_owned_this_shop' => "You already owned :shop_name",
 	'shop_subscription_success' => "You are now subscribed to :shop_name",
 	'shop_invitation_success' => ":email has been invited to subscribe to :shop_name",
 	'shopworker_invitation_success' => ":email has been invited to be a part of :shop_name family.",
