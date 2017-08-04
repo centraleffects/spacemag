@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/account';
 
     /**
      * Create a new controller instance.
@@ -79,6 +79,11 @@ class RegisterController extends Controller
         if( $user->save() ){
             // send email
             $this->sendWelcomeMail($user);
+            session()->flash('flash_message', [
+                'msg' => __('messages.first_login_welcom'),
+                'is_important' => true,
+                'type' => 'success'
+            ]);
         }
 
         return $user;

@@ -34,46 +34,7 @@
                             <div class="nav-wrapper nav-content">
                                 <ul id="nav-mobile tabs tabs-transparent" class="right">
 
-                                    @if( auth()->user()->isOwner() || auth()->user()->isWorker() )
-                                        <?php 
-                                            $nav_menus = [
-                                                'shop' => __("Shop Info"),
-                                                'shop/customers' => __("Customers"),
-                                                'shop/clients' => __("Clients"),
-                                                'shop/spots' => __("Salespot"),
-                                                'shop/articles' => __("Articles"),
-                                                'shop/todo' => __("Todo List"),
-                                                'shop/workers/todo' => __("My Todo"),
-                                                'shop/coupons' => __("Coupons")
-
-                                            ];
-
-                                            if( auth()->user()->isOwner() ){
-                                                $nav_menus['shop/workers'] = __("Shop Workers");
-                                                $nav_menus['shop/workers/todo'] = __("Workers Todo");
-                                            }
-
-                                        ?>
-                                    @elseif( auth()->user()->isCustomer() or auth()->user()->isClient() )
-                                        <?php 
-                                            $nav_menus = ['overview' => __("Overview"),
-                                                'my-shops' => __("My Shops"),
-                                                'bookings' => __("My Bookings"),
-                                                'shop/articles' => __("Articles"),
-                                                'shop/coupons' => __("Coupons")
-                                            ];
-                                        ?>
-                                    @else
-                                        <?php $nav_menus = ['shop' => __("Shops")]; ?>                                  
-                                    @endif
-
-                                    @foreach($nav_menus as $key => $value)
-                                    <li class="tab {!! \Request::path() == $key ? 'active' : '' !!}">
-                                        <a href="{{ url($key) }}">
-                                            {{ $value }}
-                                        </a>
-                                    </li>
-                                    @endforeach
+                                    @include('layouts._partials.navs')
                                 </ul>
                             </div>
                         </nav>
