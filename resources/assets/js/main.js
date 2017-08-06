@@ -77,7 +77,7 @@ window.app = angular.module('rebuy', ['angucomplete-alt', 'angular-toArrayFilter
 
 require('./lib/jquery.panzoom');
 require('./lib/jquery.mousewheel');
-require('jquery-ui');
+require('./lib/jquery-ui');
 require('./lib/select2.min');
 // require('select2');
 
