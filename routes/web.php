@@ -86,11 +86,11 @@ Route::group(['middleware' => 'web'], function (){
 	Route::get('shops/{shop}/subscribe', 'Web\ShopController@subscribe');
 
 	Route::group(['prefix' => 'shop'], function (){
-		Route::get('login-as/{user}/{shopId?}', 'ShopOwnerController@loginAsSomeone');
-		Route::get('login-back', 'ShopOwnerController@loginBack');
-		Route::get('set/{shop}', 'ShopOwnerController@setShopSession');
-		Route::get('spots', 'ShopOwnerController@spots');
-		Route::get('spots/{id}', 'ShopOwnerController@spots');
+		Route::get('login-as/{user}/{shopId?}', 'Web\AdminOwnerController@loginAsSomeone');
+		Route::get('login-back', 'Web\AdminOwnerController@loginBack');
+		Route::get('set/{shop}', 'Web\AdminOwnerController@setShopSession');
+		Route::get('spots', 'Web\AdminOwnerController@spots');
+		Route::get('spots/{id}', 'Web\AdminOwnerController@spots');
 
 		Route::get('/tags/query', 'TagController@query');
 

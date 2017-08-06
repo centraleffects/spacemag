@@ -33,28 +33,7 @@
                         <nav>
                             <div class="nav-wrapper nav-content">
                                 <ul id="nav-mobile tabs tabs-transparent" class="right">
-
-
-                                    @if( auth()->user()->isClient() || auth()->user()->isCustomer() )
-                                        <?php 
-                                            $nav_menus = [
-                                                'overview' => __("Overview"),
-                                                'my-shops' => __("My Shops"),
-                                                'bookings' => __("My Bookings"),
-                                                'shop/articles' => __("Articles"),
-                                                'shop/coupons' => __("Coupons")
-
-                                            ];
-                                        ?>
-
-                                        @foreach($nav_menus as $key => $value)
-                                        <li class="tab {!! \Request::path() == $key ? 'active' : '' !!}">
-                                            <a href="{{ url($key) }}">
-                                                {{ $value }}
-                                            </a>
-                                        </li>
-                                        @endforeach                              
-                                    @endif
+                                    @include('layouts._partials.navs')
                                 </ul>
                             </div>
                         </nav>

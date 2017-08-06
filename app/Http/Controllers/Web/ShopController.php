@@ -20,6 +20,13 @@ class ShopController extends Controller{
 
         $user = auth()->user();
 
+        if( $user->isAdmin() ){
+            return redirect('shop')->withFlash_message([
+                'msg' => __("messages.admin_cannot_subscribe", ["shop_name" => $shop->name]),
+                'type' => 'danger',
+                'is_important' => true
+            ]);
+        }
 
         //  prevents duplicate when the user role is an owner
         if( $user->isOwner() && $user->ownedShops()->find($shop->id) !== null )

@@ -9,6 +9,7 @@ return [
 	'email_verified' => "Your email has been successfully verified.",
 	'already_subscribed_to_shop' => "You have already subscribed to :shop_name",
 	'already_owned_this_shop' => "You already owned :shop_name",
+	'admin_cannot_subscribe' => "This action has no effect for an admin account.",
 	'shop_subscription_success' => "You are now subscribed to :shop_name",
 	'shop_invitation_success' => ":email has been invited to subscribe to :shop_name",
 	'shopworker_invitation_success' => ":email has been invited to be a part of :shop_name family.",
@@ -63,5 +64,6 @@ return [
 	'article_added' => "Your new article has been added.",
 	'article_updated' => "Your article has been updated.",
 	'article_deleted' => "Your article has been deleted.",
+	'first_login_welcom' => "Do you want to start selling your things and give old things new life? Enter your personal details here!"
 
 ];
