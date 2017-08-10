@@ -66,12 +66,6 @@
 								<span class="hide-on-small-only"> Generate Password</span>
 							</button>
 						</div>
-
-						<div class="col">
-							<a class="chip waves-effect waves-light green white-text" ng-click="loginAs()">
-								<i class="fa fa-sign-in"></i> Login Worker A/C
-							</a>
-						</div>
 					</div>
 				</div>
 			</div><!-- end Client's Details -->
@@ -93,6 +87,11 @@
 						<div class="col">
 							<a class="more-info" href="javascript:void(0)" ng-click="">
 								<i class="material-icons">info_outline</i>
+							</a>
+						</div>
+						<div class="col">
+							<a class="chip waves-effect waves-light green white-text" ng-click="loginAs()">
+								<i class="fa fa-sign-in"></i> Login Worker A/C
 							</a>
 						</div>
 					</div>
