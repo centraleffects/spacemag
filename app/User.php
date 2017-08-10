@@ -32,8 +32,8 @@ class User extends Authenticatable
     public function ownedShops(){
         if( $this->role == 'owner' )
             return $this->belongsToMany('App\Shop')->withPivot('user_id', 'shop_id', 'newsletter_subscribed')
-                
                 ->withTimestamps();
+                
         return  [];
     }
 

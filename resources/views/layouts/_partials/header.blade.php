@@ -9,7 +9,8 @@
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ !empty($title) ? $title : 'Home'}} {{' - '.config('app.name', 'Rebuy') }}</title>
+        
+        <title>{{ isset($title) ? $title : 'Home'}} {{' - '.config('app.name', 'Rebuy') }}</title>
         
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/favicon-32.png">

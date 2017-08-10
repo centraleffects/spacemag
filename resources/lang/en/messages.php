@@ -64,6 +64,6 @@ return [
 	'article_added' => "Your new article has been added.",
 	'article_updated' => "Your article has been updated.",
 	'article_deleted' => "Your article has been deleted.",
-	'first_login_welcom' => "Do you want to start selling your things and give old things new life? Enter your personal details here!"
+	'first_login_welcome' => "Do you want to start selling your things and give old things new life? Enter your personal details here!"
 
 ];

@@ -12,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 use App\User;
 
-class CustomerBecameAClient
+class UserRegistered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -26,5 +26,15 @@ class CustomerBecameAClient
     public function __construct(User $user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * Get the channels the event should broadcast on.
+     *
+     * @return Channel|array
+     */
+    public function broadcastOn()
+    {
+        return new PrivateChannel('channel-name');
     }
 }

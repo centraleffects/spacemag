@@ -173,4 +173,10 @@ class SalespotController extends Controller
         $spots = Helper::getAvailableSaleSpots($shop);
         return $spots;
     }
+
+    public function getTasks(Salespot $salespot){
+        $tasks = $salespot->todoTasks()->with('completor')->get();
+
+        return $tasks;
+    }
 }

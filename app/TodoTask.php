@@ -16,9 +16,14 @@ class TodoTask extends Model
     	return $this->belongsTo('App\User', 'worker_user_id');
     }
 
-    // creator of this taske
+    // creator of this task
     public function author(){
         return $this->belongsTo('App\User', 'user_id');
+    }
+
+    // the person who marked the task complete
+    public function completor(){
+        return $this->belongsTo('App\User', 'completed_by_user_id');
     }
 
     public function salespot(){
@@ -37,4 +42,5 @@ class TodoTask extends Model
     public function serviceType(){
     	return $this->belongsTo('App\ServiceType');
     }
+
 }

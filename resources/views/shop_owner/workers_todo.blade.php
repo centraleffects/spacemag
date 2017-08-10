@@ -8,20 +8,20 @@
 				@component('layouts._partials.search')
 					@slot('search_name') workers @endslot
 				@endcomponent
-				<ul class="collection">
-					<li class="collection-item" ng-if="selectedShop.workers.length" ng-repeat="x in selectedShop.workers | filter:search" ng-click="setSelectedWorker(x)">
+				<div class="collection">
+					<a href="javascript:void(0)" class="collection-item" ng-if="selectedShop.workers.length" ng-repeat="x in selectedShop.workers | filter:search" ng-click="setSelectedWorker(x)">
 						@include('layouts._partials.dragicon')
 						<span>
 							@{{ x.first_name+' '+x.last_name }}
 						</span>
-				    </li>
-				    <li ng-if="!selectedShop.workers.length">
+				    </a>
+				    <a href="javascript:void(0)" ng-if="!selectedShop.workers.length">
 					    <span>
 					    	<i class="fa fa-user-times"></i>
 					    	This shop doesn't have any worker at the moment.
 					    </span>
-				    </li>
-				</ul>
+				    </a>
+				</div>
 			</div>
 		</div>
 	@endslot
@@ -61,7 +61,7 @@
 									<input type="checkbox" ng-model="todo.done" id="_done_@{{$index}}" style="display: none;" />
 									
 								</span>
-								<span class="col col s8 m8 l8">
+								<span class="col s8 m8 l8">
 									<span class="done-@{{todo.done}}" title="Double click to edit">@{{ todo.description }}</span>
 									<input class="edit" type="text" ng-model="todo.description" ng-keyup="editOnEnter(todo)" esc-key="toggleEditMode()" title="Press 'Enter' to save and 'ESC' to cancel."/>
 								</span>

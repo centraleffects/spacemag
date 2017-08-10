@@ -92,7 +92,8 @@ class Shop extends Model
 
     // this is the workers todo tasks (specific tasks for each shop worker)
     public function tasks(){
-        return $this->hasMany('App\TodoTask');
+        return $this->hasMany('App\TodoTask')
+            ->where('salespot_id', null);
     }
 
     // public function newsletterSubscriptions(){

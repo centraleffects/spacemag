@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-use Mail;
-use App\Mail\Welcome;
+use App\Events\UserRegistered;
 
 class RegisterController extends Controller
 {
@@ -78,27 +77,15 @@ class RegisterController extends Controller
 
         if( $user->save() ){
             // send email
-            $this->sendWelcomeMail($user);
+            event(new UserRegistered($user));
+            
             session()->flash('flash_message', [
-                'msg' => __('messages.first_login_welcom'),
+                'msg' => __('messages.first_login_welcome'),
                 'is_important' => true,
                 'type' => 'success'
             ]);
         }
 
         return $user;
-    }
-
-
-    protected function sendWelcomeMail($user){
-        $mail = new Welcome($user);
-
-        try {
-            Mail::to($user->email)->send($mail);
-
-            return true;
-        } catch (\Exception $e) {
-            return false;
-        }
     }
 }

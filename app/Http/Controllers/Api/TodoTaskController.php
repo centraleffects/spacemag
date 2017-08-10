@@ -43,7 +43,7 @@ class TodoTaskController extends Controller
 
 
         if( $task->id )
-            return ['success' => 1, 'msg' => __("messages.new_task_created")];
+            return ['success' => 1, 'msg' => __("messages.new_task_created"), 'id' => $task->id];
 
         return ['success' => 0, 'msg' =>  __("errors.error_while_processing") ];
 
@@ -103,12 +103,14 @@ class TodoTaskController extends Controller
             $task->date_finished = null;
             $msg = __('messages.reopen_task');
             $action = 're-open';
+            $task->completed_by_user_id = null;
         }else{
             $task->done = true;
             $task->status = 'finished';
             $task->date_finished = date('Y-m-d H:i:s');
             $msg = __('messages.complete_task');
             $action = 'mark as completed';
+            $task->completed_by_user_id = auth()->guard('api')->user()->id;
         }
 
         if( $task->update() )
@@ -149,5 +151,18 @@ class TodoTaskController extends Controller
         }
 
         return ['success' => 0, 'msg' => __('errors.no_task_affected')];
+    }
+
+    public function countNewTasks(Shop $shop){
+        $salespots = $shop->salespots()->get();
+        $counts = [];
+        foreach ($salespots as $key => $salespot) {
+            $counts[] = [
+                'id' => $salespot->id,
+                'tasks' => $salespot->tasks()->where('done', false)->count()
+            ];
+        }
+
+        return $counts;
     }
 }
