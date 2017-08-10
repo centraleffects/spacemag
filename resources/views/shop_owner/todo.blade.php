@@ -66,7 +66,7 @@
 							<div class="todo-count"></div>
 						</div>
 						<div class="col m9 l9">
-							<a id="clear-completed" class="btn waves-effect waves-light red small right" ng-click="clear()" ng-show="hasDone()">
+							<a id="clear-completed" class="btn waves-effect waves-light red small right">
 								Clear <span >@{{ (todos.length - remaining()) }} @{{itemText()}}</span>.
 							</a>
 						</div>

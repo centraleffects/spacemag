@@ -9,7 +9,7 @@ $(function (){
 				'<path d="M 14 5.5 a 3 3 0 1 1 -3 -3 A 3 3 0 0 1 14 5.5 Z m 7 3 a 3 3 0 1 0 -3 -3 A 3 3 0 0 0 21 8.5 Z m -10 4 a 3 3 0 1 0 3 3 A 3 3 0 0 0 11 12.5 Z m 10 0 a 3 3 0 1 0 3 3 A 3 3 0 0 0 21 12.5 Z m -10 10 a 3 3 0 1 0 3 3 A 3 3 0 0 0 11 22.5 Z m 10 0 a 3 3 0 1 0 3 3 A 3 3 0 0 0 21 22.5 Z"></path>'+
 			'</svg>',
 		_checkbox = '<svg class="svgIcon " viewBox="0 0 32 32" title="checkmark"><polygon points="27.672,4.786 10.901,21.557 4.328,14.984 1.5,17.812 10.901,27.214 30.5,7.615 "></polygon></svg>',
-		_template = $('<li class="collection-item row todo-item" autofocus>'+
+		_template = $('<li class="collection-item row todo-item">'+
 			'<span class="col">'+
 				_dragicon+
 				'<label class="mark-as-complete circular-button-view">'+

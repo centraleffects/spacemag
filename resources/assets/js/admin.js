@@ -12,6 +12,11 @@ window.rebuyApp.config(['$httpProvider', function($httpProvider) {
     }
 ]);
 
+var app = angular.module('rebuy', [], function($interpolateProvider) {
+	$interpolateProvider.startSymbol('<%');
+	$interpolateProvider.endSymbol('%>');
+});
+
 (function($){
 	$.adminJS = {
 		init : function(){
