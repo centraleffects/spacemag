@@ -116,11 +116,11 @@
 				</div>
 			</div>
 
-			<div class="card hoverable" ng-show="!hasSelectedUser">
+			<!-- <div class="card hoverable" ng-show="!hasSelectedUser">
 				<div class="card-content">
 					<h5>Select a customer to get started.</h5>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	@endslot
 

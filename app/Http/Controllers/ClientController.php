@@ -29,11 +29,14 @@ class ClientController extends Controller
     public function includeUserOnJS()
     {
         $shops = auth()->user()->ownedShops()->get();
+        
         $shop = session()->put('shops', $shops);
 
         if( !session()->has("selected_shop") && auth()->check() ){
+
             $shop = auth()->user()->ownedShops()->with('todoTasks')
                         ->with('todoTasks.owner')->first();
+
             session()->put("selected_shop", $shop);
         }
 
@@ -165,5 +168,17 @@ class ClientController extends Controller
         ]);
         
         return view('customers.bookings')->withShops($shops);
+    }
+
+    public function articles(){
+        $articles = auth()->user()->articles()->get();
+        // $tags = 
+        dd($articles);
+        JavaScript::put([
+            'articles' => $articles
+        ]);
+
+        
+        return view('shop_owner.articles')->withArticles($articles);
     }
 }
