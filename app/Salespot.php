@@ -45,4 +45,8 @@ class Salespot extends Model
     public function article(){
         return $this->belongsTo('App\Article');
     }
+
+    public function tasks(){
+        return $this->hasMany('App\TodoTask');
+    }
 }

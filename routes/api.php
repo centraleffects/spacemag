@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth:api'], function (){
 			Route::get('{shop}/tasks', 'Api\TodoTaskController@getByShop');
 
 			Route::get('{shop}/tasks', 'Api\TodoTaskController@getByShop');
+			Route::get('{shop}/tasks/count', 'Api\TodoTaskController@countNewTasks');
 
 			Route::delete('{shop}/users/{user}/remove', 'Api\ShopController@removeUser');
 		
@@ -63,6 +64,7 @@ Route::group(['middleware' => 'auth:api'], function (){
 		Route::post('delete', 'Api\SalespotController@destroy');
 		Route::post('update', 'Api\SalespotController@update');
 		Route::get('list/{shop}', 'Api\SalespotController@getlist');
+		Route::get('{salespot}/tasks', 'Api\SalespotController@getTasks');
 	});
 
 

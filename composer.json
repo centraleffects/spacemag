@@ -6,14 +6,15 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "doctrine/dbal": "v2.4.2",
         "guzzlehttp/guzzle": "~6.0",
+        "klarna/checkout": "4.0.0",
         "laracasts/utilities": "^2.1",
         "laravel/framework": "5.4.*",
         "laravel/socialite": "3.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
-        "picqer/php-barcode-generator": "^0.2.1",
-        "doctrine/dbal": "v2.4.2"
+        "picqer/php-barcode-generator": "^0.2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

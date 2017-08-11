@@ -1,8 +1,8 @@
 
-var app = angular.module('rebuy', [], function($interpolateProvider) {
-	$interpolateProvider.startSymbol('<%');
-	$interpolateProvider.endSymbol('%>');
-});
+// var app = angular.module('rebuy', [], function($interpolateProvider) {
+// 	$interpolateProvider.startSymbol('<%');
+// 	$interpolateProvider.endSymbol('%>');
+// });
 
 app.controller('adminTransactionController', function($scope, $http) {
 	

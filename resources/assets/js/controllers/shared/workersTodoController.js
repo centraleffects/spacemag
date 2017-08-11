@@ -62,11 +62,13 @@ function WorkersTodoCtrl($scope, shopService, workerTodoService, $timeout, $http
                 shop_id: $scope.selectedShop.id
             };
 
-            $scope.todos.push(todo);
+            
             
             workerTodoService.addNew(todo).then(function (response){
                 if( response.data.success ){
                     $scope.todoText = '';
+                    todo.id = response.data.id;
+                    $scope.todos.push(todo);
                 }else{
                     window.reBuy.alert(response.data.msg);
                 }

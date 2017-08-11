@@ -33,6 +33,12 @@ class CreateTodoTasksTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
 
+            // this column is only fillable when the task is a TodoList (which is an exclusive task created
+            //    automatically by the 5 static services: on which this task is assigned to no one but the shop workers 
+            //    that the specific salespot is belonged to)
+            $table->integer('completed_by_user_id')->unsigned()->index()->nullable();
+            $table->foreign('completed_by_user_id')->references('id')->on('users');
+
             // this field will be used if Salespot is not or not yet specified. 
             // If a Salespot is specified, this field will become null.
             $table->integer('shop_id')->unsigned()->index()->nullable();

@@ -102,6 +102,7 @@ require('./controllers/shopowner/couponsController');
 
 require('./controllers/shared/workersTodoController');
 
+
 (function($){
 	$.adminJS = {
 		init : function(){

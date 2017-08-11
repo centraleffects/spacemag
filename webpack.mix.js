@@ -32,4 +32,5 @@ mix.js('resources/assets/js/rebuy.lib.js', 'public/js/rebuy.lib.js')
    .js('resources/assets/js/admin.js', 'public/js/admin.js')
    .js('resources/assets/js/profile.js', 'public/js/profile.js')
    .js('resources/assets/js/jquery/customers/shops.js', 'public/js/shops.js')
-   .js('resources/assets/js/jquery/customers/bookings.js', 'public/js/bookings.js');
+   .js('resources/assets/js/jquery/customers/bookings.js', 'public/js/bookings.js')
+   .js('resources/assets/js/jquery/owner-workers/todo.js', 'public/js/todo.js');

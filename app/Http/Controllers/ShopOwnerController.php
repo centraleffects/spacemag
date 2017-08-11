@@ -8,12 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
 use JavaScript;
-use Mail;
 
-use App\Mail\PasswordReset;
-use App\Http\Requests\ShopInvitationRequest;
-use App\Mail\ShopInvitation;
-use App\Mail\ShopWorkerInvitation;
 use App\Helpers\Helper;
 
 use App\Shop;
@@ -88,7 +83,8 @@ class ShopOwnerController extends Controller
 
     	return view('shop_owner.dashboard')->withDays($days)
             ->withCurrencies($currencies)
-            ->with("shop", $shop);
+            ->with("shop", $shop)
+            ->withTitle(__("Dashboard"));
     }
 
     public function articles(){
@@ -105,12 +101,18 @@ class ShopOwnerController extends Controller
 
     public function customers(){
         
-    	return view('shop_owner.customers');
+    	return view('shop_owner.customers')->withTitle(__("Customers"));
     }
 
     public function todo(){
-        
-        return view('shop_owner.todo');
+        $shop = session()->get('selected_shop');
+        $salespots = $shop->salespots()->with('todoTasks')
+            ->with('todoTasks.completor')->get();
+    
+        // dd($shops);
+        return view('shop_owner.todo')->withShop($shop)
+            ->withSalespots($salespots)
+            ->withTitle(__("Todo List"));
     }
 
     public function workers(){
@@ -133,6 +135,6 @@ class ShopOwnerController extends Controller
                 'selectedShop' => $shop
             ]);
         }
-        return view('shop_owner.workers_todo');
+        return view('shop_owner.workers_todo')->withTitle(__("Workers Todo"));
     }
 }

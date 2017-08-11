@@ -140,5 +140,22 @@ Route::group(['domain' => 'workers.'.env('APP_DOMAIN')], function () {
     });
 });
 
-Route::get('try/{shop}', 'Web\ShopController@subscribe');	
+Route::get('try', function (){
+	?>
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title></title>
+	</head>
+	<body>
+		<script type="text/html">
+		{{var a = 'dexter gwapo';}}
+		<p>Hello World{{a}}</p>
+	</script>
+	</body>
+	</html>
+
+	<?php
+});	
 

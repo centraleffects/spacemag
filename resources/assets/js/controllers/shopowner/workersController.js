@@ -1,3 +1,4 @@
+// function WorkerCtrl ($scope, workerServices, $http, $timeout, $rootScope){
 function WorkerCtrl ($scope, workerServices, $http, $timeout, $rootScope){
 	$scope.selectedShop = selectedShop;
 	$scope.workers = [];
