@@ -1,12 +1,26 @@
 @component('shop_owner.layouts.app')
-<div >
+<div  ng-controller="articlesController as vm">
 	@slot('left')
-		<div class="card hoverable" ng-controller="articlesController">
+		<div class="card hoverable">
+			<div class="row card-content">
+				
+				<span class="card-title">Select a shop to view articles</span>
+				@if($shops)
+					<select name="shop" ng-model="selectedShop" ng-init="vm.updateSelectedShop()" ng-change="vm.updateSelectedShop()">
+						@foreach ($shops as $myshop)
+							<option value="{{$myshop->id}}">{{$myshop->name}}</option>
+						@endforeach
+					</select>
+				@endif 
+
+			</div>
+		</div>
+		<div class="card hoverable">
 			<div class="row card-content">
 				
 				<span class="card-title">Article List</span>
 
-				<div class="nav-wrapper">
+				<!-- <div class="nav-wrapper">
 			      <form>
 			        <div class="input-field">
 			          <input id="search" type="search" required>
@@ -14,7 +28,7 @@
 			          <i class="material-icons">close</i>
 			        </div>
 			      </form>
-			    </div>
+			    </div> -->
 			    <div><a href="javascript:;;">Filter Result <a href="/shop/articles/new"><span class="badge">New Article</span></a></div>
     			<div>
 					<ul class="collection">

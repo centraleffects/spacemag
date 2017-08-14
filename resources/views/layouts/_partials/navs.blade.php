@@ -33,6 +33,7 @@
         $nav_menus = [
             'overview' => __("Overview"),
             'my-shops' => __("My Shops"),
+            'articles' => __("My Articles"),
             'bookings' => __("My Bookings"),
             'shop/coupons' => __("Coupons")
         ];

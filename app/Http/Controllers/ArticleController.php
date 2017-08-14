@@ -32,17 +32,17 @@ class ArticleController extends Controller
     public function includeUserOnJS()
     {
 
-        $shops = Shop::all();
-        session()->put('shops', $shops);
+
+        $shops = auth()->user()->shops()->orderBy('name', 'asc');
 
         if( !session()->has("selected_shop") && auth()->check() ){
-            if(!empty($shops)){
-              session()->put("selected_shop", $shops->first());
-            }
+
+            $shop = $shops->first();
+
+            session()->put("selected_shop", $shop);
         }
 
         $shop = session()->get('selected_shop');
-
 
         JavaScript::put([
             'user' => auth()->user(),
@@ -169,10 +169,16 @@ class ArticleController extends Controller
 
     
 
-    public function indexOwner($id = null){
+    public function indexClient($id = null){
 
         $this->includeUserOnJS();
-        
+
+        $shops = auth()->user()->shops()->orderBy('name', 'asc');
+        if($shops){
+          $shops = $shops->paginate(1000);
+        }else{
+          $shops = [];
+        }
         $shop = session()->get('selected_shop');
 
         if( $shop ){
@@ -199,7 +205,7 @@ class ArticleController extends Controller
 
         if(!$id){
             if(!$articles){
-                $id = $articles[0]->id;
+              //  $id = $articles[0]->id;
             }
         }
       
@@ -247,7 +253,7 @@ class ArticleController extends Controller
 
         $categories = SalespotCategoryType::all();
 
-        return view('shop_owner.articles', compact('articles', 'selectedArticle', 'shop', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices', 'new_article'));
+        return view('customers.articles', compact('articles', 'selectedArticle', 'shop', 'shops', 'categories', 'selected_article_categories', 'selected_article_tags', 'prices', 'new_article'));
 
     }
 
@@ -259,7 +265,7 @@ class ArticleController extends Controller
         $prices = ArticlePrice::where(["article_id" => $article->id, 'status' => 1])->first();
         $shop = session()->get('selected_shop');
         
-        return view('shop_owner.print_label',compact('prices', 'article', 'shop'));
+        return view('customers.print_label',compact('prices', 'article', 'shop'));
     }
 
     private function uploadLabelSamplePicture($article, $input, $data){

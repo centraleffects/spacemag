@@ -94,14 +94,6 @@ Route::group(['middleware' => 'web'], function (){
 
 		Route::get('/tags/query', 'TagController@query');
 
-		Route::group(['prefix' => 'articles'], function (){
-			Route::get('/',['uses' =>'ArticleController@indexOwner']);
-			Route::get('{id}',['uses' =>'ArticleController@indexOwner']);
-			Route::get('new',['uses' =>'ArticleController@indexOwner']);
-			Route::post('store',['uses' =>'ArticleController@store']);
-			Route::get('delete/{article}',['uses' =>'ArticleController@destroy']);
-			Route::get('/print/{article}',['uses' =>'ArticleController@print_label']);
-		});
 	});
 
 	Route::get('account', 'UserController@edit');
@@ -121,6 +113,16 @@ Route::group(['middleware' => 'client'], function (){
 	Route::get('my-shops', 'ClientController@myShops');
 	Route::get('shops/view/{shop}', 'ClientController@viewShop');
 	Route::get('bookings', 'ClientController@bookings');
+
+	Route::group(['prefix' => 'articles'], function (){
+			Route::get('/',['uses' =>'ArticleController@indexClient']);
+			Route::get('{id}',['uses' =>'ArticleController@indexClient']);
+			Route::get('new',['uses' =>'ArticleController@indexClient']);
+			Route::post('store',['uses' =>'ArticleController@store']);
+			Route::get('delete/{article}',['uses' =>'ArticleController@destroy']);
+			Route::get('/print/{article}',['uses' =>'ArticleController@print_label']);
+		});
+	
 });
 
 Route::get('email/confirm/{token}', 'UserController@confirmEmail');

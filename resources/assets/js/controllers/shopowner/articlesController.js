@@ -6,6 +6,7 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 	vm.img2 = false;
 	vm.materializeInit = materializeInit;
 	vm.bindEvents = bindEvents;
+	vm.updateSelectedShop = updateSelectedShop;
 
 	$scope.selectedShop = selectedShop;
 	$scope.articles = [];
@@ -13,6 +14,10 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 	$scope.currentlySelectedArticle = null;
 
 	vm.bindEvents();
+
+	function updateSelectedShop(){
+		console.log('$scope.selectedShop', $scope.selectedShop);
+	}
 
 	$scope.events = {
 		addUpdate : function(form){
