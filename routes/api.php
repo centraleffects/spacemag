@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth:api'], function (){
 		Route::post('update', 'Api\SalespotController@update');
 		Route::get('list/{shop}', 'Api\SalespotController@getlist');
 		Route::get('{salespot}/tasks', 'Api\SalespotController@getTasks');
+		Route::post('{salespot}/tasks/clear', 'Api\TodoTaskController@clearTasksBySaleSpot');
 	});
 
 

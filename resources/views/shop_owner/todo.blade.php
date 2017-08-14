@@ -25,7 +25,7 @@
 			<div class="card hoverable"><!-- Client's Details -->
 				<div class="card-content">
 					<span class="card-title">{{__("Todo List")}}
-						<span class="active-salespot">
+						<span class="active-salespot" data-id={{$salespots->first()->id}}>
 							{{$salespots->first() ? ' - '.$salespots->first()->name : ''}}
 						</span>
 					</span>
@@ -66,8 +66,8 @@
 							<div class="todo-count"></div>
 						</div>
 						<div class="col m9 l9">
-							<a id="clear-completed" class="btn waves-effect waves-light red small right">
-								Clear <span >@{{ (todos.length - remaining()) }} @{{itemText()}}</span>.
+							<a id="clear_completed" class="btn waves-effect waves-light red small right" data-tooltip="Delete all completed tasks on this Sale Spot?" style="display: none;">
+								Clear completed tasks
 							</a>
 						</div>
 					</div>

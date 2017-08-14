@@ -40,7 +40,7 @@ class CreateTodoTasksTable extends Migration
             $table->foreign('completed_by_user_id')->references('id')->on('users');
 
             // this field will be used if Salespot is not or not yet specified. 
-            // If a Salespot is specified, this field will become null.
+            // If a Salespot is specified, this field shall be null.
             $table->integer('shop_id')->unsigned()->index()->nullable();
             $table->foreign('shop_id')->references('id')->on('shops');
 
