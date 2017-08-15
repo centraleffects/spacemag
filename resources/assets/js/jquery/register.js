@@ -82,19 +82,4 @@ $(function (){
 		}
 	});
 
-	// form_register.on("submit", function (e){
-	// 	var $this = $(this);
-
-	// 	e.prevenDefault();
-
-	// 	if( txt_pass.val() != txt_confirmPass.val() ){
-
-	// 		reBuy.showErrors(errors, form_register);
-
-	// 		return false;
-	// 	}else{
-	// 		e.submit();
-	// 	}
-	// });
-
 });
