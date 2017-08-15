@@ -8,7 +8,8 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 	vm.bindEvents = bindEvents;
 	vm.updateSelectedShop = updateSelectedShop;
 
-	$scope.selectedShop = selectedShop;
+	vm.selectedShop = null;
+
 	$scope.articles = [];
 	$scope.hasSelectedArticle = false;
 	$scope.currentlySelectedArticle = null;
@@ -16,7 +17,9 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 	vm.bindEvents();
 
 	function updateSelectedShop(){
-		console.log('$scope.selectedShop', $scope.selectedShop);
+		articleServices.updateSelectedShop('/shop/updateSelectedShop/'+vm.selectedShop).then(function(data){
+			window.location.reload();
+		});
 	}
 
 	$scope.events = {
@@ -27,7 +30,7 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
 					addUpdate.html('WAIT').attr('disable', 'disable');
 
 					$timeout(function(){
-						articleServices.addOrUpdate('/shop/articles/store?&ajax=true', data ).then(function(addOrUpdate){
+						articleServices.addOrUpdate('/articles/store?&ajax=true', data ).then(function(addOrUpdate){
 							addUpdate.html('UPDATE').removeAttr('disable');
 							window.reBuy.toast(addOrUpdate.message);
 						 });	
@@ -47,7 +50,7 @@ app.controller('articlesController', function($scope, articleServices, $http, $t
  			
  			
 
-			$('.addUpdate').closest("form").on( "submit", function( event ) {
+			angular.element('.addUpdate').closest("form").on( "submit", function( event ) {
 				  event.preventDefault();
 				  $scope.events.addUpdate($(this).closest('form'));
 				  return false;

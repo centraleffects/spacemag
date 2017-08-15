@@ -1,14 +1,14 @@
 @component('shop_owner.layouts.app')
-<div  ng-controller="articlesController as vm">
-	@slot('left')
+<div  class="row" ng-controller="articlesController as vm">
+	<div class="col s3">
 		<div class="card hoverable">
 			<div class="row card-content">
 				
 				<span class="card-title">Select a shop to view articles</span>
 				@if($shops)
-					<select name="shop" ng-model="selectedShop" ng-init="vm.updateSelectedShop()" ng-change="vm.updateSelectedShop()">
+					<select name="shop" ng-model="vm.selectedShop" ng-change="vm.updateSelectedShop(this)" ng-init="vm.selectedShop = '{{$shop->id}}'">
 						@foreach ($shops as $myshop)
-							<option value="{{$myshop->id}}">{{$myshop->name}}</option>
+							<option value="{{$myshop->id}}" {{ ($shop->id == $myshop->id) ? 'selected="selected"' : ''}}>{{$myshop->name}}</option>
 						@endforeach
 					</select>
 				@endif 
@@ -29,7 +29,7 @@
 			        </div>
 			      </form>
 			    </div> -->
-			    <div><a href="javascript:;;">Filter Result <a href="/shop/articles/new"><span class="badge">New Article</span></a></div>
+			    <div><a href="javascript:;;">Filter Result <a href="/articles/new"><span class="badge">New Article</span></a></div>
     			<div>
 					<ul class="collection">
 								
@@ -38,8 +38,8 @@
 								class="collection-item" 
 								id="{{ $article->id }}"  
 								>
-								<a  href="/shop/articles/{{ $article->id }}">{{$article->name ? $article->name : 'Unknown Article'}}</a>
-								<a  href="javascript:;" onclick="window.reBuy.confirm('Are you sure to delete this article?',function(){ location.href='/shop/articles/delete/{{ $article->id }}';})" class="secondary-content">
+								<a  href="/articles/{{ $article->id }}">{{$article->name ? $article->name : 'Unknown Article'}}</a>
+								<a  href="javascript:;" onclick="window.reBuy.confirm('Are you sure to delete this article?',function(){ location.href='/articles/delete/{{ $article->id }}';})" class="secondary-content">
 									<i class="fa fa-trash-o right" aria-hidden="true"></i>
 								</a>
 							</li>
@@ -51,8 +51,9 @@
 				</div>
 			</div>
 		</div>
-	@endslot
-	@slot('center')
+	</div>
+	@if(!isset($_GET['preview']))
+	<div class="col s6">
 		@if($new_article || $selectedArticle->id )
 			<div  class="row">
 				<form method="POST" action="/{{Request::path()}}">
@@ -176,8 +177,19 @@
 					</form>
 			</div>
 			@endif
-	@endslot
-	@slot('right')
+	</div>
+	@else
+	<div class="col s6">
+		<div class="card hoverable"><!-- Client's Details -->
+			<div class="card-content">
+				<div class="preview">
+					<iframe class="frame" src="/articles/print/{{ $article->id }}?preview" frameborder="0" allowfullscreen></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+	@endif
+	<div class="col s3">
 		@if( isset($shop) )
 		<div class="row">
 			<?php /*
@@ -275,7 +287,7 @@
 		               <span class="card-title">BarCode</span>
 		               <br>
 		               @if(!empty($selectedArticle->barcode_id))
-			               <div class="barcodebox">
+			               <div class="barcodebox_preview barcodebox">
 								<div><img src="{{ Helper::getBarCode( $selectedArticle->barcode_id ) }}"/></div>
 								<div class="barcode">{{$selectedArticle->barcode_id}}</div>
 								<div class="article-name">{{$selectedArticle->name}}</div>
@@ -285,7 +297,11 @@
 						<div class="clearfix"></div>
 		            </div>
 		            <div class="card-action">
-		              <a href="/shop/articles/print/{{$selectedArticle->id}}" target="_blank">Print</a>
+		            	@if(!isset($_GET['preview']))
+		              		<a href="/articles/{{$selectedArticle->id}}?preview">Print Preview</a>
+		              	@else
+		              		<a href="/articles/{{$selectedArticle->id}}">Back</a>
+		              	@endif
 		            </div>
 		         </div>
 	        @endif
@@ -298,6 +314,8 @@
 			</div>
 		</div>
 		@endif
-	@endslot
+	</div>
 </div>
 @endcomponent
+
+{{dd($shop)}}

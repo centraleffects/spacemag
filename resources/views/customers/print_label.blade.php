@@ -11,9 +11,11 @@
 	   	overflow: hidden;
    }
    #actionbtn{
-	   	background: #ccc;
-	   	padding: 10px;
-	   	margin-bottom:10px;
+	   background: #fffdfd;
+	    padding: 30px;
+	    margin-bottom: 10px;
+	    font-size: 21px;
+	    color: red;
    }
    #content{
    		padding: 10px;
@@ -54,7 +56,7 @@
     	height: 67px;
    }
    button{
-   	font-size: 15px;
+   	font-size: 25px;
    }
    @media screen
    {

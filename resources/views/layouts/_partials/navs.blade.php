@@ -35,12 +35,12 @@
             'my-shops' => __("My Shops"),
             'articles' => __("My Articles"),
             'bookings' => __("My Bookings"),
-            'shop/coupons' => __("Coupons")
+            'coupons' => __("My Coupons")
         ];
 
-        if( auth()->user()->isClient() ){
+        /*if( auth()->user()->isClient() ){
             $nav_menus['shop/articles'] = __("Articles");
-        }
+        }*/
     ?>
 @else
     <?php $nav_menus = ['shop' => __("Shops")]; ?>                                  
