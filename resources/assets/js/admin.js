@@ -6,16 +6,12 @@ window.rebuyApp = angular.module('rebuy', [], function ($httpProvider){
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 });
 
-window.rebuyApp.config(['$httpProvider', function($httpProvider) {
+rebuyApp.config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     }
 ]);
 
-var app = angular.module('rebuy', [], function($interpolateProvider) {
-	$interpolateProvider.startSymbol('<%');
-	$interpolateProvider.endSymbol('%>');
-});
 
 (function($){
 	$.adminJS = {
