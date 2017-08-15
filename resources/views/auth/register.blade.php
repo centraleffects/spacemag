@@ -4,7 +4,7 @@
     @endslot
     <div class="row">
         <div class="col md-8 s12 l6 push-l3 pull-l3">
-            <form class="form" role="form" method="POST" action="{{ route('register') }}">
+            <form class="form" role="form" method="POST" action="{{ route('register') }}" id="form_register">
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title green-text centered">
@@ -30,7 +30,7 @@
                             <div class="input-field{{ $errors->has('first_name') ? ' has-error' : '' }}">
                                 <label for="first_name">First Name</label>
 
-                                <input id="first_name" type="text" name="first_name" value="{{ old('first_name') }}" required autofocus>
+                                <input id="first_name" type="text" name="first_name" value="{{ old('first_name') }}" required autofocus />
 
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
@@ -42,7 +42,7 @@
                             <div class="input-field{{ $errors->has('last_name') ? ' has-error' : '' }}">
                                 <label for="last_name">Last Name</label>
 
-                                <input id="last_name" type="text" name="last_name" value="{{ old('last_name') }}" required autofocus>
+                                <input id="last_name" type="text" name="last_name" value="{{ old('last_name') }}" required />
 
                                 @if ($errors->has('last_name'))
                                     <span class="help-block">
@@ -68,7 +68,12 @@
                                 <label for="password">Password</label>
 
                                 <input id="password" type="password" name="password" autocomplete="off" required />
-
+                                <br/>
+                                <span id="password_meter_text"></span>
+                                <div class="progress" style="display: none;">
+                                    <div class="determinate red" id="password_meter" style="width: 20%"></div>
+                                </div>
+                                <br/>
                                 @if ($errors->has('password'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('password') }}</strong>
@@ -77,13 +82,25 @@
                             </div>
 
                             <div class="input-field">
-                                <label for="password-confirm">Confirm Password</label>
-                                <input id="password-confirm" type="password" name="password_confirmation" autocomplete="off" required />
+                                <label for="password_confirmation">Confirm Password</label>
+                                <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="off" required />
+                                 @if ($errors->has('password_confirmation'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <br/>
+                            <div id="weak_password_confirmation" style="display: none;">
+                                <p>
+                                    <input type="checkbox" name="confirm_weak_password" value="true" id="confirm_weak_password" required />
+                                    <label class="help-block" for="confirm_weak_password">Use weak password anyway</label>
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="card-action centered">
-                        <button type="submit" class="btn green waves-effect waves-light">
+                        <button type="submit" class="btn green waves-effect waves-light" id="btn_submit">
                             <i class="fa fa-check"></i> Register
                         </button>
                         <a href="{{ route('login') }}" class="tooltipped" data-tooltip="Already a member? Login here!">
@@ -94,4 +111,7 @@
             </form>
         </div>
     </div>
+    @slot('scripts')
+    <script src="{{mix('js/register.js')}}"></script>
+    @endslot
 @endcomponent

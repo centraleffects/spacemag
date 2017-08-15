@@ -158,6 +158,17 @@
 
                 reader.readAsDataURL(input.files[0]);
             }
+        },
+
+        testPassword: function (pass){
+            var strength = 1;
+            var arr = [/.{5,}/, /[a-z]+/, /[0-9]+/, /[A-Z]+/];
+            jQuery.map(arr, function(regexp) {
+              if(pass.match(regexp))
+                 strength++;
+            });
+            
+            return strength;
         }
     }
 
