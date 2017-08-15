@@ -17,8 +17,7 @@
             'shop/clients' => __("Clients"),
             'shop/spots' => __("Salespot"),
             'shop/todo' => __("Todo List"),
-            'shop/workers/todo' => __("My Todo"),
-            'shop/coupons' => __("Coupons")
+            'shop/workers/todo' => __("My Todo")
 
         ];
 
