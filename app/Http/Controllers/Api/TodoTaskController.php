@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Input;
 use App\TodoTask;
 use App\Shop;
 use App\User;
+use App\Salespot;
 // use App\Mail\TaskAssignment; 
 
 use App\Http\Traits\GeneratesTodo;
@@ -153,14 +154,31 @@ class TodoTaskController extends Controller
         return ['success' => 0, 'msg' => __('errors.no_task_affected')];
     }
 
+    public function clearTasksBySaleSpot(Salespot $salespot){
+        $res = $salespot->todoTasks()->where('done', true)->delete();
+
+        if( $res > 0 ){
+            $response = $res > 1 ? "tasks." : "task";
+            return ['success' => 1, 'msg' => "Successfully cleared {$res} {$response}"];
+        }
+
+        return ['success' => 0, 'msg' => __('errors.no_task_affected')];
+    }
+
     public function countNewTasks(Shop $shop){
         $salespots = $shop->salespots()->get();
         $counts = [];
         foreach ($salespots as $key => $salespot) {
-            $counts[] = [
-                'id' => $salespot->id,
-                'tasks' => $salespot->tasks()->where('done', false)->count()
+
+            $tasks = $salespot->tasks()->get();
+            $resp = [
+               'salespot_id' => $salespot->id,
+               'remaining' => $tasks->where('done', false)->count(),
+               'all' => $tasks->count(),
+               'completed' => $tasks->where('done', true)->count()
             ];
+
+            $counts[] = $resp;
         }
 
         return $counts;

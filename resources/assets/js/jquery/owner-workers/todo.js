@@ -25,20 +25,23 @@ $(function (){
 		$todoList = $(".todo-list"),
 		$activeSalespot = $(".active-salespot");
 
-	fetchTodoCount(selectedShop.id, _token);
+	// buttons
+	var $btnClearCompleted = $("#clear_completed"),
+		$btnSalespots = $(".salespot");
 
-	$(document).on("click", ".salespot", function (){
+	fetchTodoCount(selectedShop.id, _token);
+	window.salespots = false;
+
+	$btnSalespots.click(function (){
 		var $this = $(this), id = $this.attr("data-id");
 
-		$activeSalespot.text(" - "+$this.find(".name").text());
+		$activeSalespot.text(" - "+$this.find(".name").text()).attr("data-id", $this.attr("data-id"));
 
 		$.ajax({
 			url: _url+id+'/tasks?api_token='+_token,
 			type: 'get',
 			dataType: 'json',
 			success: function (data){
-				console.log(data.length);
-				console.log(data);
 				if( data.length > 0 ){
 					$todoList.html("");
 					$.each(data, function (i, row){
@@ -59,6 +62,39 @@ $(function (){
 		fetchTodoCount(selectedShop.id, _token);
 	});
 
+
+	$btnClearCompleted.click(function (){
+		var $this = $(this);
+		var salespotId = $(".active-salespot").attr("data-id");
+
+		if( typeof(salespotId) != 'undefined' ){
+			var salespot = window.salespots[salespotId];
+			$(".todo-count").html(salespot.remaining+' of '+salespot.all+' remaining');
+
+			if( salespot.completed > 0 ){
+				$.ajax({
+					url: _url+salespotId+'/tasks/clear?api_token='+_token,
+					type: 'post',
+					dataType: 'json',
+					success: function (data){
+						if( data.success ){
+							reBuy.toast(data.msg);
+						}else{
+							reBuy.alert(data.msg);
+						}
+					},
+					error: function (data){
+						console.warn(data);
+						reBuy.alert("Something went wrong while process your request. Error "+data.status);
+					},
+					complete: function (){
+						$(".salespot[data-id='"+salespotId+"']").click();
+					}
+				})
+			}
+		}
+
+	});
 
 	$(document).on("click", ".mark-as-complete", function (){
 		var $this = $(this), 
@@ -148,17 +184,48 @@ $(function (){
 			success: function (data){
 				var spot = "";
 				if( data.length ){
+					window.salespots = [];
 					$.each(data, function (i, row){
-						spot = $(".salespot[data-id='"+row.id+"']").children("span.badge");
-						if( row.tasks > 0 ){
-							spot.addClass("new").addClass("orange").html(row.tasks);
+						spot = $(".salespot[data-id='"+row.salespot_id+"']").children("span.badge");
+						window.salespots[row.salespot_id] = row;
+
+						if( row.remaining > 0 ){
+							spot.addClass("new").addClass("orange").html(row.remaining);
 						}else{
 							spot.removeClass("new orange").html("");
 						}
 					});
 				}
+			},
+			error: function (data){
+				console.warn(data);
+
+				window.salespots = false;
+			},
+			complete: function (){
+				refreshTodoCount();
 			}
 		});
+	}
+
+	function refreshTodoCount(){
+		console.log("counting todo...");
+		if( window.salespots != false ){
+			var salespotId = $(".active-salespot").attr("data-id");
+			if( typeof(salespotId) != 'undefined' ){
+				var salespot = window.salespots[salespotId];
+				console.log(salespot);
+				$(".todo-count").html(salespot.remaining+' of '+salespot.all+' remaining');
+
+				if( salespot.completed > 0 ){
+					$btnClearCompleted.fadeIn();
+				}else{
+					$btnClearCompleted.fadeOut();
+				}
+			}
+		}else{
+			$(".todo-count").html('');
+		}
 	}
 
 });
