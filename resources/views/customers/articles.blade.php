@@ -317,5 +317,3 @@
 	</div>
 </div>
 @endcomponent
-
-{{dd($shop)}}
