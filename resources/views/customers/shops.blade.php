@@ -70,11 +70,7 @@
 	@endslot
 
 	@slot('right')
-		<div class="card hoverable">
-			<div class="card-content">
-				<span class="card-title">Some action</span>
-			</div>
-		</div>
+		
 	@endslot
 
 	@slot('scripts')
