@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 
+use App\Shop;
 use App\ShopCoupon;
 
 use JavaScript;
@@ -21,17 +22,16 @@ class ShopCouponController extends Controller
 
     public function includeUserOnJS()
     {
-        $shops = auth()->user()->ownedShops()->get();
-        $shop = session()->put('shops', $shops);
+         $shops = auth()->user()->shops()->orderBy('name', 'asc');
 
         if( !session()->has("selected_shop") && auth()->check() ){
-            $shop = auth()->user()->ownedShops()->with('todoTasks')
-                        ->with('todoTasks.owner')->first();
+
+            $shop = $shops->first();
+
             session()->put("selected_shop", $shop);
         }
 
         $shop = session()->get('selected_shop');
-        
 
         JavaScript::put([
             'user' => auth()->user(),
@@ -182,19 +182,29 @@ class ShopCouponController extends Controller
             session()->put('alert', 'A coupon has been deleted.');
         }
        
-       return \Redirect::to('/shop/coupons');
+       return \Redirect::to('/coupons');
     }
 
 
-    public function indexOwner($id = null){
+    public function indexClient($id = null){
         $this->includeUserOnJS();
 
         
+        $shops = auth()->user()->shops()->orderBy('name', 'asc');
+        if($shops){
+          $shops = $shops->paginate(1000);
+        }else{
+          $shops = [];
+        }
         $shop = session()->get('selected_shop');
+        if($shop){
+            $shop = Shop::where('id', $shop->id)->with('coupons')->first();
+        }else{
 
-        $coupons  =  $shop->coupons();
+        }
 
-        dd($coupons);
+        $coupons  =  $shop->coupons;
+      
         if(empty($coupons)){
             $coupons = [];
         }
@@ -202,9 +212,15 @@ class ShopCouponController extends Controller
         $selectedCoupon = new ShopCoupon();
        if(!empty($id)){
          $selectedCoupon = ShopCoupon::where('id',$id)->with('users')->first();
+         if(!$selectedCoupon){
+            $selectedCoupon = new ShopCoupon();
+         }
        }
 
 
-       return view('shop_owner.coupons', compact('coupons', 'selectedCoupon'));
+       return view('customers.coupons', compact('coupons', 'selectedCoupon', 'shop', 'shops'));
     }
+
+    
+    
 }

@@ -66,15 +66,6 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 		Route::get('new',['uses' =>'ClientController@indexOwner']);
 	});
 
-	Route::group(['prefix' => 'coupons'], function (){
-		Route::get('new',['uses' =>'ShopCouponController@indexOwner']);
-		Route::get('/',['uses' =>'ShopCouponController@indexOwner']);
-		Route::get('{id}',['uses' =>'ShopCouponController@indexOwner']);
-		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
-
-		Route::post('/store',['uses' =>'ShopCouponController@store']);
-	});
-
 	Route::post('/updatefloorplan', 'ShopController@updateFloorPlan');
 	// Route::post('/update', 'ShopController@ownerUpdateStore');
 	Route::post('update', 'ShopController@update');
@@ -114,14 +105,27 @@ Route::group(['middleware' => 'client'], function (){
 	Route::get('shops/view/{shop}', 'ClientController@viewShop');
 	Route::get('bookings', 'ClientController@bookings');
 
+	Route::get('/shop/updateSelectedShop/{shop}',['uses' =>'ShopController@updateSelectedShop']);
+
 	Route::group(['prefix' => 'articles'], function (){
 			Route::get('/',['uses' =>'ArticleController@indexClient']);
 			Route::get('{id}',['uses' =>'ArticleController@indexClient']);
 			Route::get('new',['uses' =>'ArticleController@indexClient']);
-			Route::post('store',['uses' =>'ArticleController@store']);
 			Route::get('delete/{article}',['uses' =>'ArticleController@destroy']);
 			Route::get('/print/{article}',['uses' =>'ArticleController@print_label']);
+
+			Route::post('store',['uses' =>'ArticleController@store']);
 		});
+
+	Route::group(['prefix' => 'coupons'], function (){
+		Route::get('new',['uses' =>'ShopCouponController@indexClient']);
+		Route::get('/',['uses' =>'ShopCouponController@indexClient']);
+		Route::get('{id}',['uses' =>'ShopCouponController@indexClient']);
+		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
+		
+
+		Route::post('/store',['uses' =>'ShopCouponController@store']);
+	});
 	
 });
 

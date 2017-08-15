@@ -1,6 +1,20 @@
 @component('shop_owner.layouts.app')
-	@slot('controller') ng-controller="couponsController" @endslot
-	@slot('left')
+<div  class="row" ng-controller="couponsController as vm">
+	<div class="col s3">
+		<div class="card hoverable">
+			<div class="row card-content">
+				
+				<span class="card-title">Select a shop to view coupons</span>
+				@if($shops)
+					<select name="shop" ng-model="vm.selectedShop" ng-change="vm.updateSelectedShop(this)" ng-init="vm.selectedShop = '{{$shop->id}}'">
+						@foreach ($shops as $myshop)
+							<option value="{{$myshop->id}}" {{ ($shop->id == $myshop->id) ? 'selected="selected"' : ''}}>{{$myshop->name}}</option>
+						@endforeach
+					</select>
+				@endif 
+
+			</div>
+		</div>
 		<div class="card hoverable">
 			<div class="row card-content">
 				
@@ -15,7 +29,7 @@
 			        </div>
 			      </form>
 			    </div>
-			    <div><a href="javascript:;;">Filter Result <a href="/shop/coupons/new"><span class="badge">New Coupon</span></a></div>
+			    <div><a href="javascript:;;">Filter Result <a href="/coupons/new"><span class="badge">New Coupon</span></a></div>
     			<div>
 					<ul class="collection">
 								
@@ -24,8 +38,8 @@
 									class="collection-item" 
 									id="{{ $coupon->id }}"  
 									>
-									<a  href="/shop/coupons/{{ $coupon->id }}">{{$coupon->code}}</a>
-									<a  href="javascript:;;" onclick="window.reBuy.confirm('Are you sure to delete this?',function(){ window.location.href='/shop/coupons/delete/{{ $coupon->id }}';})" class="secondary-content">
+									<a  href="/coupons/{{ $coupon->id }}">{{$coupon->code}}</a>
+									<a  href="javascript:;;" onclick="window.reBuy.confirm('Are you sure to delete this?',function(){ window.location.href='/coupons/delete/{{ $coupon->id }}';})" class="secondary-content">
 										<i class="fa fa-trash-o right" aria-hidden="true"></i>
 									</a>
 								</li>
@@ -37,10 +51,10 @@
 				</div>
 			</div>
 		</div>
-	@endslot
-	@slot('center')
+	</div>
+	<div class="col s6">
 		<div class="card hoverable">
-			<form method="POST" id="couponform" name="couponform" action="/shop/coupons/store">
+			<form method="POST" id="couponform" name="couponform" action="/coupons/store">
 		        <div class="card-content">
 		          <span class="card-title">{{ (!$selectedCoupon->id) ? 'New' : 'Edit' }} Coupon</span>
 					{{ csrf_field() }}
@@ -126,11 +140,11 @@
 	         </div>
         </div>
         @endif
-	@endslot
-	@slot('right')
+	</div>
+	<div class="col s3">
 
 
 
-	@endslot
+	</div>
 
 @endcomponent

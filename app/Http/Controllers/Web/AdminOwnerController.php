@@ -8,8 +8,56 @@ use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Shop;
 use App\Salespot;
+use App\Helpers\Helper;
+use JavaScript;
 
 class AdminOwnerController extends Controller{
+
+    function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            
+            if( auth()->check() && (auth()->user()->isOwner() or auth()->user()->isWorker() 
+                or $request->session()->has('loggedin_as_someone') or auth()->user()->isAdmin()) ){
+                $user = auth()->user();
+
+                if( !auth()->user()->isAdmin() ){
+                    if( auth()->user()->isOwner() ){
+                   
+                        $shops = $user->ownedShops()->get();
+                       
+                    }else{
+                        $shops = $user->shops()->get();
+                    }
+
+                    $shop = Helper::getShopWithTasks(auth()->user(), true);
+
+                    session()->put('shops', $shops);
+
+                    if( !session()->has("selected_shop") ){
+                        
+                        session()->put("selected_shop", $shop);
+                    }else{
+                        // make sure shop info inside the session is updated
+                        $shop = Shop::find(session()->get('selected_shop')->id);
+                        session()->put('selected_shop', $shop);
+                    }
+                    
+                    
+                    JavaScript::put([
+                        'user' => $user,
+                        'selectedShop' => $shop,
+                        'shops' => $shops
+                    ]);
+                }
+
+                return $next($request);
+            }
+
+            return redirect('/');
+            
+        });
+    }
 
 	public function loginAsSomeone(User $user, $shopId = false, Request $request){
 

@@ -17,8 +17,7 @@
             'shop/clients' => __("Clients"),
             'shop/spots' => __("Salespot"),
             'shop/todo' => __("Todo List"),
-            'shop/workers/todo' => __("My Todo"),
-            'shop/coupons' => __("Coupons")
+            'shop/workers/todo' => __("My Todo")
 
         ];
 
@@ -35,12 +34,12 @@
             'my-shops' => __("My Shops"),
             'articles' => __("My Articles"),
             'bookings' => __("My Bookings"),
-            'shop/coupons' => __("Coupons")
+            'coupons' => __("My Coupons")
         ];
 
-        if( auth()->user()->isClient() ){
+        /*if( auth()->user()->isClient() ){
             $nav_menus['shop/articles'] = __("Articles");
-        }
+        }*/
     ?>
 @else
     <?php $nav_menus = ['shop' => __("Shops")]; ?>                                  

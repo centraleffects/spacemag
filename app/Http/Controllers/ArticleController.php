@@ -209,7 +209,7 @@ class ArticleController extends Controller
             }
         }
       
-        $new_article = ( request()->segment(3) == "new" ) ;
+        $new_article = ( request()->segment(2) == "new" ) ;
 
         if($id && !$new_article){
             $selectedArticle = Article::where('id',$id)->with('tags','categories', 'labels')->first();
@@ -218,13 +218,13 @@ class ArticleController extends Controller
             $selectedArticle =  new Article();
         }
         
-       
+      
         $selected_article_tags = [];
         $selected_article_categories = [];
         $prices = [];
 
-        if(!$new_article ){
-            if($selectedArticle->tags){
+        if(!$new_article && $selectedArticle){
+            if(!empty($selectedArticle->tags)){
                 foreach($selectedArticle->tags as $key => $tag){
                     $Tag = Tag::where('id', $tag->tag_id)->first();
                     if($Tag){
@@ -413,7 +413,5 @@ class ArticleController extends Controller
         $label->label_quantity =  !empty($data['label_quantity']) ? $data['label_quantity'] : NULL;
         $label->save();
     }
-
-
 
 }

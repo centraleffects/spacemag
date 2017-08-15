@@ -187,4 +187,9 @@ class ShopController extends Controller
         }
         dd($file);
     }
+
+    public  function updateSelectedShop(Shop $shop){
+        session()->put("selected_shop", $shop);
+        return $shop;
+    }
 }

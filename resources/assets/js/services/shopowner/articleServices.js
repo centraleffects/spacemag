@@ -1,6 +1,6 @@
 
 app.factory('articleServices', function($http, $timeout){
-    var promiseaddOrUpdate;
+    var promiseaddOrUpdate, promiseupdateSelectedShop;
     var articleService = {
 
         addOrUpdate: function(url, data) {
@@ -14,6 +14,19 @@ app.factory('articleServices', function($http, $timeout){
           }
             // Return the promise to the controller
             return promiseaddOrUpdate;
+        },
+
+        updateSelectedShop : function(url){
+            if ( !promiseupdateSelectedShop ) {
+                  // $http returns a promise, which has a then function, which also returns a promise
+                  promiseupdateSelectedShop = $http.get(url + '&user_id='+window.user.id +'&api_token='+window.user.api_token).then(function (response) {
+                    // The then function here is an opportunity to modify the response
+                    // The return value gets picked up by the then in the controller.
+                    return response.data;
+                });
+              }
+                // Return the promise to the controller
+                return promiseupdateSelectedShop;
         }
 
     };

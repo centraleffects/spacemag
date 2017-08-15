@@ -48,7 +48,7 @@ class ShopOwnerController extends Controller
                         session()->put('selected_shop', $shop);
                     }
                     
-
+                    
                     JavaScript::put([
                         'user' => $user,
                         'selectedShop' => $shop,
