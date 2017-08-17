@@ -17,7 +17,8 @@
             'shop/clients' => __("Clients"),
             'shop/spots' => __("Salespot"),
             'shop/todo' => __("Todo List"),
-            'shop/workers/todo' => __("My Todo")
+            'shop/workers/todo' => __("My Todo"),
+            'shop/coupons' => __("Coupons")
 
         ];
 
@@ -33,8 +34,8 @@
             'overview' => __("Overview"),
             'my-shops' => __("My Shops"),
             'articles' => __("My Articles"),
-            'bookings' => __("My Bookings"),
-            'coupons' => __("My Coupons")
+            'bookings' => __("My Bookings")
+            
         ];
 
         /*if( auth()->user()->isClient() ){

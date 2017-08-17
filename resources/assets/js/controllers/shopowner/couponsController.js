@@ -10,9 +10,9 @@ function couponsController ($scope, couponService, $http, $timeout, $rootScope){
 	};
 
     function updateSelectedShop(){
-		couponService.updateSelectedShop('/shop/updateSelectedShop/'+vm.selectedShop).then(function(data){
+		/*couponService.updateSelectedShop('/shop/updateSelectedShop/'+vm.selectedShop).then(function(data){
 			window.location.reload();
-		});
+		});*/
 	}
 
     function bindEvents(){
@@ -25,7 +25,7 @@ function couponsController ($scope, couponService, $http, $timeout, $rootScope){
 	              if(addUpdate.success){
 	              	window.reBuy.toast('Coupon Information has been updated!');
 	              	$timeout(function(){
-	              		window.location.href= '/coupons/' + addUpdate.coupon_id;
+	              		window.location.href= '/shop/coupons/' + addUpdate.coupon_id;
 	              	},1000);
 	              }else{
 	              	window.reBuy.alert('Error: Please complete the required information and try again.');

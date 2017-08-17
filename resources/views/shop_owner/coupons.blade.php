@@ -1,7 +1,7 @@
 @component('shop_owner.layouts.app')
 <div  class="row" ng-controller="couponsController as vm">
 	<div class="col s3">
-		<div class="card hoverable">
+		<!-- <div class="card hoverable">
 			<div class="row card-content">
 				
 				<span class="card-title">Select a shop to view coupons</span>
@@ -14,13 +14,13 @@
 				@endif 
 
 			</div>
-		</div>
+		</div> -->
 		<div class="card hoverable">
 			<div class="row card-content">
 				
 				<span class="card-title">Coupon List</span></span>
 
-				<div class="nav-wrapper">
+				<!-- <div class="nav-wrapper">
 			      <form>
 			        <div class="input-field">
 			          <input id="search" type="search" required>
@@ -28,8 +28,8 @@
 			          <i class="material-icons">close</i>
 			        </div>
 			      </form>
-			    </div>
-			    <div><a href="javascript:;;">Filter Result <a href="/coupons/new"><span class="badge">New Coupon</span></a></div>
+			    </div> -->
+			    <div><a href="javascript:;;">Filter Result <a href="/shop/coupons/new"><span class="badge">New Coupon</span></a></div>
     			<div>
 					<ul class="collection">
 								
@@ -38,8 +38,8 @@
 									class="collection-item" 
 									id="{{ $coupon->id }}"  
 									>
-									<a  href="/coupons/{{ $coupon->id }}">{{$coupon->code}}</a>
-									<a  href="javascript:;;" onclick="window.reBuy.confirm('Are you sure to delete this?',function(){ window.location.href='/coupons/delete/{{ $coupon->id }}';})" class="secondary-content">
+									<a  href="/shop/coupons/{{ $coupon->id }}">{{$coupon->code}}</a>
+									<a  href="javascript:;;" onclick="window.reBuy.confirm('Are you sure to delete this?',function(){ window.location.href='/shop/coupons/delete/{{ $coupon->id }}';})" class="secondary-content">
 										<i class="fa fa-trash-o right" aria-hidden="true"></i>
 									</a>
 								</li>
@@ -54,7 +54,7 @@
 	</div>
 	<div class="col s6">
 		<div class="card hoverable">
-			<form method="POST" id="couponform" name="couponform" action="/coupons/store">
+			<form method="POST" id="couponform" name="couponform" action="/shop/coupons/store">
 		        <div class="card-content">
 		          <span class="card-title">{{ (!$selectedCoupon->id) ? 'New' : 'Edit' }} Coupon</span>
 					{{ csrf_field() }}

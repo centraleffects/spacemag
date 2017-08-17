@@ -72,7 +72,7 @@
 
 			<div class="card hoverable"><!-- Shop -->
 				<div class="card-content">
-					<div class="card-title">Shop Name</div>
+					<div class="card-title">List of Assigned Shops</div>
 					
 					<div class="row" ng-if="shops.length" ng-repeat="shop in shops">
 						<div class="col">

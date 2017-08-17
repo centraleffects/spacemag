@@ -182,11 +182,11 @@ class ShopCouponController extends Controller
             session()->put('alert', 'A coupon has been deleted.');
         }
        
-       return \Redirect::to('/coupons');
+       return \Redirect::to('/shop/coupons');
     }
 
 
-    public function indexClient($id = null){
+    public function indexOwner($id = null){
         $this->includeUserOnJS();
 
         
@@ -218,7 +218,7 @@ class ShopCouponController extends Controller
        }
 
 
-       return view('customers.coupons', compact('coupons', 'selectedCoupon', 'shop', 'shops'));
+       return view('shop_owner.coupons', compact('coupons', 'selectedCoupon', 'shop', 'shops'));
     }
 
     

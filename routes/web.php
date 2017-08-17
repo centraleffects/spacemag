@@ -70,6 +70,16 @@ Route::group(['prefix' => 'shop', 'middleware' => ['owner'] ], function (){
 	// Route::post('/update', 'ShopController@ownerUpdateStore');
 	Route::post('update', 'ShopController@update');
 
+	Route::group(['prefix' => 'coupons'], function (){
+		Route::get('new',['uses' =>'ShopCouponController@indexOwner']);
+		Route::get('/',['uses' =>'ShopCouponController@indexOwner']);
+		Route::get('{id}',['uses' =>'ShopCouponController@indexOwner']);
+		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
+		
+
+		Route::post('/store',['uses' =>'ShopCouponController@store']);
+	});
+
 });
 
 
@@ -117,15 +127,7 @@ Route::group(['middleware' => 'client'], function (){
 			Route::post('store',['uses' =>'ArticleController@store']);
 		});
 
-	Route::group(['prefix' => 'coupons'], function (){
-		Route::get('new',['uses' =>'ShopCouponController@indexClient']);
-		Route::get('/',['uses' =>'ShopCouponController@indexClient']);
-		Route::get('{id}',['uses' =>'ShopCouponController@indexClient']);
-		Route::get('delete/{id}',['uses' =>'ShopCouponController@destroy']);
-		
-
-		Route::post('/store',['uses' =>'ShopCouponController@store']);
-	});
+	
 	
 });
 

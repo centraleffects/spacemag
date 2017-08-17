@@ -7,7 +7,7 @@ app.controller('spotsController', function($scope, spotService, $timeout, $templ
     $scope.langOptions = [{'value': 'en','text' : 'English'},{'value': 'sv','text' : 'Swedish'}];
     $scope.owners = [];
     $scope.categories = [];
-    $scope.spotStatusOptions = [{'value': 'rebuilding','text' : 'Rebuilding'},{'value': 'painting','text' : 'Painting'},{'value': 'on repair','text' : 'On Repair'},{'value': 'available', 'text': 'Available'}];
+    $scope.spotStatusOptions = [{'value': 'active','text' : 'Active'},{'value': 'blocked','text' : 'Blocked'},{'value': 'deleted','text' : 'Deleted'}];
     $scope.spotTypeOptions = [{'value': 'hanger','text' : 'Hanger'},{'value': 'shelves','text' : 'Shelves'},{'value': 'standard','text' : 'Standard'}, {'value': 'wall section','text' : 'Wall Section'}];
     $scope.spots = {};
     $scope.spots.data = null;
