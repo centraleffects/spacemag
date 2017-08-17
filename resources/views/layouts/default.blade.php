@@ -43,5 +43,14 @@
 		<!--  Scripts-->
 		@include('layouts._partials._scripts')
 
+		{{ $scripts or '' }}
+
+	    @if(Session::has("flash_message"))
+	        <script type="text/javascript">
+	            $("div.alert").not(".alert-important").delay(5000).slideUp(function(){
+	                $(this).remove();
+	            });
+	        </script>
+	    @endif
   	</body>
 </html>
